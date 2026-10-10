@@ -453,7 +453,7 @@ Every member: `data/normalized/` is on `main`, so pull and build your own local 
 ### 9.5 Dorai: golden set, safety rules, ethics, demo
 
 - **D1 `eval/golden-set` (50 items by 18:00 Saturday, before any eval run on the dev split):**
-  - Write all items by hand from the approved sources into `eval/golden.jsonl`, reading the live pages in a browser. Re-source the 10 items in #16 first (they cite faa.gov pages).
+  - Write all items from the approved sources into `eval/golden.jsonl`, reading the live pages in a browser. Re-source the 10 items in #16 first (they cite faa.gov pages).
   - Targets: single_hop 18, multi_hop 7, comparative 5, temporal 5, unanswerable 10, ambiguous 5. Floor: 40 items with every category minimum met.
   - `source_url` must be the exact URL in the corpus (the GovInfo section URL, the Federal Register `full_text` URL, the GovInfo PDF URL or the Know Before You Fly page URL).
   - Run the full `make golden-check` as you go (quotes are checked against `data/normalized/`); CFR-section items can be checked once the GovInfo CFR sections land.
