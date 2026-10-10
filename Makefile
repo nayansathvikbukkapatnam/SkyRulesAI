@@ -20,7 +20,7 @@ define run
 	else echo "not implemented yet: $(1) (owner and branch in CLAUDE.md section 9)"; exit 1; fi
 endef
 
-.PHONY: help setup freeze fixtures crawl extract chunk index migrate golden-check split eval retrieval-eval stats app test lint clean
+.PHONY: help setup freeze fixtures crawl extract chunk index migrate golden-check split eval retrieval-eval stats report-chunking app test lint clean
 
 help:
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-14s %s\n", $$1, $$2}'
@@ -41,7 +41,7 @@ freeze: ## re-pin requirements.txt after editing requirements.in
 fixtures: ## rebuild tests/fixtures from tests/fixtures/build_fixtures.py
 	$(PY) -m tests.fixtures.build_fixtures
 
-crawl: ## crawl faa.gov once into data/raw/ (FORCE=1 to crawl again)
+crawl: ## crawl the approved sources once into data/raw/ (FORCE=1 to crawl again)
 	$(call run,src.crawl.crawler,$(if $(FORCE),--force))
 
 extract: ## data/raw/ -> data/normalized/ + reports/artifacts/ingestion_stats.json
@@ -71,6 +71,9 @@ retrieval-eval: ## Recall@5/20, MRR, nDCG@10 for a config (CONFIG=b2 SPLIT=dev; 
 
 stats: ## bootstrap intervals and McNemar tests from saved eval runs
 	$(call run,src.eval.stats,)
+
+report-chunking: ## fill reports/02_chunking.md tables from reports/artifacts/
+	$(call run,src.reports.chunking,)
 
 app: ## start the app at http://localhost:8000
 	@if [ -f src/app/server.py ]; then $(PY) -m uvicorn src.app.server:app --port 8000; \

@@ -184,6 +184,15 @@ def test_cli_writes_the_log_and_exits_zero(store, tmp_path, monkeypatch):
     assert "(no re-crawl)" in log
     assert (tmp_path / "chunks" / "struct@v1.jsonl").exists()
     assert (tmp_path / "chunks" / "struct@v1.manifest.json").exists()
+    record = json.loads((tmp_path / "artifacts" / "migration.json").read_text())
+    assert record["orphan_check"] == {
+        "passed": True,
+        "index_minus_manifest": 0,
+        "manifest_minus_index": 0,
+        "old_strategy_count": 0,
+    }
+    assert (record["from"], record["to"], record["deleted_old"]) == ("fixed@v1", "struct@v1", 5)
+    assert record["before"] == {"fixed@v1": 5}
 
 
 def test_failed_check_is_logged_with_the_mismatched_ids():

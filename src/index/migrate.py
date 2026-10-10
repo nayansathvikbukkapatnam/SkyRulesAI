@@ -278,9 +278,36 @@ def run(
     paths.ARTIFACTS.mkdir(parents=True, exist_ok=True)
     out = paths.ARTIFACTS / "migration_log.txt"
     out.write_text(log)
+    data = paths.ARTIFACTS / "migration.json"
+    data.write_text(json.dumps(result_record(result), indent=2) + "\n")
     print(log, end="")
-    print(f"wrote {_rel(out)}")
+    print(f"wrote {_rel(out)} and {_rel(data)}")
     return 0 if result.passed else 1
+
+
+def result_record(r: MigrationResult) -> dict:
+    """The run as JSON, so report 02's tables are filled from data, not from the text log."""
+    return {
+        "from": r.from_tag,
+        "to": r.to_tag,
+        "commit": _git_commit(),
+        "run_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "n_docs": r.n_docs,
+        "before": r.before,
+        "generated": r.generated,
+        "deleted_old": r.deleted_old,
+        "deleted_stale_new": r.deleted_stale_new,
+        "upserted": r.upserted,
+        "after": r.after,
+        "bm25": r.bm25,
+        "orphan_check": {
+            "passed": r.passed,
+            "index_minus_manifest": len(r.check.index_minus_manifest),
+            "manifest_minus_index": len(r.check.manifest_minus_index),
+            "old_strategy_count": r.check.old_strategy_count,
+        },
+        "seconds": r.seconds,
+    }
 
 
 if __name__ == "__main__":
