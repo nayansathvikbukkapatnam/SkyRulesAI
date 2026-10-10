@@ -1,0 +1,40 @@
+# Top-level dependencies (CLAUDE.md section 3). requirements.txt is the pinned
+# result of installing these: edit this file, then run `make freeze`.
+
+# Config and shared
+python-dotenv
+PyYAML
+
+# 1. Scrape
+requests
+tenacity
+
+# 2. Extraction (pytesseract also needs the tesseract binary: brew install tesseract)
+trafilatura
+beautifulsoup4
+pdfplumber
+pytesseract
+Pillow
+
+# 3-5, 7-8. Tokenizer, embeddings, reranker, vector DB, keyword search
+sentence-transformers
+chromadb
+rank-bm25
+
+# 9. Generation
+boto3
+
+# App
+fastapi
+uvicorn
+
+# Evaluation
+pandas
+numpy
+scikit-learn
+statsmodels
+matplotlib
+
+# Quality
+ruff
+pytest

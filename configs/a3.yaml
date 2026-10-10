@@ -1,0 +1,4 @@
+# A3 = A2 + cross-encoder reranker (top 5).
+retrieval_mode: hybrid
+chunk_strategy: struct@v1
+rerank: true

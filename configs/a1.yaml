@@ -1,0 +1,3 @@
+# A1 = B2 + structure-aware chunks.
+retrieval_mode: dense
+chunk_strategy: struct@v1

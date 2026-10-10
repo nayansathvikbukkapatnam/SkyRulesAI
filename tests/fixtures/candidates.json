@@ -1,0 +1,71 @@
+{
+  "question": "How high can I fly my drone for fun?",
+  "candidates": [
+    {
+      "chunk_id": "adb67bc3d658::struct@v1::0000",
+      "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+      "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+      "title": "[FIXTURE] Recreational Flyers",
+      "effective_date": "2025-06-12",
+      "page_type": "guide_page",
+      "dense_score": 0.82,
+      "bm25_score": 7.5,
+      "fused_score": 0.032787
+    },
+    {
+      "chunk_id": "adb67bc3d658::struct@v1::0001",
+      "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+      "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+      "title": "[FIXTURE] Recreational Flyers",
+      "effective_date": "2025-06-12",
+      "page_type": "guide_page",
+      "dense_score": 0.76,
+      "bm25_score": 6.4,
+      "fused_score": 0.032258
+    },
+    {
+      "chunk_id": "adb67bc3d658::struct@v1::0002",
+      "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+      "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+      "title": "[FIXTURE] Recreational Flyers",
+      "effective_date": "2025-06-12",
+      "page_type": "guide_page",
+      "dense_score": 0.7,
+      "bm25_score": 5.3,
+      "fused_score": 0.031746
+    },
+    {
+      "chunk_id": "a71ad3767684::struct@v1::0000",
+      "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+      "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+      "title": "[FIXTURE] Certificated Remote Pilots",
+      "effective_date": "2024-11-03",
+      "page_type": "guide_page",
+      "dense_score": 0.64,
+      "bm25_score": 4.2,
+      "fused_score": 0.03125
+    },
+    {
+      "chunk_id": "a71ad3767684::struct@v1::0001",
+      "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+      "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+      "title": "[FIXTURE] Certificated Remote Pilots",
+      "effective_date": "2024-11-03",
+      "page_type": "guide_page",
+      "dense_score": 0.58,
+      "bm25_score": 3.1,
+      "fused_score": 0.030769
+    },
+    {
+      "chunk_id": "c8091d823bb2::struct@v1::0000",
+      "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+      "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+      "title": "[FIXTURE] Register Your Drone",
+      "effective_date": null,
+      "page_type": "faq",
+      "dense_score": 0.52,
+      "bm25_score": 2.0,
+      "fused_score": 0.030303
+    }
+  ]
+}

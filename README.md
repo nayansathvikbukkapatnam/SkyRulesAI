@@ -14,8 +14,13 @@ A retrieval-augmented assistant that answers questions about aviation rules and 
 
 ## Setup
 
+Needs Python 3.11 (macOS: `brew install python@3.11`) and, for OCR, `brew install tesseract`.
+
 ```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env   # fill in values locally
+make setup             # creates .venv and installs the pinned requirements.txt
+cp .env.example .env   # fill in AWS_REGION, AWS_PROFILE, BEDROCK_MODEL_ID, CRAWL_CONTACT_EMAIL
+make test              # unit tests run on tests/fixtures/, no network or AWS needed
+make help              # every pipeline command
 ```
+
+Dependencies: edit `requirements.in`, then run `make freeze` to re-pin `requirements.txt`.

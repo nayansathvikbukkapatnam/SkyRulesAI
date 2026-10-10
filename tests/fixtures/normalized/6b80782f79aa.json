@@ -1,0 +1,33 @@
+{
+  "doc_id": "6b80782f79aa",
+  "source_url": "https://fixtures.skyrules.test/uas/getting_started/remote_id",
+  "title": "[FIXTURE] Remote Identification of Drones",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2024-03-16",
+  "crawl_ts": "2026-10-10T09:00:00Z",
+  "content_hash": "69888547ae80fc95b74e74c867f51c60369dc1192af60285aa230a1dfc83b8ed",
+  "sections": [
+    {
+      "heading_path": [
+        "Remote ID",
+        "What Remote ID is"
+      ],
+      "text": "Fixture text. Remote ID lets a drone in flight share identification and location information that others can receive.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Remote ID",
+        "Ways to comply"
+      ],
+      "text": "Fixture text. Pilots comply by flying a Standard Remote ID drone, adding a broadcast module, or flying inside a recognized identification area.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "fixture-trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}
