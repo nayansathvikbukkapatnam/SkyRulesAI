@@ -56,7 +56,13 @@ class RobotsChecker:
             except Exception:
                 status, text = None, ""
             if status == 200:
-                parser.parse(text.splitlines())
+                # RFC 9309: blank lines do not end a group. urllib.robotparser treats
+                # a blank line after "User-agent:" as the end of the group and then
+                # drops every rule that follows (eCFR's robots.txt is laid out that
+                # way), which silently allows everything. Without blank lines, its
+                # grouping matches the RFC: a new group starts at a User-agent line
+                # that follows rules.
+                parser.parse([line for line in text.splitlines() if line.strip()])
             elif status in (401, 403) or status is None or status >= 500:
                 parser.disallow_all = True
             else:

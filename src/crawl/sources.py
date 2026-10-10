@@ -66,15 +66,21 @@ class SourceSet:
 
     @classmethod
     def load(
-        cls, path: Path = SOURCES_FILE, only: list[str] | None = None, cap: int | None = None
+        cls,
+        path: Path = SOURCES_FILE,
+        only: list[str] | None = None,
+        cap: int | None = None,
+        include_disabled: bool = False,
     ) -> SourceSet:
         """Enabled sources from the YAML. `only` picks sources by name; `cap` limits
-        every source to that many URLs (for a small dry run)."""
+        every source to that many URLs (for a small dry run); `include_disabled` is
+        for tests of a disabled source's rules."""
         with path.open(encoding="utf-8") as f:
             raw = yaml.safe_load(f)
         sources = []
         for s in raw["sources"]:
-            if not s.get("enabled", True) or (only and s["name"] not in only):
+            disabled = not s.get("enabled", True) and not include_disabled
+            if disabled or (only and s["name"] not in only):
                 continue
             source = Source(
                 name=s["name"],

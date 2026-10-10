@@ -262,6 +262,44 @@ def test_robots_wildcards_and_longest_match(path, allowed):
     assert checker.allowed(f"{KBYF}{path}") is allowed
 
 
+# eCFR's real robots.txt layout (2026-10-10): a blank line after "User-agent: *" and
+# indented rules. urllib.robotparser alone drops every rule here and allows all.
+ECFR_ROBOTS = """\
+# See http://www.robotstxt.org/robotstxt.html for documentation
+
+User-agent: *
+
+  Sitemap: https://www.ecfr.gov/sitemaps/sitemap.xml.gz
+  Disallow: /search
+  Disallow: /on/
+  # Don't index developer tool links
+  Disallow: /api/renderer/v1/content/
+  Disallow: /api/versioner/v1/full/
+"""
+
+
+@pytest.mark.parametrize(
+    "path, allowed",
+    [
+        ("/api/renderer/v1/content/enhanced/current/title-14?section=107.31", False),
+        ("/api/versioner/v1/full/2026-10-01/title-14.xml", False),
+        ("/search?q=drone", False),
+        ("/api/versioner/v1/titles.json", True),
+        ("/current/title-14/section-107.31", True),
+    ],
+)
+def test_robots_blank_line_after_user_agent_does_not_drop_the_rules(path, allowed):
+    checker = RobotsChecker(UA, lambda url: (200, ECFR_ROBOTS))
+    assert checker.allowed(f"{ECFR}{path}") is allowed
+
+
+def test_robots_groups_still_split_at_the_next_user_agent():
+    robots = "User-agent: other-bot\n\nDisallow: /\n\nUser-agent: *\n\nDisallow: /private\n"
+    checker = RobotsChecker(UA, lambda url: (200, robots))
+    assert checker.allowed(f"{KBYF}/public") is True
+    assert checker.allowed(f"{KBYF}/private/x") is False
+
+
 def test_robots_group_for_our_user_agent_wins_over_star():
     robots = "User-agent: *\nDisallow: /\n\nUser-agent: SkyRulesAI-MSAI633\nAllow: /\n"
     checker = RobotsChecker(UA, lambda url: (200, robots))
@@ -289,10 +327,9 @@ def test_robots_group_for_our_user_agent_wins_over_star():
         (f"{BASE}/user/login", SKIP, "excluded_login", "faa"),
         (f"{BASE}/air_traffic/publications", SKIP, "out_of_scope", "faa"),
         (f"{BASE}/uas/images/drone.png", SKIP, "unsupported_file_type", "faa"),
-        # eCFR: only the renderer API (the web pages are closed to automated clients)
-        (f"{ECFR_SECTION}107.31", LEAF, "linked_document", "ecfr"),
-        (f"{ECFR}/current/title-14/section-107.31", SKIP, "out_of_scope", "ecfr"),
-        (f"{ECFR}/api/versioner/v1/titles", SKIP, "out_of_scope", "ecfr"),
+        # eCFR is disabled (its robots.txt disallows the renderer API): never requested
+        (f"{ECFR_SECTION}107.31", SKIP, "other_host", None),
+        (f"{ECFR}/current/title-14/section-107.31", SKIP, "other_host", None),
         # Federal Register: only the full text of the listed drone rules
         (f"{FR}/documents/full_text/html/2021/01/15/2020-28948.html", LEAF, None, None),
         (f"{FR}/documents/full_text/html/2021/01/15/2021-00001.html", SKIP, "out_of_scope", None),
@@ -328,7 +365,7 @@ def test_scope_rules(url, kind, reason, source):
 
 
 def test_disabled_sources_are_not_loaded():
-    assert "wayback" not in {s.name for s in SOURCES.sources}
+    assert {"wayback", "ecfr"}.isdisjoint(s.name for s in SOURCES.sources)
     with pytest.raises(ValueError):
         SourceSet.load(only=["wayback"])
 
@@ -411,7 +448,7 @@ def test_ecfr_index_lists_sections_which_are_saved_one_document_each(tmp_path):
         '<div class="section" id="101.1">balloons</div>'
         "</div>"
     )
-    sources = SourceSet.load(only=["ecfr"])
+    sources = SourceSet.load(only=["ecfr"], include_disabled=True)
     sources.sources[0] = replace(sources.sources[0], index_urls=(part,))
     site = FakeSite(
         {

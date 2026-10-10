@@ -52,7 +52,12 @@ sources:
   # one whole part from the renderer API; it is read only to list its section
   # numbers (like a sitemap, not saved), and each section is then fetched and
   # saved as its own document through the same API.
+  # DISABLED 2026-10-10: eCFR's robots.txt disallows /api/renderer/v1/content/.
+  # A parser bug (blank line after "User-agent: *") hid that rule, so the first
+  # crawl fetched these sections against robots.txt. Those files are quarantined
+  # and not used; the regulation text needs another, robots-compliant route.
   - name: ecfr
+    enabled: false
     host: www.ecfr.gov
     aliases: [ecfr.gov]
     seeds: []
@@ -92,6 +97,18 @@ sources:
       - 'https://www.federalregister.gov/documents/full_text/html/2016/06/28/2016-15079.html'
       - 'https://www.federalregister.gov/documents/full_text/html/2015/12/16/2015-31750.html'
     sitemap: null
+    # Titles and publication dates as returned by the Federal Register API; the
+    # full_text route has no title. Used by extraction for both the HTML and the
+    # govinfo PDF of each document.
+    documents:
+      '2020-28948': {title: 'Remote Identification of Unmanned Aircraft', type: Rule, published: '2021-01-15', audience: general}
+      '2020-28947': {title: 'Operation of Small Unmanned Aircraft Systems Over People', type: Rule, published: '2021-01-15', audience: part107}
+      '2019-28100': {title: 'Remote Identification of Unmanned Aircraft Systems', type: Proposed Rule, published: '2019-12-31', audience: general}
+      '2019-00765': {title: 'External Marking Requirement for Small Unmanned Aircraft', type: Rule, published: '2019-02-13', audience: general}
+      '2019-00758': {title: 'Safe and Secure Operations of Small Unmanned Aircraft Systems', type: Proposed Rule, published: '2019-02-13', audience: general}
+      '2019-00732': {title: 'Operation of Small Unmanned Aircraft Systems Over People', type: Proposed Rule, published: '2019-02-13', audience: part107}
+      '2016-15079': {title: 'Operation and Certification of Small Unmanned Aircraft Systems', type: Rule, published: '2016-06-28', audience: part107}
+      '2015-31750': {title: 'Registration and Marking Requirements for Small Unmanned Aircraft', type: Rule, published: '2015-12-16', audience: general}
     max_urls: 20
     crawl: []
     leaf:
