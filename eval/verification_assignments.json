@@ -1,0 +1,63 @@
+{
+  "note": "Who verifies which golden items. Dorai wrote every item, so Dorai verifies none. Contiguous blocks keep git merge conflicts to the block boundaries.",
+  "assignments": {
+    "Pavan": [
+      "g001",
+      "g002",
+      "g003",
+      "g004",
+      "g005",
+      "g006",
+      "g007",
+      "g008",
+      "g009",
+      "g010",
+      "g011",
+      "g012",
+      "g013"
+    ],
+    "Nayan": [
+      "g014",
+      "g015",
+      "g016",
+      "g017",
+      "g018",
+      "g019",
+      "g020",
+      "g021",
+      "g022",
+      "g023",
+      "g024",
+      "g025",
+      "g026"
+    ],
+    "Sai": [
+      "g027",
+      "g028",
+      "g029",
+      "g030",
+      "g031",
+      "g032",
+      "g033",
+      "g034",
+      "g035",
+      "g036",
+      "g037",
+      "g038"
+    ],
+    "Adinath": [
+      "g039",
+      "g040",
+      "g041",
+      "g042",
+      "g043",
+      "g044",
+      "g045",
+      "g046",
+      "g047",
+      "g048",
+      "g049",
+      "g050"
+    ]
+  }
+}
