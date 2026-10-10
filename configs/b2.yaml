@@ -1,0 +1,3 @@
+# B2: dense only, fixed-size chunks, no reranker, basic grounded prompt.
+# Start of the ablation: B2 -> A1 -> A2 -> A3 -> B3, one change per step.
+retrieval_mode: dense

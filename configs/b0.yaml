@@ -1,0 +1,4 @@
+# B0: closed book. Same LLM, no retrieval, so it measures what the model already knows.
+closed_book: true
+retrieval_mode: null
+chunk_strategy: null

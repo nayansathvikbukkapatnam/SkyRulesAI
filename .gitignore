@@ -1,9 +1,16 @@
 # Secrets
 .env
 
-# Data and generated indexes
+# Data and generated indexes (data/normalized/ IS committed)
 data/raw/
+data/chunks/
+data/index/
 chroma/
+
+# Caches and logs
+.cache/
+logs/
+.ruff_cache/
 
 # Python
 __pycache__/

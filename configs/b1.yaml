@@ -1,0 +1,2 @@
+# B1: BM25 only, fixed-size chunks, no reranker.
+retrieval_mode: bm25

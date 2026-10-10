@@ -1,0 +1,32 @@
+{
+  "doc_id": "a71ad3767684",
+  "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+  "title": "[FIXTURE] Certificated Remote Pilots",
+  "page_type": "guide_page",
+  "audience": "part107",
+  "effective_date": "2024-11-03",
+  "crawl_ts": "2026-10-10T09:00:00Z",
+  "content_hash": "a5341a6a226cef6ac0df7aa36faf8bf3dc65b45288ef432b711458b4a3d6383d",
+  "sections": [
+    {
+      "heading_path": [
+        "Certificated Remote Pilots"
+      ],
+      "text": "Fixture text. Flying for work or business is covered by the Part 107 rules.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Certificated Remote Pilots",
+        "Get a remote pilot certificate"
+      ],
+      "text": "Fixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "fixture-trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

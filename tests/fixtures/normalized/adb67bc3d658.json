@@ -1,0 +1,40 @@
+{
+  "doc_id": "adb67bc3d658",
+  "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+  "title": "[FIXTURE] Recreational Flyers",
+  "page_type": "guide_page",
+  "audience": "recreational",
+  "effective_date": "2025-06-12",
+  "crawl_ts": "2026-10-10T09:00:00Z",
+  "content_hash": "066db2b2f9a9e404851e56fd334242b4df184af7339c4b02ef0a7830f80805f1",
+  "sections": [
+    {
+      "heading_path": [
+        "Recreational Flyers"
+      ],
+      "text": "Fixture text. Flying for fun follows the recreational rules.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Recreational Flyers",
+        "Fly at or below 400 feet"
+      ],
+      "text": "Fixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Recreational Flyers",
+        "Take the safety test"
+      ],
+      "text": "Fixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "fixture-trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

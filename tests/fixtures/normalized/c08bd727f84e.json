@@ -1,0 +1,27 @@
+{
+  "doc_id": "c08bd727f84e",
+  "source_url": "https://fixtures.skyrules.test/sites/faa.gov/files/uas/fixture_study_guide.pdf",
+  "title": "[FIXTURE] Remote Pilot Study Guide",
+  "page_type": "study_guide",
+  "audience": "part107",
+  "effective_date": "2023-02-01",
+  "crawl_ts": "2026-10-10T09:00:00Z",
+  "content_hash": "a55c305fe744a94e67d2d394a8785e6abf966ccc3962fb0460cbfee54b28705b",
+  "sections": [
+    {
+      "heading_path": [
+        "Chapter 2 Weather",
+        "Stable and unstable air"
+      ],
+      "text": "Fixture text. Stable air brings smooth flying and poor visibility; unstable air brings turbulence and good visibility.",
+      "tables": [
+        "| Characteristic | Stable air | Unstable air |\n| --- | --- | --- |\n| Clouds | Stratiform | Cumuliform |\n| Turbulence | Smooth | Rough |\n| Visibility | Fair to poor | Good |"
+      ]
+    }
+  ],
+  "extraction": {
+    "method": "fixture-pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,7 @@
+# B3 (= A4) = A3 + evidence gate and answer checks. The final system.
+retrieval_mode: hybrid
+chunk_strategy: struct@v1
+rerank: true
+gate: true
+gate_threshold: null           # set from the dev-split tuning (S15) before the b3-frozen tag
+checks: [citation_validity, claim_support, number_date, quote_limit]

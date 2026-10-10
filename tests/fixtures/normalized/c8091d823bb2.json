@@ -1,0 +1,27 @@
+{
+  "doc_id": "c8091d823bb2",
+  "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+  "title": "[FIXTURE] Register Your Drone",
+  "page_type": "faq",
+  "audience": "general",
+  "effective_date": null,
+  "crawl_ts": "2026-10-10T09:00:00Z",
+  "content_hash": "bfa8e562aa7b8087820733522a4326c881f38db277d5c0b82b02776420b0fb5b",
+  "sections": [
+    {
+      "heading_path": [
+        "Register Your Drone",
+        "Who must register"
+      ],
+      "text": "Fixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.",
+      "tables": [
+        "| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |"
+      ]
+    }
+  ],
+  "extraction": {
+    "method": "fixture-trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}
