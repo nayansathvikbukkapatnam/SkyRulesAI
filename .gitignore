@@ -1,0 +1,17 @@
+# Secrets
+.env
+
+# Data and generated indexes
+data/raw/
+chroma/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
