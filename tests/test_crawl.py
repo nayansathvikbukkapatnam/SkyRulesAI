@@ -337,6 +337,18 @@ def test_robots_group_for_our_user_agent_wins_over_star():
         # govinfo: only Federal Register PDFs, as leaves
         (f"{GOVINFO}/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf", LEAF, None, "govinfo"),
         (f"{GOVINFO}/app/collection/fr", SKIP, "out_of_scope", "govinfo"),
+        (
+            f"{GOVINFO}/content/pkg/CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec107-31.pdf",
+            LEAF,
+            None,
+            "govinfo",
+        ),
+        (
+            f"{GOVINFO}/content/pkg/CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec91-1.pdf",
+            SKIP,
+            "out_of_scope",
+            "govinfo",
+        ),
         # Know Before You Fly: guidance sections only, not the news posts
         (f"{KBYF}/", CRAWL, "in_scope", "knowbeforeyoufly"),
         (f"{KBYF}/whos-flying/recreational/", CRAWL, "in_scope", "knowbeforeyoufly"),
@@ -449,7 +461,8 @@ def test_ecfr_index_lists_sections_which_are_saved_one_document_each(tmp_path):
         "</div>"
     )
     sources = SourceSet.load(only=["ecfr"], include_disabled=True)
-    sources.sources[0] = replace(sources.sources[0], index_urls=(part,))
+    [index] = sources.sources[0].indexes
+    sources.sources[0] = replace(sources.sources[0], indexes=(replace(index, urls=(part,)),))
     site = FakeSite(
         {
             part: FakeResponse(302, location=full),

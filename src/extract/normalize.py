@@ -22,7 +22,13 @@ from urllib.parse import urlsplit
 import yaml
 
 from src.common import paths
-from src.common.contracts import NormalizedDoc, doc_id_for, sha256_hex, validate_normalized_doc
+from src.common.contracts import (
+    NormalizedDoc,
+    Section,
+    doc_id_for,
+    sha256_hex,
+    validate_normalized_doc,
+)
 from src.crawl.crawler import read_manifest
 from src.crawl.sources import SOURCES_FILE, SourceSet
 from src.extract import html as html_x
@@ -33,6 +39,8 @@ log = logging.getLogger(__name__)
 
 HTML, PDF = "text/html", "application/pdf"
 FR_NUMBER = re.compile(r"(\d{4}-\d{5})\.(?:html|pdf)$")
+# govinfo annual CFR edition, one PDF per section, e.g. CFR-2025-title14-vol2-sec107-31.pdf
+CFR_SECTION = re.compile(r"CFR-(\d{4})-title14-vol\d-sec(\d+)-(\d+)\.pdf$")
 MONTH_DATE = (
     r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
     r"\s+\d{1,2},\s+\d{4}"
@@ -68,6 +76,42 @@ def _effective_date(sections, published: str | None) -> str | None:
     return published
 
 
+def trim_cfr_section(sections, number: str) -> tuple[str | None, list]:
+    """Keep only section `number` from a CFR section PDF, which prints whole pages.
+
+    A govinfo section PDF also carries the end of the previous section and the
+    start of the next ones. The section runs from its own "§ <number>" heading to
+    the next "§" heading. Returns its caption (mended where the PDF hyphenated it
+    across lines) and one section holding its text and tables; (None, sections)
+    when the heading is not found.
+    """
+    own = re.compile(rf"^§\s*{re.escape(number)}\s+(.*)$")
+    other = re.compile(r"^§\s*\d+\.\d+\s")
+    start = next((i for i, s in enumerate(sections) if own.match(s["heading_path"][-1])), None)
+    if start is None or len(sections[start]["heading_path"]) < 2:
+        return None, sections
+    caption = own.match(sections[start]["heading_path"][-1]).group(1).strip()
+    texts, tables = [], []
+    for i in range(start, len(sections)):
+        heading = sections[i]["heading_path"][-1]
+        if i > start and other.match(heading):
+            break
+        if i > start and len(sections[i]["heading_path"]) > 1:
+            texts.append(heading)  # a sub-heading inside the section stays as text
+        texts.append(sections[i]["text"])
+        tables += sections[i]["tables"]
+    body = "\n\n".join(t for t in texts if t)
+    if not re.search(r"[.\]]$", caption):
+        # "Visual line of sight aircraft op-" + "eration." -> "...operation."
+        m = re.match(r"^\s*(\S[^\n]*?[.\]])(?:\s|$)", body)
+        if m:
+            rest = m.group(1)
+            caption = caption[:-1] + rest if caption.endswith("-") else f"{caption} {rest}"
+            body = body[m.end() :].lstrip()
+    root = sections[start]["heading_path"][:1]
+    return caption, [Section(heading_path=list(root), text=body, tables=tables)]
+
+
 def _keyword_audience(url: str) -> str:
     u = url.lower()
     if "recreational" in u:
@@ -100,6 +144,29 @@ def extract_entry(
         }
         if not public_path:
             ext.warnings.append("no public eCFR path found; source_url is the API URL")
+        return meta, ext
+
+    if host == "www.govinfo.gov" and (cfr := CFR_SECTION.search(url)):
+        year, part, sec = cfr.groups()
+        number = f"{part}.{sec}"
+        ext = extract_pdf(raw, title_hint=f"14 CFR § {number}")
+        caption, ext.sections = trim_cfr_section(ext.sections, number)
+        if caption is None:
+            ext.warnings.append(f"heading for § {number} not found; kept the whole page text")
+        if caption and "Reserved" in caption:
+            ext.sections = []
+            ext.warnings.append("reserved section (no text)")
+        title = f"14 CFR § {number} {caption or ''}".strip() + f" ({year} edition)"
+        ext.title = title
+        for section in ext.sections:
+            section["heading_path"][0] = title
+        meta = {
+            "source_url": url,
+            "page_type": "regulation_summary",
+            "audience": "part107" if part == "107" else "general",
+            # The annual edition is the text in force on January 1 of that year.
+            "effective_date": f"{year}-01-01",
+        }
         return meta, ext
 
     if host in ("www.federalregister.gov", "www.govinfo.gov") and fr:

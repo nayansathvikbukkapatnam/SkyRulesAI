@@ -337,17 +337,19 @@ class Crawler:
         """
         seeds: list[str] = []
         for source in self.sources.sources:
-            for index_url in source.index_urls:
-                resp, _, reason = self._fetch(index_url, in_scope_only=False)
-                if reason is None and resp.status_code != 200:
-                    reason = f"http_{resp.status_code}"
-                if reason:
-                    self._skip(index_url, f"index_{reason}", None, None)
-                    continue
-                text = resp.content.decode("utf-8", errors="replace")
-                for match in source.index_pattern.finditer(text):
-                    url = source.index_template.format(*match.groups())
-                    self._add_seed(seeds, self.sources.normalize(url, index_url), source.name)
+            for index in source.indexes:
+                for index_url in index.urls:
+                    resp, _, reason = self._fetch(index_url, in_scope_only=False)
+                    if reason is None and resp.status_code != 200:
+                        reason = f"http_{resp.status_code}"
+                    if reason:
+                        self._skip(index_url, f"index_{reason}", None, None)
+                        continue
+                    text = resp.content.decode("utf-8", errors="replace")
+                    for match in index.pattern.finditer(text):
+                        url = index.template.format(*match.groups())
+                        link = self.sources.normalize(url, index_url)
+                        self._add_seed(seeds, link, source.name)
         return seeds
 
     def _add_seed(self, seeds: list[str], link: str | None, source_name: str) -> None:

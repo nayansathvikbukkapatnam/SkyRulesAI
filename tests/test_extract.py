@@ -6,7 +6,7 @@ import pytest
 
 from src.common.contracts import validate_normalized_doc
 from src.extract import html as html_x
-from src.extract.normalize import FR_CONTACT, _effective_date, normalize
+from src.extract.normalize import FR_CONTACT, _effective_date, normalize, trim_cfr_section
 from src.extract.pdf import _columns, _join, _pdf_date, table_to_markdown
 from src.extract.pii import redact
 
@@ -172,6 +172,37 @@ def test_effective_date_comes_from_dates_section_else_publication_date():
         {"heading_path": ["T", "DATES:"], "text": "Send comments by March 2, 2020.", "tables": []}
     ]
     assert _effective_date(proposed, "2019-12-31") == "2019-12-31"
+
+
+def test_cfr_section_is_trimmed_to_its_own_text_and_caption_mended():
+    t = "14 CFR § 107.31"
+
+    def sec(heading, text, tables=()):
+        return {"heading_path": [t, *heading], "text": text, "tables": list(tables)}
+
+    sections = [
+        sec([], "end of 107.29 from the same page."),
+        sec(["§107.31 Visual line of sight aircraft op-"], "eration.\n\n(a) With vision unaided."),
+        sec(["Note to paragraph (a)"], "A note.", ["| a | b |"]),
+        sec(["§107.35 Operation of multiple small"], "unmanned aircraft. Next section."),
+    ]
+    caption, [section] = trim_cfr_section(sections, "107.31")
+    assert caption == "Visual line of sight aircraft operation."
+    assert section["heading_path"] == [t]
+    assert section["text"] == "(a) With vision unaided.\n\nNote to paragraph (a)\n\nA note."
+    assert section["tables"] == ["| a | b |"]
+    assert "107.29" not in section["text"] and "Next section" not in section["text"]
+
+
+def test_cfr_section_without_its_heading_is_left_whole():
+    sections = [{"heading_path": ["x"], "text": "no heading here", "tables": []}]
+    assert trim_cfr_section(sections, "107.31") == (None, sections)
+
+
+def test_reserved_cfr_section_caption():
+    sections = [{"heading_path": ["x", "§ 107.5 [Reserved]"], "text": "", "tables": []}]
+    caption, _ = trim_cfr_section(sections, "107.5")
+    assert caption == "[Reserved]"
 
 
 def test_pdf_contact_block_is_removed_up_to_supplementary_information():
