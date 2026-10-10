@@ -32,6 +32,11 @@ class Source:
     crawl: tuple[re.Pattern, ...]
     leaf: tuple[re.Pattern, ...]
     exclude: tuple[tuple[str, re.Pattern], ...]
+    # Discovery pages (read like a sitemap, never saved): every match of
+    # index_pattern in their text becomes a seed via index_template.format(*groups).
+    index_urls: tuple[str, ...] = ()
+    index_pattern: re.Pattern | None = None
+    index_template: str | None = None
 
 
 def _patterns(items) -> tuple[re.Pattern, ...]:
@@ -40,6 +45,14 @@ def _patterns(items) -> tuple[re.Pattern, ...]:
 
 def _named(mapping) -> tuple[tuple[str, re.Pattern], ...]:
     return tuple((name, re.compile(p)) for name, p in (mapping or {}).items())
+
+
+def _index_pattern(index) -> re.Pattern | None:
+    if not index:
+        return None
+    if not index.get("pattern") or not index.get("template"):
+        raise ValueError("an index needs both a pattern and a template")
+    return re.compile(index["pattern"])
 
 
 class SourceSet:
@@ -73,6 +86,9 @@ class SourceSet:
                 crawl=_patterns(s.get("crawl")),
                 leaf=_patterns(s.get("leaf")),
                 exclude=_named(s.get("exclude")),
+                index_urls=tuple((s.get("index") or {}).get("urls") or []),
+                index_pattern=_index_pattern(s.get("index")),
+                index_template=(s.get("index") or {}).get("template"),
             )
             if cap is not None:
                 source = replace(source, max_urls=min(source.max_urls, cap))

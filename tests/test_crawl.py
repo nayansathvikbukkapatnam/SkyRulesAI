@@ -1,6 +1,7 @@
 """Crawler tests against fake sites: no network, no real sleeping (CLAUDE.md rule 1)."""
 
 import json
+from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
 
@@ -26,6 +27,7 @@ ECFR = "https://www.ecfr.gov"
 FR = "https://www.federalregister.gov"
 GOVINFO = "https://www.govinfo.gov"
 KBYF = "https://knowbeforeyoufly.org"
+ECFR_SECTION = f"{ECFR}/api/renderer/v1/content/enhanced/current/title-14?section="
 UA = user_agent_for("team@example.com")
 SOURCES = SourceSet.load()  # the real configs/crawl/sources.yaml
 
@@ -287,48 +289,27 @@ def test_robots_group_for_our_user_agent_wins_over_star():
         (f"{BASE}/user/login", SKIP, "excluded_login", "faa"),
         (f"{BASE}/air_traffic/publications", SKIP, "out_of_scope", "faa"),
         (f"{BASE}/uas/images/drone.png", SKIP, "unsupported_file_type", "faa"),
-        # eCFR: only the drone parts and sections
-        (
-            f"{ECFR}/current/title-14/chapter-I/subchapter-F/part-107",
-            CRAWL,
-            "in_scope",
-            "ecfr",
-        ),
-        (f"{ECFR}/current/title-14/section-107.31", CRAWL, "in_scope", "ecfr"),
-        (
-            f"{ECFR}/current/title-14/chapter-I/subchapter-F/part-107/subpart-B/section-107.51",
-            CRAWL,
-            "in_scope",
-            "ecfr",
-        ),
-        (f"{ECFR}/current/title-14/section-101.41", CRAWL, "in_scope", "ecfr"),
-        (f"{ECFR}/current/title-14/section-101.1", SKIP, "out_of_scope", "ecfr"),  # balloons
-        (
-            f"{ECFR}/current/title-14/chapter-I/subchapter-F/part-101/subpart-D",
-            SKIP,
-            "out_of_scope",
-            "ecfr",
-        ),
-        (f"{ECFR}/current/title-14/part-91", SKIP, "out_of_scope", "ecfr"),
-        (f"{ECFR}/api/versioner/v1/titles", SKIP, "excluded_non_content", "ecfr"),
-        # Federal Register: only the listed drone rules
-        (f"{FR}/d/2020-28948", CRAWL, "in_scope", "federalregister"),
-        (
-            f"{FR}/documents/2021/01/15/2020-28948/remote-identification-of-unmanned-aircraft",
-            CRAWL,
-            "in_scope",
-            "federalregister",
-        ),
-        (f"{FR}/documents/2021/01/15/2021-00001/some-other-rule", SKIP, "out_of_scope", None),
+        # eCFR: only the renderer API (the web pages are closed to automated clients)
+        (f"{ECFR_SECTION}107.31", LEAF, "linked_document", "ecfr"),
+        (f"{ECFR}/current/title-14/section-107.31", SKIP, "out_of_scope", "ecfr"),
+        (f"{ECFR}/api/versioner/v1/titles", SKIP, "out_of_scope", "ecfr"),
+        # Federal Register: only the full text of the listed drone rules
+        (f"{FR}/documents/full_text/html/2021/01/15/2020-28948.html", LEAF, None, None),
+        (f"{FR}/documents/full_text/html/2021/01/15/2021-00001.html", SKIP, "out_of_scope", None),
+        (f"{FR}/d/2020-28948", SKIP, "out_of_scope", "federalregister"),
         # govinfo: only Federal Register PDFs, as leaves
         (f"{GOVINFO}/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf", LEAF, None, "govinfo"),
         (f"{GOVINFO}/app/collection/fr", SKIP, "out_of_scope", "govinfo"),
-        # Know Before You Fly
+        # Know Before You Fly: guidance sections only, not the news posts
         (f"{KBYF}/", CRAWL, "in_scope", "knowbeforeyoufly"),
-        (f"{KBYF}/recreational-flyers/", CRAWL, "in_scope", "knowbeforeyoufly"),
+        (f"{KBYF}/whos-flying/recreational/", CRAWL, "in_scope", "knowbeforeyoufly"),
+        (f"{KBYF}/get-started/register-your-drone/", CRAWL, "in_scope", "knowbeforeyoufly"),
+        (f"{KBYF}/good-drone-news-in-the-empire-state", SKIP, "out_of_scope", None),
+        (f"{KBYF}/wp-content/uploads/2024/01/guide.pdf", LEAF, None, "knowbeforeyoufly"),
         (f"{KBYF}/contact-us/", SKIP, "excluded_contact_page", "knowbeforeyoufly"),
         (f"{KBYF}/wp-admin/", SKIP, "excluded_site_admin", "knowbeforeyoufly"),
         (f"{KBYF}/wp-login.php", SKIP, "excluded_login", "knowbeforeyoufly"),
+        (f"{KBYF}/sign-in?redirect_to=x", SKIP, "excluded_login", "knowbeforeyoufly"),
         (f"{KBYF}/?s=drone", SKIP, "excluded_search", "knowbeforeyoufly"),
         (f"{KBYF}/tag/safety/", SKIP, "excluded_archive_listing", "knowbeforeyoufly"),
         (f"{KBYF}/feed/", SKIP, "excluded_feed", "knowbeforeyoufly"),
@@ -405,25 +386,47 @@ def test_leaf_pages_are_fetched_but_not_expanded(tmp_path):
     assert site.fetched() == [f"{BASE}/uas", ac]
 
 
-def test_federal_register_rule_leads_to_its_govinfo_pdf_only(tmp_path):
-    doc = f"{FR}/documents/2021/01/15/2020-28948/remote-identification-of-unmanned-aircraft"
+def test_federal_register_full_text_is_saved_but_its_links_are_not_followed(tmp_path):
+    doc = f"{FR}/documents/full_text/html/2021/01/15/2020-28948.html"
     pdf = f"{GOVINFO}/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf"
     site = FakeSite(
         {
-            f"{FR}/d/2020-28948": FakeResponse(301, location=doc),
-            doc: FakeResponse(
-                body=page(pdf, f"{FR}/documents/2021/01/15/2021-00001/unrelated-rule")
-            ),
+            doc: FakeResponse(body=page(f"{FR}/documents/2021/01/15/2021-00001/unrelated")),
             pdf: FakeResponse(body=b"%PDF-1.7 rule", content_type="application/pdf"),
         }
     )
     crawler, _ = make_crawler(tmp_path, site)
-    crawler.run([f"{FR}/d/2020-28948"])
-    assert site.fetched() == [f"{FR}/d/2020-28948", doc, pdf]
-    entries = {e["url"]: e for e in manifest(tmp_path)}
-    assert entries[f"{FR}/d/2020-28948"]["final_url"] == doc
-    assert entries[pdf]["content_type"] == "application/pdf"
+    crawler.run([doc, pdf])
+    assert site.fetched() == [doc, pdf]
     assert crawler.saved_by_source == {"federalregister": 1, "govinfo": 1}
+    assert {e["content_type"] for e in manifest(tmp_path)} == {"text/html", "application/pdf"}
+
+
+def test_ecfr_index_lists_sections_which_are_saved_one_document_each(tmp_path):
+    part = f"{ECFR}/api/renderer/v1/content/enhanced/current/title-14?part=107"
+    full = f"{part}&chapter=I&subchapter=F"
+    index_html = (
+        '<div class="part"><div class="section" id="107.1">a</div>'
+        '<div class="section" id="107.31">b</div><div class="section" id="107.1">dup</div>'
+        '<div class="section" id="101.1">balloons</div><div class="section" id="101.41">e</div>'
+        "</div>"
+    )
+    sources = SourceSet.load(only=["ecfr"])
+    sources.sources[0] = replace(sources.sources[0], index_urls=(part,))
+    site = FakeSite(
+        {
+            part: FakeResponse(302, location=full),
+            full: FakeResponse(body=index_html.encode()),
+            f"{ECFR_SECTION}107.1": FakeResponse(body=b"<h4>107.1 Applicability</h4>"),
+            f"{ECFR_SECTION}107.31": FakeResponse(body=b"<h4>107.31 Visual line of sight</h4>"),
+            f"{ECFR_SECTION}101.41": FakeResponse(body=b"<h4>101.41 Applicability</h4>"),
+        }
+    )
+    crawler, _ = make_crawler(tmp_path, site, sources=sources)
+    seeds = crawler.index_seeds()
+    assert seeds == [f"{ECFR_SECTION}{n}" for n in ("107.1", "107.31", "101.41")]
+    crawler.run(seeds)
+    assert [e["url"] for e in manifest(tmp_path)] == seeds  # the index page itself is not saved
 
 
 # --- Raw store and manifest -------------------------------------------------
@@ -577,8 +580,8 @@ def test_per_source_cap_leaves_room_for_other_sources(tmp_path):
         {
             f"{BASE}/uas": FakeResponse(body=page("/uas/a", "/uas/b")),
             **{f"{BASE}/uas/{x}": FakeResponse(body=page()) for x in "ab"},
-            f"{KBYF}/": FakeResponse(body=page("/guide")),
-            f"{KBYF}/guide": FakeResponse(body=page()),
+            f"{KBYF}/": FakeResponse(body=page("/get-started")),
+            f"{KBYF}/get-started": FakeResponse(body=page()),
         }
     )
     crawler, _ = make_crawler(tmp_path, site, sources=SourceSet.load(cap=2))
@@ -618,7 +621,7 @@ def test_sitemap_seeds_keep_only_in_scope_pages_of_that_source(tmp_path):
         f"<sitemapindex {ns}><sitemap><loc>{KBYF}/page-sitemap.xml</loc></sitemap>"
         f"<sitemap><loc>https://evil.example.com/sitemap.xml</loc></sitemap></sitemapindex>"
     )
-    urls = [f"{KBYF}/guide/", f"{KBYF}/contact-us/", f"{BASE}/uas", f"{KBYF}/guide"]
+    urls = [f"{KBYF}/get-started/", f"{KBYF}/contact-us/", f"{BASE}/uas", f"{KBYF}/a-news-post"]
     urlset = f"<urlset {ns}>" + "".join(f"<url><loc>{u}</loc></url>" for u in urls)
     urlset += "</urlset>"
     site = FakeSite(
@@ -632,5 +635,5 @@ def test_sitemap_seeds_keep_only_in_scope_pages_of_that_source(tmp_path):
         }
     )
     crawler, _ = make_crawler(tmp_path, site, sources=SourceSet.load(only=["knowbeforeyoufly"]))
-    assert crawler.sitemap_seeds() == [f"{KBYF}/guide"]
+    assert crawler.sitemap_seeds() == [f"{KBYF}/get-started"]
     assert not any("evil.example.com" in u for u in site.fetched())

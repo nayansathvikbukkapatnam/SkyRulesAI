@@ -326,12 +326,36 @@ class Crawler:
                     pending += [u for u in children if u and urlsplit(u).hostname == source.host]
                     continue
                 for loc in locs:
-                    link = self.sources.normalize(loc, sitemap)
-                    if link and link not in seeds:
-                        kind, _, name = self.sources.scope(link)
-                        if kind == CRAWL and name == source.name:
-                            seeds.append(link)
+                    self._add_seed(seeds, self.sources.normalize(loc, sitemap), source.name)
         return seeds
+
+    def index_seeds(self) -> list[str]:
+        """Seeds listed on each source's index pages (e.g. eCFR section numbers).
+
+        Like sitemaps, index pages are read for discovery only and never saved;
+        each item they list is fetched and saved as its own document.
+        """
+        seeds: list[str] = []
+        for source in self.sources.sources:
+            for index_url in source.index_urls:
+                resp, _, reason = self._fetch(index_url, in_scope_only=False)
+                if reason is None and resp.status_code != 200:
+                    reason = f"http_{resp.status_code}"
+                if reason:
+                    self._skip(index_url, f"index_{reason}", None, None)
+                    continue
+                text = resp.content.decode("utf-8", errors="replace")
+                for match in source.index_pattern.finditer(text):
+                    url = source.index_template.format(*match.groups())
+                    self._add_seed(seeds, self.sources.normalize(url, index_url), source.name)
+        return seeds
+
+    def _add_seed(self, seeds: list[str], link: str | None, source_name: str) -> None:
+        """Keep a discovered URL only if it is in scope for the source that listed it."""
+        if link and link not in seeds:
+            kind, _, name = self.sources.scope(link)
+            if kind != SKIP and name == source_name:
+                seeds.append(link)
 
     def _source_name(self, url: str) -> str | None:
         source = self.sources.source_for(url)
@@ -483,8 +507,9 @@ def main(argv: list[str] | None = None) -> int:
             max_urls=args.max_urls,
             max_depth=args.max_depth,
         )
-        seeds = [u for s in sources.sources for u in s.seeds] + crawler.sitemap_seeds()
-        log.info("%d seeds (configured + sitemaps)", len(seeds))
+        seeds = [u for s in sources.sources for u in s.seeds]
+        seeds += crawler.sitemap_seeds() + crawler.index_seeds()
+        log.info("%d seeds (configured + sitemaps + index pages)", len(seeds))
         crawler.run(seeds)
 
     stats = crawl_stats(crawler, started_at, len(seeds))
