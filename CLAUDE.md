@@ -76,6 +76,56 @@ Sunday: tune on dev (8:00) -> tag b3-frozen (9:00) -> test split once (9:00 to 1
 
 Nobody waits: if your input is not on main yet, build and test against `tests/fixtures/` (and `tests/fixtures/real_sample/` once Adinath adds it).
 
+### How it runs on your laptop
+
+There is no shared database or server to connect to. Every laptop runs the whole system on its own:
+
+- **Code comes through git.** You pull Nayan's server, Sai's retrieval and everyone else's code from `main`.
+- **Data comes through git too, but only `data/normalized/`** (the cleaned text). Nobody else needs `data/raw/`.
+- **You build your own index:** `make chunk STRATEGY=fixed && make index STRATEGY=fixed` creates your own `data/chunks/`, `data/index/` (BM25) and `chroma/` from `data/normalized/`. Chunk IDs are deterministic, so every laptop builds the same index. Re-run it whenever `data/normalized/` changes on `main`.
+- **`make app` starts the server on your own machine** at `http://localhost:8000`. It reads your own `chroma/` and BM25 files and calls Claude with your own key from `.env`.
+- **Before a dependency merges,** use fixtures, a stub with the exact section 5 signature, or recorded mock events (the frontend). Never point at someone else's laptop.
+- **For the demo,** the presenter's laptop runs everything.
+
+### Working in sync (rules for every Claude Code session)
+
+Five Claude Code sessions push to the same repo. These rules keep them from colliding:
+
+1. **Edit only files you own** (table below). If your task needs a change in someone else's file, stop and tell the user to ask that owner, or open a small PR and tag the owner.
+2. **Shared files change only in a small, separate PR, announced in the group chat first:** `src/common/contracts.py`, `src/common/config.py`, `configs/*.yaml`, `Makefile`, `requirements.in` and `requirements.txt`, `pyproject.toml`, `CLAUDE.md`, `.claude/skills/`, `docs/DELIVERABLES.md`. Never bundle a shared-file change into a feature PR.
+3. **Start every task from a fresh `main`:** `git checkout main && git pull`, then create the branch.
+4. **Before opening a PR:** `git fetch origin && git rebase origin/main`, then `make lint test`. CI must be green before the reviewer merges.
+5. **Small PRs, one task each.** Merge as soon as it is reviewed, delete the branch, and post one line in the group chat if the PR changes something others use (a contract, a Makefile target, `data/normalized/`, a config switch).
+6. **Never commit generated or local files:** `data/raw/`, `data/chunks/`, `data/index/`, `chroma/`, `logs/`, `.cache/`, `.env`. `data/normalized/` is committed only by Adinath.
+7. **Artifacts:** write only your own files in `reports/artifacts/` (named by stage or config, for example `eval_b2_dev.json`), so two PRs never edit the same artifact.
+8. **Stubs:** when you call code that is not merged yet, write a stub with the exact section 5 signature in your own file, mark it `# STUB until <PR or branch>`, and replace it as soon as the real code is on `main`.
+9. **Golden set:** verification PRs change only `verified_by` and `verified_date` on the assigned items.
+
+**File ownership:**
+
+| Owner | Files |
+|---|---|
+| Adinath | `src/crawl/`, `src/extract/`, `configs/crawl/sources.yaml`, `data/normalized/`, `tests/fixtures/real_sample/`, `src/eval/stats.py`, reports 01 and 06 |
+| Nayan | `src/index/`, `src/generate/answer.py`, `src/generate/log.py`, `src/generate/checks.py`, `src/app/server.py`, `src/reports/`, `.github/`, `README.md`, report 02 (with Sai) |
+| Sai | `src/chunk/`, `src/retrieve/`, `src/generate/claim_check.py`, `src/eval/retrieval_metrics.py`, `src/eval/run_eval.py`, `src/eval/answer_metrics.py`, report 04 |
+| Pavan | `src/generate/llm.py`, `src/generate/prompt.py`, `src/generate/generate.py`, `src/app/static/`, `docs/UI_SPEC.md`, report 05 |
+| Dorai | `eval/golden.jsonl`, `eval/split.json`, `src/eval/golden_check.py`, `src/eval/split.py`, `src/generate/router.py`, `data/test_pages/`, `docs/demo_script.md`, reports 03 and 07 |
+
+Each owner also owns the tests for their files (`tests/test_<module>.py`).
+
+**Hand-off points (the only places where merge order matters):**
+
+| When this merges | Who does what next |
+|---|---|
+| Adinath's updated `data/normalized/` | Everyone pulls and re-runs `make chunk` and `make index` |
+| Pavan's `generate.py` | Nayan replaces his `generate()` stub in `answer.py` |
+| Dorai's router (#27) | Nayan replaces his `route()` stub |
+| Nayan's `answer.py` | Sai switches `run_eval.py` from the fake `answer()` to the real one |
+| Nayan's `server.py` | Pavan switches the frontend from mock events to `make app` on localhost |
+| Verified golden set, then `eval/split.json` | Sai starts the dev runs; Adinath runs the stats on them |
+
+Everything else runs in parallel.
+
 ---
 
 ## 1. The project in one paragraph
