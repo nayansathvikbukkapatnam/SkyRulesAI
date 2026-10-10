@@ -1,5 +1,6 @@
 # Shared settings for every run. Each configs/<name>.yaml overrides only what it changes.
-# Secrets and machine-specific values (AWS profile, region, model ID) live in .env.
+# Secrets and machine-specific values (LLM provider, API key, AWS profile, region, model IDs)
+# live in .env.
 
 # --- Ablation switches (CLAUDE.md section 5) ---
 closed_book: false
@@ -9,7 +10,10 @@ rerank: false
 gate: false
 gate_threshold: null           # tuned on the dev split (S15); null = not tuned yet
 checks: []                     # any of: citation_validity, claim_support, number_date, quote_limit
-generator_model: null          # null = read BEDROCK_MODEL_ID from .env
+generator_model: null          # null = read ANTHROPIC_MODEL_ID or BEDROCK_MODEL_ID (per provider)
+
+# --- LLM backend (not an ablation switch) ---
+llm_provider: null             # null = read LLM_PROVIDER from .env: anthropic | bedrock
 
 # --- Fixed settings (change only through a reviewed PR) ---
 chunking:
@@ -32,11 +36,32 @@ rerank_settings:
   model: cross-encoder/ms-marco-MiniLM-L-6-v2
   top_n: 5
 generation:
-  temperature: 0
+  # null = never sent. Claude Haiku 5.5 returns a 400 for any temperature other than 1
+  # (Haiku 5.5 migration guide, "Remove sampling parameters"). A non-null value is sent,
+  # and dropped (with a warning) only if the API rejects it.
+  temperature: null
+  # Anthropic backend only. thinking: disabled | adaptive. effort: low | medium | high |
+  # xhigh | max | null. "disabled" works only with effort high or below.
+  thinking: disabled
+  effort: medium
   max_tokens: 1024
-  # Fill from the Bedrock pricing page for our region before reporting cost (P1).
-  price_per_mtok_input_usd: null
-  price_per_mtok_output_usd: null
+  timeout_s: 60
+  max_retries: 5               # on rate limits, overloaded errors, 5xx and timeouts
+  retry_base_delay_s: 1.0      # exponential backoff: 1, 2, 4, 8, 16 s (+ jitter), capped below
+  retry_max_delay_s: 30.0
+  # USD per million tokens, per provider. Cost is null when the model ID does not contain
+  # `model`, a price is null, or the prompt exceeds max_input_tokens (a different price tier).
+  prices:
+    anthropic:
+      model: claude-haiku-5-5
+      input_per_mtok_usd: 0.10
+      output_per_mtok_usd: 0.50
+      max_input_tokens: 100000
+    bedrock:
+      model: claude-haiku-5-5
+      input_per_mtok_usd: null   # fill from the Bedrock pricing page for our region
+      output_per_mtok_usd: null
+      max_input_tokens: 100000
 checks_settings:
   quote_max_words: 25
 eval:

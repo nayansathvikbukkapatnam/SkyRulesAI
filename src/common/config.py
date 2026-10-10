@@ -28,7 +28,18 @@ SWITCHES = (
     "generator_model",
 )
 
-ENV_KEYS = ("AWS_REGION", "AWS_PROFILE", "BEDROCK_MODEL_ID", "CRAWL_CONTACT_EMAIL")
+ENV_KEYS = (
+    "LLM_PROVIDER",
+    "ANTHROPIC_API_KEY",
+    "ANTHROPIC_MODEL_ID",
+    "AWS_REGION",
+    "AWS_PROFILE",
+    "BEDROCK_MODEL_ID",
+    "CRAWL_CONTACT_EMAIL",
+)
+
+# LLM_PROVIDER picks the backend in src/generate/llm.py; each reads its own model ID key.
+MODEL_ID_ENV = {"anthropic": "ANTHROPIC_MODEL_ID", "bedrock": "BEDROCK_MODEL_ID"}
 
 _dotenv_loaded = False
 
@@ -73,8 +84,10 @@ def load_config(name: str) -> dict[str, Any]:
     """Return the merged config for a run, e.g. load_config("b2")."""
     cfg = _merge(_read_yaml("default"), _read_yaml(name)) if name != "default" else _read_yaml(name)
     cfg["name"] = name
-    if cfg.get("generator_model") is None:
-        cfg["generator_model"] = env("BEDROCK_MODEL_ID")
+    if cfg.get("llm_provider") is None:
+        cfg["llm_provider"] = env("LLM_PROVIDER")
+    if cfg.get("generator_model") is None and cfg["llm_provider"] in MODEL_ID_ENV:
+        cfg["generator_model"] = env(MODEL_ID_ENV[cfg["llm_provider"]])
     errors = validate_config(cfg)
     if errors:
         raise ValueError(f"config {name!r} is invalid: " + "; ".join(errors))
@@ -89,6 +102,9 @@ def validate_config(cfg: dict[str, Any]) -> list[str]:
         errors.append(f"retrieval_mode must be one of {sorted(RETRIEVAL_MODES)}")
     if cfg["closed_book"] and (cfg["rerank"] or cfg["gate"]):
         errors.append("closed_book runs cannot rerank or gate")
+    provider = cfg.get("llm_provider")
+    if provider is not None and provider not in MODEL_ID_ENV:
+        errors.append(f"llm_provider must be one of {sorted(MODEL_ID_ENV)} or null")
     threshold = cfg["gate_threshold"]
     if threshold is not None and not isinstance(threshold, (int, float)):
         errors.append("gate_threshold must be a number or null (null = not tuned yet)")

@@ -20,10 +20,30 @@ STEP_GROUPS = [
 
 @pytest.mark.parametrize("name", ALL)
 def test_every_config_loads(name, monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "bedrock")
     monkeypatch.setenv("BEDROCK_MODEL_ID", "test-model")
     cfg = load_config(name)
     assert set(SWITCHES) <= set(cfg)
     assert cfg["generator_model"] == "test-model"
+
+
+@pytest.mark.parametrize(
+    ("provider", "model_key"),
+    [("anthropic", "ANTHROPIC_MODEL_ID"), ("bedrock", "BEDROCK_MODEL_ID")],
+)
+def test_model_id_follows_the_llm_provider(provider, model_key, monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", provider)
+    monkeypatch.setenv("ANTHROPIC_MODEL_ID", "anthropic-model")
+    monkeypatch.setenv("BEDROCK_MODEL_ID", "bedrock-model")
+    cfg = load_config("b2")
+    assert cfg["llm_provider"] == provider
+    assert cfg["generator_model"] == f"{provider}-model"
+
+
+def test_unknown_llm_provider_is_rejected(monkeypatch):
+    monkeypatch.setenv("LLM_PROVIDER", "openai")
+    with pytest.raises(ValueError, match="llm_provider"):
+        load_config("b2")
 
 
 def test_every_yaml_in_configs_is_tested():
@@ -71,7 +91,8 @@ def test_fixed_settings_match_the_stack(monkeypatch):
     }
     assert (cfg["retrieval"]["pool_size"], cfg["retrieval"]["rrf_k"]) == (20, 60)
     assert cfg["rerank_settings"]["top_n"] == 5
-    assert cfg["generation"]["temperature"] == 0
+    # Not sent: Claude Haiku 5.5 rejects any temperature other than 1 with a 400.
+    assert cfg["generation"]["temperature"] is None
     assert cfg["checks_settings"]["quote_max_words"] == 25
 
 
