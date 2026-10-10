@@ -135,10 +135,18 @@ def block_methods(artifacts: Path) -> str:
     if not s:
         return _missing("ingestion stats", "make extract")
     rows = [[f"`{k}`", v] for k, v in s["extraction_method"].items()]
-    return _table(["Extraction method", "Documents"], rows) + (
-        f"\n\nImage-only PDF pages (no text layer, OCR not run): {s['pages_needing_ocr']} pages "
-        f"in {s['documents_needing_ocr']} documents. "
-        "Source: `reports/artifacts/ingestion_stats.json`."
+    ocr = [
+        ["OCR engine", s.get("ocr_engine") or "not installed"],
+        ["Documents with OCR text", s.get("documents_with_ocr", 0)],
+        ["Pages whose text came from OCR", s.get("pages_ocr_text_kept", 0)],
+        ["Pages where OCR failed or found no confident text", s.get("pages_ocr_failed_or_empty")],
+        ["Pages still without text (OCR not available)", s["pages_needing_ocr"]],
+    ]
+    return (
+        _table(["Extraction method", "Documents"], rows)
+        + "\n\n"
+        + _table(["OCR (pages with no text layer)", "Value"], ocr)
+        + "\n\nSource: `reports/artifacts/ingestion_stats.json`."
     )
 
 

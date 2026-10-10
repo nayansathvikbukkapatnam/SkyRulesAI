@@ -127,16 +127,26 @@ Source: `reports/artifacts/crawl_stats.json`.
 | Federal Register full text (HTML) | BeautifulSoup structure walker (`bs4-federalregister`) | On these files trafilatura lost every heading and took "AGENCY:" as the title. The walker keeps the full heading path and every table with its caption, and removes page-number markers and help boxes. |
 | govinfo CFR sections (XML) | XML parser (`xml-cfr`, `src/extract/cfr.py`) | Section number, caption, paragraphs and source note are separate elements; `[Reserved]` sections are skipped. |
 | PDFs (Federal Register rules, Know Before You Fly handouts) | `pdfplumber`, column-aware (`src/extract/pdf.py`) | Federal Register PDFs are set in three columns: each page is split at its column gutters and read column by column, sideways margin text and running heads are dropped, tables become Markdown, and headings come from font size or short bold lines. |
+| PDF pages with no text layer (Know Before You Fly handouts that are pictures of text) | Tesseract OCR (`src/extract/ocr.py`, method `pdfplumber+tesseract`) | Each such page is rendered at 300 dpi and read with Tesseract; only words with confidence of 60 or more are kept, so poster noise does not become corpus text. The document is marked `extraction.ocr_used: true`. A page where OCR fails or finds no confident text is logged, not guessed. |
 
 <!-- BEGIN AUTO:methods -->
 | Extraction method | Documents |
 |---|---|
 | `bs4-federalregister` | 8 |
-| `pdfplumber` | 19 |
+| `pdfplumber` | 14 |
 | `trafilatura` | 22 |
+| `pdfplumber+tesseract` | 5 |
 | `xml-cfr` | 111 |
 
-Image-only PDF pages (no text layer, OCR not run): 24 pages in 5 documents. Source: `reports/artifacts/ingestion_stats.json`.
+| OCR (pages with no text layer) | Value |
+|---|---|
+| OCR engine | 5.4.0.20240606 |
+| Documents with OCR text | 5 |
+| Pages whose text came from OCR | 22 |
+| Pages where OCR failed or found no confident text | 2 |
+| Pages still without text (OCR not available) | 0 |
+
+Source: `reports/artifacts/ingestion_stats.json`.
 <!-- END AUTO:methods -->
 
 <!-- BEGIN AUTO:corpus -->
@@ -156,7 +166,7 @@ Image-only PDF pages (no text layer, OCR not run): 24 pages in 5 documents. Sour
 | &nbsp;&nbsp;by audience: `part107` | 68 |
 | &nbsp;&nbsp;by audience: `recreational` | 3 |
 | &nbsp;&nbsp;by audience: `public_safety` | 2 |
-| Sections | 1868 |
+| Sections | 1871 |
 | Tables kept as Markdown | 157 |
 | Documents with at least one table | 17 |
 | Duplicates removed (same bytes or same extracted content) | 0 |
@@ -215,7 +225,7 @@ On inspection, the redacted street addresses are organizational mailing addresse
 - **No faa.gov pages.** The FAA's own plain-language guidance (for example its B4UFLY and recreational-flyer pages) is not in the corpus, because faa.gov refused our crawler. The regulations, the published rules and Know Before You Fly cover the same rules, but the bot cannot cite faa.gov.
 - **Know Before You Fly is not the FAA.** It is an industry-led education campaign run in partnership with the FAA. Its pages are guidance, not regulation, and are labelled `guide_page` or `toolkit_pdf`.
 - **The CFR text is the January 1, 2025 edition**, not today's eCFR. Any amendment published after that date is missing.
-- **Image-only PDF pages are not extracted.** OCR was not run (task A3); the count is in section 4. They are classroom handouts, not rules.
+- **OCR text is imperfect.** Pages read by OCR (section 4) are posters and classroom handouts, not rules; their text can contain layout noise, and a few pages had no text Tesseract was confident about. Running OCR needs the Tesseract program installed; without it (as in CI) those pages are reported as needing OCR instead.
 - **Near-duplicate content.** Each Federal Register rule is in the corpus twice, as HTML and as its official PDF. They are not exact duplicates (different extraction), so both are kept; retrieval may return both.
 - **eCFR files fetched against its robots.txt are kept in quarantine** as evidence for this report and `07_ethics.md`, outside the corpus. They should be deleted after grading.
 - **`crawl_stats.json` describes only the latest run.** Totals across runs come from `crawl_summary.json`, which is computed from the crawl logs in `data/raw/` (not committed).

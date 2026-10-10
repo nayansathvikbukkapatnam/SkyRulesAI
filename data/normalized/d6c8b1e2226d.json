@@ -1,22 +1,31 @@
 {
   "doc_id": "d6c8b1e2226d",
   "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF_2025_DiscoveryDroneLessonPlan_Final.pdf",
-  "title": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF_2025_DiscoveryDroneLessonPlan_Final.pdf",
+  "title": "BEFORE YOU",
   "page_type": "toolkit_pdf",
   "audience": "general",
   "effective_date": "2025-12-31",
   "crawl_ts": "2026-10-10T19:03:22+00:00",
-  "content_hash": "83dd85b3f22d4a24dcd769f467deefea77087c3edae0fad83e02ab74e469536c",
+  "content_hash": "ff3d13cd7308ae6a9ae00fbbc5713b0755955baa31993c65f3fb6282213d3dea",
   "sections": [
     {
       "heading_path": [
-        "in developing this lesson plan."
+        "BEFORE YOU"
       ],
-      "text": "Page 2 • Contents Page 3 • Introduction Page 4 • Safety Precautions Page 5 • Prepare: Getting Ready to Build and Fly Page 6 • Prepare: Getting Ready to Build and Fly",
+      "text": "BEFORE YOU Discovery Drone Kit Lesson Plan",
       "tables": []
     },
     {
       "heading_path": [
+        "BEFORE YOU",
+        "in developing this lesson plan."
+      ],
+      "text": "Page 2 • Contents INTRODUCTION The Discovery Drone Kit is designed to take Tackle real-world challenges that simulate your students on an engaging, hands-on journey drone delivery, payload lifting, and precision into the world of drone technology, aviation safety, navigation. and real-world problem solving. This Innovate through redesign by modifying the blends engineering, flight principles, and creative drone’s structure to enhance stability, speed design challenges.\n\nor visual appeal, encouraging creativity and Students will: engineering-based mindsets.\n\n- Analyze and reflect using collected data.\n\n- Assemble their own drone using step-by-step yze and reflect using collecte instructions while learning about components Whether you're a seasoned Science, Technology, and construction techniques. Engineering, and Math (STEM) educator or new to drones, the Discovery Drone Kit provides everything you need to ensure a successful and inspiring learning experience, from build instructions to troubleshooting tips. Let’s get ready to build, fly, and discover!\n\nPractice safe drone operations, learn essential pre- and post-flight procedures, and maintain flight logs to monitor performance.\n\nDevelop flight skills through guided activities that explore aerodynamics, weight distribution, and control.\n\n- /ntroduction Page 3 • Introduction Page 4 • Safety Precautions Page 5 • Prepare: Getting Ready to Build and Fly Page 6 • Prepare: Getting Ready to Build and Fly",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "BEFORE YOU",
         "measure using"
       ],
       "text": "Page 7 • Flight",
@@ -24,6 +33,7 @@
     },
     {
       "heading_path": [
+        "BEFORE YOU",
         "What skills were most important in this challenge?"
       ],
       "text": "Activities and Investigations",
@@ -31,6 +41,7 @@
     },
     {
       "heading_path": [
+        "BEFORE YOU",
         "diagrams."
       ],
       "text": "Page 8 • Drone Redesign and Innovation Challenge Page 9 • Troubleshooting 7",
@@ -38,6 +49,7 @@
     },
     {
       "heading_path": [
+        "BEFORE YOU",
         "GRADE 3"
       ],
       "text": "Page 10 • Resources and Next Generation Science Standards Page 11 • Resources and Next Generation Science Standards Page 12 • Resources and Next Generation Science Standards Common Core State ELA/Literacy Mathematics",
@@ -50,6 +62,7 @@
     },
     {
       "heading_path": [
+        "BEFORE YOU",
         "GRADE 4"
       ],
       "text": "Standards Connections:\n\nPage 13 • Resources and Next Generation Science Standards Page 14 • Resources and Next Generation Science Standards Page 15 • Resources and Next Generation Science Standards Page 16 • Resources and Next Generation Science Standards Mathematics * The performance expectations Disciplinary Core Idea.",
@@ -64,6 +77,7 @@
     },
     {
       "heading_path": [
+        "BEFORE YOU",
         "GRADE 5"
       ],
       "text": "marked with Page 17 • an asterisk integrate traditional science content with engineering through a Practice or Resources and Next Generation Science Standards Page 18 • Resources and Next Generation Science Standards Page 19 • Resources and Next Generation Science Standards",
@@ -77,19 +91,16 @@
     },
     {
       "heading_path": [
+        "BEFORE YOU",
         "and are clear of debris like hair or dirt."
       ],
-      "text": "Page 20 • Flight Log",
+      "text": "Page 20 • Flight Log BEFORE YOU DISCOVERY DRONE K The Discavery Drone Kit instruction manual, educational lessons, flight log, and teacher training and resources are available at https://knowbeforeyoufly.org/Discovery-Drone-Kit Discovery-Drone-kit ‘ OU",
       "tables": []
     }
   ],
   "extraction": {
-    "method": "pdfplumber",
-    "ocr_used": false,
-    "warnings": [
-      "page 1: no text layer (needs OCR)",
-      "page 3: no text layer (needs OCR)",
-      "page 21: no text layer (needs OCR)"
-    ]
+    "method": "pdfplumber+tesseract",
+    "ocr_used": true,
+    "warnings": []
   }
 }
