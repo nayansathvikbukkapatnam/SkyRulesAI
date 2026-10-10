@@ -1,0 +1,33 @@
+{
+  "doc_id": "81e6ad1d72fa",
+  "source_url": "https://knowbeforeyoufly.org/get-started/register-your-drone",
+  "title": "Register Your Drone",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-13",
+  "crawl_ts": "2026-10-10T18:53:25+00:00",
+  "content_hash": "fcf36a9a642c7e4cf480731f8bd34eb75687b68daaf8775d25ef86b73c7b4191",
+  "sections": [
+    {
+      "heading_path": [
+        "Register Your Drone",
+        "Recreational Drone Users"
+      ],
+      "text": "You must register your drone or model aircraft if it weighs more than 0.55 pounds. If you are planning to fly recreationally, you must fly under the requirements of Part 107 or follow all the requirements of the FAA Rules for Recreational Flyers and Modeler Community-Based Organizations.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Register Your Drone",
+        "Commercial and Public Drone Users"
+      ],
+      "text": "Public, commercial and other non-model aircraft UAS operators may use the online registration system. During the registration process, users will have to identify whether they are operating a model aircraft for recreational purposes or operating a UAS for business or government use.\n\nNon-model aircraft will receive a unique Certificate of Aircraft Registration for each aircraft.\n\nOperators can still continue to use the existing paper-based registration system.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

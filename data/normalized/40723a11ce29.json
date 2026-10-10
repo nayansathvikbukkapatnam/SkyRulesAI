@@ -1,0 +1,105 @@
+{
+  "doc_id": "40723a11ce29",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2026/01/KBYF_Manufacturer___Retailer_Fact_Sheet.pdf",
+  "title": "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+  "page_type": "toolkit_pdf",
+  "audience": "general",
+  "effective_date": "2026-01-14",
+  "crawl_ts": "2026-10-10T19:03:50+00:00",
+  "content_hash": "25d325e4660d2712f4fb9e172eda4b0c7ccd1ece8aaa9f4ff3e9475fc15eb774",
+  "sections": [
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES"
+      ],
+      "text": "FOLLOW THESE KEY SAFETY 7) Do NOT fly in airspace where drones are TIPS FOR FLYING YOUR DRONE prohibited. Use the B4UFLY mobile app to confirm there are no airspace restrictions",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "TO KEEP THE AIRSPACE SAFE"
+      ],
+      "text": "where you plan to fly. (See faa.gov/drones for more information on airspace restrictions.)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "BEFORE YOU FLY YOUR DRONE"
+      ],
+      "text": "8) Fly your drone at or below 400 feet when in 1) Register your drone at FAADroneZone uncontrolled airspace. (faadronezone.faa.gov), display the FAA- 9) Keep your drone within your line-ofissued registration number on the outside sight , or within the line-of-sight of a visual surface of the aircraft, and carry your proof observer who is co-located and in direct of registration with you.\n\ncommunication with you if flying first person 2) Complete The Recreational UAS Safety Test view (FPV).\n\n(TRUST) and carry proof of completion with 10) Give way and never interfere with you. (See faa.gov/trust.) traditional aircraft.\n\n3) Visit the FAA Drone Zone for the latest 11) Avoid flying over people or public events.\n\nsafety information.\n\n12) Avoid flying near emergencies such 4) Download the B4UFLY mobile app for easy as accident response, law enforcement access to check airspace restrictions.\n\nactivities, firefighting, or natural disaster recovery efforts.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "WHEN YOU FLY YOUR DRONE"
+      ],
+      "text": "13) Avoid operating your drone in a dangerous 5) Follow the safety guidelines of a or unsafe manner, such as carrying community-based organization. hazardous materials or attaching dangerous items that could cause death 6) Do NOT fly in controlled airspace (around or serious injury.\n\nand above many airports) unless you have received authorization from the FAA 14) Understand that drugs or alcohol may through the Low Altitude Authorization impair your ability to fly your drone safely. and Notification Capability (LAANC) or The FAA may pursue enforcement action against any FAADroneZone. (See faa.gov/laanc or person operating model aircraft who endangers the faadronezone.faa.gov.) safety of the national airspace system.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "OTHER THAN RECREATION"
+      ],
+      "text": "FOLLOW THESE KEY SAFETY and Notification Capability (LAANC) or",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "RULES FOR FLYING YOUR FAADroneZone. (See faa.gov/laanc or"
+      ],
+      "text": "faadronezone.faa.gov.)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "DRONE TO KEEP THE"
+      ],
+      "text": "7) Do NOT fly in airspace where drones are",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "AIRSPACE SAFE"
+      ],
+      "text": "prohibited. Use the B4UFLY mobile app to confirm there are no airspace restrictions",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "BEFORE YOU FLY YOUR DRONE"
+      ],
+      "text": "where you plan to fly. (See faa.gov/drones for 1) Register your drone at FAADroneZone more information on airspace restrictions.) (faadronezone.faa.gov), display the FAA- 8) Give way and never interfere with issued registration number on the outside traditional aircraft.\n\nsurface of the aircraft, and carry your proof of registration with you. 9) Avoid flying near emergencies such as accident response, law enforcement 2) Become an FAA-Certificated Remote Pilot .\n\nactivities, firefighting, or natural disaster 3) Request waivers, when necessary to recovery efforts.\n\nfacilitate your operations, through the 10) Never carry hazardous materials or attach FAADroneZone (faadronezone.faa.gov), a dangerous weapon to your drone.\n\nand carry your waiver(s) with you when you are flying. The FAA may pursue enforcement action against any person operating model aircraft who endangers the 4) Keep your remote pilot certificate current.\n\nsafety of the national airspace system.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "WHEN YOU FLY YOUR DRONE"
+      ],
+      "text": "5) Operate under 14 Code of Federal Regulations part 107 (the Small UAS Rule).",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "FLYING A DRONE FOR RECREATIONAL PURPOSES",
+        "FOR RECREATIONAL DRONE FLYING"
+      ],
+      "text": "6) Do NOT fly in controlled airspace (around and above many airports) unless you have received authorization from the FAA through the Low Altitude Authorization To learn more about flying drones or model aircraft for educational purposes please visit knowbeforeyoufly.org or faa.gov/drones",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

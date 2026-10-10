@@ -1,0 +1,33 @@
+{
+  "doc_id": "40d7b2f26b00",
+  "source_url": "https://knowbeforeyoufly.org/get-started/uas-best-practices",
+  "title": "Drone Best Practices",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-03-30",
+  "crawl_ts": "2026-10-10T18:59:18+00:00",
+  "content_hash": "d0e62ef79f157e0a6275ceb10fda39c89d4956521a3e9849a99bff83ec3b0106",
+  "sections": [
+    {
+      "heading_path": [
+        "Drone Best Practices",
+        "Voluntary Best Practices for UAS Privacy, Transparency, and Accountability"
+      ],
+      "text": "Below is a list of voluntary guidelines for “neighborly” drone use, which serve to provide guidance to UAS operators on ways to balance their rights as drone users and other people’s rights to privacy. These guidelines are the result of a multi-stakeholder engagement process established by President Obama. The objective of the process was to develop and communicate best practices, accountability, and transparency issues regarding commercial and private UAS use in the National Airspace System (NAS).\n\nThe U.S. Department of Commerce’s National Telecommunications Information Administration (NTIA) initiated the process, which included stakeholders from industry, civil society, academia, and other interested U.S. government agencies. The multi-stakeholder group released its recommended voluntary best practices in May 18, 2016.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Drone Best Practices",
+        "Guidelines for Neighborly Drone Use:"
+      ],
+      "text": "- Consult the quick IMSAFE self assessment checklist to ensure you’re safe to fly\n\n- If you can, tell other people you’ll be taking pictures or video of them before you do so.\n\n- If you think someone has a reasonable expectation of privacy, don’t violate that privacy by taking pictures, video, or otherwise gathering sensitive data, unless you’ve got a very good reason.\n\n- Don’t fly over other people’s private property without permission if you can easily avoid doing so.\n\n- Don’t gather personal data for no reason, and don’t keep it for longer than you think you have to.\n\n- If you keep sensitive data about other people, secure it against loss or theft.\n\n- If someone asks you to delete personal data about him or her that you’ve gathered, do so, unless you’ve got a good reason not to.\n\n- If anyone raises privacy, security, or safety concerns with you, try and listen to what they have to say, as long as they’re polite and reasonable about it.\n\n- Don’t harass people with your drone.\n\n**Important note:** the best practices do not apply to news-gatherers and news reporting organizations, which are protected by U.S. law and the First Amendment to the Constitution. These organizations should operate under the ethics rules and standards of their organization, and according to existing federal and state laws.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

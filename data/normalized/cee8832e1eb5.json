@@ -1,0 +1,33 @@
+{
+  "doc_id": "cee8832e1eb5",
+  "source_url": "https://knowbeforeyoufly.org/compliance-and-safety/safety-reporting",
+  "title": "Safety Reporting",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-13",
+  "crawl_ts": "2026-10-10T18:59:25+00:00",
+  "content_hash": "5bcad41a06eec273361155ba848b02094746d96a064da535ac27837236c1192d",
+  "sections": [
+    {
+      "heading_path": [
+        "Safety Reporting",
+        "You Can Help Improve Aviation Safety. Voluntary Reporting is Now Available for UAS/Drones!"
+      ],
+      "text": "Improving safety depends on the free, unrestricted flow of information from users of the National Airspace System. This includes recreational drone pilots!\n\nPilots, air traffic controllers, flight attendants, maintenance personnel, dispatchers, and others have long used NASA’s Aviation Safety Reporting System (ASRS) to report aviation safety issues. This system is now available to drone pilots through a new webform — click on the **UAS** option under “Submit a Report”.\n\nASRS is a voluntary reporting system administered by NASA that serves as a non-punitive means for reporting incidents and safety-related issues. The reports that NASA shares with the FAA are confidential, anonymous, and important. These reports are used by the FAA to improve system safety, plan for future safety enhancements, and share safety information with the aviation community.\n\nAnyone can use this reporting system, including bystanders! The goal of the ASRS program is simply to improve aviation safety as a whole. You can file reports for a variety of things. For example: violations of regulations, close calls with power lines, near midair collisions, flyaways, loss of control, etc. Even seeing something unsafe in the sky is reason enough for filing a NASA ASRS Report. NASA receives hundreds of reports every day. The more events that get reported, the more improvements can be made.\n\nLearn more about this program by reading Advisory Circular 00-46F – Aviation Safety Reporting Program, FAA’s website, and NASA’s website about UAS Safety Reporting.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Safety Reporting",
+        "Organizing Partners"
+      ],
+      "text": "*In partnership with*",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

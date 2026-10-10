@@ -1,0 +1,92 @@
+{
+  "doc_id": "ea99ac2ec68f",
+  "source_url": "https://knowbeforeyoufly.org/compliance-and-safety/comply-and-fly",
+  "title": "Comply and Fly",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-02-18",
+  "crawl_ts": "2026-10-10T18:59:13+00:00",
+  "content_hash": "076a2184b18fbbb017aa3150e733510bc4b1ff51128ca2a866a9f056611ea259",
+  "sections": [
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "Attention flyers!"
+      ],
+      "text": "Remote ID is now part of the standard drone registration process and you must comply in order to fly. Is your drone ready and safe?",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "Comply … Then Fly"
+      ],
+      "text": "Have you heard of Remote ID? It’s like a digital license plate for your drone — and something you need to be aware of to fly legally if your drone weighs over 0.55 pounds.\n\nHere’s what you should know:\n\n- Remote ID broadcasts information to keep the skies safe, like your drone’s altitude, location, and velocity.\n\n- It does not broadcast any personal information.\n\n- Drones purchased in the U.S. after September 2022 will likely be Remote ID compliant out of the box.\n\n- Older drones can become compliant with a software update or a Remote ID Broadcast Module, which can be retrofitted to your drone.\n\n- To access a list of compliant drones and broadcast modules, visit the FAA’s Declaration of Compliance website.\n\n- You can update your drone’s FAA Registration with the Remote ID serial number in the FAADroneZone Portal.\n\n- Failure to comply with all federal requirements may result in fines or suspensions.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "Are You Compliant?"
+      ],
+      "text": "Remote ID is part of the drone registration process for all new registrations and may require existing registrations to be updated. So, how can you make sure your drone is compliant and ready to fly? Here’s easy-to-follow guidance:\n\n- If you purchased a drone after September 2022 in the U.S., it should already be Remote ID compliant or have a software update available for download.\n\n- To check on the status of your drone, visit the FAA’s Declaration of Compliance website for a list of compliant drones and broadcast modules.\n\n- If your drone is older, it likely will not have a software update available. In that case, you can purchase a compatible Remote ID Broadcast Module to attach to your drone so it’s compliant.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "What Is a Remote ID Broadcast Module?"
+      ],
+      "text": "If you have an older drone, there probably isn’t a software or firmware update available to make it Remote ID compliant. That’s where Remote ID Broadcast Modules come in! Here’s the skinny:\n\n- These small devices can be retrofitted to your drone to make it Remote ID compliant.\n\n- Each broadcast module has its own Remote ID serial number. This number must be added to your drone’s FAA Registration to make it Remote ID compliant.\n\n- There are several types of Remote ID Broadcast Modules on the market — e.g., varied sizes, weights, and power sources — so do your research to find a good fit and to ensure the one you choose is FAA-accepted.\n\n**Commercial and Part 107 Flyers:** If you want to use your Remote ID Broadcast Module on a different drone, you must remove the Remote ID serial number from its current registration and reassign it to the new one.\n\n**Recreation Flyers:** You can move the Remote ID Broadcast Module from drone to drone so long as they are listed in your FAADroneZone inventory.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "How Do I Register My Drone?"
+      ],
+      "text": "Registering your drone for Remote ID is easy, though the process is slightly different for new flyers, new drones, and drones that are already registered. Simply follow the steps that apply to you:",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "How Do I Register My Drone?",
+        "New Flyer"
+      ],
+      "text": "- Visit the FAADroneZone Portal and create an account if you do not have one.\n\n- When ready, click “Add a Service,” select “Drone Owners and Pilots Service,” and then click “Add Service.”\n\n- From there, launch the Drone Owners and Pilots Dashboard.\n\n- You will be asked if you are a Recreational Flyer (someone who flies for personal interest/enjoyment) or Part 107 Pilot (holds a Remote Pilot Certificate and flies for non-recreational or business reasons).\n\n- Check here to determine if you are a Part 107 Pilot. If you are, you will need to take a course and pass the FAA Part 107 Remote Pilot Test to fly.\n\n- Enter your information and acknowledge the Safety Guidance.\n\n- Add a drone to your FAADroneZone inventory.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "How Do I Register My Drone?",
+        "New Drone"
+      ],
+      "text": "- In the FAADroneZone Dashboard, click “Add a Device.”\n\n- In a pop-up window, you will be asked if your drone has FAA Remote ID Information.\n\n- Select “Yes” if you have a Remote ID serial number via your drone or broadcast module. If not, select “No”. In that scenario, Remote ID compliance is achievable in FAA-recognized Identification Areas (FRIAs).\n\n- Fill out the form with your drone’s information. These details are usually printed on your drone or broadcast module or within their apps. If you have questions, consult uasdoc.faa.gov/ or your drone’s manufacturer’s website.\n\n- Once all information is ready, click “Add a Device” to add the registration to your shopping cart and checkout.\n\n- You should now be able to see your registered and Remote ID compliant drone in your dashboard.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "How Do I Register My Drone?",
+        "Registered Drone"
+      ],
+      "text": "- Go to the FAADroneZone Portal, launch the Drone Owners and Pilots Dashboard, and click on “Manage Device Inventory.”\n\n- Find the drone you want to update and click “Edit.”\n\n- In the pop-up window, select “Yes” for Remote ID and enter the Remote ID serial number for your drone or broadcast module.\n\n- Click “Save.” Your drone’s registration will be updated, and it will now be Remote ID compliant.\n\n**Remember:** Put a Remote ID compliant label on your drone. Your drone’s manufacturer will likely include these stickers in the box or mail them to you upon request.\n\nTo check that Remote ID is working properly, download a drone scanner app on your smart device.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Comply and Fly",
+        "What Is a FRIA?"
+      ],
+      "text": "If you are unable to equip your drone with Remote ID, you can still fly — it just has to be inside an FAA-Recognized Identification Area (FRIA). Let’s look at what this means:\n\n- A FRIA is a defined area where drones can be flown without Remote ID equipment.\n\n- Normal drone safety rules apply, and all drones still need to comply with FAA registration requirements.\n\n- The drone and the pilot must be located within the FRIA’s boundaries during the entire flight, and the pilot must always have the drone in sight.\n\n- A list of approved FRIAs can be found here: FAA’s UAS Data Delivery System.\n\n- New FRIAs are regularly approved, and community-based organizations and educational institutions can apply to request the establishment of a FRIA on the FAADroneZone website.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

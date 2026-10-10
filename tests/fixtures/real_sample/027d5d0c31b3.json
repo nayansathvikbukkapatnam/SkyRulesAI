@@ -1,0 +1,65 @@
+{
+  "doc_id": "027d5d0c31b3",
+  "source_url": "https://knowbeforeyoufly.org/whos-flying/commercial",
+  "title": "Fly for Work",
+  "page_type": "guide_page",
+  "audience": "part107",
+  "effective_date": "2026-03-30",
+  "crawl_ts": "2026-10-10T18:59:20+00:00",
+  "content_hash": "88a5e002d84c1ac68f0ba512d5cb4be98c104f59d7937d87d942614e6f5800c2",
+  "sections": [
+    {
+      "heading_path": [
+        "Fly for Work",
+        "What is commercial use of UAS or drones?"
+      ],
+      "text": "For example, using a drone to take photographs for your own personal use would be considered recreational. However, using the same device to take photographs or videos for compensation or sale to another individual would be considered a commercial operation or business use. You can visit the FAA’s website for further clarification as to what constitutes commercial or other non-hobby, non-recreational UAS operations.\n\nThe commercial use of UAS or drones is the operation of an uncrewed or model aircraft for non-hobby and non-recreational purposes.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Work",
+        "What are some examples of commercial uses of UAS?"
+      ],
+      "text": "Some examples of commercial uses of UAS include using a drone for:\n\n- Crop monitoring/inspection\n\n- Research and development\n\n- Educational/academic use\n\n- Power line/pipeline inspection in hilly or mountainous terrain\n\n- Antenna inspections\n\n- Bridge inspections\n\n- Aerial photography, including for events, real estate or construction, or\n\n- Wildlife nesting area evaluations or\n\n- Public Safety Operations which can also be flown as a public aircraft operator",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Work",
+        "What requirements do I need to meet to fly commercially?"
+      ],
+      "text": "As a commercial operator, you must fly under the FAA’s Part 107 rules.\n\nFirst, learn the rules. To understand what is and is not allowed under Part 107 rules, you can review a summary from the FAA here.\n\nSecond, obtain a Remote Pilot Certificate from the FAA. In order to be eligible for a Remote Pilot Certificate, you must be:\n\n- At least 16 years of age\n\n- Able to read, write, speak and understand English\n\n- Be in physical and mental condition to safely fly a UAS\n\nTo review and understand all of the necessary steps to obtaining your Remote Pilot Certificate, visit the FAA’s website.\n\nThird, register your drone with the FAA. Registration costs $5 and is valid for 3 years. You will need a credit card or debit card and the make and model of your drone handy in order to register. If you have completed all of the steps above and are ready to register your drone, visit dronezone.faa.gov and select “I Fly under Part 107” to create an account and register. Once you have registered, mark your drone with your registration number in case it gets lost or stolen.\n\nFinally, learn where and how to fly. Check out the U.S. Air Space Map in the Where to Fly tab to learn more.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Work",
+        "I’ve completed all the requirements to fly commercially, now what are the operating rules?"
+      ],
+      "text": "- Must fly under 400 feet above ground level (AGL)\n\n- Must keep the UAS within visual line of sight, either by the remote pilot in command or a visual observer\n\n- Must fly during daylight hours or civil twilight hours (30 minutes before official sunrise to 30 minutes after official sunset, local time) with appropriate anti-collision lighting\n\n- Must fly at or below 100 mph\n\n- Must yield right of way to manned aircraft\n\n- Must not fly over people\n\n- Must not fly from a moving vehicle unless you are in a sparsely populated area\n\n- Must remain at least 400 feet away from the lateral boundaries of critical infrastructure including military bases, federal prisons, power plants, monuments, etc.\n\nIf you want to operate UAS for commercial purposes outside of these rules, you may apply for a certificate of waiver. The FAA will grant waivers if operation can be performed safely but may otherwise not be allowed under Part 107.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Work",
+        "I’m an experienced operator, how do I take my career to the next level?"
+      ],
+      "text": "The AUVSI Trusted UAS Operator Program is a professional certification program that establishes a higher standard for commercial uncrewed aircraft system operators.\n\nBuilt to go beyond the minimum requirements of Part 107, the program validates advanced knowledge, flight proficiency, safety practices, and risk management skills that employers and customers recognize and value.\n\nEarning certification through the AUVSI Trusted UAS Operator Program demonstrates a commitment to professionalism, operational excellence, and industry best practices, helping remote pilots differentiate themselves in a competitive marketplace.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Work",
+        "What else do I need to know?"
+      ],
+      "text": "Users of commercial and recreational UAS should be aware that in remote, rural and agricultural areas, manned aircraft, including fixed-wing aircraft and helicopters, may be operating very close to ground level. Pilots conducting agricultural, firefighting, law enforcement, emergency medical, wildlife survey operations and a variety of other services all legally and routinely work in low-level airspace. Operators controlling UAS in these areas should maintain situational awareness, give way to, and remain a safe distance from other aircraft, manned or unmanned.\n\nAlso, please read the voluntary guidelines for “neighborly” drone use, which serve to provide guidance to UAS operators on ways to balance their rights as drone users and other people’s rights to privacy.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "doc_id": "c608fd357f29",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2026/01/KBYF_PSA_Postcard_Recreational_2022.pdf",
+  "title": "RECREATIONAL",
+  "page_type": "toolkit_pdf",
+  "audience": "recreational",
+  "effective_date": "2026-01-14",
+  "crawl_ts": "2026-10-10T19:03:49+00:00",
+  "content_hash": "6d92281d8af201b544586b56f668f9cbd156a8c2663049c248aa59648c7bdd46",
+  "sections": [
+    {
+      "heading_path": [
+        "RECREATIONAL"
+      ],
+      "text": "I N F O R M A T I O N",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "NEVER FLY NEAR"
+      ],
+      "text": "other aircraft,",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "KNOWLEDGE TEST"
+      ],
+      "text": "F O R",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "FLYERS"
+      ],
+      "text": "or",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "a short (and free) online knowledge test. Check out www.faa.gov/uas"
+      ],
+      "text": "www.knowbeforeyoufly.org to learn more.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "• REGISTER your drone • KEEP your drone within your line of sight"
+      ],
+      "text": "• FLY your drone at or below 400 feet, and in controlled • CHECK for FAA airspace restrictions",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "AND SAFETY TIPS EXIST TO HELP YOU FLY SAFELY IN THE NATIONAL AIRSPACE. THINK OF THESE TIPS"
+      ],
+      "text": "AS A PRE-FLIGHT CHECKLIST TO HELP YOU FLY SAFELY.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "DON’Ts"
+      ],
+      "text": "• NEVER FLY near other aircraft, especially near airports • NEVER FLY near emergencies such as fires or hurri cane",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "RECREATIONAL",
+        "recovery efforts"
+      ],
+      "text": "• NEVER FLY over groups of people, public events,",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

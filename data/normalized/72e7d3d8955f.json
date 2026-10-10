@@ -1,0 +1,64 @@
+{
+  "doc_id": "72e7d3d8955f",
+  "source_url": "https://knowbeforeyoufly.org/whos-flying/government-entities",
+  "title": "Fly for Public Safety",
+  "page_type": "guide_page",
+  "audience": "public_safety",
+  "effective_date": "2026-03-27",
+  "crawl_ts": "2026-10-10T18:59:17+00:00",
+  "content_hash": "3008b5b959c0626be403d43bdd5fd77ab437ab7551594ad94000a14c62cdc55c",
+  "sections": [
+    {
+      "heading_path": [
+        "Fly for Public Safety"
+      ],
+      "text": "If you want to operate a drone for a government entity – such as a law enforcement agency, fire department, or any other federal, state, local or tribal agency – you have two options:",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Public Safety",
+        "**1**."
+      ],
+      "text": "Follow the same requirements and operating rules for business users. That is, the FAA’s small UAS rule (known as “Part 107”).\n\nOR:",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Public Safety",
+        "2."
+      ],
+      "text": "If you want to operate UAS for a government entity outside of these rules, you may apply for a blanket public Certificate of Authorization (COA) which allows flights at or below 400 feet in Class G airspace nationwide or a Jurisdictional COA that authorizes flights within controlled airspace (Class B, Class C, Class D or Surface Class E), self-certification of the UAS pilot and the ability to obtain emergency COAs under special circumstances.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Public Safety",
+        "Who can obtain a COA to operate public aircraft?"
+      ],
+      "text": "- Only government entities – such as federal, state, local or tribal government agencies and law enforcement – can receive a COA for public UAS aircraft operations.\n\n- Public aircraft operations must be conducted for a governmental function and not for commercial purposes to include compensation or hire.\n\n- COAs are most commonly issued to public (government) entities, but are also required for civil (private) operations.\n\n- The FAA thoroughly evaluates each COA application to determine the safety of the proposal.\n\n- COAs are issued for a specific period of time, usually two years, and include special provisions unique to each proposal, such as a defined block of airspace.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Public Safety",
+        "How can I apply for a COA?"
+      ],
+      "text": "- Since 2009, the FAA has taken steps to streamline the application process by transitioning online.\n\n- The average COA processing time is less than 60 days.\n\n- Expedited authorization is available in emergency and life-threatening situations.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Public Safety",
+        "What else do I need to know?"
+      ],
+      "text": "Users of commercial and recreational UAS should be aware that in remote, rural and agricultural areas, manned aircraft, including fixed-wing aircraft and helicopters, may be operating very close to ground level. Pilots conducting agricultural, firefighting, law enforcement, emergency medical, wildlife survey operations and a variety of other services all legally and routinely work in low-level airspace. Operators controlling UAS in these areas should maintain situational awareness, give way to, and remain a safe distance from other aircraft, manned or unmanned.\n\nAlso, please read the voluntary guidelines for “neighborly” drone use, which serve to provide guidance to UAS operators on ways to balance their rights as drone users and other people’s rights to privacy.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

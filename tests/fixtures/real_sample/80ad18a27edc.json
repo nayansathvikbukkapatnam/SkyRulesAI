@@ -1,0 +1,24 @@
+{
+  "doc_id": "80ad18a27edc",
+  "source_url": "https://knowbeforeyoufly.org/whos-flying/recreational/the-recreational-uas-safety-test-trust",
+  "title": "The Recreational UAS Safety Test (TRUST)",
+  "page_type": "guide_page",
+  "audience": "recreational",
+  "effective_date": "2026-04-13",
+  "crawl_ts": "2026-10-10T18:59:26+00:00",
+  "content_hash": "676b5c5f52c0c219120d0ee03e6ba3cdbc2ed988957d541304a057cae2074647",
+  "sections": [
+    {
+      "heading_path": [
+        "The Recreational UAS Safety Test (TRUST)"
+      ],
+      "text": "TRUST stands for The Recreational UAS Safety Test. It provides education and testing for recreational drone flyers on important safety and regulatory information. If you fly your drone recreationally under the Exception for Recreational Flyers, you must pass the test before you fly. Federal law requires all recreational flyers to pass an aeronautical knowledge and safety test. The FAA developed The Recreational UAS Safety Test to meet this requirement.\n\nTRUST is free, can be taken online through a variety of FAA-approved test administrators, and typically takes 30 minutes or less to complete. After you pass the test, you will receive a completion certificate. Be sure to keep this certificate with you when you fly your drone, either in paper or electronic format. Test administrators will not keep a record of your completion certificate, therefore if you lose your certificate, you need re-take the TRUST.\n\nThe below organizations have all been approved by the FAA to administer the TRUST as of November 2025:",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

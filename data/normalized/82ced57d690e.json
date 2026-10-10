@@ -1,0 +1,198 @@
+{
+  "doc_id": "82ced57d690e",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF_Discovery_Drone_Kit_Instructions-1.pdf",
+  "title": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF_Discovery_Drone_Kit_Instructions-1.pdf",
+  "page_type": "toolkit_pdf",
+  "audience": "general",
+  "effective_date": "2025-06-20",
+  "crawl_ts": "2026-10-10T19:03:18+00:00",
+  "content_hash": "bdf5b9eeb7dfc2abb13b0ece38ad4a79ce14f505dfca37863f64f92abc33ff60",
+  "sections": [
+    {
+      "heading_path": [
+        "WELCOME TO YOUR DISCOVERY DRONE KIT!"
+      ],
+      "text": "Get ready to have some fun building and flying your drone. Before we get into the details of building and flying, here’s some basic safety info about drones (also referred to as uncrewed aircraft).\n\nFlying a drone is a lot of fun! It also needs to be done safely. Remember that the drone in this kit is an aircraft, and you are the pilot! That means when flying, YOU are responsible for safety.\n\nAnd you are responsible for making sure you protect the safety of:\n\n• People and property on the ground • Structures near your flying location (such as buildings, towers, power lines, etc.) Scan to visit the Know • Other aircraft in the airspace Before You Fly website NOTE: The drone you’ll put together in this kit should be flown indoors, without factors such as weather or airspace impacting your flight. However, it is important to be aware that if you do fly a drone outdoors, you’ll need to follow certain rules and regulations. Those rules are set by the Federal Aviation Administration (FAA) and can evolve rapidly. For the latest information, visit https://www.faa.gov/uas or use the QR code above. ACKNOWLEDGMENTS: Special thanks to David Meador, Paul Uttley, Tim Lankford, Jason Redd for content and renderings on behalf of Pitsco Education, LLC. 2",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "CONTENTS"
+      ],
+      "text": "Charging The Batteries ...........4 Replacement Parts ..............12 Drone Assembly ..................5 Troubleshooting .................13 Controller Functions ..............8 Drone Parts .....................14 Pairing The Controller ...........10 Support .........................15 Taking Flight ..................... 11",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "WHAT RULES DO I NEED TO FOLLOW IF I FLY OUTSIDE?"
+      ],
+      "text": "If you want to fly drones outdoors for fun, there are some simple safety guidelines that you must follow:\n\n1. Take The Recreational UAS Safety Test (TRUST) and carry proof of test passage when you fly. TRUST is free, takes less than 30 minutes to complete, and will provide you with basic knowledge to fly safely in the airspace.\n\n2. Keep your drone in eyesight at all times.\n\n3. You must see and avoid other aircraft and Scan to take the TRUST test!\n\nobstacles at all times.\n\n4. Do not fly in adverse weather conditions, such as in high wind or reduced visibility.\n\n5. Do not fly under the influence of alcohol or drugs.\n\n6. Ensure your operating environment is safe. Protect the safety of people and property on the ground.\n\n7. Do not conduct surveillance or photograph persons in areas where there is an expectation of privacy without the individual’s permission.\n\n8. If your aircraft weighs more than 0.55 lbs, you must register with the FAA. (Don’t worry, the drone in this kit weighs less, therefore you don’t Scan to learn about need to register this one.) FAA Drone registration 3",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Never leave charging batteries unattended."
+      ],
+      "text": "Battery",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Never use damaged batteries."
+      ],
+      "text": "Micro USB For the drone to operate at maximum cable capacity, the batteries should be fully charged. Locate the charger, micro USB cable, and batteries. Plug these in while Charger building the drone.\n\n• If the battery begins to swell during charging or use, immediately stop using the battery and place it in a safe, fire-safe place. Take the battery to a local Li-Po battery disposal or recycling center as soon as possible.\n\n• Always use the included charger and battery style.\n\n• Disconnect battery after use.\n\n• Never charge, transport, or store batteries in extreme temperatures. • Charge batteries in a well-ventilated area away from flammable materials.\n\n4",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "WHAT YOU’LL NEED"
+      ],
+      "text": "The following is the list of parts you will need to build the basic drone. See pages 14-15 for a complete parts list.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "DRONE PARTS"
+      ],
+      "text": "Part Name (Quantity) Propeller guard (4) Drone body (1) Motor mounts with black and white wires (2) Motor mounts with red and blue wires (2) Battery (2) Propeller A (2) Propeller B (2) Body tube, colors vary (4) Controller (1)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "PUTTING YOUR DRONE TOGETHER"
+      ],
+      "text": "Cut four body tubes to equal lengths. A good length to start with is 1 3/4 inches . The tubes will attach to the drone body and motor mounts by sliding snugly over the connection points.\n\n5",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "DDRROONNEE AASSSSEEMMBBLLYY"
+      ],
+      "text": "WARNING: Failure to follow assembly instructions may result in unintended actions that may include the drone failing to take off, flipping, drifting, spinning, or behaving erratically.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "PROPELLER (PROP) AND PROPELLER GUARD"
+      ],
+      "text": "Before mounting the props, you should slide Slide on the propeller guards onto the motor mounts from the top.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "MOTOR/PROPELLER/GUARD ASSEMBLY"
+      ],
+      "text": "The props need to be pressed onto the motor axle. You should match the props to the motors first. The props labeled “A” should be mounted on the red-and-blue wired motors, and the props labeled “B” should be mounted on the black-and-white wired motors.\n\nA B Propeller Guard Propeller Guard Slide on Slide on Clockwise Counterclockwise Motor Motor (red and blue wires) (black and white wires)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "ALIGNING THE MOTORS AND DRONE BODY"
+      ],
+      "text": "When connecting the motors to the drone body, it is important to align them correctly. The motor wire coloring should match the wire coloring coming from the drone body. This is because the motors spin in opposite directions. Work carefully when connecting and disconnecting the wires to prevent 6",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "DDRROONNEE AASSSSEEMMBBLLYY"
+      ],
+      "text": "them from breaking. You will want to ensure that the motors are aligned with the body because any deviations can cause a reduced flight time from the batteries or an inability to take off.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "BASIC DRONE DESIGN"
+      ],
+      "text": "To build a basic drone that will fly, use the following diagram. Clockwise Motor Counterclockwise Motor 1 3/4 Inches Drone Front Blue and Red Wire to Black and White Wire to Blue and Red Wire Black and White Wire Black and White Wire to Blue and Red Wire to Black and White Wire Blue and Red Wire Counterclockwise Motor Clockwise Motor 7 8",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "CONTROLLER INCLUDED WITH YOUR KIT."
+      ],
+      "text": "Speed (slow, medium, fast) Flips mode Ascent Pitch Forward Yaw Left Yaw Right Roll Left Roll Right Descent Pitch Backward Takeoff/Land Emergency Stop (push and hold) Headless/Normal Mode On/ Tune/Normal Mode (press) Off (press) Forward Ascent Descent Backward Yaw Roll",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "CCOONNTTRROOLLLLEERR FFUUNNCCTTIIOONNSS"
+      ],
+      "text": "Speed – The drone’s responsiveness to the controller’s commands is adjusted into three different modes by pressing and releasing this button. • Slow – The drone operates more gently to the commands input at the controller. This mode is recommended for a beginner drone pilot. • Medium – The drone operates intuitively to the commands input by the controller. This mode is recommended as you gain experience as a drone pilot. • Fast – The drone operates rapidly to any commands input by the controller. This mode is recommended only after extensive experience as a drone pilot. Flips – When this button is pressed, the drone enters flip mode. While in flip mode, the right joystick on the controller can be used to perform a flip by pressing one of the four directions forward, backward, left, or right.\n\nAscent/Descent – This is the throttle; it controls the speed of the motors. Pushing up causes the drone to go straight up; pushing down causes the drone to go straight down. Yaw Left/Yaw Right – Rotates the drone around the center of the drone body. It is used to change the direction the drone is pointing. Pushing left rotates the drone to the left; pushing right rotates the drone to the right.\n\nPitch Forward/Pitch Backward – Tilts the drone forward or backward. Pushing up tilts the drone forward, and it moves forward. Pushing down tilts the drone backward, and the drone moves backward.\n\nRoll Left/Roll Right – Tilts the drone to the left or right. Pushing right tilts the drone to the right, and it moves to the right. Pushing left tilts the drone to the left, and the drone moves to the left.\n\nTakeoff/Land – Pushing and releasing this button will make the drone take off when not flying and land when flying. Pushing and holding when the drone is in flight will activate the emergency landing feature, and the drone’s motors will immediately stop spinning, and the drone will fall directly to the ground. Power On/Off – Pushing and releasing this button will turn the controller on or off. Headless/Normal Mode – In normal mode, left and right are always in reference to the drone’s left and right. In headless mode, left and right are in reference to the controller’s left and right when facing the drone.\n\nTune/Normal Mode – In normal mode, the controls operate the motors to cause movement in the drone. In tune mode, the power sent to each of the motors is adjusted to balance the flight characteristics of the drone. Each time the drone is restarted, the previous tuning returns to the default.\n\n9",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "PAIRING THE CONTROLLER"
+      ],
+      "text": "Follow these steps to pair your controller. Remember to wear safety glasses when operating the drone. Tie back long hair and secure lanyards, hoodie strings, or anything else that may become entangled in the propellers. 1. After the drone is built, make sure the battery is fully charged before flying. Then, insert the battery into the drone body.\n\n2. After the battery is in place, press and hold the power button on the bottom of the drone to power up the drone. The LED lights on the bottom will flash when the drone is powered up.\n\n3. Turn on the drone and place it on a level surface. The drone indicator lights will blink slowly, which indicates it is waiting for pairing. Pairing Takeoff/Land 4. Power on the controller. The controller will beep once.\n\n5. To pair, push the left joystick fully upward until you hear a beep and then fully downward until you hear a second beep. The indicator lights on the drone will change from blink to solid indicating a successful pair.\n\n10",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "PRE-FLIGHT PREP"
+      ],
+      "text": "• Inspect the drone, controller and batteries for damage, and ensure that all of these have been fully charged.\n\n• Find an appropriate indoor space for flying.\n\n• You might need to align your motors when taking off for the first time. Make sure the props on the motors are aligned with the drone’s body. (Hint: You can use the connectors on the motor mounts and drone body to help you line up the motors and the body.) • Familiarize yourself with the controller functions.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "TAKING FLIGHT"
+      ],
+      "text": "1. Press the Takeoff/Land button to start flight. The motors will begin spinning and the drone will rise one meter above the surface and hover.\n\n2. Use the left and right joysticks to control the flight. Gentle joystick movements are best. This will help you understand the controls and how they correlate to the aircraft’s movements.\n\n3. If the drone flies unpredictably or not at all, see the troubleshooting section of this guide for help.\n\n4. Flight time is approximately six to seven minutes depending on weight of drone. You will notice a slight degradation of performance from the beginning to end of the battery life.\n\n5. Drone lights will blink to indicate low battery. At around the 5 minute mark you should begin planning your controlled landing.\n\n6. Drone will land automatically when battery is depleted or press the Takeoff/Land button to land the drone.\n\n7. Be quick to disarm the aircraft by pressing and holding the “Takeoff/ Land” button in the case of an unexpected landing or out-of-control flight. This will reduce the chances of damage occurring to the aircraft. 8. Have a safe flight!\n\n11",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "TROUBLESHOOTING"
+      ],
+      "text": "Problem: Drone won’t take off.\n\n• The drone is too heavy. The maximum weight the drone can lift is between 65 and 75 grams. The drone with the battery in its lightest configuration is about 50 grams.\n\n• The props are flipped. If the A and B props are on the wrong motors, they will push down instead of up, preventing the drone from taking off.\n\n• The battery is too low. When the battery is critically low, the drone will land automatically and will not take off.\n\nDrone flips over on the ground when taking off.\n\nTwo of the props are not on the correct motors. The A and B props must be on the correct motors; if two are correct and two are incorrect, the drone will flip over during takeoff.\n\nDrone flies erratically or spins after taking off.\n\nThe motors might not be aligned correctly. If one or more motors are not aligned in the same plane as the others, the drone will fly erratically; drift left, right, forward, or backward; or fly in circles after takeoff. This can also happen if one or more drone arms are damaged or bent. This will require replacing the damaged drone arm to fix.\n\nDrone drifts toward one of the motors.\n\nThis usually indicates that one of the arms of the drone is a different length than the others. You should ensure all the drone arms are the same length. This can also happen if one of the drone motors is damaged and not spinning as fast as the other motors. The only solution to this is replacing the motor. 12",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "TO PURCHASE REPLACEMENT PARTS"
+      ],
+      "text": "To order replacement components or additional kits, visit the manufacturer’s website (https://www.pitsco.com/products/drone-maker-kit) or scan the QR code below. See pages 14-15 for a parts list.\n\nScan to visit the Pitsco website 13",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "DDRROONNEE PPAARRTTSS"
+      ],
+      "text": "14",
+      "tables": [
+        "| Part | Part Name | Quantity |\n| --- | --- | --- |\n|  | 90-degree connector | 10 |\n|  | 90-degree through connector | 10 |\n|  | Propeller guard | 8 |\n|  | Drone body | 1 |\n|  | Motor mounts with black and white wires | 2 |\n|  | Motor mounts with red and blue wires | 2 |\n|  | Charger | 1 |"
+      ]
+    },
+    {
+      "heading_path": [
+        "DDRROONNEE PPAARRTTSS"
+      ],
+      "text": "15 Have questions? There are a variety of ways to get in touch with Pitsco, the drone manufacturer:\n\n[REDACTED PHONE] [REDACTED EMAIL] Chat: Pitsco.com/Support",
+      "tables": [
+        "| Part | Part Name | Quantity |\n| --- | --- | --- |\n|  | Micro USB cable | 2 |\n|  | Battery | 2 |\n|  | Propeller A | 4 |\n|  | Propeller B | 4 |\n|  | Body tube (colors vary) | 16 |\n|  | Controller | 1 |"
+      ]
+    },
+    {
+      "heading_path": [
+        "to gain access to build videos, drone"
+      ],
+      "text": "Scan to access the",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "SCAN TO ACCESS ADDITIONAL FAA RESOURCES"
+      ],
+      "text": "www.faasafety.gov/ FAASTApp/directory/ www.faa.gov/ faadronezone- www.faa.gov/uas/ education access.faa.gov educationalusers/ (must enter keyword youth-drone-initiative “dronepro” and state)",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": [
+      "page 1: no text layer (needs OCR)"
+    ]
+  }
+}

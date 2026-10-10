@@ -1,0 +1,24 @@
+{
+  "doc_id": "9b2157ec99eb",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/faa-small-drone-rules",
+  "title": "FAA Small Drone Rules",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-03",
+  "crawl_ts": "2026-10-10T18:59:24+00:00",
+  "content_hash": "d53f4c2db6e6dd4eb33ee32da7224a2aa9a8ae73e9c57d1340c345c3d37dbe7f",
+  "sections": [
+    {
+      "heading_path": [
+        "FAA Small Drone Rules"
+      ],
+      "text": "FAA Small Drone Rules Fact Sheet Overview of FAA Part 107 requirements for small drones. View Fact Sheet Applying for a Waiver Learn how to apply for a waiver under Part 107 Apply for a waiver Rule Summary Plain language breakdown of the Small Drone Rule. Read summary Remote Pilot Knowledge Test Information on the knowledge test and certification process. Learn about the test",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

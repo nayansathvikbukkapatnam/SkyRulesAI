@@ -1,0 +1,48 @@
+{
+  "doc_id": "2e91e7e55b1a",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/discovery-drone-learning-materials",
+  "title": "Discovery Drone Learning Materials",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-02-23",
+  "crawl_ts": "2026-10-10T18:59:16+00:00",
+  "content_hash": "2d4e5a8da851f94f5d7321ecca2d87d1c9579993b9a450e2d47d5441c330e836",
+  "sections": [
+    {
+      "heading_path": [
+        "Discovery Drone Learning Materials"
+      ],
+      "text": "The Discovery Drone Kit is made possible through federal funding. Kits provide an opportunity for students age 8-12 to have a fun and educational drone experience.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Discovery Drone Learning Materials",
+        "**Discovery Drone Kit Instruction Manual**"
+      ],
+      "text": "This manual includes information about building the kit and flying safely. It also contains a troubleshooting reference and how to order spare parts. A printed instruction manual is included with each kit. View, download, and print additional copies here.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Discovery Drone Learning Materials",
+        "**Discovery Drone Lesson Plan** *and printable flight log!*"
+      ],
+      "text": "This lesson plan is designed to take your students on an engaging, hands-on journey into the world of drone technology, aviation safety, and real-world problem-solving. Use the whole lesson plan or select individual activities. Examples:\n\n- Practice safe drone operation, learn essential pre- and post-flight procedures, and maintain flight logs to monitor performance.\n\n- Tackle real-world challenges that simulate drone delivery, payload lifting, and precision navigation.\n\n- Innovate through redesign by modifying the drone’s structure to enhance stability, speed, or visual appeal—encouraging creativity and engineering mindset.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Discovery Drone Learning Materials",
+        "Printable Activity: Challenge Cards"
+      ],
+      "text": "Use these cards in a variety of ways! The deck includes a mix of flight challenges, knowledge questions, and blank customizable cards. To make the cards:\n\n1. Download the file.\n\n2. Print front and back (so that the card “fronts” are all the same).\n\n3. Laminate (if desired) and then cut apart.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

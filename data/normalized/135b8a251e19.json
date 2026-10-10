@@ -1,0 +1,51 @@
+{
+  "doc_id": "135b8a251e19",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/educational-downloads",
+  "title": "Educational Downloads",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-03",
+  "crawl_ts": "2026-10-10T18:59:23+00:00",
+  "content_hash": "90f2825fa29b4dc4283fe2f9c444b28b313c19ce49cd56380c5c3d968c404d0c",
+  "sections": [
+    {
+      "heading_path": [
+        "Educational Downloads"
+      ],
+      "text": "Access printable materials, training programs, and trusted resources to support safe and responsible drone operations.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Educational Downloads",
+        "Downloadable Materials",
+        "KBYF Educational Postcard"
+      ],
+      "text": "Printable resource outlining key safety guidelines for recreational drone flyers.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Educational Downloads",
+        "Downloadable Materials",
+        "KBYF IMSAFE Postcard"
+      ],
+      "text": "Quick pre-flight checklist to help operators assess readiness and ensure safe flight conditions.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Educational Downloads",
+        "Downloadable Materials",
+        "Manufacturer & Retailer Fact Sheet"
+      ],
+      "text": "Resource designed to help manufacturers and retailers share key safety information with customers at the point of sale.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

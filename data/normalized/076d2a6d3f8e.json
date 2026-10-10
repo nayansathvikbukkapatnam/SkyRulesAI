@@ -1,0 +1,86 @@
+{
+  "doc_id": "076d2a6d3f8e",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/key-resources",
+  "title": "Key Resources",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-03",
+  "crawl_ts": "2026-10-10T18:53:31+00:00",
+  "content_hash": "2492b3f56c0aebd0571020486f62e87c492ce7c54a977a0eadf39c68025702f9",
+  "sections": [
+    {
+      "heading_path": [
+        "Key Resources"
+      ],
+      "text": "Home / Knowledge Library / Key Resources",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources"
+      ],
+      "text": "Find the essential tools, apps, and guidance you need to plan your flight, understand airspace, and fly safely and responsibly.\n\nWhether you’re flying for fun or work, these resources will help you prepare before takeoff and stay compliant in the air.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources",
+        "Download the B4UFLY App"
+      ],
+      "text": "Use FAA-approved B4UFLY tools to see where you can and cannot fly in real time.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources",
+        "FAA Small Drone Rules"
+      ],
+      "text": "Understand the rules you need to follow before you take off.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources",
+        "Educational Downloads"
+      ],
+      "text": "Download quick guides, checklists, and resources to help you prepare and fly safely.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources",
+        "Trainings and Programs"
+      ],
+      "text": "Build your skills with courses and hands-on learning opportunities.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources",
+        "The Recreational UAS Safety Test (TRUST)"
+      ],
+      "text": "Take the required safety test before flying recreationally.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Key Resources",
+        "Key Resources",
+        "Quick KBYF Video Guides"
+      ],
+      "text": "Watch short, easy-to-follow videos on drone rules, safety tips, and how to fly responsibly.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

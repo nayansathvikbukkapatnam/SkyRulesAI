@@ -1,0 +1,51 @@
+{
+  "doc_id": "97cdec17ac3c",
+  "source_url": "https://knowbeforeyoufly.org/about/about-us",
+  "title": "About Us",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-20",
+  "crawl_ts": "2026-10-10T18:59:11+00:00",
+  "content_hash": "d5c2ba98f0458bd91e6f9f8d5ea4f2faa9f80ac31fc95c43cb026d65be81d954",
+  "sections": [
+    {
+      "heading_path": [
+        "About Us"
+      ],
+      "text": "Know Before You Fly is an education campaign organized by the Academy of Model Aeronautics (AMA) and the Association for Uncrewed Vehicle Systems International (AUVSI), in partnership with the Federal Aviation Administration (FAA). Their shared goal is to educate prospective users about the safe and responsible operation of drones.\n\nAs excitement and enthusiasm builds around drones, and the regulatory framework continues to take shape, businesses and consumers alike are looking to buy drones for commercial and personal uses. These prospective operators want to fly, and fly safely. But many don’t realize that just because you can easily and quickly buy drones, it doesn’t mean you can fly it anywhere or for any purpose. Know Before You Fly provides prospective users with the information and guidance they need to fly safely and responsibly.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "About Us",
+        "Organizing Partners",
+        "Association for Uncrewed Vehicle Systems International"
+      ],
+      "text": "The Association for Uncrewed Vehicle Systems International (AUVSI) — the world’s largest non-profit organization dedicated to the advancement of uncrewed systems and robotics — represents corporations and professionals from more than 60 countries involved in industry, government and academia. AUVSI members work in the defense, civil and commercial markets.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "About Us",
+        "Organizing Partners",
+        "Academy of Model Aeronautics"
+      ],
+      "text": "The Academy of Model Aeronautics, founded in 1936, serves as the nation’s collective voice for approximately 200,000 modelers in 2,400 clubs in the United States and Puerto Rico. Headquartered in Muncie, Indiana, AMA is a membership organization representing those who fly model aircraft for recreational and educational purposes.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "About Us",
+        "Organizing Partners",
+        "Federal Aviation Administration"
+      ],
+      "text": "The Federal Aviation Administration (FAA) is committed to providing the safest, most efficient aerospace system in the world. The agency is working to safely integrate drones into our National Airspace System.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

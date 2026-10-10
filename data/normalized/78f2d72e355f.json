@@ -1,0 +1,40 @@
+{
+  "doc_id": "78f2d72e355f",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2026/01/KBYF_PSA_Postcard_IMSAFE_2022.pdf",
+  "title": "I’M SAFE",
+  "page_type": "toolkit_pdf",
+  "audience": "general",
+  "effective_date": "2026-01-14",
+  "crawl_ts": "2026-10-10T19:03:48+00:00",
+  "content_hash": "845e36fecacaabc6e7d3162480e8b578e50dc99b8d2358d5c27cf5d283c8ad42",
+  "sections": [
+    {
+      "heading_path": [
+        "I’M SAFE"
+      ],
+      "text": "SAFETY FIRST! Before you fly your drone, review this checklist.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "I’M SAFE",
+        "STRESS: Am I under psychological pressure from the job?"
+      ],
+      "text": "Worried about financial matters, health problems,",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "I’M SAFE",
+        "EMOTION: Am I emotionally upset?"
+      ],
+      "text": "If any of the above apply to you, it may affect your ability to fly safely.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

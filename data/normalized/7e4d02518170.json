@@ -1,0 +1,24 @@
+{
+  "doc_id": "7e4d02518170",
+  "source_url": "https://knowbeforeyoufly.org/about/supporters",
+  "title": "Supporters",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-03-30",
+  "crawl_ts": "2026-10-10T18:59:19+00:00",
+  "content_hash": "ca5bf248b6a039f2f4b8bd88ab847f069be0574b1c9e5753c16b5117312cca1b",
+  "sections": [
+    {
+      "heading_path": [
+        "Supporters"
+      ],
+      "text": "The following organizations are committed to providing prospective operators of uncrewed aircraft systems the tools to know how to fly safely and responsibly before taking to the skies.\n\nThis support may be in the form of sharing links to Know Before You Fly content, including co-branded safety fliers in retail boxes, providing access to airspace information, including signage in stores and much more.\n\nJoin at no cost and help promote safe drone flying nationwide.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

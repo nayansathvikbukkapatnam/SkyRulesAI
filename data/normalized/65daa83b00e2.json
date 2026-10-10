@@ -1,0 +1,153 @@
+{
+  "doc_id": "65daa83b00e2",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF_SDK_2022_Instructions.pdf",
+  "title": "HAS JUST LANDED",
+  "page_type": "toolkit_pdf",
+  "audience": "general",
+  "effective_date": "2025-12-31",
+  "crawl_ts": "2026-10-10T19:03:09+00:00",
+  "content_hash": "d7ba8c4f20ea45e53b2ed2db768a7ef0d2f59b3e9ea98cbc38cf09ead4d60ac1",
+  "sections": [
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "Student"
+      ],
+      "text": "Welcome to your Student Drone Kit!\n\nGet ready to have some fun building and flying your drone. Before we get into the details of building, and flying, here’s some basic safety info about drones (also referred to as unmanned aircraft).\n\nFlying a drone is a lot of fun! It also needs to be done safely! Remember that the drone in this kit is an aircraft, and you are its pilot! That means when flying, YOU are responsible for safety.\n\nAnd you are responsible for making sure you protect the safety of:\n\n• People and property on the ground • Structures near your flying location (such as buildings, towers, power lines, etc.) • Other aircraft in the airspace The drone you’ll put together in this kit is meant to be flown indoors first, to practice flying and make sure everything is working well without things like weather or airspace impacting your first flight. After flying indoors, and following the safety requirements described in this booklet, you’ll be ready to fly outdoors.\n\nThe rules for drones are evolving rapidly, and if you’re flying outdoors those rules are set by the Federal",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "Drone Kit"
+      ],
+      "text": "Aviation Administration (FAA). For the latest information on drone rules, visit the Know Before You Fly safety campaign website using the QR code below.\n\nScan to visit the Know Before You Fly website TOOLS REQUIRED:\n\nAcroBee prop tool (included) Micro Phillips screwdriver (included) Tweezers or micro needle-nose pliers",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "WHAT RULES DO I NEED TO FOLLOW?"
+      ],
+      "text": "If you want to fly drones or unmanned aircraft outdoors for fun, there are some simple safety guidelines that you must follow:\n\n1. Take The Recreational high wind or reduced visibility.\n\nUAS Safety Test 5. Do not fly under the influence of alcohol or drugs. (TRUST) and carry 6. Ensure your operating environment is safe, and protect proof of test passage the safety of people and property on the ground. when you fly. TRUST 7. Do not conduct surveillance or photograph is free, takes less persons in areas where there is an expectation than 30 minutes to of privacy without complete, and will the individual’s provide you with permission.\n\nbasic knowledge Scan to take the 8. If your aircraft to fly safely in the TRUST test! weighs more than airspace. 0.55 lbs you must 2. Keep your drone in eyesight at all times. If using the register with the goggles, you must also have a visual observer near FAA. (Don’t worry, you to scan the surrounding airspace while flying. the drone in this kit 3. You must see and avoid other aircraft and obstacles weighs less, therefore Scan to learn about at all times. you don’t need to FAA Drone registration 4. Do not fly in adverse weather conditions, such as in register this one). 1 1 1 3 4 Removeable Monitor 2 6 8 10 3 5 12 9 11 7",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "KIT CONTENTS:"
+      ],
+      "text": "1. Video Goggles (First Person View (FPV) Goggle) : 3. Frame: VRDrone 65mm brushed Frame The goggles are also the container for the drone, 4. Power Connectors: (USB-Micro USB & USB-USB C) charger, and batteries. Monitor comes with 5. Prop tool channel search, accurate channel lock in, and the 6. Flight Controller, ESC, & Receiver: 5A per motors drone container has built-in battery charger. JST1.25plug; VTX: 25mw 2. Transmitter: Beesign Protocol, Plug N Play for 7. Camera mounting bracket simulator, 1000 mAh battery with SmartBattery 8. Batteries: Nitro Nectar Gold 250mAh 1S HV LiPo Protection. (The transmitter power manager system 9. Propeller: Azi (Tri Blade) Micro Propellers will automatically discharge the battery to storage 10. Frame base caps mode and put the system to sleep if its not been 11. FPV Camera used for more than 7 days.) 12. Motor: BDR SILVER Edition (6mm Brushed Motor)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "ASSEMBLY"
+      ],
+      "text": "1. Collect the parts you see in the image.\n\nSpecial note: these pieces are fragile and must be handled with care!\n\n2. When looking at the drone from underneath, with the camera mount facing away from you, the counterclockwise-spinning (red and blue wires) motors go in the top left and bottom right positions and the clockwise-spinning motors go in the top right and bottom left positions.\n\nThis image shows the underside of the drone.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "INSTRUCTIONS"
+      ],
+      "text": "3. Insert the motors into the VRdrone frame from the underside of frame. Apply firm and even pressure when inserting motors into the frame. It helps to place your fingers beneath the motor supports that connect the duct to the motor receptacle, so the frame doesn’t break under the pressure.\n\n4. Gently direct the motor wires towards the center of the frame, then place the frame base caps over the motor wire leads, taking care not to pinch the fragile wires.\n\n5. Place the camera into the mounting bracket as shown.\n\n6. Gently insert camera and mounting bracket into the fitted slot at the front of the drone frame.\n\nEnsure that the camera is oriented as shown, then screw in the two silver Phillips screws.\n\n7. Insert the connector from the camera to the flight controller board as shown.\n\n8. Ensure the VTX antenna is attached as shown.\n\n9. Feed the VTX antenna through the top of the frame as shown.\n\n10. Ensure rubber grommets are firmly seated onto the flight controller assembly. Note the arrow on the flight board, and ensure that arrow points towards the camera (front) of the drone, then seat the board into the four mounting points on the frame.\n\n11. Insert the motor wires into the board as shown. There is a single notch on the back of the connector that aligns with a groove in the receptacle.\n\n12. Once inserted, seat wires into the channels in the frame to protect them in flight as shown.\n\n13. Next, place the mounting screws into the holes in the base frame piece. Ensure that the motor wires and battery leads are not pinched as you mount the frame base to the frame using the four screws as shown.\n\nFirst, start each of the screws, and then tighten them down. Do not overtighten them. A firm and secure connection is all that is needed.\n\n14. Install the propellers onto the motors. and likewise for the counterclockwisespinning propellers and motors. You can tell which direction the propellers spin by looking at the leading edge of the propeller and figuring out which way it will spin to push the air down.\n\n15. Congratulations, you’re finished The propeller pictured on the left spins with the build!\n\nclockwise when viewed from the top of the drone, and affixes to the motors with the white and black wires. The propeller on the right spins counterclockwise, and affixes to the motors with the red and blue wires. Make sure that the clockwise-spinning propellers are installed on the corresponding motor",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "CHARGING THE BATTERIES:"
+      ],
+      "text": "NEVER LEAVE CHARGING BATTERIES UNATTENDED. NEVER CHARGE BATTERIES OVERNIGHT. NEVER USE DAMAGED BATTERIES.\n\n• If the battery begins to swell during charging or use, immediately stop using the battery and place it in a safe, fire-safe place. Take the battery to a local Li-Po battery disposal or recycling center as soon as possible.\n\n• Always use the included charger and battery style.\n\n• Disconnect battery after use.\n\n• Never charge, transport, or store batteries in extreme temperatures. • Charge batteries in a well-ventilated area away from flammable materials. • To charge the batteries, plug in the charger using the supplied micro USB cable. Connect the batteries to the charging ports. The LED will turn red to indicate the batteries are charging. When the LED turns green, the batteries are done charging. Remove the batteries after they are finished charging.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "THE TRANSMITTER:"
+      ],
+      "text": "Charging the transmitter:\n\nConnect the provided USB-C cable to the charging port. A red LED will turn on indicating that the transmitter is charging. When the charging is complete, the red LED will turn green. Checking the battery level:\n\nTo check the battery, push the power button once. It will blink the following colors to indicate battery voltage.\n\n•Blue: 100% •Green: >70% •Orange: >30% •Red: >10% (Low battery warning will start) Inactivity and Self-Discharging:\n\nAfter 6 minutes of inactivity, warning vibrations will begin. After 30 minutes, transmitter will automatically shut down. After no usage for 7 days, transmitter will discharge its battery to the storage voltage to protect the battery.\n\nStick Calibration:\n\nTo calibrate the sticks, point both left and right sticks in neutral position (both sticks pointing straight up in center of transmitter). Hold and press both A and B buttons for approximately 5 seconds until you hear a tone. The center LED will turn light blue. Move the left stick in a “+” pattern by pointing the stick left to right and up to down. Repeat the same process for the right stick at the same time. When you are done, put both sticks in the neutral position and calibration will be completed automatically. Simulator Mode:\n\nIt is highly recommended that before flight, you practice with a simulator. Although there are many simulators available, we recommend tinywhoopgo.com. While transmitter is powered on, connect it to your personal computer with the included USB-C data cable and it will be automatically detected as a joystick device. (You may be prompted to download and install a driver Scan to visit the Tiny for the joystick.) Whoop Go website",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "THE GOGGLES/MONITOR:"
+      ],
+      "text": "Charging the Goggles:\n\nConnect the provided micro USB cable to the charging port. A red LED will turn on indicating that the monitor is charging. When the charging is complete, the red LED will turn off. When not using the monitor, power off to conserve battery life. Attaching Antenna:\n\nBefore using the goggles, you should attach the antenna. This ensures you have the best range available when utilizing the FPV feed. To do so, screw it onto the connector clockwise. To remove the antenna, rotate it counter-clockwise. Auto-Search Function:\n\nTo find the drone’s current channel simply press and hold in the CH button for 1-2 seconds. The goggle will then automatically change to the channel with the best signal. Before using this function, make sure that no other drone is powered on at the same time. This avoids signal interference.\n\nManual Channel Change:\n\nUse the CH and FR buttons to cycle through different bands and channels. Note: you can separately operate up to 8 drones at a time by utilizing Raceband channels 1-8 for each separate drone. Find more information at knowbeforeyoufly.org/StudentDroneKit.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "POWERING ON THE DRONE:"
+      ],
+      "text": "Simply plug in the battery lead to the battery to power the drone on. Unplug it to power off.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "POWERING ON AND OFF:"
+      ],
+      "text": "ALWAYS turn on transmitter first and turn it off last. To turn on the transmitter, hold the power button until the green light turns on. The transmitter will beep and a green LED will light up, indicating it is on. To turn off the transmitter, hold the power button until the transmitter beeps. After releasing the power button, the green LED will turn off indicating the transmitter is off.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "BINDING MODE:"
+      ],
+      "text": "The act of pairing the transmitter to the drone is referred to as binding. When the transmitter is powered on and not connected to a drone (unbound), the center LED will blink slowly in green color. When the connection is established, (bound) the center LED will turn to a solid green color.\n\nTo bind your transmitter to the drone, power on the drone and place it into bind mode by pressing the small button on the flight controller board located at the underside and back of the drone (see the attached image.) Once pressed, the FC board will quickly blink the red LED. Next, turn on the transmitter. After transmitter is powered on, press and hold the power button and B button at the same time for two seconds. You will hear a tone and the center LED will start blinking. This should complete the binding process. Once connected, the red LED will glow a solid red instead of flashing. If you want to cancel the binding process you can press the B button on the transmitter.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "FLIGHT INSTRUCTIONS"
+      ],
+      "text": "If you are unfamiliar with the controls of the drone, please carefully read the following instructions to learn the controls. Note: If you lose control of the drone, disarm immediately by toggling the Aux1 switch, the same one you used to arm the drone. This reduces the likelihood of damage to the drone or any objects nearby.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "FIRST FLIGHT PREP:"
+      ],
+      "text": "Read these flight tips before your first flight.\n\n• Inspect the drone, transmitter, goggles and batteries for damage, and ensure that all of these have been fully charged.\n\n• Find a large and open indoor space for flying.\n\n• Familiarize yourself with the tranmitter buttons and sticks.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "FLIGHT ORDER OF OPERATIONS:"
+      ],
+      "text": "• Turn on the transmitter. Ensure that the throttle is oriented to the bottom of the controller. • If utilizing the goggles*, connect the goggle antenna onto the goggles and power the goggles on.\n\n• Place a battery into the drone then connect the cable to the battery. • Place the drone onto a flat surface clear of overhead obstacles. • If utilizing the goggles*, check the video signal and make sure the goggles are set to the same channel as the drone.\n\n• Ensure the throttle is positioned at low throttle; the left transmitter stick pointed towards the base of the transmitter, closest to the pilot. As a safeguard, if this step isn’t taken the drone won’t arm.\n\n• Take off by arming the drone via the transmitter (Aux1) and raising the throttle.\n\n• Upon landing, immediately disarm the drone (Aux1) and unplug the battery from the drone, then turn off the goggles, and then the transmitter.\n\n*If you are operating the drone with the FPV goggles, you are required to utilize a Visual Observer (VO). You can learn more Scan to visit the AMA about FPV and the responsibilities of a VO by scanning the QR FPV Operations Guide code to the right.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "FLIGHT TIPS:"
+      ],
+      "text": "• We highly recommend using a flight simulator before attempting your first flight. This will reduce the risk of damage to the aircraft and build your skills in the safest environment possible. A great first step is to try out the Tiny Whoop Go simulator. It’s free and provides a great basic understanding of flight controls. You can download it by visiting the link provided to the right. • Once you have a basic control understanding from the simulator of your choice, you can move on with greater success to your Scan to visit the Tiny first flight. Whoop Go website • Each drone battery will last between 2-3 minutes of flight before requiring recharge. You will notice a slight degradation of performance from the beginning to end of the battery life. At around the 2 minute mark you should begin planning your controlled landing.\n\n• Gentle control inputs are the best indicator of success. Manage your throttle well and learn to hover in place first, flying via Line Of Sight (LOS). This will help you understand the controls and how they correlate to the aircraft’s movements. • Be quick to disarm (Aux1) the aircraft in the case of an unexpected landing or out-ofcontrol flight. This will reduce the liklihood of damage occuring to the aircraft. • When you can successfully hover in place, you may choose to begin flying your drone while utilizing the FPV functionality. (Ensure that you utilize a visual observer. ) • You can change channels via the front button on the flight controller, or by entering the On Screen Display (OSD) on the goggle montiors. Enter the OSD by moving the throttle to 50% and then rudder left while simultaneously pitching forward with the right stick. Settings for VTX, OSD, Flight Controller, PID, and rates can be changed in the OSD Menu. You can restore defaults via the OSD using: Main -> Save/Exit -> Reset to Factory Default.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "HAS JUST LANDED",
+        "TO PURCHASE REPLACEMENT PARTS:"
+      ],
+      "text": "Visit the manufacturer’s website to order replacement parts like batteries, frames, motors, etc at newbeedrone.com/collections/ kbyf or by scanning the QR code to the right.\n\nScan here for replacement parts",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

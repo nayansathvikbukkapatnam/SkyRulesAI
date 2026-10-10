@@ -1,0 +1,42 @@
+{
+  "doc_id": "f06dc42d569d",
+  "source_url": "https://knowbeforeyoufly.org/whos-flying/educational",
+  "title": "Fly for Educators & Students",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-02-19",
+  "crawl_ts": "2026-10-10T18:59:14+00:00",
+  "content_hash": "c4ed6b236900271aaa6556b68506371fd04cc73a4081cc69636bb64f33791312",
+  "sections": [
+    {
+      "heading_path": [
+        "Fly for Educators & Students"
+      ],
+      "text": "Students are able to use drones or model aircraft in an accredited educational institution as part of their coursework under the recreational guidelines for model aircraft, as long as the aircraft is operated within the programming and safety guidelines of a nationwide, community-based organization such as the Academy of Model Aeronautics (AMA).\n\nUsing drones can inspire interest in STEM education through hands-on activity, potentially leading to new and unique career opportunities. AMA offers a variety of educational programming through the AMA Flight School including student model aviation clubs and UAS4STEM, its hands-on learning competition series.\n\nIt’s important to note that recreational guidelines apply only to accredited educational institutions and not to research efforts, which would too closely link operation of the UAS to faculty members’ professional duties and compensation. Also, if a student is operating a drone, a course instructor can provide only minimal assistance if the primary purpose of the course is not operating the drone, but is focused on something else, such as design or construction.\n\nFor schools interested in operating a UAS for purposes other than recreational use (i.e. for research), please review our guidelines for business and public operators.\n\nClick here for more information from the FAA on flying drones for educational or instructional purposes.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Educators & Students",
+        "Resources for Educators",
+        "FAA’s Buzzy The Drone"
+      ],
+      "text": "Watch the FAA’s BUZZY the Drone educational video playlist.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Educators & Students",
+        "Resources for Educators",
+        "AMA’s Flight School"
+      ],
+      "text": "AMA’s Flight School offers a variety of hands-on learning opportunities for students of all ages. A full list of programs can be found here.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}
