@@ -6,7 +6,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from src.app import server
-from src.app.server import MAX_HISTORY_MESSAGES, b3_check_flags, create_app
+from src.app.server import MAX_HISTORY_MESSAGES, _sse, b3_check_flags, create_app
 from src.common.config import load_config
 from src.generate.answer import STAGES
 from src.generate.claim_check import JUDGE_SYSTEM
@@ -286,3 +286,14 @@ def test_b3_flags_include_unsupported_claims():
 
 def test_no_flags_for_a_refused_b2_answer():
     assert b3_check_flags({"status": "refused", "sentences": []}, CONFIGS["b3"], Judge("yes")) == []
+
+
+def test_nan_and_infinity_are_sent_as_null():
+    # The browser's JSON.parse rejects NaN, so one bad score would break the page.
+    line = _sse(
+        "answer",
+        {"gate_score": float("nan"), "trace": {"reranked": [{"rerank_score": float("inf")}]}},
+    )
+    data = line.split("data: ", 1)[1].strip()
+    assert "NaN" not in data and "Infinity" not in data
+    assert json.loads(data) == {"gate_score": None, "trace": {"reranked": [{"rerank_score": None}]}}

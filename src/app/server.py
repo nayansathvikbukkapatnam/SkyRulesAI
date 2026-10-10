@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 import queue
 import threading
 from collections.abc import Callable, Iterator
@@ -81,8 +82,24 @@ class State:
     llm_error: str | None = None
 
 
+def _finite(value: Any) -> Any:
+    """The value with NaN and infinity replaced by None, at any depth.
+
+    JSON has no NaN: Python writes it anyway, but the browser's JSON.parse rejects
+    the whole event, so one bad score would break the page.
+    """
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if isinstance(value, dict):
+        return {k: _finite(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_finite(v) for v in value]
+    return value
+
+
 def _sse(event: str, data: Any) -> str:
-    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n"
+    body = json.dumps(_finite(data), ensure_ascii=False, default=str, allow_nan=False)
+    return f"event: {event}\ndata: {body}\n\n"
 
 
 def b3_check_flags(b2: dict, b3_config: dict, client: Any) -> list[list[str]]:

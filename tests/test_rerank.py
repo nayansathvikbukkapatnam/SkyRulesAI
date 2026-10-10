@@ -88,3 +88,15 @@ def test_real_cross_encoder_ranks_the_answer_near_the_top(candidates):
     # recreational drones) just above the 400-feet answer, so only check the top 2.
     assert any("400 feet" in c["text"] for c in top[:2])
     assert top[0]["rerank_score"] > top[-1]["rerank_score"]
+
+
+class NaNCrossEncoder:
+    """A model that returns NaN, as the real cross-encoder did with zero-copy weights."""
+
+    def predict(self, pairs, **kwargs):
+        return np.full(len(pairs), np.nan, dtype=np.float32)
+
+
+def test_non_finite_scores_raise_instead_of_ranking_silently(candidates):
+    with pytest.raises(RuntimeError, match="non-finite scores"):
+        Reranker(model=NaNCrossEncoder()).rerank("400 feet", candidates, top_n=5)
