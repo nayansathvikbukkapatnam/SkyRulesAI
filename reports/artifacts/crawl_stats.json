@@ -1,28 +1,12 @@
 {
   "command": "make crawl",
-  "started_at": "2026-10-10T18:58:49+00:00",
-  "finished_at": "2026-10-10T19:03:50+00:00",
+  "started_at": "2026-10-10T19:57:06+00:00",
+  "finished_at": "2026-10-10T19:59:01+00:00",
   "user_agent": "SkyRulesAI-MSAI633 (+<CRAWL_CONTACT_EMAIL>)",
   "sources": {
-    "faa": {
-      "host": "www.faa.gov",
-      "max_urls": 400
-    },
-    "ecfr": {
-      "host": "www.ecfr.gov",
-      "max_urls": 200
-    },
-    "federalregister": {
-      "host": "www.federalregister.gov",
-      "max_urls": 20
-    },
     "govinfo": {
       "host": "www.govinfo.gov",
-      "max_urls": 20
-    },
-    "knowbeforeyoufly": {
-      "host": "knowbeforeyoufly.org",
-      "max_urls": 100
+      "max_urls": 200
     }
   },
   "limits": {
@@ -32,51 +16,34 @@
     "effective_min_interval_s": 1.0,
     "max_attempts": 4
   },
-  "requests_this_run": 265,
+  "requests_this_run": 116,
   "min_gap_between_requests_s": 1.0,
   "robots": {
-    "checks": 274,
-    "disallowed": 14
+    "checks": 115,
+    "disallowed": 0
   },
-  "seeds": 157,
-  "saved_this_run": 141,
+  "seeds": 120,
+  "saved_this_run": 112,
   "saved_this_run_by_source": {
-    "federalregister": 3,
-    "govinfo": 3,
-    "knowbeforeyoufly": 28,
-    "ecfr": 107
+    "govinfo": 112
   },
-  "resumed_from_manifest": 25,
+  "resumed_from_manifest": 8,
   "manifest": {
-    "entries": 161,
-    "unique_sha256": 161,
+    "entries": 273,
+    "unique_sha256": 273,
     "by_content_type": {
       "text/html": 142,
-      "application/pdf": 19
+      "application/pdf": 131
     },
     "by_source": {
-      "ecfr": {
-        "text/html": 112
-      },
-      "federalregister": {
-        "text/html": 8
-      },
       "govinfo": {
-        "application/pdf": 8
+        "application/pdf": 120
       },
-      "knowbeforeyoufly": {
-        "text/html": 22,
+      "unknown": {
+        "text/html": 142,
         "application/pdf": 11
       }
     }
   },
-  "skipped_this_run_by_reason": {
-    "duplicate_of_fetched_url": 1,
-    "excluded_login": 22,
-    "other_host": 435,
-    "out_of_scope": 7,
-    "robots_disallowed": 13,
-    "sitemap_robots_disallowed": 1,
-    "unsupported_file_type": 2
-  }
+  "skipped_this_run_by_reason": {}
 }
