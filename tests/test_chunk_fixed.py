@@ -13,7 +13,7 @@ from src.chunk.fixed import (
     doc_text,
     main,
     read_normalized,
-    token_windows,
+    word_windows,
 )
 from src.common import paths
 from src.common.contracts import parse_chunk_id, validate_chunk
@@ -43,25 +43,59 @@ def long_doc(docs, n_words):
 # --- Windows -------------------------------------------------------------------
 
 
+def word_spans(n):
+    """n one-token words separated by spaces: (0, 2), (3, 5), ..."""
+    return [(3 * i, 3 * i + 2) for i in range(n)]
+
+
 def test_windows_cover_everything_with_exact_overlap():
-    windows = list(token_windows(1200, 512, 64))
+    windows = list(word_windows(word_spans(1200), 512, 64))
     assert windows == [(0, 512), (448, 960), (896, 1200)]
 
 
 @pytest.mark.parametrize("n", [0, 1, 511, 512])
 def test_short_texts_give_at_most_one_window(n):
-    assert list(token_windows(n, 512, 64)) == ([(0, n)] if n else [])
+    assert list(word_windows(word_spans(n), 512, 64)) == ([(0, n)] if n else [])
 
 
 def test_no_trailing_window_hidden_inside_the_previous_one():
     # 960 tokens: the second window ends exactly at the end, so no third window.
-    assert list(token_windows(960, 512, 64)) == [(0, 512), (448, 960)]
+    assert list(word_windows(word_spans(960), 512, 64)) == [(0, 512), (448, 960)]
 
 
 @pytest.mark.parametrize("overlap", [-1, 512, 600])
 def test_bad_overlap_is_rejected(overlap):
     with pytest.raises(ValueError):
-        list(token_windows(100, 512, overlap))
+        list(word_windows(word_spans(100), 512, overlap))
+
+
+def subword_spans(n_words, pieces):
+    """n_words words of `pieces` tokens each; pieces of one word touch (no gap)."""
+    spans, pos = [], 0
+    for _ in range(n_words):
+        for _ in range(pieces):
+            spans.append((pos, pos + 2))
+            pos += 2
+        pos += 1  # the space between words
+    return spans
+
+
+def test_windows_never_split_a_word():
+    spans = subword_spans(400, 3)  # 1200 tokens, every word is 3 pieces
+    windows = list(word_windows(spans, 512, 64))
+    for start, end in windows:
+        assert start % 3 == 0 and (end % 3 == 0 or end == len(spans))
+        assert end - start <= 512
+    covered = set().union(*(range(s, e) for s, e in windows))
+    assert covered == set(range(len(spans)))  # nothing skipped
+    for (_, prev_end), (nxt_start, _) in zip(windows, windows[1:], strict=False):
+        assert 60 <= prev_end - nxt_start <= 64  # overlap only shrinks to a word boundary
+
+
+def test_a_word_longer_than_a_window_is_still_cut():
+    spans = subword_spans(1, 700)  # one 700-token "word", e.g. a long URL
+    windows = list(word_windows(spans, 512, 64))
+    assert windows[0] == (0, 512) and windows[-1][1] == 700
 
 
 # --- Chunks --------------------------------------------------------------------
@@ -154,7 +188,21 @@ def test_real_bge_tokenizer_counts_match(docs):
     chunks = chunk_doc(doc, tokenize)
     assert len(chunks) > 1
     assert all(c["n_tokens"] <= 512 for c in chunks)
-    assert all(c["n_tokens"] == 512 for c in chunks[:-1])
     for chunk in chunks:
-        # Re-tokenizing a chunk's text gives (almost exactly) the count we stored.
-        assert abs(len(tokenize(chunk["text"])) - chunk["n_tokens"]) <= 2
+        # Windows end on word boundaries, so re-tokenizing gives exactly the stored count.
+        assert len(tokenize(chunk["text"])) == chunk["n_tokens"]
+
+
+@pytest.mark.skipif(not _bge_cached(), reason="bge-small-en-v1.5 not in the local HF cache")
+def test_real_bge_long_words_never_push_a_chunk_past_512(docs):
+    # Long rare words split into several bge pieces; a window cut between pieces used
+    # to start a chunk with a fragment that re-tokenized one token longer (513).
+    tokenize = bge_tokenizer()
+    words = "Reauthorization unmanned interoperability recordkeeping airworthiness".split()
+    doc = copy.deepcopy(docs[0])
+    doc["sections"] = [{"heading_path": [], "text": " ".join(words * 400), "tables": []}]
+    chunks = chunk_doc(doc, tokenize)
+    assert len(chunks) > 3
+    for chunk in chunks:
+        assert len(tokenize(chunk["text"])) == chunk["n_tokens"] <= 512
+        assert chunk["text"].split()[0] in words and chunk["text"].split()[-1] in words

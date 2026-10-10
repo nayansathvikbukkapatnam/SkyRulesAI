@@ -52,17 +52,39 @@ def bge_tokenizer(model_name: str = "BAAI/bge-small-en-v1.5") -> Tokenize:
     return tokenize
 
 
-def token_windows(n_tokens: int, max_tokens: int, overlap: int) -> Iterator[tuple[int, int]]:
-    """(start, end) token index ranges: each at most max_tokens, consecutive ones sharing
-    `overlap` tokens. The last window ends at n_tokens; no window sits inside another."""
+def word_windows(
+    spans: list[tuple[int, int]], max_tokens: int, overlap: int
+) -> Iterator[tuple[int, int]]:
+    """(start, end) token ranges of at most max_tokens, consecutive ones sharing about
+    `overlap` tokens, each starting and ending on a word boundary.
+
+    bge splits long words into pieces ("authorization" -> "authori", "##zation"). A
+    window cut between two pieces would start a chunk with a word fragment, and the
+    fragment re-tokenizes into more tokens than it had in place, so a 512-token
+    window could come back as 513. A token starts a word when whitespace precedes
+    it. Windows shrink to the last word start within max_tokens, and the next window
+    starts at the first word start at or after `overlap` tokens back, so text is
+    never skipped. Only a single word longer than a whole window is cut mid-word.
+    """
     if not 0 <= overlap < max_tokens:
         raise ValueError(f"overlap must be in [0, max_tokens): {overlap=} {max_tokens=}")
-    step = max_tokens - overlap
-    for start in range(0, n_tokens, step):
-        end = min(start + max_tokens, n_tokens)
+    n = len(spans)
+    starts_word = [i == 0 or spans[i][0] > spans[i - 1][1] for i in range(n)] + [True]
+    start = 0
+    while start < n:
+        limit = min(start + max_tokens, n)
+        end = limit
+        while end > start and not starts_word[end]:
+            end -= 1
+        if end == start:  # one word longer than a whole window
+            end = limit
         yield start, end
-        if end == n_tokens:
+        if end == n:
             return
+        nxt = max(end - overlap, start + 1)
+        while nxt < end and not starts_word[nxt]:
+            nxt += 1
+        start = nxt
 
 
 def doc_text(doc: NormalizedDoc) -> str:
@@ -107,7 +129,7 @@ def chunk_doc(
     text = doc_text(doc)
     spans = tokenize(text)
     chunks: list[Chunk] = []
-    for start, end in token_windows(len(spans), max_tokens, overlap):
+    for start, end in word_windows(spans, max_tokens, overlap):
         piece = text[spans[start][0] : spans[end - 1][1]]
         chunks.append(make_chunk(doc, STRATEGY, len(chunks), piece, [], end - start))
     return chunks

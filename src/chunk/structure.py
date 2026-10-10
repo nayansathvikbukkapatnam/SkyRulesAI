@@ -27,7 +27,7 @@ from src.chunk.fixed import (
     bge_tokenizer,
     make_chunk,
     read_normalized,
-    token_windows,
+    word_windows,
     write_chunks,
 )
 from src.common import paths
@@ -54,9 +54,7 @@ def split_text(text: str, tokenize: Tokenize, budget: int, overlap: int) -> list
     """Pieces of `text` of at most `budget` tokens, overlapping, sliced from the original."""
     spans = tokenize(text)
     overlap = min(overlap, budget // 2)
-    return [
-        text[spans[s][0] : spans[e - 1][1]] for s, e in token_windows(len(spans), budget, overlap)
-    ]
+    return [text[spans[s][0] : spans[e - 1][1]] for s, e in word_windows(spans, budget, overlap)]
 
 
 def split_table(table: str, tokenize: Tokenize, budget: int, overlap: int) -> list[str]:
