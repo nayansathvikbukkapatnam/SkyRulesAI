@@ -1,0 +1,73 @@
+{
+  "doc_id": "0c1fbe345652",
+  "source_url": "https://knowbeforeyoufly.org/get-started/fly-right",
+  "title": "Fly Right: Keep the Skies Safe",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-20",
+  "crawl_ts": "2026-10-10T18:59:27+00:00",
+  "content_hash": "5fe318a16ae904d70da6147db934f068e80817ffddaee91a60c69c02c6bc8ecc",
+  "sections": [
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "*Get the guidance you need to operate drones safely and responsibly*"
+      ],
+      "text": "The sky may be the limit for drones, but a responsible pilot needs to follow some simple rules. Before you take off, make sure you’re up-to-date on drone safety.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "It Was Love at First Flight …"
+      ],
+      "text": "You and your drone will be inseparable — as long as you follow the rules. Make sure your drone flight doesn’t meet a sad end by staying away from controlled airspace, never flying over crowds or sporting events, and keeping it below 400 feet and within your line of sight. Remember: Drones are fun, but they aren’t toys.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "Avoid Rookie Mistakes"
+      ],
+      "text": "To fly like a pro you need to get in the mindset of a pro. Get your head in the game by following a pre-flight checklist — from charging your batteries and applying firmware and app updates to checking the weather for high winds or precipitation. Whether you’re playing at home or away, double check whether you need an airspace authorization or not. Check state and local ordinances, and make sure you’re taking off in a flat, open area, too (Flying a drone is *not* a contact sport!).\n\n- Learn how to control your drone like a pro with this step-by-step tutorial from Fly-robotics.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "Register It, Don’t Regret It"
+      ],
+      "text": "Don’t let your next flight be your last! If your drone weighs more than 0.55 pounds, it needs to be registered with the FAA. If it’s ever lost, you’ll be glad you did! Registration is your best chance to find your drone and get it back in action. Registration costs just $5 and is good for three years.\n\n- Register Your Drone With the FAA",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "Pass Your Test With Flying Colors"
+      ],
+      "text": "Would you get in a car with an unlicensed driver? Of course not. What they don’t know can and will hurt. The same goes for flying a drone without the right knowledge. By law, recreational drone operators must obtain a free TRUST (The Recreational UAS Safety Test) certificate prior to flying. Visit the FAA Website for a list of approved TRUST Test Administrators. It’s required. And did we mention that it’s free?",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "Big Changes Have Come"
+      ],
+      "text": "Change can be … awkward. But it helps to be prepared: In September 2023 the FAA will introduce a new way to keep the skies safe for drone pilots with Remote ID — a kind of beacon for your drone that broadcasts its ID (with location and altitude to those nearby, but no personal info). Make sure any new drones you buy are Remote ID compatible. Have an older drone? Find out if it can be upgraded so you won’t be grounded with the new regulation.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly Right: Keep the Skies Safe",
+        "Organizing Partners"
+      ],
+      "text": "*In partnership with*",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

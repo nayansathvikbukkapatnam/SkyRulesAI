@@ -1,0 +1,160 @@
+{
+  "doc_id": "93f852a157b5",
+  "source_url": "https://knowbeforeyoufly.org/compliance-and-safety/flying-internationally",
+  "title": "Flying Internationally",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-02-19",
+  "crawl_ts": "2026-10-10T18:53:27+00:00",
+  "content_hash": "1a4f33a51c391da11ed4b9c6a8c2b8a7d6ad680ea080ea6ce8de388591315b32",
+  "sections": [
+    {
+      "heading_path": [
+        "Flying Internationally"
+      ],
+      "text": "The rules for driving a car vary from country to country around the world and so do rules for flying remotely piloted aircraft (RPAS), or drones. Learn what you need to know if you plan to bring your drone with you when you travel.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Bangladesh"
+      ],
+      "text": "- Operating Remotely Piloted Aircraft Systems (PDF)\n\n- Unmanned Aerial System Regulations (PDF) (Bangladeshi/English)\n\n- Application for Remotely Piloted Aircraft System (PDF)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Belgium"
+      ],
+      "text": "- Where are you allowed to fly\n\n- UAS Regulation (French)\n\n- Training and Exams for Drone Pilots (French)\n\n- How to Register your drone (French)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Benin"
+      ],
+      "text": "- Drone Operator Application (French)\n\n- RPA Identification Request (French)\n\n- Drone Operating Authorization (French)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Canada"
+      ],
+      "text": "- Drone Regulations, Registration, and Licensing\n\n- How to Register Your Drone\n\n- How to Get Your Drone Pilot Certificate\n\n- Where to Fly Your Drone",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Chile"
+      ],
+      "text": "- Registration of RPAs and Drones Rules (Spanish)\n\n- Update on RPAS/Drone Registrations (Spanish)\n\n- Air Operator Certificate for Drones for Aerial Work (Spanish)\n\n- Requirements for Drone Work Certificate",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "China – Hong Kong"
+      ],
+      "text": "- Small Unmanned Aircraft (SUA) Registration\n\n- eSUA Mobile App\n\n- SUA Operator Safety Requirements\n\n- Where You Can Fly Your Drone",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Croatia"
+      ],
+      "text": "- How to Fly Drones (for international operators)\n\n- UAS Operator Registration\n\n- Where Your Drone Can Fly (Croatian)\n\n- Flight Operations and Education | Forms and Publications (Croatian)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Cyprus"
+      ],
+      "text": "- UAV Laws\n\n- UAS Regulations and Registration\n\n- Where You Can Fly\n\n- How to get Authorization for Specific Category",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Czech Republic"
+      ],
+      "text": "- Drone Operation Rules for Different Categories of Operations\n\n- Where You Can Fly (Czech)\n\n- Registration of Unmanned System (Czech)\n\n- Drone Operator Training (Czech)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Estonia"
+      ],
+      "text": "- Drone Operation Rules\n\n- How to Operate Drones\n\n- Where Can You Fly\n\n- How to Get Authorization to Fly in Specific Categories",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Iceland"
+      ],
+      "text": "- Registration of Drones for Commercial Use\n\n- Application of Exemption from Regulation\n\n- Drone Regulations\n\n- How to Get Authorization to Operate in Specific Category",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Luxembourg"
+      ],
+      "text": "- Where You Can Fly\n\n- Where to Register as Drone Operator\n\n- How to Become a Drone Operator\n\n- How to Fly in Specific Category",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Malta"
+      ],
+      "text": "- Regulations on Operating Drones\n\n- How to Register Your Drone\n\n- How to Become a Drone Operator\n\n- Where You Can Fly",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Peru"
+      ],
+      "text": "- Requirements for Operations of Remotely Piloted Aircraft Systems (Spanish)\n\n- Regulation on Certification for Air Services and Aerial Work Operators (Spanish)\n\n- Drone Operation Permits (Spanish)",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Slovenia"
+      ],
+      "text": "- Drone Operator Registration and Training\n\n- Where You Can Fly\n\n- How to Operate in the Specific Category (Slovenian)\n\n- Unmanned Aircraft Systems Laws",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "Uganda"
+      ],
+      "text": "- Unmanned Aircraft Systems Regulations\n\n- Procedure for Importation, Operation, and Registration of Drones",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Flying Internationally",
+        "United Arab Emirates"
+      ],
+      "text": "- Unmanned Aircraft: Commercial and Governmental Operations (PDF)\n\n- Unmanned Aircraft: Event Operations (PDF)\n\n- Unmanned Aircraft: Demonstration Operations (PDF)\n\n- Unmanned Aircraft: Recreational Flights (PDF)",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

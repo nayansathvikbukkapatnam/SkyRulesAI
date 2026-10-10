@@ -1,0 +1,40 @@
+{
+  "doc_id": "3ec4f1185be0",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/student-drone-learning-materials",
+  "title": "Student Drone Learning Materials",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-02-18",
+  "crawl_ts": "2026-10-10T18:59:12+00:00",
+  "content_hash": "43109a50a15db42ba71e5d6b405166b228aec0817c025a04769083850d967991",
+  "sections": [
+    {
+      "heading_path": [
+        "Student Drone Learning Materials"
+      ],
+      "text": "These drone kits were made available with federal funding and distributed to organizations that support youth education. Kits help teach 9th- through 12th-grade students about science, aerodynamics, engineering principles, aviation principles, safe flying practices and aviation-related careers. Each kit contained all of the necessary components and instructions to assemble a small drone, including goggles for optional first-person-view flying. This page houses resources for using the kits with students.\n\nThis video includes step-by-step instructions to assemble the drone, bind it to the transmitter, adjust the video transmission channel on the monitor, change the on-screen display, and an introduction to piloting the drone using the transmitter.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Student Drone Learning Materials",
+        "**Know Before You Fly Webinar**"
+      ],
+      "text": "**Held on June 27, 2023**\n\nThis webinar introduces educators to safe, responsible drone use in classrooms and youth programs. It covers basic FAA rules, student eligibility, and how to use Know Before You Fly Student Drone Kits and lesson resources to support hands-on STEM learning while keeping safety and compliance front and center.\n\n**Student Drone Learning Materials Unit of Study**\n\nThis document is a comprehensive resource that helps educators use the drone kits with students using activities that correspond to NextGen Science Standards.\n\nThis is the PDF version of the printed instruction booklet that comes with each drone kit.\n\nThe student drone kit has the potential to be more than a fun, hands-on STEM learning tool: it could be the beginning of a career in aviation!",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Student Drone Learning Materials",
+        "**Practice Flying Before Lifting Off**"
+      ],
+      "text": "Learn to fly the drone using this free flight simulator BEFORE flying the actual drone! This saves your equipment from wear and tear and will help your students be more confident and successful pilots. Directions are located in the manual!",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

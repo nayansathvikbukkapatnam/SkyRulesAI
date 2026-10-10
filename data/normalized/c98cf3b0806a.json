@@ -1,0 +1,24 @@
+{
+  "doc_id": "c98cf3b0806a",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF_2025_DiscoveryDroneFlightLog_SinglePage.pdf",
+  "title": "and are clear of debris like hair or dirt.",
+  "page_type": "toolkit_pdf",
+  "audience": "general",
+  "effective_date": "2025-12-31",
+  "crawl_ts": "2026-10-10T19:03:22+00:00",
+  "content_hash": "91b894517e849862a1e4417c1e260e5af3881ab8852a50225ae0b56692e9fe53",
+  "sections": [
+    {
+      "heading_path": [
+        "and are clear of debris like hair or dirt."
+      ],
+      "text": "and are clear of debris like hair or dirt.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

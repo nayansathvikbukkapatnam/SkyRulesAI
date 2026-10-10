@@ -1,0 +1,24 @@
+{
+  "doc_id": "9d500645bc03",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/key-resources/trainings-and-programs",
+  "title": "Trainings and Programs",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-03",
+  "crawl_ts": "2026-10-10T18:59:21+00:00",
+  "content_hash": "a1c27a5b2b426c19ffa48c20c8385256fc67879a0c6a909b10b539dd5f43f475",
+  "sections": [
+    {
+      "heading_path": [
+        "Trainings and Programs"
+      ],
+      "text": "Trainings and Programs Academy of Model Aeronautics Small Drone Program Structured safety education and flight programs for recreational operators. Learn More What to Know Before You Fly (AMA) Guidance and educational materials to help new flyers understand safety expectations. View Resource AUVSI Trusted UAS Operator Program Professional training framework focused on operational standards and safety best practices. View Program",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

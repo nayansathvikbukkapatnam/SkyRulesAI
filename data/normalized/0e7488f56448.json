@@ -1,0 +1,51 @@
+{
+  "doc_id": "0e7488f56448",
+  "source_url": "https://knowbeforeyoufly.org/whos-flying/recreational",
+  "title": "Fly for Fun",
+  "page_type": "guide_page",
+  "audience": "recreational",
+  "effective_date": "2026-02-20",
+  "crawl_ts": "2026-10-10T18:53:29+00:00",
+  "content_hash": "823cae7a4244847d6f7d68ef46bb416a9ed74d534d09190b9051839d7ca06915",
+  "sections": [
+    {
+      "heading_path": [
+        "Fly for Fun",
+        "What is recreational use of drones?"
+      ],
+      "text": "The recreational use of drones is the operation of an uncrewed or model aircraft for personal interest and enjoyment.\n\nFor example, using a drone to take photographs for your own personal use would be considered recreational. However, using the same device to take photographs or videos for compensation or sale to another individual would be considered a commercial operation or business use. You can visit the FAA’s website for further clarification as to what constitutes commercial or other non-hobby, non-recreational operations.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Fun",
+        "What rules do I need to follow as a recreational operator?"
+      ],
+      "text": "If you want to fly drones or model aircraft for fun, we recommend flying within the programming of a community-based organization such as the Academy of Model Aeronautics (AMA). Recreational flyers must follow specific federal safety requirements. To make these requirements easier to understand, we have organized the key rules below into what you must do and what you must not do before and during every flight.\n\n- Register with the FAA at https://faadronezone.faa.gov/.\n\n- Take The Recreational UAS Safety Test (TRUST) and carry proof of test passage.\n\n- Keep your aircraft in eyesight at all times, and use an observer to assist if needed.\n\n- Remain well clear of and do not interfere with manned aircraft operations, and you must see and avoid other aircraft and obstacles at all times.\n\n- Ensure the operating environment is safe and that the operator is competent and proficient in the operation of the UAS.\n\n- Check and follow all local laws and ordinances before flying over private property.\n\n- Do not fly over unprotected persons or moving vehicles, and remain well clear from individuals and vulnerable property.\n\n- Do not fly in adverse weather conditions such as in high winds or reduced visibility.\n\n- Do not fly under the influence of alcohol or drugs.\n\n- Do not fly near or over sensitive infrastructure or property such as power stations, water treatment facilities, correctional facilities, heavily traveled roadways, government facilities, etc.\n\nUsers of both commercial and recreational UAS should be aware that in remote, rural and agricultural areas, manned aircraft, including fixed-wing aircraft and helicopters, may be operating very close to ground level. Pilots conducting agricultural, firefighting, law enforcement, emergency medical, wildlife survey operations and a variety of other services all legally and routinely work in low-level airspace. Operators controlling UAS in these areas should maintain situational awareness, give way to, and remain a safe distance from these low-level, manned airplanes and helicopters.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Fun",
+        "What rules do I need to follow as a recreational operator?",
+        "Interested in Learning More?"
+      ],
+      "text": "Check out What to know before you fly, an educational course from the AMA that teaches the basics of UAS, their operation and the airspace.\n\nIn June 2021, the FAA announced The Recreational UAS Safety Test (TRUST). TRUST is a legally-required prerequisite for flying your drone recreationally under the Exception for Recreational Flyers. The test is free, can be taken online, and typically takes less than 30 minutes to complete.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Fly for Fun",
+        "What rules do I need to follow as a recreational operator?",
+        "Where Can I Fly?"
+      ],
+      "text": "The Academy of Model Aeronautics (AMA), founded in 1936, is the world’s largest community-based organization whose members fly model aircraft for recreational and educational purposes. Their more than 200,000 members receive up to $2.5 million in insurance coverage and the opportunity to fly at more than 2,500 flying sites across the country.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

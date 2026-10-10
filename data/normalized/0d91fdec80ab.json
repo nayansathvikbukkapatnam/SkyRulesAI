@@ -1,0 +1,24 @@
+{
+  "doc_id": "0d91fdec80ab",
+  "source_url": "https://knowbeforeyoufly.org/knowledge-library/videos",
+  "title": "Videos",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-03",
+  "crawl_ts": "2026-10-10T18:59:22+00:00",
+  "content_hash": "fee3cf1dd57a18d6b682fff5e76ff7aa2752a35ea4911ae09e246a2b140e99c9",
+  "sections": [
+    {
+      "heading_path": [
+        "Videos"
+      ],
+      "text": "Skip to the content\n\n### How to Apply for an Operational Waiver\n\n### FAA Recreational Drone Flying Playlist\n\n### Acrobatic Pilot Sean D. Tucker Flips Out for Drone Safety\n\n### San Francisco 49ers Tackle Drone Safety\n\n### Sinclair Broadcast Group PSA (26 second version)\n\n### Sinclair Broadcast Group PSA (12 second version)",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

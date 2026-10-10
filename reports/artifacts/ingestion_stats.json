@@ -1,0 +1,54 @@
+{
+  "command": "make extract",
+  "manifest_entries": 161,
+  "excluded_disabled_sources": {
+    "www.ecfr.gov": 112
+  },
+  "documents_written": 49,
+  "by_content_type": {
+    "text/html": 30,
+    "application/pdf": 19
+  },
+  "by_source": {
+    "federalregister.gov": 8,
+    "govinfo.gov": 8,
+    "knowbeforeyoufly.org": 33
+  },
+  "by_page_type": {
+    "regulation_summary": 16,
+    "guide_page": 22,
+    "toolkit_pdf": 11
+  },
+  "by_audience": {
+    "general": 37,
+    "part107": 7,
+    "recreational": 3,
+    "public_safety": 2
+  },
+  "extraction_method": {
+    "bs4-federalregister": 8,
+    "pdfplumber": 19,
+    "trafilatura": 22
+  },
+  "sections": 1757,
+  "tables": 157,
+  "documents_with_tables": 17,
+  "duplicates_removed": 0,
+  "duplicates": [],
+  "failures": [],
+  "reserved_sections_skipped": [],
+  "effective_date_found": 49,
+  "effective_date_found_by_source": {
+    "federalregister.gov": 8,
+    "govinfo.gov": 8,
+    "knowbeforeyoufly.org": 33
+  },
+  "documents_needing_ocr": 5,
+  "pages_needing_ocr": 24,
+  "pii_redactions": {
+    "phone": 16,
+    "street_address": 58,
+    "email": 16
+  },
+  "stale_files_removed": 0
+}

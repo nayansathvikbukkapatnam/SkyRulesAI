@@ -1,0 +1,27 @@
+{
+  "doc_id": "f9bed737a3fb",
+  "source_url": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF-Poster_11x17-Final.pdf",
+  "title": "AVIATION CAREER OPPORTUNITIES!",
+  "page_type": "toolkit_pdf",
+  "audience": "general",
+  "effective_date": "2025-12-31",
+  "crawl_ts": "2026-10-10T19:03:10+00:00",
+  "content_hash": "f7b7ae630151ca530f0c886fb3ce404f46f32217f8b8947d568aadf192db485d",
+  "sections": [
+    {
+      "heading_path": [
+        "AVIATION CAREER OPPORTUNITIES!",
+        "AVIATION CAREER OPPORTUNITIES!"
+      ],
+      "text": "MORE INFORMATION Jobs at FAA.gov The Federal Aviation Administration is a great place to learn more about the opportunities in aviation that await you!\n\nVisit www.faa.gov/jobs for more information.\n\nKnow Before You Fly Student Drone Kit",
+      "tables": [
+        "| DRONES | CREWED AVIATION | AVIATION SUPPORT |\n| --- | --- | --- |\n| Drones are used to accomplish tasks in many different fields. What other jobs do you think may involve drones in the future? Advanced Air Mobility Agriculture Archeology Cartography Cinematography Construction Delivery Entertainment Environmental/Conservation Exploration Firefighting Infrastructure Inspection Law Enforcement Military Operations Mining Natural Disaster Support Search and Rescue Security/Surveillance/Scouting Surveying | These roles are what many traditionally think of when considering aviation careers! How many of these are you familiar with? Airline Captain Airline Co-pilot Airline Flight Attendant Airshow Performer Agricultural Cabin Crew Member Cargo/Delivery/Shipping Corporate Pilot Emergency Services Firefighter Pilot Flight Engineer Flight Instructor Flight Navigator Flight Operations Officer Flight Paramedic Helicopter Pilot Loadmaster Military Operations Search and Rescue Test Pilot | These roles enable all aviation to take place safely and ensure the advancement of new technologies. How might YOUR personal interests align with a career in aviation? Aeronautical Engineer Aerospace Engineer Air Boss Air Marshal Air Traffic Controller Aircraft Maintenance Airport Operations Aircraft Production Airport Security Aviation Meteorologist Education Flight Logistics Flight Operations Coordinator Legal Counsel Military Operations Safety Inspector Technical Illustrator Technical Writer Technician |"
+      ]
+    }
+  ],
+  "extraction": {
+    "method": "pdfplumber",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

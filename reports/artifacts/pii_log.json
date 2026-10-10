@@ -1,0 +1,86 @@
+{
+  "command": "make extract",
+  "note": "counts only; matched values are never logged",
+  "totals": {
+    "phone": 16,
+    "street_address": 58,
+    "email": 16
+  },
+  "documents_with_redactions": 19,
+  "by_doc": {
+    "d98d42a3eebf": {
+      "phone": 3,
+      "street_address": 3,
+      "email": 2
+    },
+    "18578889e1bd": {
+      "phone": 1,
+      "street_address": 1
+    },
+    "34e274a857ad": {
+      "phone": 3,
+      "street_address": 6,
+      "email": 1
+    },
+    "f768dbc8f5d4": {
+      "phone": 2,
+      "street_address": 4
+    },
+    "98f22391df77": {
+      "phone": 1,
+      "street_address": 3
+    },
+    "a226c9edd739": {
+      "email": 3,
+      "street_address": 3
+    },
+    "ccf7e5b8f4be": {
+      "street_address": 1
+    },
+    "1caea8f49978": {
+      "email": 2,
+      "street_address": 6
+    },
+    "afc3e9e83f44": {
+      "email": 2,
+      "street_address": 6
+    },
+    "d3b2624ef1ef": {
+      "email": 2,
+      "street_address": 3
+    },
+    "ed572f8de9a9": {
+      "email": 1
+    },
+    "638de1ad05b0": {
+      "phone": 2,
+      "street_address": 4
+    },
+    "e6538e7de5f6": {
+      "phone": 1,
+      "street_address": 1
+    },
+    "a598c89d0df6": {
+      "phone": 2,
+      "street_address": 4
+    },
+    "aa3f056e9982": {
+      "email": 1,
+      "street_address": 4
+    },
+    "f01f177cc2bc": {
+      "street_address": 3
+    },
+    "cdf436877a71": {
+      "email": 1,
+      "street_address": 5
+    },
+    "3b2c31d0fa3b": {
+      "street_address": 1
+    },
+    "82ced57d690e": {
+      "email": 1,
+      "phone": 1
+    }
+  }
+}

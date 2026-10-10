@@ -1,0 +1,50 @@
+{
+  "doc_id": "ed572f8de9a9",
+  "source_url": "https://knowbeforeyoufly.org/",
+  "title": "Home",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-04-13",
+  "crawl_ts": "2026-10-10T18:53:23+00:00",
+  "content_hash": "9d8d1353b002915964d39ae792916c861ab50c651de9e6beacaa2d3111ad90bd",
+  "sections": [
+    {
+      "heading_path": [
+        "Home"
+      ],
+      "text": "Drones and other model aircraft are increasingly available online and on store shelves. Prospective operators—from consumers to businesses—want to fly and fly safely, but many don’t realize that just because you can easily acquire a drone or model aircraft doesn’t mean you can fly it anywhere, or for any purpose.\n\n**Know Before You Fly** is an educational campaign that provides prospective users with the information and guidance they need to fly safely and responsibly. The campaign is organized by the Academy of Model Aeronautics (AMA) and the Association for Uncrewed Vehicle Systems International (AUVSI), in partnership with the Federal Aviation Administration (FAA).",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Home",
+        "Safe Skies Start With You.",
+        "**Knowledge Library**"
+      ],
+      "text": "Find practical tools, guides, and learning materials that support safe and responsible drone use. Explore videos, checklists, educational resources, and hands-on learning materials for students, educators, and drone operators.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Home",
+        "Safe Skies Start With You.",
+        "**Support Know Before You Fly**"
+      ],
+      "text": "The Know Before You Fly campaign is looking for supporters to help spread the word on safe and responsible drone use.\n\nIf your business is interested in becoming an official supporter of the campaign and promoting safe flying, send us a note at [REDACTED EMAIL].",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Home",
+        "Organizing Partners"
+      ],
+      "text": "*In partnership with*",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

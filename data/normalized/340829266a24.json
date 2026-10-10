@@ -1,0 +1,33 @@
+{
+  "doc_id": "340829266a24",
+  "source_url": "https://knowbeforeyoufly.org/compliance-and-safety/avoid-wildfires",
+  "title": "Avoid Wildfires",
+  "page_type": "guide_page",
+  "audience": "general",
+  "effective_date": "2026-02-19",
+  "crawl_ts": "2026-10-10T18:59:15+00:00",
+  "content_hash": "e9193ed70bca87d855151e68332c6cc4713a8bbb5785f4292796d63620fa7b1d",
+  "sections": [
+    {
+      "heading_path": [
+        "Avoid Wildfires",
+        "Why it’s so important to Know Before You Fly!"
+      ],
+      "text": "Federal, state and local wildland fire management agencies and the Federal Aviation Administration (FAA) urge members of the public not to fly Unmanned Aircraft Systems (UAS) over or near wildfires. **This technology can also be referred to as “drones”, “uncrewed aircraft systems”, or “remote systems and remote pilots”.** Unauthorized drone flights pose serious risks to firefighter and public safety operations and the effectiveness of wildfire suppression efforts.\n\nIf an unauthorized drone is detected flying over or near a wildfire, wild- land fire managers may have to ground all airtankers, helicopters, and other aerial firefighting resources until they can confirm that the drone has left the area and they feel confident that it won’t be coming back. This can cause wildfires to become larger and more costly and unduly threaten lives, property, and valuable natural and cultural resources.\n\nAerial firefighting resources, such as airtankers and helicopters, fly at very low altitudes, typically just a few hundred feet above the ground and in the same airspace as drones flown by the public. This creates\n\nthe potential for a mid-air collision, or a pilot distraction that may results in a crash, which could seriously injure or kill aerial and/or ground firefighters.\n\nTemporary Flight Restrictions (TFR) typically put in place during wildfires require all aircraft not involved in wildfire suppression operations to obtain permission to enter specified airspace. Drones, including those flown by the public for fun, are considered aircraft under federal law, and are therefore subject to all TFRs.\n\nMembers of the public should not fly drones over or near wildfires even if a TFR is not in place because of the potential for accidents and disruption of suppression operations. Individuals who are determined to have interfered with wildfire suppression efforts may be subject to civil penalties of up to $20,000 and criminal prosecution punishable by up to two years in jail. Members of the public who have witnessed, or have information about an unauthorized drone flight over or near a wildfire, should contact local law enforcement.\n\nIn 2016, the U.S. Department of the Interior (DOI) stepped up its awareness campaign in partnership with drone industry volunteers through the DOI’s Of- fice of Aviation Services and Office of Wildland Fire. The pilot project made initial wildfire location data available to project volunteer partners (AirMap, Skyward and DJI), allowing drone opera- tors to access near real-time wildfire location data through the partners’ portals, offering operators visibility on where not to fly.\n\nTo use the new expanded service, drone operators can create an account on the Geo- Platform ArcGIS Online Organization at https://idp.geoplatform.gov/registeruser.html. After an account is created go to https://geoplatform.maps.arcgis.com/home/index.html and sign in using the GeoPlatform.gov account. Search for the group “Current Wildland Fires” and request to “Join this group” to gain access to wildland fire location data. For more information, visit the DOI’s Office of Aviation Services at http://www.doi.gov/aviation or download the User Guide at https://www.doi.gov/aviation/irwin-geoplatform-ser-vice-user-guide-v10.\n\nTo inform drone pilots of flight restrictions, the FAA has developed an easy-to-use smartphone app called B4UFLY. The app helps drone pilots determine whether there are restrictions or requirements in effect at the location where they want to fly. B4UFLY is available for free and can be downloaded in the App Store for iOS and Google Play store for Android devices.",
+      "tables": []
+    },
+    {
+      "heading_path": [
+        "Avoid Wildfires",
+        "Additional wildland fire information links:"
+      ],
+      "text": "Incident Information System\n\n*Providing interagency all-risk incident information.*\n\nNational Interagency Fire Center\n\n*Providing wildland fire information, resources, standards, program highlights and career information for wildland fire management agencies located at NIFC.*\n\nThe National Interagency Fire Center (NIFC), located in Boise, Idaho, is the nation’s support center for wildland firefighting. Nine different agencies and organizations are part of NIFC including, the Bureau of Indian Affairs, Bureau of Land Management, Depart- ment of Defense, U.S. Fire Administration, U.S. Fish and Wildlife Service, USDA Forest Service, National Association of State Foresters, National Oceanic and Atmospheric Administration, and National Park Service.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "trafilatura",
+    "ocr_used": false,
+    "warnings": []
+  }
+}
