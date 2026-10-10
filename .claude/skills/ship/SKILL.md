@@ -11,7 +11,7 @@ Ship the current task. Issue to close (optional): $ARGUMENTS
 2. **Quality gate:** run `make lint test`. If anything fails, fix it and run again. If it still fails after a real attempt, stop and explain what is failing instead of shipping.
 
 3. **Safety checks on the diff** (`git diff main...HEAD` plus uncommitted changes):
-   - **Secrets:** no `.env`, no AWS keys, tokens or passwords. Search the diff for `AKIA`, `aws_secret`, `secret_access_key`, `token`, `password`. Any hit: stop.
+   - **Secrets:** no `.env`, no AWS keys, tokens or passwords. Search the diff for `AKIA`, `sk-ant-`, `aws_secret`, `secret_access_key`, `token`, `password`. Any hit: stop.
    - **No large data files:** nothing under `data/raw/`, `data/chunks/`, `data/index/`, `chroma/`, `.cache/` or `logs/`.
    - **No golden set items written by Claude** (`CLAUDE.md` rule 4) and no test-split runs (rule 5).
    - **Report numbers:** any number added to `reports/` comes from a file in `reports/artifacts/` (rule 6).

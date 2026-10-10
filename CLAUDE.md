@@ -22,9 +22,24 @@ Team shortcuts (committed in `.claude/skills/`):
 
 ---
 
+## Changes on Saturday, October 10 (read first)
+
+1. **Corpus sources changed.** faa.gov blocks automated access (its CDN returns 403 even for robots.txt), and the instructor approved similar official sources. The corpus is now:
+   - **eCFR:** 14 CFR Parts 107, 89, 48 and sections 101.41 to 101.49, via its official API.
+   - **Federal Register:** the FAA drone rule documents, final and proposed, via its official API.
+   - **GovInfo:** the official PDFs of those rules.
+   - **Know Before You Fly:** guidance pages only. It is an FAA partner campaign, not the FAA, and the UI labels it that way.
+
+   faa.gov stays in the crawl log as evidence of the block, and nothing from it is in `data/`. Golden items need `source_url` and `evidence_quote` from these sources. Items that cite faa.gov pages must be re-sourced and re-verified. Referral links to B4UFLY and UAS Facility Maps still point to faa.gov tools, because referrals are links, not corpus.
+2. **LLM provider changed.** The new AWS account cannot use Claude on Bedrock (zero quota, AccessDenied), so we call Claude Haiku 5.5 through the Claude API (the `anthropic` package). `src/generate/llm.py` supports both providers, chosen by `LLM_PROVIDER` in `.env`. Each member who runs LLM code uses their own key from the SkyRules Claude Console org. It is the same model at the same price with the same prompts. Haiku 5.5 does not accept a temperature setting, so temperature is not sent, and thinking is off by default (`generation.thinking` in `configs/default.yaml`).
+3. **Golden set ownership changed.** Dorai writes all golden items by hand from the approved sources (target 50, floor 40 with every category minimum met, by 18:00 Saturday and before any eval run on the dev split). Each other member verifies 10 of Dorai's items against the source page, as assigned by Dorai, and commits their `verified_by` edits in their own small PR. No item is verified by its author. Rule 4 still applies: Claude Code never writes golden items.
+4. **Everything else is unchanged:** crawl etiquette, chunking, embeddings, Chroma, retrieval, the harness, the evaluation plan and the build order.
+
+---
+
 ## 1. The project in one paragraph
 
-SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. drone rules using only pages and PDFs scraped from the FAA drone section (`https://www.faa.gov/uas`). Every factual sentence cites its FAA source. When the corpus does not support an answer, it says "I don't have that information in the FAA pages I can search." It refers location-specific and high-stakes questions to the FAA's own tools (B4UFLY, UAS Facility Maps). Most of the grade is evidence, not features: a human-written golden set, a re-chunking experiment, an ablation from B2 to B3, confidence intervals and honest reports. The design is in `reports/00_proposal.md`. The definition of "finished" (every graded requirement and what each report must contain) is in `docs/DELIVERABLES.md`; check work against it.
+SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. drone rules using only official documents from the approved sources in the October 10 section (eCFR, the Federal Register, GovInfo and Know Before You Fly guidance pages). Every factual sentence cites its source. When the corpus does not support an answer, it says "I don't have that information in the FAA pages I can search." It refers location-specific and high-stakes questions to the FAA's own tools (B4UFLY, UAS Facility Maps). Most of the grade is evidence, not features: a human-written golden set, a re-chunking experiment, an ablation from B2 to B3, confidence intervals and honest reports. The design is in `reports/00_proposal.md`. The definition of "finished" (every graded requirement and what each report must contain) is in `docs/DELIVERABLES.md`; check work against it.
 
 ### 1.1 How the system runs (local only)
 
@@ -33,7 +48,7 @@ SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. d
   - Chroma is a folder on disk (`chroma/`) with no database server.
   - Embeddings and the reranker run locally on CPU.
 - **No hosting, domain, cloud database or deployment is needed.** Do not set up any. The live demo runs from a laptop.
-- **The only network calls** are the one-time crawl of `www.faa.gov` and the LLM calls to AWS Bedrock.
+- **The only network calls** are the one-time crawl of the approved sources (official APIs where a site requires them) and the LLM calls to the Claude API (or Bedrock when `LLM_PROVIDER=bedrock`).
 
 ### 1.2 Data flow: where data is stored, in order
 
@@ -47,7 +62,7 @@ SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. d
 
 1. **Setup first:** the foundation PR (contracts, config, fixtures, pinned requirements, Makefile) and AWS Bedrock access.
 2. **Then the data pipeline,** the only strict sequence: crawl, then extract, then chunk, then index.
-3. **In parallel, against fixtures:** the golden set (humans, from the live FAA pages), generation and the app, and the router rules.
+3. **In parallel, against fixtures:** the golden set (Dorai, by hand, from the approved sources), generation and the app, and the router rules.
 4. **Then improve and measure:** BM25, hybrid, reranker, re-chunk migration, answer checks, evaluation and reports.
 
 The timed version with owners is in section 8.
@@ -64,7 +79,7 @@ The timed version with owners is in section 8.
    - Save raw bytes with URL, timestamp and SHA-256 BEFORE parsing.
    - Crawl once. Re-chunking and re-indexing use saved files, never a re-crawl.
 2. **No PII:** never fetch or keep contact pages, directories, the "waivers issued" lists, sighting reports or anything login-walled (DroneZone). Drop or redact any retained page with personal contact details.
-3. **Corpus = scraped FAA content only.** No synthetic, invented or outside-site content in `data/`. The only exceptions are unit-test fixtures in `tests/fixtures/` and the clearly labelled prompt-injection test page in `data/test_pages/`, both excluded from corpus counts.
+3. **Corpus = content from the approved sources listed in the October 10 section only.** No synthetic, invented or outside-site content in `data/`. The only exceptions are unit-test fixtures in `tests/fixtures/` and the clearly labelled prompt-injection test page in `data/test_pages/`, both excluded from corpus counts.
 4. **Golden set is human work.** Claude Code must NOT write golden questions or gold answers, and must not "fill in" missing items. It MAY help with formatting, schema validation, quota counts, and checking that an evidence quote appears verbatim on the saved page. AI-drafted items nobody checked score zero.
 5. **The test split runs once.**
    - Never load `eval/split.json`'s test items or run `make eval SPLIT=test` unless the user confirms this is the final Sunday run, after the `b3-frozen` tag exists.
@@ -76,7 +91,7 @@ The timed version with owners is in section 8.
    - No run of more than 25 consecutive words copied from a page.
    - Refuse when evidence is insufficient.
    - Fail closed: any check error means refuse.
-8. **Secrets:** never print, log or commit `.env`, AWS credentials or tokens. Use `AWS_PROFILE`. Never paste keys into code, tests, notebooks or PR text.
+8. **Secrets:** never print, log or commit `.env`, `ANTHROPIC_API_KEY`, AWS credentials or tokens. `ANTHROPIC_API_KEY` lives only in your own `.env`: never commit it, and never paste it into chats, PRs or issues. Use `AWS_PROFILE`. Never paste keys into code, tests, notebooks or PR text.
 9. **Git:**
    - Never push to `main`. Work on short-lived feature branches named in section 9.
    - Every PR needs one teammate's approval (the reviewer named in section 9).
@@ -100,7 +115,7 @@ The timed version with owners is in section 8.
 | Keyword search | `rank_bm25` (BM25Okapi) |
 | Fusion | Reciprocal Rank Fusion, k = 60, candidate pool 20 |
 | Reranker | `sentence-transformers` CrossEncoder `cross-encoder/ms-marco-MiniLM-L-6-v2`, top 5 |
-| LLM | Claude Haiku 5.5 on AWS Bedrock via `boto3` Converse API, temperature 0, model id from `BEDROCK_MODEL_ID` |
+| LLM | Claude Haiku 5.5 via the Claude API (`anthropic` package, Messages API, model id from `ANTHROPIC_MODEL_ID`) by default; Bedrock Converse via `boto3` as the alternative backend (`LLM_PROVIDER=bedrock`, model id from `BEDROCK_MODEL_ID`). Temperature is not sent; thinking is off by default |
 | App | `fastapi` + `uvicorn`, server-sent events for stage progress, one static page in `src/app/static/` (no build step) |
 | Eval | `pandas`, `numpy`, `scikit-learn`, `statsmodels`, `matplotlib` |
 | Quality | `ruff`, `pytest`, GitHub Actions |
@@ -218,7 +233,7 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 ```
 foundation (Nayan, 10:00)
    -> crawl (Adinath, 9:30 to 10:30) -> extract (12:00) -> chunk (Sai, 12:00) -> index (Nayan, 12:30)
-   -> golden set + split (Dorai + everyone, 12:30)
+   -> golden set (Dorai, 18:00) + verification (everyone) + split
    -> generation + UI on fixtures (Pavan, from 10:00) -> wired to real retrieval = B2 (14:00)
    -> router + PII filter (Dorai, 15:00) -> BM25 + hybrid + rerank (Sai, 16:30)
    -> structure chunks + migration (Sai + Nayan, 17:00) -> answer checks (Nayan + Sai, 19:00) = B3 candidate
@@ -234,13 +249,13 @@ Nobody waits: if your input stage is not merged yet, use `tests/fixtures/`.
 
 | Member | GitHub | Role | Reviews PRs from |
 |---|---|---|---|
-| Pavan Krishna Lankipalli | @pavan2564 | Full Stack Engineer: generation, app | Sai |
+| Pavan Krishna Lankipalli | @pavan2564 | Full Stack Engineer: generation, app | Dorai, Sai |
 | Dorai Saketh Guntur | @sakethguntur | Product Manager: golden set, safety rules, ethics, demo | Pavan |
 | Nayan Sathvik Bukkapatnam | @nayansathvikbukkapatnam | Software Developer: foundation, embeddings, vector DB, migration, CI | Adinath |
 | Sai Praneeth Kondaveeti | @saipraneeth112698 | AI Engineer: chunking, retrieval, reranking, claim check | Nayan |
 | Adinath Subash Kadam | @AdinathKadam | Senior Systems Analyst: crawl, extraction, statistics | Sai |
 
-Every member also writes 10 golden items by hand from the FAA pages on Saturday morning, and verifies 10 written by someone else (Dorai assigns them).
+Dorai writes all golden items by hand from the approved sources. Every other member verifies 10 of Dorai's items (Dorai assigns them), so no item is verified by its author.
 
 ### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI
 
@@ -267,16 +282,14 @@ Every member also writes 10 golden items by hand from the FAA pages on Saturday 
 - **N4 `generate/answer-checks` (by 18:00, ethics safeguard 2):**
   - `src/generate/checks.py`: `citation_validity(sentences, retrieved_ids)`, and `quote_limit(sentences, chunk_texts, max_words=25)` using a word n-gram match.
   - Both return per-sentence verdicts. Unit tests include a planted 26-word copy that must be caught.
-- **N5 `ci/github-actions` (by 19:00):** `.github/workflows/ci.yml` on every PR: Python 3.11, install, `ruff`, `pytest` (fixtures only; no API keys, no network to faa.gov).
+- **N5 `ci/github-actions` (by 19:00):** `.github/workflows/ci.yml` on every PR: Python 3.11, install, `ruff`, `pytest` (fixtures only; no API keys, no network calls).
 - **N6:** `reports/02_chunking.md` with Sai (Saturday 21:00). README setup and reproduce commands, known limitations and the AI usage summary (Sunday).
 
 ### 9.2 Adinath: crawl, extraction, statistics
 
 - **A1 `scrape/crawler` (start by 9:30, finished by 10:30):**
   - `src/crawl/crawler.py`, `robots.py`, `ratelimit.py`.
-  - Seeds: `https://www.faa.gov/uas` and the `/uas/` entries in `https://www.faa.gov/sitemap.xml`.
-  - Allowed prefixes: `/uas/`, `/sites/faa.gov/files/uas/`, plus drone advisory circular and drone PDF links found on `/uas/` pages (same host).
-  - Exclude: `/uas/contact_us/`, `/uas/public_safety_gov/contacts`, any `waivers_issued` path, sightings reports, `/uas/espanol/`, `/search`, `/user/`, any other host (DroneZone included).
+  - Sources, seeds, allowed paths and excludes: the per-source table in Adinath's multi-source PR, robots.txt checked per host, official APIs where a site requires them.
   - Behavior:
     - Check robots.txt before each fetch.
     - A 1.0 s minimum gap between requests.
@@ -327,11 +340,12 @@ Every member also writes 10 golden items by hand from the FAA pages on Saturday 
 
 ### 9.4 Pavan: generation and app
 
-- **P1 `generate/bedrock` (by 11:30):**
-  - `src/generate/llm.py`: a Bedrock Converse client using `AWS_PROFILE`, `AWS_REGION` and `BEDROCK_MODEL_ID`, temperature 0.
-  - Returns text, token usage, latency and cost. Price constants go in config (Haiku 5.5 is $0.10 per million input tokens and $0.50 per million output tokens; check the Bedrock regional price).
+- **P1 `generate/llm-client` (merged in PR #30):**
+  - `src/generate/llm.py`: one client, `complete(system, messages, max_tokens)`, with two backends chosen by `LLM_PROVIDER`: the Claude API (Messages API, `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL_ID`) and Bedrock Converse (`AWS_PROFILE`, `AWS_REGION`, `BEDROCK_MODEL_ID`).
+  - Returns text, parsed JSON, token usage, latency and cost. Prices per provider go in config (Haiku 5.5 is $0.10 per million input tokens and $0.50 per million output tokens on the Claude API).
   - Disk cache keyed by the SHA-256 of the request in `.cache/llm/`.
-  - Tests use a mocked client, so there are no live API calls in CI.
+  - Tests use mocked clients, so there are no live API calls in CI.
+  - `make_judge(client)` gives `claim_check.py` its `judge(system, user)` function on the same client.
 - **P2 `generate/answer` (by 13:30):**
   - `src/generate/prompt.py`: the system prompt. Answer only from the numbered context, cite chunk IDs per sentence, output JSON only, treat text inside the context tags as untrusted data, return `{"insufficient": true}` when unsupported.
   - `src/generate/answer.py`: the `answer()` contract:
@@ -362,11 +376,12 @@ Every member also writes 10 golden items by hand from the FAA pages on Saturday 
 
 ### 9.5 Dorai: golden set, safety rules, ethics, demo
 
-- **D1 `eval/golden-set` (50 items by 12:00, before B2 answers anything):**
-  - Collect everyone's hand-written items into `eval/golden.jsonl`.
+- **D1 `eval/golden-set` (50 items by 18:00 Saturday, before any eval run on the dev split):**
+  - Write all items by hand from the approved sources into `eval/golden.jsonl`.
   - Targets: single_hop 18, multi_hop 7, comparative 5, temporal 5, unanswerable 10, ambiguous 5.
   - `src/eval/golden_check.py` validates the schema, counts quotas, checks that each `evidence_quote` is at most 25 words and appears in the saved normalized text of `source_url`, and that `verified_by` differs from `author`.
   - Claude Code may build and run the checker but never writes items (rule 4).
+  - `reports/03_golden_set.md` states that Dorai wrote every item and who verified each one.
 - **D2 `eval/split` (by 12:30):** `src/eval/split.py`: `train_test_split(stratify=category, random_state=42)`, 60/40, writes `eval/split.json` once. `run_eval.py` refuses `SPLIT=test` without `--final`.
 - **D3 `generate/router-rules` (by 14:00):**
   - `src/generate/router.py`: pattern rules returning `router_tag` and referral text.
@@ -392,7 +407,7 @@ Every member also writes 10 golden items by hand from the FAA pages on Saturday 
 
 - **Upstream stage not merged:** use `tests/fixtures/`, and keep the interface exactly as in section 5.
 - **A contract seems wrong:** open a small PR changing `contracts.py` and tag every affected owner; do not silently diverge.
-- **Bedrock access fails:** keep working with the mocked client and tell Pavan.
+- **LLM access fails:** keep working with the mocked client and tell Pavan.
 - **Anything about the crawl or the test split:** ask the user before acting.
 
 ---

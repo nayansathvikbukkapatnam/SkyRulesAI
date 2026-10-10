@@ -19,7 +19,7 @@ Follow these steps in order. Do not write or change any code in this command; en
 5. **Check setup, without printing any secret:**
    - `.venv/` exists and `requirements.txt` installs. If not, offer to run `make setup`.
    - `.env` exists. Check only which keys are set, never their values; if it is missing, offer to copy `.env.example`.
-   - Pavan only: `aws sts get-caller-identity --profile "$AWS_PROFILE"` succeeds. If not, explain `aws configure --profile <name>`.
+   - Pavan only: `LLM_PROVIDER` is set in `.env`, and so is the matching key name (`ANTHROPIC_API_KEY` for `anthropic`; `AWS_PROFILE` and `AWS_REGION` for `bedrock`). Check names only, never values.
 
 6. **Find this member's progress:**
    - Run `gh pr list --author @me --state all`, `gh issue list --assignee @me` and `gh pr list --search "review-requested:@me"`.
