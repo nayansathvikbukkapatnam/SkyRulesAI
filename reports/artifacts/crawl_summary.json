@@ -1,0 +1,49 @@
+{
+  "command": "make crawl-summary",
+  "manifest_entries": 385,
+  "unique_sha256": 385,
+  "first_fetch": "2026-10-10T18:53:12+00:00",
+  "last_fetch": "2026-10-10T20:24:40+00:00",
+  "by_source": {
+    "ecfr": {
+      "text/html": 112
+    },
+    "federalregister": {
+      "text/html": 8
+    },
+    "govinfo": {
+      "application/pdf": 120,
+      "application/xml": 112
+    },
+    "knowbeforeyoufly": {
+      "text/html": 22,
+      "application/pdf": 11
+    }
+  },
+  "by_content_type": {
+    "text/html": 142,
+    "application/pdf": 131,
+    "application/xml": 112
+  },
+  "robots_allowed_as_recorded_at_fetch": 385,
+  "entries_from_disabled_sources": {
+    "ecfr": 112
+  },
+  "skipped_records": 908,
+  "skipped_unique_urls": 645,
+  "skipped_unique_by_reason": {
+    "duplicate_of_fetched_url": 1,
+    "excluded_login": 22,
+    "index_http_404": 1,
+    "max_urls_for_source": 163,
+    "other_host": 435,
+    "out_of_scope": 7,
+    "robots_disallowed": 13,
+    "sitemap_robots_disallowed": 1,
+    "unsupported_file_type": 2
+  },
+  "robots_disallowed_by_source": {
+    "faa": 14
+  },
+  "quarantined_files": 112
+}
