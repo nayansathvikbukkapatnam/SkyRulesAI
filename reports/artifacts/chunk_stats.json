@@ -1,0 +1,44 @@
+{
+  "fixed@v1": {
+    "n_chunks": 3656,
+    "n_docs": 160,
+    "chunks_per_doc_median": 1.0,
+    "n_tokens": {
+      "min": 10,
+      "median": 512.0,
+      "p95": 512.0,
+      "max": 512,
+      "mean": 497.0
+    },
+    "n_tokens_total": 1816860,
+    "n_at_max_tokens": 2664,
+    "n_over_max_tokens": 0,
+    "by_page_type": {
+      "guide_page": 29,
+      "regulation_summary": 3556,
+      "toolkit_pdf": 71
+    },
+    "written_at": "2026-10-10T21:56:26+00:00"
+  },
+  "struct@v1": {
+    "n_chunks": 4905,
+    "n_docs": 160,
+    "chunks_per_doc_median": 1.0,
+    "n_tokens": {
+      "min": 4,
+      "median": 511.0,
+      "p95": 512.0,
+      "max": 512,
+      "mean": 395.2
+    },
+    "n_tokens_total": 1938586,
+    "n_at_max_tokens": 2174,
+    "n_over_max_tokens": 0,
+    "by_page_type": {
+      "guide_page": 94,
+      "regulation_summary": 4644,
+      "toolkit_pdf": 167
+    },
+    "written_at": "2026-10-10T21:56:37+00:00"
+  }
+}

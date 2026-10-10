@@ -1,6 +1,6 @@
 # 02 Chunking, embedding and re-chunking
 
-**Owners:** Nayan (embedding, vector database, migration) and Sai (chunking strategies, statistics).
+**Owner:** Sai (chunking strategies, statistics, the real-corpus index and migration run, this report). The embedding, vector database and migration code is Nayan's (#14, #22).
 
 Every number in this report is generated from `reports/artifacts/` by `make report-chunking`, which fills the marked tables. Nothing between the `AUTO` markers is typed by hand. A table that still says "Not produced yet" means the run it needs has not happened.
 
@@ -24,35 +24,41 @@ Both strategies read the saved normalized documents in `data/normalized/` and co
 |---|---|---|
 | Code | `src/chunk/fixed.py` | `src/chunk/structure.py` |
 | Unit of work | The whole document: every section's text and tables joined | One section (`heading_path`) at a time |
-| Rule | Windows of 512 tokens, consecutive windows sharing 64 tokens | A section that fits in 512 tokens, heading included, is one chunk. A longer section's text is cut into 512-token windows with 64 tokens of overlap |
+| Rule | Windows of up to 512 tokens, consecutive windows sharing about 64 tokens | A section that fits in 512 tokens, heading included, is one chunk. A longer section's text is cut into windows of up to 512 tokens with about 64 tokens of overlap |
 | Headings | Not included; a window can span several sections | The heading path ("Part 107 > Subpart B > § 107.51 Operating limitations") is put in front of every chunk and stored in `heading_path` |
 | Tables | Can be cut anywhere | Kept whole if they fit. A bigger table is split by rows, never mid-row, with the header row repeated in every part |
 
-**Why compare them:** our sources are organized by headings: eCFR sections, Federal Register document parts, and guidance pages. A fixed window can join the end of one rule to the start of the next, and loses the heading that says which rule it is. Structure-aware chunks keep one topic per chunk and carry the heading words into the embedding and the BM25 index, at the cost of uneven chunk lengths.
+**Window edges fall on word boundaries** (both strategies, #44). bge splits rare words into pieces, and a window cut between two pieces would start a chunk with a fragment that re-tokenizes one token longer, which on the first real-corpus run pushed 24 chunks to 513 tokens. Each window therefore shrinks to the last whole word within 512 tokens, and the next one starts at the first whole word inside the overlap, so the overlap is 64 tokens or slightly less and no text is skipped. Only a single "word" longer than a whole window (for example a very long URL) is cut mid-word.
+
+**Why compare them:** our sources are organized by headings: the 14 CFR sections from GovInfo's 2025 annual edition (one document per section), the parts of each Federal Register rule (and its GovInfo PDF), and the Know Before You Fly guidance pages and PDFs. A fixed window can join the end of one rule to the start of the next, and loses the heading that says which rule it is. Structure-aware chunks keep one topic per chunk and carry the heading words into the embedding and the BM25 index, at the cost of uneven chunk lengths.
 
 ## 2. Chunk counts and token lengths
 
 <!-- BEGIN AUTO:chunk_counts -->
 | Strategy | Chunks | Docs | Chunks/doc (median) | Min | Median | p95 | Max | Mean | Over 512 |
 |---|---|---|---|---|---|---|---|---|---|
-| `fixed@v1` | – | – | – | – | – | – | – | – | – |
-| `struct@v1` | – | – | – | – | – | – | – | – | – |
+| `fixed@v1` | 3656 | 160 | 1 | 10 | 512 | 512 | 512 | 497 | 0 |
+| `struct@v1` | 4905 | 160 | 1 | 4 | 511 | 512 | 512 | 395.2 | 0 |
 
-_Not produced yet: chunk stats for fixed@v1, struct@v1. Run `make chunk STRATEGY=fixed|struct`._
+Token counts use the bge-small tokenizer. Source: `reports/artifacts/chunk_stats.json`.
 <!-- END AUTO:chunk_counts -->
 
 ### Token-length histograms
 
 <!-- BEGIN AUTO:histograms -->
-_Not produced yet: histogram for fixed@v1. Run `make chunk STRATEGY=fixed`._
+![Chunk length, fixed@v1](artifacts/chunk_hist_fixed@v1.png)
 
-_Not produced yet: histogram for struct@v1. Run `make chunk STRATEGY=struct`._
+![Chunk length, struct@v1](artifacts/chunk_hist_struct@v1.png)
 <!-- END AUTO:histograms -->
 
 ### Chunks by page type
 
 <!-- BEGIN AUTO:page_types -->
-_Not produced yet: chunk stats. Run `make chunk STRATEGY=fixed|struct`._
+| Page type | `fixed@v1` chunks | `struct@v1` chunks |
+|---|---|---|
+| `guide_page` | 29 | 94 |
+| `regulation_summary` | 3556 | 4644 |
+| `toolkit_pdf` | 71 | 167 |
 <!-- END AUTO:page_types -->
 
 ## 3. Chunk IDs
@@ -72,7 +78,19 @@ Code: `src/common/contracts.py` (`doc_id_for`, `chunk_id_for`), tested in `tests
 ## 4. Embedding and the vector database
 
 <!-- BEGIN AUTO:embedding -->
-_Not produced yet: embedding record. Run `make index STRATEGY=struct`._
+| Setting | Value |
+|---|---|
+| Model | `BAAI/bge-small-en-v1.5` |
+| Hugging Face revision | `5c38ec7c405ec4b44b94cc5a9bb96e735b38267a` |
+| Dimension | 384 |
+| Distance (checked on the live collection) | cosine |
+| L2-normalized | True |
+| Measured vector norms (sample) | 0.9999999 to 1.0000001 |
+| Query instruction | "Represent this sentence for searching relevant passages: " |
+| sentence-transformers / chromadb | 6.1.0 / 1.5.9 |
+| Indexed strategy, chunks in collection | `fixed@v1`, 3656 |
+
+Source: `reports/artifacts/embedding_info.json`.
 <!-- END AUTO:embedding -->
 
 - **Normalization and metric agree.** Every vector is L2-normalized when it is embedded, and `embed()` raises an error if any norm differs from 1 by more than 0.001. The Chroma collection is created with cosine distance and checked every time it is opened, because Chroma's default is L2. With unit-length vectors, cosine and inner product give the same ranking. Unit tests check both settings, so a mismatch fails the build instead of silently degrading ranking (`tests/test_index.py`).
@@ -93,7 +111,22 @@ Code: `src/index/embed.py`, `src/index/store.py`.
 5. **Orphan check:** index IDs − manifest IDs must be empty, manifest IDs − index IDs must be empty, and no chunk may still be tagged `fixed@v1`. Otherwise the command exits with an error and lists the mismatched IDs.
 
 <!-- BEGIN AUTO:migration -->
-_Not produced yet: migration record. Run `make migrate FROM=fixed@v1 TO=struct@v1`._
+| Step | Result |
+|---|---|
+| Normalized documents read (no re-crawl) | 160 |
+| Index before | `fixed@v1`: 3656 |
+| `struct@v1` chunks generated | 4905 |
+| `fixed@v1` chunks deleted (metadata filter) | 3656 |
+| Stale `struct@v1` chunks deleted | 0 |
+| `struct@v1` chunks upserted | 4905 |
+| Index after | `struct@v1`: 4905 |
+| Index IDs − manifest IDs | 0 |
+| Manifest IDs − index IDs | 0 |
+| Chunks still tagged `fixed@v1` | 0 |
+| Orphan check | **PASS** |
+| Commit, run at | `44e6731`, 2026-10-10T22:03:36+00:00 |
+
+Sources: `reports/artifacts/migration.json`, full log in `reports/artifacts/migration_log.txt`.
 <!-- END AUTO:migration -->
 
 ## 6. Effect on retrieval (dev split)
@@ -106,11 +139,15 @@ _Not produced yet: dev retrieval metrics for b2, a1. Run `make retrieval-eval CO
 
 ## 7. Findings
 
-_To write after the tables above are filled, from those numbers only:_
+Numbers below are from the tables above and `reports/artifacts/chunk_stats.json` (160 documents, commit `44e6731`).
 
-- _How the chunk counts and length distributions differ, and why (for example, short eCFR sections versus long Federal Register documents)._
-- _Whether structure-aware chunks changed Recall@5, MRR and nDCG@10 on dev, and by how much. Uncertainty is reported in 04 and 06._
-- _Chunk-boundary failures found in the error analysis (06), with an example._
+- **Structure-aware chunking makes more, shorter chunks.** `struct@v1` has 4905 chunks against 3656 for `fixed@v1`, with a mean of 395.2 tokens against 497. A section is never merged with its neighbour, so short sections become short chunks of their own (the shortest `struct@v1` chunk is 4 tokens, against 10 for `fixed@v1`), and every long section ends in a partial window.
+- **Most documents fit in one chunk under both strategies** (median 1 chunk per document). The 111 CFR sections are one document per section, so many documents are short.
+- **The long documents hit the 512-token cap.** 2664 `fixed@v1` chunks and 2174 `struct@v1` chunks are exactly 512 tokens; none is longer (Over 512 = 0 for both).
+- **Structure-aware chunks repeat text on purpose.** They hold 1938586 tokens in total against 1816860 for `fixed@v1`, because every chunk of a section carries its heading path and every long section adds its own overlap.
+- **Page types:** `regulation_summary` (the CFR sections, the Federal Register rules and their GovInfo PDFs) accounts for 3556 `fixed@v1` and 4644 `struct@v1` chunks; Know Before You Fly pages (`guide_page`) and PDFs (`toolkit_pdf`) account for the rest.
+- _Pending the dev split: whether structure-aware chunks changed Recall@5, MRR and nDCG@10 on dev, and by how much (section 6; uncertainty in reports 04 and 06)._
+- _Pending the error analysis (06): chunk-boundary failures, with an example._
 
 ## 8. Limitations
 

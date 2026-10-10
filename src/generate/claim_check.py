@@ -11,8 +11,9 @@ Two checks per sentence, both run against the sentence's cited chunks only:
 Fail closed (CLAUDE.md rule 7): a missing cited chunk, a judge error or an answer
 that cannot be parsed counts as unsupported, never as a pass.
 
-The judge is any `judge(system, user) -> str` callable; answer.py passes one that
-wraps the Bedrock client in llm.py (temperature 0, cached).
+The judge is any `judge(system, user) -> str` callable; answer.py passes
+make_judge(client) from llm.py, which uses the configured provider (the Claude API
+by default) and its cache.
 """
 
 from __future__ import annotations
