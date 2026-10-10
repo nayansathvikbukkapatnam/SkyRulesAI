@@ -222,10 +222,10 @@ def embedding_info(store: ChunkStore, vectors_sample: np.ndarray) -> dict[str, A
     }
 
 
-def _bm25_hook(tag: str) -> str:
+def build_bm25_if_available(tag: str) -> str:
     """Build BM25 from the same chunk file once Sai's src/retrieve/bm25.py (S4) provides it."""
     try:
-        from src.retrieve.bm25 import build_bm25  # type: ignore[attr-defined]
+        from src.retrieve.bm25 import build_bm25
     except ImportError:
         return "skipped (src.retrieve.bm25.build_bm25 not merged yet)"
     build_bm25(tag)
@@ -257,7 +257,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         f"{tag}: upserted {stats['upserted']}, removed {stats['stale_removed']} stale, "
         f"collection now {stats['total']} chunks ({seconds:.1f}s)"
     )
-    print(f"BM25: {_bm25_hook(tag)}")
+    print(f"BM25: {build_bm25_if_available(tag)}")
     print(f"wrote {out}")
     return 0
 
