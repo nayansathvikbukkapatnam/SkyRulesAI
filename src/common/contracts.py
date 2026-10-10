@@ -189,8 +189,10 @@ class GoldenItem(TypedDict, total=False):
     category: Category
     question: str
     gold_answer: str
-    source_url: str
-    evidence_quote: str  # 25 words or fewer
+    # A list (one quote per URL, same order) for multi_hop and comparative items
+    # that combine 2+ pages; a single string otherwise.
+    source_url: str | list[str]
+    evidence_quote: str | list[str]  # each 25 words or fewer, verbatim from its page
     searched_for: str  # unanswerable items only
     author: str
     verified_by: str

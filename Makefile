@@ -56,8 +56,8 @@ index: ## embed chunks into Chroma and build BM25 (STRATEGY=fixed|struct)
 migrate: ## re-chunk migration with orphan check (FROM=fixed@v1 TO=struct@v1)
 	$(call run,src.index.migrate,--from $(FROM) --to $(TO))
 
-golden-check: ## validate eval/golden.jsonl (schema, quotas, quotes, verifier)
-	$(call run,src.eval.golden_check,)
+golden-check: ## validate eval/golden.jsonl (schema, quotas, quotes, verifier; NO_QUOTES=1 before extraction)
+	$(call run,src.eval.golden_check,$(if $(NO_QUOTES),--no-quotes))
 
 split: ## stratified 60/40 dev/test split, seed 42 (refuses to overwrite)
 	$(call run,src.eval.split,)
