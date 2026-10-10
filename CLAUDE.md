@@ -27,7 +27,7 @@ Team shortcuts (committed in `.claude/skills/`):
 ### What changed today
 
 1. **Corpus sources changed.** faa.gov blocks automated access (its CDN returns 403 even for robots.txt), and the instructor approved similar official sources. The approved sources, with hosts, seeds and paths, are in `configs/crawl/sources.yaml`:
-   - **GovInfo, 2025 annual edition of 14 CFR:** the drone regulations, one document per section. Parts 107 (small UAS) and 89 (Remote ID) are in volume 2 and Part 48 (registration) is in volume 1, under `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol<N>/`, for example `.../CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-51.xml`. The edition date is January 1, 2025, and it is shown as the content age.
+   - **GovInfo, 2025 annual edition of 14 CFR:** the drone regulations, one PDF per section (112 sections). Parts 107 (small UAS) and 89 (Remote ID) are in volume 2 and Part 48 (registration) is in volume 1, under `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol<N>/`, for example `.../CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec107-51.pdf`. Each part's XML is read only to list its sections. The edition date is January 1, 2025, and it is shown as the content age.
    - **Federal Register:** the 8 FAA drone rule documents (final and proposed), full text through the `full_text` route.
    - **GovInfo PDFs:** the official printed PDF of each of those 8 rules.
    - **Know Before You Fly:** guidance pages and PDFs only. It is an education campaign run in partnership with the FAA, not the FAA, and the UI labels it that way.
@@ -36,7 +36,7 @@ Team shortcuts (committed in `.claude/skills/`):
 2. **eCFR incident.** A robots.txt parser bug (a blank line after `User-agent: *`) hid eCFR's disallow rule, so the first crawl fetched 112 eCFR API pages against robots.txt. The parser is fixed with a test on eCFR's exact file (PR #29), eCFR is disabled, and those files are quarantined: they are never extracted, chunked or indexed. `reports/01_ingestion.md` and `reports/07_ethics.md` describe it honestly.
 3. **LLM provider changed.** The new AWS account cannot use Claude on Bedrock (zero quota, AccessDenied), so we call Claude Haiku 5.5 through the Claude API (the `anthropic` package). `src/generate/llm.py` supports both providers, chosen by `LLM_PROVIDER` in `.env`. Each member who runs LLM code uses their own key from the SkyRules Claude Console org. Haiku 5.5 does not accept a temperature setting, so temperature is not sent, and thinking is off by default (`generation.thinking` in `configs/default.yaml`).
 4. **Golden set ownership changed.** Dorai writes all golden items by hand from the approved sources. Each other member verifies 10 of Dorai's items against the source page, as assigned by Dorai, and commits their `verified_by` edits in their own small PR. No item is verified by its author. Rule 4 still applies: Claude Code never writes golden items.
-5. **Ownership changed.** Nayan now owns the backend (`answer.py`, `server.py`, `log.py`). Pavan owns the LLM client, the prompt and the generation step (`llm.py`, `prompt.py`, `generate.py`), the frontend and report 05. Sai also owns the evaluation runner and answer metrics (`run_eval.py`, `answer_metrics.py`). Section 9 has the details.
+5. **Ownership changed.** Pavan owns generation and the whole app: the LLM client, prompt and generation step (`llm.py`, `prompt.py`, `generate.py`), the backend (`answer.py`, `server.py`, `log.py`, agreed with Nayan), the frontend and report 05. Sai takes Nayan's N10 (real index, migration run, report 02) as S13. Nayan's open tasks all moved, by agreement; his Claude Code does not work on them. Sai also owns the evaluation runner and answer metrics (`run_eval.py`, `answer_metrics.py`). Section 9 has the details.
 6. **How everyone gets the data.** Adinath commits `data/normalized/` (small, public, cleaned text). Every member then builds their own chunks, BM25 index and Chroma locally from it with `make chunk` and `make index`. Deterministic chunk IDs mean everyone gets the same index. `data/raw/`, `data/chunks/`, `data/index/` and `chroma/` are never committed.
 
 ### Done (merged on main)
@@ -45,6 +45,7 @@ Team shortcuts (committed in `.claude/skills/`):
 |---|---|---|
 | Foundation | contracts, config, paths, fixtures, pinned requirements, Makefile, CI | #13, #34 |
 | Crawl | multi-source crawler, robots.txt per host (fixed parser), 1 req/s, raw bytes and manifest | #28, #29 |
+| CFR crawl | 112 GovInfo 14 CFR section PDFs crawled (robots-compliant), extraction support for them | #38 |
 | Extraction | HTML and PDF extraction, PII filter, `data/normalized/` committed (49 documents: 8 Federal Register rules, their 8 GovInfo PDFs, 33 Know Before You Fly pages and PDFs), 5 real samples | #36 |
 | Chunking | fixed-size, structure-aware, chunk stats | #17, #18, #19 |
 | Index | bge embeddings, cosine Chroma with `page_type` filter, re-chunk migration with orphan check | #14, #22 |
@@ -59,15 +60,15 @@ Open: golden items (#16), split (#25), router (#27), all by Dorai.
 
 ```
 Now: data/normalized/ (49 docs) is on main -> everyone: git pull, make chunk + make index      (now)
-Adinath: GovInfo CFR sections (crawl once) + CFR XML extraction -> updated data/normalized/    (by 17:00)
+Adinath: CFR sections crawled (#38) -> make extract -> commit updated data/normalized/          (by 17:00)
    -> everyone: git pull, re-run make chunk + make index (about 160 docs)                       (17:00 to 17:30)
-   -> Sai + Nayan: real chunk stats, real index, migration fixed@v1 -> struct@v1                (17:30 to 19:00)
+   -> Sai: real chunk stats, real index, migration fixed@v1 -> struct@v1, report 02             (17:30 to 21:00)
 Adinath: OCR for the 5 PDFs (24 pages) whose tables are images                                  (by 19:00)
 Dorai: golden items by hand from the live source pages                                          (by 18:00)
    -> make golden-check once data/normalized/ exists, fix quotes, verification by others        (18:30 to 20:00)
    -> merge split (#25), make split                                                             (by 20:30)
-Nayan: answer.py + server.py + log.py on fixtures, then on the real index = B2 end to end       (by 19:30)
-Pavan: prompt.py + generate.py (by 16:30), then the frontend against the SSE contract           (16:30 to 21:00)
+Pavan: prompt.py + generate.py (16:30) -> answer.py (18:00) -> server.py + log.py (19:00)
+       -> B2 end to end in the app (19:30) -> frontend against the real server              (to 21:30)
 Sai: run_eval.py + answer_metrics.py on fixtures (by 18:30), then dev runs B0 to B3 after split (20:30 to 23:00)
 Reports 01 to 04: Saturday 22:30
 Sunday: tune on dev (8:00) -> tag b3-frozen (9:00) -> test split once (9:00 to 10:00)
@@ -80,7 +81,7 @@ Nobody waits: if your input is not on main yet, build and test against `tests/fi
 
 There is no shared database or server to connect to. Every laptop runs the whole system on its own:
 
-- **Code comes through git.** You pull Nayan's server, Sai's retrieval and everyone else's code from `main`.
+- **Code comes through git.** You pull Pavan's server, Sai's retrieval and everyone else's code from `main`.
 - **Data comes through git too, but only `data/normalized/`** (the cleaned text). Nobody else needs `data/raw/`.
 - **You build your own index:** `make chunk STRATEGY=fixed && make index STRATEGY=fixed` creates your own `data/chunks/`, `data/index/` (BM25) and `chroma/` from `data/normalized/`. Chunk IDs are deterministic, so every laptop builds the same index. Re-run it whenever `data/normalized/` changes on `main`.
 - **`make app` starts the server on your own machine** at `http://localhost:8000`. It reads your own `chroma/` and BM25 files and calls Claude with your own key from `.env`.
@@ -106,9 +107,9 @@ Five Claude Code sessions push to the same repo. These rules keep them from coll
 | Owner | Files |
 |---|---|
 | Adinath | `src/crawl/`, `src/extract/`, `configs/crawl/sources.yaml`, `data/normalized/`, `tests/fixtures/real_sample/`, `src/eval/stats.py`, reports 01 and 06 |
-| Nayan | `src/index/`, `src/generate/answer.py`, `src/generate/log.py`, `src/generate/checks.py`, `src/app/server.py`, `src/reports/`, `.github/`, `README.md`, report 02 (with Sai) |
-| Sai | `src/chunk/`, `src/retrieve/`, `src/generate/claim_check.py`, `src/eval/retrieval_metrics.py`, `src/eval/run_eval.py`, `src/eval/answer_metrics.py`, report 04 |
-| Pavan | `src/generate/llm.py`, `src/generate/prompt.py`, `src/generate/generate.py`, `src/app/static/`, `docs/UI_SPEC.md`, report 05 |
+| Nayan | `src/generate/checks.py`, `.github/`, `README.md` (no open tasks; tag him on changes to his merged code) |
+| Sai | `src/chunk/`, `src/index/`, `src/reports/`, report 02, `src/retrieve/`, `src/generate/claim_check.py`, `src/eval/retrieval_metrics.py`, `src/eval/run_eval.py`, `src/eval/answer_metrics.py`, report 04 |
+| Pavan | `src/generate/llm.py`, `src/generate/prompt.py`, `src/generate/generate.py`, `src/generate/answer.py`, `src/generate/log.py`, `src/app/server.py`, `src/app/static/`, `docs/UI_SPEC.md`, report 05 |
 | Dorai | `eval/golden.jsonl`, `eval/split.json`, `src/eval/golden_check.py`, `src/eval/split.py`, `src/generate/router.py`, `data/test_pages/`, `docs/demo_script.md`, reports 03 and 07 |
 
 Each owner also owns the tests for their files (`tests/test_<module>.py`).
@@ -118,10 +119,9 @@ Each owner also owns the tests for their files (`tests/test_<module>.py`).
 | When this merges | Who does what next |
 |---|---|
 | Adinath's updated `data/normalized/` | Everyone pulls and re-runs `make chunk` and `make index` |
-| Pavan's `generate.py` | Nayan replaces his `generate()` stub in `answer.py` |
-| Dorai's router (#27) | Nayan replaces his `route()` stub |
-| Nayan's `answer.py` | Sai switches `run_eval.py` from the fake `answer()` to the real one |
-| Nayan's `server.py` | Pavan switches the frontend from mock events to `make app` on localhost |
+| Dorai's router (#27) | Pavan replaces his `route()` stub in `answer.py` |
+| Pavan's `answer.py` | Sai switches `run_eval.py` from the fake `answer()` to the real one |
+| Sai's `run_eval.py` and answer metrics | Pavan and Sai can measure B2 on dev once the split exists |
 | Verified golden set, then `eval/split.json` | Sai starts the dev runs; Adinath runs the stats on them |
 
 Everything else runs in parallel.
@@ -202,7 +202,6 @@ The timed version with owners is in "Current status and plan" above.
 | Language | Python 3.11, virtual env in `.venv/` |
 | Crawl | `requests`, robots.txt rules with RFC 9309 wildcards (`src/crawl/robots.py`), `tenacity` |
 | HTML extraction | `trafilatura` (fallback `beautifulsoup4`) |
-| XML extraction (GovInfo CFR sections) | `lxml` or the standard library XML parser |
 | PDF extraction | `pdfplumber` (text and tables); `pytesseract` + `Pillow` only for tables stored as images |
 | Tokenizer and embeddings | `sentence-transformers` with `BAAI/bge-small-en-v1.5` (384 dim, normalized), its tokenizer for token counts |
 | Vector DB | `chromadb` `PersistentClient` at `chroma/`, collection `skyrules`, cosine |
@@ -224,7 +223,7 @@ UI reference: build the UI from `docs/UI_SPEC.md` (tokens, layout, every compone
 src/
   common/        config.py (loads configs/*.yaml + .env), paths.py, contracts.py
   crawl/         crawler.py, robots.py, ratelimit.py, sources.py
-  extract/       html.py, xml_cfr.py, pdf.py, ocr.py, pii.py, normalize.py
+  extract/       html.py, pdf.py, ocr.py, pii.py, normalize.py
   chunk/         fixed.py, structure.py, stats.py
   index/         embed.py, store.py, migrate.py
   retrieve/      bm25.py, retrieve.py, rerank.py
@@ -272,7 +271,7 @@ def chunk_id_for(doc_id, strategy, version, ordinal) -> str:
   - `generate(question, passages, cfg, client, closed_book=False) -> Generation`, where `passages` are the reranked candidates and
     `Generation = {status: "answered" | "insufficient" | "error", sentences: [{text, chunk_ids}], raw_text, error, usage: {input_tokens, output_tokens, cost_usd, latency_ms}}`.
     It builds the prompt from `prompt.py` with numbered passages, calls the LLM, parses the JSON, repairs it once with one more call if needed, and maps passage numbers to `chunk_id`s. A truncated or unparseable reply returns `status: "error"`. In closed-book mode (B0) there are no passages and no citations.
-- **Pipeline (Nayan, `src/generate/answer.py`):** `answer(question, history, config, pilot_type="not_sure") -> Answer`:
+- **Pipeline (Pavan, `src/generate/answer.py`):** `answer(question, history, config, pilot_type="not_sure") -> Answer`:
   ```json
   {"status": "answered" | "refused",
    "sentences": [{"text": "...", "chunk_ids": ["..."]}],
@@ -285,7 +284,7 @@ def chunk_id_for(doc_id, strategy, version, ordinal) -> str:
    "cost_usd": 0.0}
   ```
   `answer()` accepts an optional `on_stage(name, status, ms)` callback so the server can stream progress.
-- **Server (Nayan, `src/app/server.py`):** `GET /` serves the static page, `GET /api/health`, and `POST /api/ask` with `{question, history, pilot_type, compare}` streams server-sent events: `stage` events `{name, status, ms}` for `route`, `retrieve`, `rerank`, `generate`, `check`, then one `answer` event with the Answer above. With `compare: true` it returns answers for configs b2 and b3. No answer text is streamed before the checks pass.
+- **Server (Pavan, `src/app/server.py`):** `GET /` serves the static page, `GET /api/health`, and `POST /api/ask` with `{question, history, pilot_type, compare}` streams server-sent events: `stage` events `{name, status, ms}` for `route`, `retrieve`, `rerank`, `generate`, `check`, then one `answer` event with the Answer above. With `compare: true` it returns answers for configs b2 and b3. No answer text is streamed before the checks pass.
 - **Eval results (Sai, `src/eval/run_eval.py`):** `reports/artifacts/eval_<config>_<split>.json` with one record per golden item: `id, category, question, answer (the Answer above), retrieved chunk_ids, pass/fail per metric`, plus the git commit and timestamp.
 - `eval/golden.jsonl`, one item per line:
   `id, category (single_hop|multi_hop|comparative|temporal|unanswerable|ambiguous), question, gold_answer, source_url, evidence_quote (<= 25 words), searched_for (unanswerable only), author, verified_by, verified_date`
@@ -341,8 +340,8 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 ```
 crawl (Adinath) -> extract + PII filter (Adinath) -> data/normalized/ committed
    -> chunk (everyone locally; Sai reports stats) -> index (everyone locally; Nayan reports embedding record)
-   -> retrieve + rerank (Sai, done) -> answer() pipeline (Nayan) <- generate() (Pavan) <- router (Dorai)
-   -> server (Nayan) -> frontend (Pavan)
+   -> retrieve + rerank (Sai, done) -> answer() pipeline (Pavan) <- generate() (Pavan) <- router (Dorai)
+   -> server + frontend (Pavan)
 golden set (Dorai) -> golden-check with quotes (after extraction) -> verification (everyone) -> split (Dorai)
    -> run_eval + answer_metrics (Sai) -> dev runs B0..B3 + ablation (Sai, Adinath) -> stats (Adinath)
 ```
@@ -355,53 +354,29 @@ Times are in "Current status and plan" above. Nobody waits: if your input stage 
 
 | Member | GitHub | Role | Reviews PRs from |
 |---|---|---|---|
-| Pavan Krishna Lankipalli | @pavan2564 | Full Stack Engineer: LLM client, prompt and generation step, frontend | Dorai, Sai |
+| Pavan Krishna Lankipalli | @pavan2564 | Full Stack Engineer: LLM client, generation, backend, frontend | Dorai, Sai |
 | Dorai Saketh Guntur | @sakethguntur | Product Manager: golden set, safety rules, ethics, demo | Pavan |
-| Nayan Sathvik Bukkapatnam | @nayansathvikbukkapatnam | Software Developer: foundation, embeddings, vector DB, migration, CI, backend | Adinath |
-| Sai Praneeth Kondaveeti | @saipraneeth112698 | AI Engineer: chunking, retrieval, reranking, claim check, eval runner | Nayan |
+| Nayan Sathvik Bukkapatnam | @nayansathvikbukkapatnam | Software Developer: foundation, embeddings, vector DB, migration, CI | Adinath |
+| Sai Praneeth Kondaveeti | @saipraneeth112698 | AI Engineer: chunking, index build, retrieval, reranking, claim check, eval runner | Nayan |
 | Adinath Subash Kadam | @AdinathKadam | Senior Systems Analyst: crawl, extraction, statistics | Sai |
 
 Dorai writes all golden items by hand from the approved sources. Every other member verifies 10 of Dorai's items (Dorai assigns them), so no item is verified by its author.
 
 Every member: `data/normalized/` is on `main`, so pull and build your own local index now (section 6), re-run it when the GovInfo CFR sections land, and run the app against it before the demo.
 
-### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI, backend
+### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI
 
 - **Done:** N1 foundation (#13), N2 embeddings and Chroma (#14), N3 re-chunk migration (#22), N4 answer checks (#32), N5 CI (#34), report 02 scaffold and README (#35).
-- **N7 `generate/answer` (next, by 18:00 on fixtures):**
-  - `src/generate/answer.py`: the `answer()` contract in section 5, in this order:
-    1. Follow-up rewrite: `rewrite_followup()` from Pavan's `generate.py`, only when there is history.
-    2. Router: `route()` (Dorai, #27). An injection tag continues with the stripped question; location and high-stakes tags add the referral.
-    3. Retrieve and rerank: `retrieve()` then `rerank()` (Sai), with the config's mode, strategy and filters. Skipped in closed-book mode (B0).
-    4. Evidence gate: refuse when the top `rerank_score` is below `gate_threshold` (from config; skipped when `gate` is false or the threshold is null).
-    5. Generate: `generate()` (Pavan).
-    6. Checks: `check_sentences()` from `checks.py` and `claim_check.py`, as listed in the config's `checks`, with the judge from `make_judge()`.
-    7. Fail closed: refuse if generation returned `insufficient` or `error`, or any check fails or errors.
-    8. Referral: attach it for location and high-stakes tags, also on refusals.
-    9. Build citations from the cited chunks (title, URL, `effective_date`, `source_name`) and record per-stage latency and total cost.
-    10. Log through `log.py`.
-  - Until #27 and Pavan's `generate.py` merge, call them through small stubs with the section 5 signatures, and replace the stubs when they land.
-  - Tests on fixtures with a fake LLM client: an answered path, each refusal path (gate, insufficient, failed check, check error), referral on a location question, closed-book mode, and that `on_stage` fires for every stage.
-- **N8 `app/backend` (by 19:00):**
-  - `src/app/server.py`: the server contract in section 5 (SSE `stage` events, then `answer`; `compare` runs b2 and b3).
-  - Load the config, retrieval indexes, reranker and LLM client once at startup, not per request.
-  - Tests with FastAPI's test client and a fake `answer()`: event order, the final answer event, compare mode, and a clean error event when `answer()` raises.
-  - `make app` works on a laptop with the real local index. Demo B2 end to end to the team by 19:30.
-- **N9 `generate/logging`:** `src/generate/log.py`: append every query to `logs/queries.jsonl` (question, rewrite, router tag, candidate IDs and scores, check verdicts, latency per stage, cost). Never log credentials.
-- **N10 real index and report 02 (with Sai, 18:00 to 21:00):** build `fixed@v1` on the real corpus, run the migration to `struct@v1` with the orphan check, run `make report-chunking`, update report 02's wording for the new sources (GovInfo CFR sections instead of eCFR). Report 02 by Saturday 22:30.
+- **Moved (agreed):** the backend tasks `answer.py`, `server.py` and `log.py` are now Pavan's P7, P8 and P9 (section 9.4), and N10 is now Sai's S13 (section 9.3). Nayan's Claude Code does not work on them. Nayan has no open tasks; he reviews Adinath's PRs and helps with golden set verification.
 
 ### 9.2 Adinath: crawl, extraction, statistics
 
 - **Done:** A1 crawler (#28), the multi-source crawler with the fixed robots parser (#29), and A2 plus A4 for HTML and PDF: extraction, the PII filter, `data/normalized/` with 49 documents and `tests/fixtures/real_sample/` (#36).
-- **A1b `scrape/govinfo-cfr` (in progress, by 17:00):**
-  - Add a `govinfo_cfr` source to `configs/crawl/sources.yaml` for the 2025 annual edition of 14 CFR: Parts 107 and 89 (volume 2) and Part 48 (volume 1), one document per section, for example `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-51.xml`.
-  - Find the section list from a part-level document, read only as an index (like a sitemap, not saved), then fetch each section.
-  - Check GovInfo's robots.txt for every path used, first. Fetch 2 or 3 sample sections, inspect them, then crawl once.
-  - Post the new counts (documents per source, PDFs, table pages) in the group chat.
-- **A2b `extract/cfr-xml` (with A1b, by 17:00):** add `src/extract/xml_cfr.py` for the GovInfo CFR sections (spec below), re-run `make extract`, and commit the updated `data/normalized/` and `ingestion_stats.json`. Tell the group chat, because everyone re-runs `make chunk` and `make index` after it.
+- **A1b `scrape/govinfo-cfr`:** done (#38). 112 section PDFs of 14 CFR Parts 107, 89 and 48 (2025 edition) from GovInfo, part XML used only to list sections, 0 robots refusals.
+- **A2b `extract/cfr-sections` (next, by 17:00):** the CFR section PDFs are trimmed to their own section by `normalize.py` (#38). Re-run `make extract`, and commit the updated `data/normalized/` and `ingestion_stats.json`. Tell the group chat, because everyone re-runs `make chunk` and `make index` after it.
 - **A2 `extract/normalize` (done for HTML and PDF in #36; the spec stays here for reference):**
   - `src/extract/html.py` (Federal Register and Know Before You Fly): trafilatura with headings kept as Markdown `#` levels and tables kept as Markdown tables, with a bs4 fallback. Strip navigation, footers and banners.
-  - `src/extract/xml_cfr.py` (GovInfo CFR sections): section number and heading as the heading path ("14 CFR Part 107 > Subpart B > 107.51 Operating limitations for small unmanned aircraft"), paragraphs as text, and the edition date as `effective_date`.
+  - GovInfo CFR section PDFs: section number and heading as the heading path ("14 CFR Part 107 > Subpart B > 107.51 Operating limitations for small unmanned aircraft"), paragraphs as text, and the edition date as `effective_date`.
   - `src/extract/pdf.py` (GovInfo and Know Before You Fly PDFs): pdfplumber text per page, tables to Markdown, headings by font size and section numbering.
   - `src/extract/normalize.py`:
     - Reads the manifest, skips the quarantined eCFR entries and anything not in an enabled source, and dedupes by content hash (a Federal Register HTML document and its GovInfo PDF are different documents; keep both).
@@ -422,31 +397,52 @@ Every member: `data/normalized/` is on `main`, so pull and build your own local 
 - **S10 `eval/run-eval` (next, by 18:30 on fixtures):**
   - `src/eval/run_eval.py`: for a config and split, run `answer()` on every golden item in the split, and write the eval results contract in section 5. Record the git commit, config and timestamp.
   - Refuse `SPLIT=test` without `--final`, and refuse it entirely if the `b3-frozen` tag does not exist.
-  - Until Nayan's `answer()` merges, test with a fake `answer()`.
+  - Until Pavan's `answer()` (P7) merges, test with a fake `answer()`.
 - **S11 `eval/answer-metrics` (by 19:30):**
   - `src/eval/answer_metrics.py`: answer correctness (an LLM judge through `make_judge`, comparing the answer to `gold_answer`), citation validity, correct-refusal rate on unanswerable items, over-refusal rate on answerable items, latency p50 and p95, and cost per query. Writes per-item pass/fail so Adinath's McNemar tests can use it.
   - Pavan checks the correctness judge against his own hand labels (P6), so keep the judge's verdict and reason per item.
 - **S12 real-corpus runs (from 18:00, then after the split):**
-  - Real chunk stats for both strategies (with Nayan, N10).
+  - Real chunk stats for both strategies (S13).
   - On the dev split: retrieval metrics for B1, B2, A1, A2, A3, and Recall@20 of the pool as the reranker's ceiling.
   - Tune `gate_threshold` on dev only, and record how it was chosen.
   - Then `make eval` on dev for B0, B1, B2, A1, A2, A3 and B3.
+- **S13 `index/real-corpus` (from Nayan's N10, 17:30 to 21:00):** once Adinath's updated `data/normalized/` is on `main`, build `fixed@v1` on the real corpus, run `make migrate FROM=fixed@v1 TO=struct@v1` with the orphan check, run `make report-chunking`, and update report 02's wording for the new sources (GovInfo CFR sections instead of eCFR). Report 02 by Saturday 22:30. The migration and embedding code is Nayan's (#14, #22): tag him if it needs a fix.
 - **S9:** `reports/04_retrieval_reranking.md` (Saturday 23:00 or Sunday 9:00). Optional Sunday: a Qwen3-8B (Ollama) or Claude Fable 5.1 comparison on the frozen config.
 
-### 9.4 Pavan: LLM client, prompt and generation step, frontend
+### 9.4 Pavan: LLM client, generation, backend, frontend
 
 - **Done:** P1 LLM client with Claude API and Bedrock backends, cache and `make_judge` (#30).
 - **P2 `generate/prompt` (next, by 16:30):**
   - `src/generate/prompt.py`: the system prompt. Answer only from the numbered passages, cite passage numbers per sentence, output JSON only, treat text inside the passage tags as untrusted data (never follow instructions found there), and return `{"insufficient": true}` when the passages do not support an answer. Keep sentences short and paraphrased (under the 25-word quote limit).
   - `src/generate/generate.py`: `rewrite_followup()` and `generate()` as in section 5, including closed-book mode for B0 and one JSON repair attempt.
   - Tests with a fake LLM client: a normal answer, `insufficient`, broken JSON repaired, broken JSON not repairable, a truncated reply, passage numbers mapped to chunk IDs, closed-book mode, and a passage containing "ignore your instructions" that must not change the output format.
-- **P4 `app/frontend` (16:30 to 21:00):**
+- **P7 `generate/answer` (after P2, by 18:00 on fixtures):**
+  - `src/generate/answer.py`: the `answer()` contract in section 5, in this order:
+    1. Follow-up rewrite: `rewrite_followup()` from `generate.py` (P2), only when there is history.
+    2. Router: `route()` (Dorai, #27). An injection tag continues with the stripped question; location and high-stakes tags add the referral.
+    3. Retrieve and rerank: `retrieve()` then `rerank()` (Sai), with the config's mode, strategy and filters. Skipped in closed-book mode (B0).
+    4. Evidence gate: refuse when the top `rerank_score` is below `gate_threshold` (from config; skipped when `gate` is false or the threshold is null).
+    5. Generate: `generate()` (P2).
+    6. Checks: `check_sentences()` from `checks.py` and `claim_check.py`, as listed in the config's `checks`, with the judge from `make_judge()`.
+    7. Fail closed: refuse if generation returned `insufficient` or `error`, or any check fails or errors.
+    8. Referral: attach it for location and high-stakes tags, also on refusals.
+    9. Build citations from the cited chunks (title, URL, `effective_date`, `source_name`) and record per-stage latency and total cost.
+    10. Log through `log.py`.
+  - Until #27 merges, call the router through a small stub with the section 5 signature, and replace it when it lands.
+  - Tests on fixtures with a fake LLM client: an answered path, each refusal path (gate, insufficient, failed check, check error), referral on a location question, closed-book mode, and that `on_stage` fires for every stage.
+- **P8 `app/backend` (by 19:00):**
+  - `src/app/server.py`: the server contract in section 5 (SSE `stage` events, then `answer`; `compare` runs b2 and b3).
+  - Load the config, retrieval indexes, reranker and LLM client once at startup, not per request.
+  - Tests with FastAPI's test client and a fake `answer()`: event order, the final answer event, compare mode, and a clean error event when `answer()` raises.
+  - `make app` works on a laptop with the real local index. Demo B2 end to end to the team by 19:30.
+- **P9 `generate/logging` (with P8):** `src/generate/log.py`: append every query to `logs/queries.jsonl` (question, rewrite, router tag, candidate IDs and scores, check verdicts, latency per stage, cost). Never log credentials.
+- **P4 `app/frontend` (after P8, to 21:30; a mock-driven start earlier is fine):**
   - `src/app/static/`: plain HTML, CSS and JS matching the mockup and `docs/UI_SPEC.md`:
     - pilot toggle, preflight stage strip with the drone, cited answer reveal
     - citation hover previews, source cards with freshness badges and source names (Know Before You Fly labelled as an FAA partner campaign)
     - refusal card, location referral, follow-up chips, retrieval trace drawer
     - B2 vs B3 compare, cockpit (dark) mode, the reliability note ("not official FAA guidance")
-  - Build against the server contract in section 5. Until Nayan's server merges, use a small mock in `app.js` that replays recorded SSE events.
+  - Build against the server contract in section 5. Until your server (P8) runs, use a small mock in `app.js` that replays recorded SSE events.
   - No build step; the Google Fonts link for IBM Plex is fine (system font fallback); inline SVG for the drone.
 - **P6:** `reports/05_generation.md` (Sunday): the prompt and grounding design, citation validity, correct-refusal and over-refusal rates, the quote limit, referral behavior, temperature and thinking settings, latency p50 and p95, cost per query, and how the correctness judge was checked: Pavan hand-labels 20 dev answers and reports agreement with the judge.
 
