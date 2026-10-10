@@ -5,7 +5,7 @@ import json
 import pytest
 
 from src.common import paths
-from src.index.store import _bm25_hook
+from src.index.store import build_bm25_if_available
 from src.retrieve.bm25 import BM25Index, build_bm25, tokenize
 
 FIX = paths.FIXTURES
@@ -84,7 +84,7 @@ def test_load_rejects_wrong_tag_and_missing_file(tmp_path):
 def test_store_hook_builds_bm25(tmp_path, monkeypatch):
     monkeypatch.setattr(paths, "CHUNKS", FIX / "chunks")
     monkeypatch.setattr(paths, "INDEX", tmp_path)
-    assert _bm25_hook("struct@v1") == "built"
+    assert build_bm25_if_available("struct@v1") == "built"
     assert (tmp_path / "bm25_struct@v1.pkl").exists()
 
 
