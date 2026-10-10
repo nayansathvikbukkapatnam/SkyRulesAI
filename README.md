@@ -10,7 +10,7 @@ A retrieval-augmented assistant that answers questions about aviation rules and 
 | Pavan | @pavan2564 | TBD |
 | Dorai Saketh Guntur | @sakethguntur | TBD |
 | Adinath Kadam | @AdinathKadam | TBD |
-| Sai Praneeth | TBD | TBD |
+| Sai Praneeth | @saipraneeth112698 | TBD |
 
 ## Setup
 
