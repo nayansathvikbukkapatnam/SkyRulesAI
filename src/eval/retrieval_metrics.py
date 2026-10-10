@@ -106,7 +106,9 @@ def item_metrics(ranked: Sequence[Candidate], pairs: Sequence[tuple[str, str]]) 
         "recall@5": recall_at(5),
         "recall@20": recall_at(20),
         "mrr": 1 / first_hit if first_hit else 0.0,
-        "ndcg@10": dcg / idcg,
+        # One chunk can hit two pairs at once (two quotes from one page), which the
+        # one-pair-per-rank ideal does not model; that is still a perfect ranking.
+        "ndcg@10": min(1.0, dcg / idcg),
         "first_hit_rank": first_hit,
     }
 

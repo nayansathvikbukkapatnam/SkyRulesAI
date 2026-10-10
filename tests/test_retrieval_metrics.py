@@ -91,6 +91,17 @@ def test_duplicate_hits_do_not_inflate_ndcg():
     assert m["ndcg@10"] == pytest.approx(1.0)
 
 
+def test_one_chunk_holding_two_quotes_caps_ndcg_at_one():
+    # A comparative item can cite two quotes from the same page; one chunk may hold both.
+    page = "/uas/recreational_flyers"
+    item = {"source_url": [BASE + page] * 2,
+            "evidence_quote": ["at or below 400 feet", "free online safety test"]}  # fmt: skip
+    both = cand("e", page, "Stay at or below 400 feet and take the free online safety test.")
+    m = item_metrics([both, NOISE], evidence_pairs(item))
+    assert m["recall@5"] == 1.0
+    assert m["ndcg@10"] == 1.0
+
+
 def test_no_hit_scores_zero():
     m = item_metrics([NOISE, OTHER], evidence_pairs(SINGLE))
     assert m == {"recall@5": 0.0, "recall@20": 0.0, "mrr": 0.0, "ndcg@10": 0.0,
