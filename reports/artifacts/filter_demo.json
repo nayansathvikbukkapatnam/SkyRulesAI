@@ -1,0 +1,103 @@
+{
+  "strategy": "struct@v1",
+  "git_commit": "a872426",
+  "cases": [
+    {
+      "query": "How much does it cost to register a drone?",
+      "page_type": "guide_page",
+      "top": [
+        {
+          "chunk_id": "027d5d0c31b3::struct@v1::0002",
+          "page_type": "guide_page",
+          "title": "Fly for Work"
+        },
+        {
+          "chunk_id": "ea99ac2ec68f::struct@v1::0007",
+          "page_type": "guide_page",
+          "title": "Comply and Fly"
+        },
+        {
+          "chunk_id": "ea99ac2ec68f::struct@v1::0005",
+          "page_type": "guide_page",
+          "title": "Comply and Fly"
+        },
+        {
+          "chunk_id": "ea99ac2ec68f::struct@v1::0006",
+          "page_type": "guide_page",
+          "title": "Comply and Fly"
+        },
+        {
+          "chunk_id": "ea99ac2ec68f::struct@v1::0004",
+          "page_type": "guide_page",
+          "title": "Comply and Fly"
+        }
+      ],
+      "all_match": true
+    },
+    {
+      "query": "How much does it cost to register a drone?",
+      "page_type": "regulation_summary",
+      "top": [
+        {
+          "chunk_id": "a598c89d0df6::struct@v1::0180",
+          "page_type": "regulation_summary",
+          "title": "Registration and Marking Requirements for Small Unmanned Aircraft (Federal Register Rule, 2015-12-16)"
+        },
+        {
+          "chunk_id": "e6538e7de5f6::struct@v1::0349",
+          "page_type": "regulation_summary",
+          "title": "Operation and Certification of Small Unmanned Aircraft Systems (Federal Register Rule, 2016-06-28)"
+        },
+        {
+          "chunk_id": "cdf436877a71::struct@v1::0172",
+          "page_type": "regulation_summary",
+          "title": "Registration and Marking Requirements for Small Unmanned Aircraft (Federal Register Rule, 2015-12-16) [PDF]"
+        },
+        {
+          "chunk_id": "f01f177cc2bc::struct@v1::0334",
+          "page_type": "regulation_summary",
+          "title": "Operation and Certification of Small Unmanned Aircraft Systems (Federal Register Rule, 2016-06-28) [PDF]"
+        },
+        {
+          "chunk_id": "34e274a857ad::struct@v1::0227",
+          "page_type": "regulation_summary",
+          "title": "Remote Identification of Unmanned Aircraft Systems (Federal Register Proposed Rule, 2019-12-31)"
+        }
+      ],
+      "all_match": true
+    },
+    {
+      "query": "What are the operating limitations for small unmanned aircraft?",
+      "page_type": "toolkit_pdf",
+      "top": [
+        {
+          "chunk_id": "ddec8ea44a1e::struct@v1::0000",
+          "page_type": "toolkit_pdf",
+          "title": "KBYF_IndexCards2025_v3"
+        },
+        {
+          "chunk_id": "3b2c31d0fa3b::struct@v1::0021",
+          "page_type": "toolkit_pdf",
+          "title": "No Drone Zone - Public Safety Small Drone Playbook"
+        },
+        {
+          "chunk_id": "7473b54fbb77::struct@v1::0002",
+          "page_type": "toolkit_pdf",
+          "title": "https://knowbeforeyoufly.org/wp-content/uploads/2025/12/KBYF-Unit-of-Study-Pages-HiRes-Final.pdf"
+        },
+        {
+          "chunk_id": "3b2c31d0fa3b::struct@v1::0022",
+          "page_type": "toolkit_pdf",
+          "title": "No Drone Zone - Public Safety Small Drone Playbook"
+        },
+        {
+          "chunk_id": "65daa83b00e2::struct@v1::0002",
+          "page_type": "toolkit_pdf",
+          "title": "HAS JUST LANDED"
+        }
+      ],
+      "all_match": true
+    }
+  ],
+  "written_at": "2026-10-10T22:16:45+00:00"
+}

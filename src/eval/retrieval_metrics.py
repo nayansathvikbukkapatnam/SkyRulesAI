@@ -121,6 +121,28 @@ def summarize(rows: Sequence[dict[str, Any]], key: str) -> dict[str, float | Non
     }
 
 
+def bootstrap_ci(
+    values: Sequence[float], n_resamples: int = 10_000, seed: int = 42, level: float = 0.95
+) -> list[float] | None:
+    """Percentile bootstrap interval for the mean, resampling items with replacement."""
+    if not values:
+        return None
+    import numpy as np
+
+    data = np.asarray(values, dtype=float)
+    rng = np.random.default_rng(seed)
+    means = data[rng.integers(0, len(data), size=(n_resamples, len(data)))].mean(axis=1)
+    tail = (1 - level) / 2 * 100
+    lo, hi = np.percentile(means, [tail, 100 - tail])
+    return [round(float(lo), 4), round(float(hi), 4)]
+
+
+def intervals(rows: Sequence[dict[str, Any]], key: str) -> dict[str, list[float] | None]:
+    """95% bootstrap interval of each metric's mean, for one list ("pool" or "final")."""
+    scored = [r[key] for r in rows if r.get(key)]
+    return {m: bootstrap_ci([s[m] for s in scored]) for m in METRICS}
+
+
 def _percentile(values: Sequence[float], q: float) -> float | None:
     if not values:
         return None
@@ -203,6 +225,7 @@ def report(cfg: dict, split: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
         "pool": summarize(scored, "pool"),
         "final": summarize(scored, "final"),
         "pool_recall@20_ceiling": summarize(scored, "pool")["recall@20"],
+        "ci95": {"pool": intervals(scored, "pool"), "final": intervals(scored, "final")},
         "by_category": by_category,
         "latency_ms": latency,
         "items": rows,
