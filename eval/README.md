@@ -4,7 +4,7 @@ One JSON object per line. Items are written by team members from the live FAA pa
 
 | Field | Required for | Notes |
 |---|---|---|
-| `id` | all | Unique, e.g. `dorai-01` |
+| `id` | all | Unique, `g001` to `g050` (zero-padded number, no names) |
 | `category` | all | `single_hop`, `multi_hop`, `comparative`, `temporal`, `unanswerable`, `ambiguous` |
 | `question` | all | As a real user would ask it |
 | `gold_answer` | all except `unanswerable` | Taken from the page, not from memory |
@@ -20,7 +20,7 @@ One JSON object per line. Items are written by team members from the live FAA pa
 Shape only (placeholders, not a real item):
 
 ```json
-{"id": "<name>-01", "category": "single_hop", "question": "<question>", "gold_answer": "<answer from the page>", "source_url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/section-107.<number>", "evidence_quote": "<exact words from the page>", "author": "<name>", "verified_by": "<other name>", "verified_date": "2026-10-10"}
+{"id": "g001", "category": "single_hop", "question": "<question>", "gold_answer": "<answer from the page>", "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-<number>.xml", "evidence_quote": "<exact words from the page>", "author": "<name>", "verified_by": "<other name>", "verified_date": "2026-10-10"}
 ```
 
 Check the file with `make golden-check`. Until `data/normalized/` exists, `make golden-check NO_QUOTES=1` checks everything except whether each quote appears on its saved page. The full check must pass before the split (`make split`).
