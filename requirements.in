@@ -21,7 +21,8 @@ sentence-transformers
 chromadb
 rank-bm25
 
-# 9. Generation
+# 9. Generation (LLM_PROVIDER picks the backend)
+anthropic
 boto3
 
 # App
