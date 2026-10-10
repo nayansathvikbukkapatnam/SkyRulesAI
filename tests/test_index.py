@@ -217,3 +217,35 @@ def test_real_bge_model_is_384_dim_normalized_and_sensible(tmp_path):
     store.upsert(chunks)
     top = store.query("How high can I fly my drone for fun?", k=1)[0]
     assert "400 feet" in top["text"]
+
+
+def test_check_normalized_rejects_nan_and_infinite_vectors():
+    # abs(NaN - 1) > tol is False, so NaN must be caught explicitly.
+    with pytest.raises(ValueError, match="NaN or infinite"):
+        check_normalized(np.array([[np.nan, 0.0], [1.0, 0.0]]))
+    with pytest.raises(ValueError, match="NaN or infinite"):
+        check_normalized(np.array([[np.inf, 0.0]]))
+
+
+def test_own_weights_copies_parameters_and_leaves_stand_ins_alone():
+    torch = pytest.importorskip("torch")
+    from src.index.embed import own_weights
+
+    layer = torch.nn.Linear(4, 2)
+    layer.register_buffer("scale", torch.ones(2))
+    before_w, before_b = layer.weight.data_ptr(), layer.scale.data_ptr()
+    assert own_weights(layer) is layer
+    assert layer.weight.data_ptr() != before_w and layer.scale.data_ptr() != before_b
+    assert torch.isfinite(layer(torch.ones(1, 4))).all()
+
+    class Wrapper:  # a CrossEncoder-style object holding its torch model in .model
+        def __init__(self):
+            self.model = torch.nn.Linear(2, 1)
+
+    wrapped = Wrapper()
+    ptr = wrapped.model.weight.data_ptr()
+    own_weights(wrapped)
+    assert wrapped.model.weight.data_ptr() != ptr
+
+    stand_in = object()
+    assert own_weights(stand_in) is stand_in

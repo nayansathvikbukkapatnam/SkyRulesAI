@@ -1,8 +1,8 @@
 """Stage 4: turn chunk texts into L2-normalized vectors with bge-small-en-v1.5.
 
 Vectors are normalized to length 1 so cosine similarity (the Chroma collection's
-distance) and inner product rank identically. embed() checks every norm and
-raises instead of silently storing an unnormalized vector.
+distance) and inner product rank identically. embed() checks every vector is
+finite with norm 1 and raises instead of silently storing a bad one.
 """
 
 from __future__ import annotations
@@ -14,6 +14,29 @@ from typing import Any
 import numpy as np
 
 NORM_TOLERANCE = 1e-3
+
+
+def own_weights(model: Any) -> Any:
+    """Copy every weight and buffer of a loaded model into memory this process owns.
+
+    With some torch and transformers versions on macOS, weights loaded zero-copy from
+    the safetensors file give NaN in matrix multiplies although every value reads as
+    finite; one copy after loading fixes it (seen with the cross-encoder: NaN for every
+    pair before, -0.34 vs -11.06 after). Copying costs a few MB once, at load.
+    """
+    import torch
+
+    module = model if isinstance(model, torch.nn.Module) else getattr(model, "model", None)
+    if not isinstance(module, torch.nn.Module):
+        return model  # a test stand-in: nothing to copy
+    with torch.no_grad():
+        for param in module.parameters():
+            param.data = param.data.clone()
+        for sub in module.modules():
+            for name, buf in list(sub._buffers.items()):
+                if buf is not None:
+                    sub._buffers[name] = buf.clone()
+    return model
 
 
 class Embedder:
@@ -42,7 +65,7 @@ class Embedder:
             from sentence_transformers import SentenceTransformer
 
             # Embeddings run locally on CPU (CLAUDE.md section 1.1).
-            self._model = SentenceTransformer(self.model_name, device="cpu")
+            self._model = own_weights(SentenceTransformer(self.model_name, device="cpu"))
         return self._model
 
     @property
@@ -70,6 +93,12 @@ class Embedder:
 
 
 def check_normalized(vectors: np.ndarray, tol: float = NORM_TOLERANCE) -> None:
+    nonfinite = np.flatnonzero(~np.isfinite(vectors).all(axis=1))
+    if nonfinite.size:  # NaN fails every comparison, so it must be caught explicitly
+        raise ValueError(
+            f"{nonfinite.size} embedding(s) contain NaN or infinite values "
+            f"(first at row {nonfinite[0]}); the model did not load correctly"
+        )
     norms = np.linalg.norm(vectors, axis=1)
     bad = np.flatnonzero(np.abs(norms - 1.0) > tol)
     if bad.size:

@@ -11,6 +11,7 @@ call's latency is kept in `Reranker.last_latency_ms` for the query log and repor
 
 from __future__ import annotations
 
+import math
 import time
 from collections.abc import Sequence
 from typing import Any
@@ -41,8 +42,11 @@ class Reranker:
         if self._model is None:
             from sentence_transformers import CrossEncoder
 
-            # Runs locally on CPU (CLAUDE.md section 1.1).
-            self._model = CrossEncoder(self.model_name, device="cpu")
+            from src.index.embed import own_weights
+
+            # Runs locally on CPU (CLAUDE.md section 1.1). own_weights() avoids NaN scores
+            # from zero-copy loaded weights on some macOS setups.
+            self._model = own_weights(CrossEncoder(self.model_name, device="cpu"))
         return self._model
 
     def rerank(
@@ -65,6 +69,12 @@ class Reranker:
             RerankedCandidate(**c, rerank_score=float(s))
             for c, s in zip(candidates, scores, strict=True)
         ]
+        bad = [c["chunk_id"] for c in scored if not math.isfinite(c["rerank_score"])]
+        if bad:  # NaN sorts unpredictably and breaks the gate: fail loudly instead
+            raise RuntimeError(
+                f"cross-encoder returned non-finite scores for {len(bad)} of {len(scored)} "
+                f"candidates (first {bad[0]}); the reranker model did not load correctly"
+            )
         scored.sort(key=lambda c: -c["rerank_score"])
         self.last_latency_ms = (time.perf_counter() - started) * 1000
         return scored[:top_n]

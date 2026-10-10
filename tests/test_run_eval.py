@@ -86,6 +86,14 @@ def test_correct_answer_with_valid_citations():
     assert r["judge"] == {"correct": True, "reason": "matches"}
 
 
+def test_closed_book_answer_has_no_citation_validity_to_grade():
+    # B0 retrieves nothing, so its uncited sentences are not applicable, not invalid.
+    b0 = answered([{"text": "Recreational flyers stay at or below 400 feet.", "chunk_ids": []}], [])
+    r = am.item_result(ITEMS[0], b0, yes_judge)
+    assert r["answered"] and r["correct"]
+    assert r["citation_valid"] is None
+
+
 def test_refusing_an_answerable_item_is_over_refusal_and_incorrect():
     r = am.item_result(ITEMS[1], refused([ALT]), yes_judge)
     assert r["over_refused"] is True and r["correct"] is False and r["citation_valid"] is None

@@ -7,7 +7,8 @@ Per item (kept so Adinath's McNemar tests can pair items across configs):
   items, correct means refused. The judge's verdict and reason are kept, so
   Pavan can check the judge against his own hand labels (P6).
 - citation_valid: for answered items, every sentence cites at least one chunk and
-  only chunks that were retrieved (checks.citation_validity). None when refused.
+  only chunks that were retrieved (checks.citation_validity). None when refused, and
+  None in closed-book mode (B0), where nothing is retrieved so there is nothing to cite.
 - refused_correctly / over_refused: refusal behavior on unanswerable and
   answerable items respectively (None where it does not apply).
 - evidence_recall@5: share of the item's evidence quotes found in the reranked
@@ -108,7 +109,7 @@ def item_result(item: dict, answer: dict | None, judge: Judge | None) -> dict[st
     if pairs and chunks:
         out["evidence_recall@5"] = item_metrics(chunks, pairs)["recall@5"]
 
-    if answered:
+    if answered and chunks:  # closed book (B0) retrieves nothing: not applicable, not invalid
         verdicts = citation_validity(answer.get("sentences") or [], [c["chunk_id"] for c in chunks])
         out["citation_valid"] = bool(verdicts) and all(v["ok"] for v in verdicts)
 
