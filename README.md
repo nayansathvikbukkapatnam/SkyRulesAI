@@ -4,11 +4,13 @@ A retrieval-augmented assistant that answers questions about aviation rules and 
 
 ## Team
 
-| Name | Role |
-|------|------|
-| Nayan Sathvik | TBD |
-| _Teammate_ | TBD |
-| _Teammate_ | TBD |
+| Name | GitHub | Role |
+|------|--------|------|
+| Nayan Sathvik | @nayansathvikbukkapatnam | TBD |
+| Pavan | @pavan2564 | TBD |
+| Dorai Saketh Guntur | @sakethguntur | TBD |
+| Adinath Kadam | @AdinathKadam | TBD |
+| Sai Praneeth | TBD | TBD |
 
 ## Setup
 
