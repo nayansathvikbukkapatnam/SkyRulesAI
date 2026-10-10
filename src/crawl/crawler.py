@@ -1,9 +1,12 @@
-"""Crawl the FAA drone section once into data/raw/ (CLAUDE.md rule 1, task A1).
+"""Crawl the allowed drone-rule sources once into data/raw/ (CLAUDE.md rule 1, task A1).
 
+The sites and paths come from configs/crawl/sources.yaml (see src/crawl/sources.py).
 Etiquette is enforced here in code, not by convention:
-- only www.faa.gov, only the drone paths below, never the PII paths in EXCLUDED;
-- robots.txt is checked before every request, redirect hops included;
-- at least 1.0 s between requests (longer if robots.txt sets a Crawl-delay);
+- only the listed hosts and paths, never the PII/login/contact paths they exclude;
+- robots.txt is checked before every request, redirect hops included, with
+  wildcard rules honoured;
+- at least 1.0 s between requests across all sites (longer if a robots.txt sets
+  a Crawl-delay);
 - a User-Agent carrying the team contact email from .env;
 - exponential backoff on 429 and 5xx;
 - raw bytes are saved to data/raw/{sha256}.bin BEFORE any parsing, then one
@@ -11,7 +14,8 @@ Etiquette is enforced here in code, not by convention:
 
 Run with `make crawl` (or `python -m src.crawl.crawler`). It refuses to run when a
 manifest with 150+ documents already exists unless --force is given, and it never
-re-fetches a URL that is already in the manifest (resume).
+re-fetches a URL that is already in the manifest (resume). `--per-source 5` does a
+small dry run whose pages are then reused by the full crawl.
 """
 
 from __future__ import annotations
@@ -20,14 +24,13 @@ import argparse
 import json
 import logging
 import os
-import re
 import sys
 import time
 import xml.etree.ElementTree as ET
 from collections import Counter, deque
 from datetime import UTC, datetime
-from pathlib import Path, PurePosixPath
-from urllib.parse import urljoin, urlsplit, urlunsplit
+from pathlib import Path
+from urllib.parse import urljoin, urlsplit
 
 import requests
 from bs4 import BeautifulSoup
@@ -37,102 +40,26 @@ from src.common import config, paths
 from src.common.contracts import ManifestEntry, canonical_url, sha256_hex
 from src.crawl.ratelimit import RateLimiter
 from src.crawl.robots import RobotsChecker
+from src.crawl.sources import CRAWL, SKIP, SourceSet
 
 log = logging.getLogger(__name__)
 
-HOST = "www.faa.gov"
-START_URL = "https://www.faa.gov/uas"
-SITEMAP_URL = "https://www.faa.gov/sitemap.xml"
 USER_AGENT_TEMPLATE = "SkyRulesAI-MSAI633 (+{email})"
 
-MAX_URLS = 400
 MAX_DEPTH = 3
 MIN_INTERVAL_S = 1.0
 TIMEOUT_S = 30.0
 MAX_ATTEMPTS = 4
 MAX_REDIRECTS = 5
-MAX_SITEMAPS = 50
+MAX_SITEMAPS_PER_SOURCE = 50
 REFUSE_AT = 150
 
-# Pages under these prefixes are fetched and their links followed.
-CRAWL_PREFIXES = ("/uas/", "/sites/faa.gov/files/uas/")
-# Drone advisory circulars and PDFs elsewhere on the same host. Links are only
-# ever taken from drone-section pages, so reaching one of these means a /uas/
-# page linked to it. They are fetched but their own links are not followed.
-LEAF_PREFIXES = (
-    "/regulations_policies/advisory_circulars/",
-    "/documentlibrary/media/advisory_circular/",
-)
-# Checked before anything else, so an excluded path is never requested (rule 2: no PII).
-EXCLUDED = (
-    ("contact_page", re.compile(r"/contact")),
-    ("waivers_issued", re.compile(r"waivers?_issued")),
-    ("sightings", re.compile(r"sighting")),
-    ("spanish", re.compile(r"^/uas/espanol(/|$)")),
-    ("search", re.compile(r"^/search(/|$)")),
-    ("user_account", re.compile(r"^/user(/|$)")),
-    ("login", re.compile(r"log_?in|sign_?in")),
-)
-SKIP_EXTENSIONS = frozenset(
-    ".jpg .jpeg .png .gif .svg .webp .ico .bmp .tif .tiff .mp4 .mov .avi .mp3 .wav "
-    ".zip .gz .css .js .xml .json .rss .doc .docx .xls .xlsx .ppt .pptx .kml .kmz".split()
-)
-
 HTML, PDF = "text/html", "application/pdf"
-CRAWL, LEAF, SKIP = "crawl", "leaf", "skip"
 REDIRECT_CODES = frozenset({301, 302, 303, 307, 308})
 
 
 def user_agent_for(email: str) -> str:
     return USER_AGENT_TEMPLATE.format(email=email)
-
-
-def request_url(href: str, base: str) -> str | None:
-    """Absolute http(s) URL to request for a link, without its fragment; None otherwise.
-
-    The path is kept as the server wrote it (trailing slash included), so a
-    redirect from /uas to /uas/ does not loop back through canonical_url.
-    """
-    try:
-        parts = urlsplit(urljoin(base, (href or "").strip()))
-    except ValueError:
-        return None
-    if parts.scheme not in ("http", "https") or not parts.hostname:
-        return None
-    host = parts.hostname.lower()
-    if host in (HOST, "faa.gov"):
-        parts = parts._replace(scheme="https", netloc=HOST)
-    return urlunsplit(parts._replace(fragment=""))
-
-
-def normalize_link(href: str, base: str) -> str | None:
-    """Canonical URL used as a link's identity (dedupe, manifest), or None."""
-    url = request_url(href, base)
-    if url is None:
-        return None
-    try:
-        return canonical_url(url)
-    except ValueError:
-        return None
-
-
-def scope(url: str) -> tuple[str, str]:
-    """Decide what to do with a URL: (CRAWL | LEAF | SKIP, reason)."""
-    parts = urlsplit(url)
-    if (parts.hostname or "").lower() != HOST:
-        return SKIP, "other_host"
-    path = parts.path.lower()
-    for reason, pattern in EXCLUDED:
-        if pattern.search(path):
-            return SKIP, f"excluded_{reason}"
-    suffix = PurePosixPath(path).suffix
-    if suffix in SKIP_EXTENSIONS:
-        return SKIP, "unsupported_file_type"
-    if path == "/uas" or path.startswith(CRAWL_PREFIXES):
-        return CRAWL, "drone_section"
-    if suffix == ".pdf" or path.startswith(LEAF_PREFIXES):
-        return LEAF, "linked_from_drone_section"
-    return SKIP, "out_of_scope"
 
 
 def content_kind(resp, url: str) -> str | None:
@@ -145,13 +72,13 @@ def content_kind(resp, url: str) -> str | None:
     return None
 
 
-def extract_links(body: bytes, base: str) -> list[str]:
+def extract_links(body: bytes, base: str, sources: SourceSet) -> list[str]:
     """Canonical URLs of every <a href> on an HTML page, in page order, deduped."""
     soup = BeautifulSoup(body, "html.parser")
     links: list[str] = []
     seen: set[str] = set()
     for a in soup.find_all("a", href=True):
-        link = normalize_link(a["href"], base)
+        link = sources.normalize(a["href"], base)
         if link and link not in seen:
             seen.add(link)
             links.append(link)
@@ -199,7 +126,7 @@ class RetryableStatus(Exception):
 
 
 class Crawler:
-    """Breadth-first crawl of the drone section with resume from the manifest.
+    """Breadth-first crawl of the allowed sources with resume from the manifest.
 
     `session` only needs `.get(url, headers=, timeout=, allow_redirects=)`, so tests
     pass a fake site and never touch the network.
@@ -209,11 +136,12 @@ class Crawler:
         self,
         session,
         user_agent: str,
+        sources: SourceSet,
         *,
         raw_dir: Path = paths.RAW,
         manifest_path: Path = paths.MANIFEST,
         skipped_path: Path = paths.SKIPPED,
-        max_urls: int = MAX_URLS,
+        max_urls: int | None = None,
         max_depth: int = MAX_DEPTH,
         limiter: RateLimiter | None = None,
         sleep=time.sleep,
@@ -222,10 +150,11 @@ class Crawler:
     ) -> None:
         self.session = session
         self.user_agent = user_agent
+        self.sources = sources
         self.raw_dir = raw_dir
         self.manifest_path = manifest_path
         self.skipped_path = skipped_path
-        self.max_urls = max_urls
+        self.max_urls = max_urls if max_urls is not None else sources.max_urls_total
         self.max_depth = max_depth
         self.timeout = timeout
         self.limiter = limiter or RateLimiter(MIN_INTERVAL_S, sleep=sleep)
@@ -235,6 +164,7 @@ class Crawler:
         )
         self.robots = RobotsChecker(user_agent, self._fetch_robots_txt)
         self.stats: Counter[str] = Counter()
+        self.saved_by_source: Counter[str] = Counter()
         self.skipped: Counter[str] = Counter()
         self._logged_skips: set[str] = set()
 
@@ -291,8 +221,10 @@ class Crawler:
         """Fetch a URL, following redirects by hand so every hop is checked.
 
         Returns (response, final canonical URL, None) or (None, URL, skip reason).
+        With in_scope_only=False (sitemaps) a redirect must stay on the same host.
         """
         current = url
+        host = urlsplit(url).hostname
         for _ in range(MAX_REDIRECTS + 1):
             if not self._robots_allowed(current):
                 return None, canonical_url(current), "robots_disallowed"
@@ -305,15 +237,15 @@ class Crawler:
             location = resp.headers.get("Location")
             if resp.status_code not in REDIRECT_CODES or not location:
                 return resp, canonical_url(current), None
-            nxt = request_url(location, current)
+            nxt = self.sources.request_url(location, current)
             if nxt is None:
                 return None, canonical_url(current), "bad_redirect"
             target = canonical_url(nxt)
             if in_scope_only:
-                kind, reason = scope(target)
+                kind, reason, _ = self.sources.scope(target)
                 if kind == SKIP:
                     return None, target, f"redirect_{reason}"
-            elif urlsplit(target).hostname != HOST:
+            elif urlsplit(target).hostname != host:
                 return None, target, "redirect_other_host"
             current = nxt
         return None, canonical_url(current), "too_many_redirects"
@@ -365,34 +297,69 @@ class Crawler:
 
     # --- Crawl ----------------------------------------------------------------
 
-    def sitemap_seeds(self, url: str = SITEMAP_URL) -> list[str]:
-        """Drone-section URLs listed in the sitemap (and its child sitemaps)."""
-        pending, visited, seeds = [url], set(), []
-        while pending and len(visited) < MAX_SITEMAPS:
-            sitemap = pending.pop(0)
-            if sitemap in visited:
+    def sitemap_seeds(self) -> list[str]:
+        """In-scope URLs listed in each source's sitemap (and its child sitemaps)."""
+        seeds: list[str] = []
+        for source in self.sources.sources:
+            if not source.sitemap:
                 continue
-            visited.add(sitemap)
-            resp, _, reason = self._fetch(sitemap, in_scope_only=False)
-            if reason is None and resp.status_code != 200:
-                reason = f"http_{resp.status_code}"
-            if reason:
-                self._skip(sitemap, f"sitemap_{reason}", None, None)
-                continue
-            try:
-                root = ET.fromstring(resp.content)
-            except ET.ParseError:
-                self._skip(sitemap, "sitemap_parse_error", None, None)
-                continue
-            locs = [el.text.strip() for el in root.iter() if el.tag.endswith("loc") and el.text]
-            if root.tag.endswith("sitemapindex"):
-                pending += [u for u in (request_url(x, sitemap) for x in locs) if u]
-                continue
-            for loc in locs:
-                link = normalize_link(loc, sitemap)
-                if link and scope(link)[0] == CRAWL and link not in seeds:
-                    seeds.append(link)
+            pending, visited = [source.sitemap], set()
+            while pending and len(visited) < MAX_SITEMAPS_PER_SOURCE:
+                sitemap = pending.pop(0)
+                if sitemap in visited:
+                    continue
+                visited.add(sitemap)
+                resp, _, reason = self._fetch(sitemap, in_scope_only=False)
+                if reason is None and resp.status_code != 200:
+                    reason = f"http_{resp.status_code}"
+                if reason:
+                    self._skip(sitemap, f"sitemap_{reason}", None, None)
+                    continue
+                try:
+                    root = ET.fromstring(resp.content)
+                except ET.ParseError:
+                    self._skip(sitemap, "sitemap_parse_error", None, None)
+                    continue
+                locs = [el.text.strip() for el in root.iter() if el.tag.endswith("loc") and el.text]
+                if root.tag.endswith("sitemapindex"):
+                    children = (self.sources.request_url(x, sitemap) for x in locs)
+                    pending += [u for u in children if u and urlsplit(u).hostname == source.host]
+                    continue
+                for loc in locs:
+                    self._add_seed(seeds, self.sources.normalize(loc, sitemap), source.name)
         return seeds
+
+    def index_seeds(self) -> list[str]:
+        """Seeds listed on each source's index pages (e.g. eCFR section numbers).
+
+        Like sitemaps, index pages are read for discovery only and never saved;
+        each item they list is fetched and saved as its own document.
+        """
+        seeds: list[str] = []
+        for source in self.sources.sources:
+            for index_url in source.index_urls:
+                resp, _, reason = self._fetch(index_url, in_scope_only=False)
+                if reason is None and resp.status_code != 200:
+                    reason = f"http_{resp.status_code}"
+                if reason:
+                    self._skip(index_url, f"index_{reason}", None, None)
+                    continue
+                text = resp.content.decode("utf-8", errors="replace")
+                for match in source.index_pattern.finditer(text):
+                    url = source.index_template.format(*match.groups())
+                    self._add_seed(seeds, self.sources.normalize(url, index_url), source.name)
+        return seeds
+
+    def _add_seed(self, seeds: list[str], link: str | None, source_name: str) -> None:
+        """Keep a discovered URL only if it is in scope for the source that listed it."""
+        if link and link not in seeds:
+            kind, _, name = self.sources.scope(link)
+            if kind != SKIP and name == source_name:
+                seeds.append(link)
+
+    def _source_name(self, url: str) -> str | None:
+        source = self.sources.source_for(url)
+        return source.name if source else None
 
     def run(self, seeds: list[str]) -> None:
         self.raw_dir.mkdir(parents=True, exist_ok=True)
@@ -401,7 +368,9 @@ class Crawler:
         for e in entries:
             done[e["url"]] = e
             done.setdefault(e["final_url"], e)
-        budget = self.max_urls - len(entries)
+        total = len(entries)
+        per_source = Counter(self._source_name(e["url"]) for e in entries)
+        caps = {s.name: s.max_urls for s in self.sources.sources}
 
         queue: deque[tuple[str, int, str | None]] = deque()
         seen: set[str] = set()
@@ -410,7 +379,7 @@ class Crawler:
             if url in seen:
                 return
             seen.add(url)
-            kind, reason = scope(url)
+            kind, reason, _ = self.sources.scope(url)
             if kind == SKIP:
                 self._skip(url, reason, depth, found_on)
             elif depth > self.max_depth:
@@ -419,7 +388,7 @@ class Crawler:
                 queue.append((url, depth, found_on))
 
         for seed in seeds:
-            link = normalize_link(seed, START_URL)
+            link = self.sources.normalize(seed, seed)
             if link:
                 enqueue(link, 0, None)
 
@@ -435,10 +404,15 @@ class Crawler:
                     entry["content_type"],
                 )
             else:
-                if budget <= 0:
+                name = self._source_name(url)
+                if total >= self.max_urls:
                     self._skip(url, "max_urls", depth, found_on)
                     continue
-                budget -= 1
+                if per_source[name] >= caps[name]:
+                    self._skip(url, "max_urls_for_source", depth, found_on)
+                    continue
+                total += 1
+                per_source[name] += 1
                 resp, final_url, reason = self._fetch(url)
                 if reason is None and final_url != url and final_url in done:
                     reason = "duplicate_of_fetched_url"
@@ -455,10 +429,11 @@ class Crawler:
                 done.setdefault(final_url, entry)
                 body = resp.content
                 self.stats["saved"] += 1
-                log.info("[%d] %s depth=%d %s", self.stats["saved"], kind, depth, url)
+                self.saved_by_source[name] += 1
+                log.info("[%d] %s %s depth=%d %s", self.stats["saved"], name, kind, depth, url)
 
-            if kind == HTML and body is not None and scope(final_url)[0] == CRAWL:
-                for link in extract_links(body, final_url):
+            if kind == HTML and body is not None and self.sources.scope(final_url)[0] == CRAWL:
+                for link in extract_links(body, final_url, self.sources):
                     enqueue(link, depth + 1, url)
 
 
@@ -466,14 +441,21 @@ def crawl_stats(crawler: Crawler, started_at: str, n_seeds: int) -> dict:
     """Evidence for reports/01_ingestion.md, written to reports/artifacts/crawl_stats.json."""
     entries = read_manifest(crawler.manifest_path)
     gap = crawler.limiter.min_gap_observed
+    by_source: dict[str, Counter] = {}
+    for e in entries:
+        name = crawler._source_name(e["url"]) or "unknown"
+        by_source.setdefault(name, Counter())[e["content_type"]] += 1
     return {
         "command": "make crawl",
         "started_at": started_at,
         "finished_at": _now(),
         # The real address is in .env; the artifact records only where it comes from.
         "user_agent": user_agent_for("<CRAWL_CONTACT_EMAIL>"),
+        "sources": {
+            s.name: {"host": s.host, "max_urls": s.max_urls} for s in crawler.sources.sources
+        },
         "limits": {
-            "max_urls": crawler.max_urls,
+            "max_urls_total": crawler.max_urls,
             "max_depth": crawler.max_depth,
             "min_interval_s": MIN_INTERVAL_S,
             "effective_min_interval_s": crawler.limiter.min_interval,
@@ -484,20 +466,24 @@ def crawl_stats(crawler: Crawler, started_at: str, n_seeds: int) -> dict:
         "robots": {"checks": crawler.robots.checks, "disallowed": crawler.robots.denied},
         "seeds": n_seeds,
         "saved_this_run": crawler.stats["saved"],
+        "saved_this_run_by_source": dict(crawler.saved_by_source),
         "resumed_from_manifest": crawler.stats["resumed"],
         "manifest": {
             "entries": len(entries),
             "unique_sha256": len({e["sha256"] for e in entries}),
             "by_content_type": dict(Counter(e["content_type"] for e in entries)),
+            "by_source": {k: dict(v) for k, v in sorted(by_source.items())},
         },
         "skipped_this_run_by_reason": dict(sorted(crawler.skipped.items())),
     }
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Crawl the FAA drone section once.")
+    parser = argparse.ArgumentParser(description="Crawl the allowed drone-rule sources once.")
     parser.add_argument("--force", action="store_true", help="run even if a full manifest exists")
-    parser.add_argument("--max-urls", type=int, default=MAX_URLS)
+    parser.add_argument("--sources", help="comma-separated source names (default: all enabled)")
+    parser.add_argument("--per-source", type=int, help="cap every source at N URLs (dry run)")
+    parser.add_argument("--max-urls", type=int, help="total URL cap (default from sources.yaml)")
     parser.add_argument("--max-depth", type=int, default=MAX_DEPTH)
     args = parser.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -509,14 +495,21 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
+    only = args.sources.split(",") if args.sources else None
+    sources = SourceSet.load(only=only, cap=args.per_source)
     email = config.env("CRAWL_CONTACT_EMAIL", required=True)
     started_at = _now()
     with requests.Session() as session:
         crawler = Crawler(
-            session, user_agent_for(email), max_urls=args.max_urls, max_depth=args.max_depth
+            session,
+            user_agent_for(email),
+            sources,
+            max_urls=args.max_urls,
+            max_depth=args.max_depth,
         )
-        seeds = [START_URL] + crawler.sitemap_seeds()
-        log.info("%d seeds (start page + sitemap)", len(seeds))
+        seeds = [u for s in sources.sources for u in s.seeds]
+        seeds += crawler.sitemap_seeds() + crawler.index_seeds()
+        log.info("%d seeds (configured + sitemaps + index pages)", len(seeds))
         crawler.run(seeds)
 
     stats = crawl_stats(crawler, started_at, len(seeds))

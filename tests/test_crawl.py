@@ -1,6 +1,7 @@
-"""Crawler tests against a fake site: no network, no real sleeping (CLAUDE.md rule 1)."""
+"""Crawler tests against fake sites: no network, no real sleeping (CLAUDE.md rule 1)."""
 
 import json
+from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
 
@@ -11,23 +12,24 @@ from tenacity import wait_none
 from src.common.contracts import ManifestEntry, sha256_hex
 from src.crawl import crawler as crawl_mod
 from src.crawl.crawler import (
-    CRAWL,
-    LEAF,
-    SKIP,
     Crawler,
     extract_links,
-    normalize_link,
     read_manifest,
-    scope,
     should_refuse,
     user_agent_for,
 )
 from src.crawl.ratelimit import RateLimiter
 from src.crawl.robots import RobotsChecker
+from src.crawl.sources import CRAWL, LEAF, SKIP, SourceSet
 
 BASE = "https://www.faa.gov"
-ROBOTS_URL = f"{BASE}/robots.txt"
+ECFR = "https://www.ecfr.gov"
+FR = "https://www.federalregister.gov"
+GOVINFO = "https://www.govinfo.gov"
+KBYF = "https://knowbeforeyoufly.org"
+ECFR_SECTION = f"{ECFR}/api/renderer/v1/content/enhanced/current/title-14?section="
 UA = user_agent_for("team@example.com")
+SOURCES = SourceSet.load()  # the real configs/crawl/sources.yaml
 
 
 class FakeClock:
@@ -60,31 +62,40 @@ def page(*hrefs):
 
 
 class FakeSite:
-    """Stands in for requests.Session. A list value is served in order (for retries)."""
+    """Stands in for requests.Session across hosts. A list value is served in order.
+
+    Any /robots.txt not given explicitly allows everything.
+    """
 
     def __init__(self, pages, robots="User-agent: *\nAllow: /\n"):
-        robots_resp = FakeResponse(body=robots.encode(), content_type="text/plain")
-        self.pages = {ROBOTS_URL: robots_resp, **pages}
+        self.pages = pages
+        self.robots = robots
         self.requests = []
 
     def get(self, url, headers=None, timeout=None, allow_redirects=True):
         assert allow_redirects is False, "redirects must be followed by hand"
         self.requests.append((url, headers))
+        if url.endswith("/robots.txt") and url not in self.pages:
+            return FakeResponse(body=self.robots.encode(), content_type="text/plain")
         resp = self.pages.get(url, FakeResponse(404, b"not found"))
         if isinstance(resp, list):
             return resp.pop(0) if len(resp) > 1 else resp[0]
         return resp
 
     def fetched(self):
-        return [u for u, _ in self.requests if u != ROBOTS_URL]
+        return [u for u, _ in self.requests if not u.endswith("/robots.txt")]
+
+    def robots_requests(self):
+        return [u for u, _ in self.requests if u.endswith("/robots.txt")]
 
 
-def make_crawler(tmp_path, site, **kwargs):
+def make_crawler(tmp_path, site, sources=SOURCES, **kwargs):
     clock = FakeClock()
     raw = tmp_path / "raw"
     crawler = Crawler(
         site,
         UA,
+        sources,
         raw_dir=raw,
         manifest_path=raw / "manifest.jsonl",
         skipped_path=raw / "skipped.jsonl",
@@ -127,19 +138,20 @@ def test_rate_limiter_does_not_sleep_when_enough_time_has_passed():
     assert limiter.min_gap_observed == pytest.approx(2.5)
 
 
-def test_crawler_requests_are_at_least_one_second_apart(tmp_path):
+def test_crawler_requests_are_at_least_one_second_apart_across_sites(tmp_path):
     site = FakeSite(
         {
-            f"{BASE}/uas": FakeResponse(body=page("/uas/a", "/uas/b")),
+            f"{BASE}/uas": FakeResponse(body=page("/uas/a")),
             f"{BASE}/uas/a": FakeResponse(body=page()),
-            f"{BASE}/uas/b": FakeResponse(body=page()),
+            f"{KBYF}/": FakeResponse(body=page("/about")),
+            f"{KBYF}/about": FakeResponse(body=page()),
         }
     )
     crawler, clock = make_crawler(tmp_path, site)
-    crawler.run([f"{BASE}/uas"])
-    assert len(site.requests) == 4  # robots.txt + 3 pages
+    crawler.run([f"{BASE}/uas", f"{KBYF}/"])
+    assert len(site.requests) == 6  # 2 robots.txt + 4 pages
     assert crawler.limiter.min_gap_observed >= 1.0
-    assert clock.t >= 3.0
+    assert clock.t >= 5.0
 
 
 # --- robots.txt -------------------------------------------------------------
@@ -162,19 +174,33 @@ def test_robots_disallow_is_respected(tmp_path):
     assert crawler.robots.denied == 1
 
 
-def test_robots_txt_is_read_once_and_checked_before_every_fetch(tmp_path):
+def test_robots_txt_is_read_once_per_site_and_checked_before_every_fetch(tmp_path):
     site = FakeSite(
         {
             f"{BASE}/uas": FakeResponse(body=page("/uas/a", "/uas/b")),
             f"{BASE}/uas/a": FakeResponse(body=page()),
             f"{BASE}/uas/b": FakeResponse(body=page()),
+            f"{KBYF}/": FakeResponse(body=page()),
         }
     )
     crawler, _ = make_crawler(tmp_path, site)
-    crawler.run([f"{BASE}/uas"])
-    assert [u for u, _ in site.requests].count(ROBOTS_URL) == 1
-    assert site.requests[0][0] == ROBOTS_URL
-    assert crawler.robots.checks == 3
+    crawler.run([f"{BASE}/uas", f"{KBYF}/"])
+    assert sorted(site.robots_requests()) == [f"{KBYF}/robots.txt", f"{BASE}/robots.txt"]
+    assert crawler.robots.checks == 4
+
+
+def test_a_blocked_site_does_not_stop_the_others(tmp_path):
+    site = FakeSite(
+        {
+            f"{BASE}/robots.txt": FakeResponse(403, b"Access Denied"),
+            f"{BASE}/uas": FakeResponse(body=page()),
+            f"{KBYF}/": FakeResponse(body=page()),
+        }
+    )
+    crawler, _ = make_crawler(tmp_path, site)
+    crawler.run([f"{BASE}/uas", f"{KBYF}/"])
+    assert site.fetched() == [f"{KBYF}/"]
+    assert skipped(tmp_path)[f"{BASE}/uas"] == "robots_disallowed"
 
 
 def test_crawl_delay_in_robots_txt_widens_the_gap(tmp_path):
@@ -207,56 +233,157 @@ def test_robots_network_error_fails_closed():
     assert RobotsChecker(UA, fetch).allowed(f"{BASE}/uas") is False
 
 
+WILDCARD_ROBOTS = """\
+User-agent: *
+Disallow: /*.json$
+Disallow: /*?s=
+Disallow: /private/
+Allow: /private/public-page
+Allow: /core/*.css$
+Disallow: /core/
+"""
+
+
+@pytest.mark.parametrize(
+    "path, allowed",
+    [
+        ("/data/rules.json", False),  # "*" and "$" are honoured
+        ("/data/rules.json?x=1", True),  # "$" anchors the end of the URL
+        ("/page?s=drone", False),
+        ("/private/secret", False),
+        ("/private/public-page", True),  # the longer Allow beats the shorter Disallow
+        ("/core/theme.css", True),
+        ("/core/script.js", False),
+        ("/uas/getting_started", True),
+    ],
+)
+def test_robots_wildcards_and_longest_match(path, allowed):
+    checker = RobotsChecker(UA, lambda url: (200, WILDCARD_ROBOTS))
+    assert checker.allowed(f"{KBYF}{path}") is allowed
+
+
+# eCFR's real robots.txt layout (2026-10-10): a blank line after "User-agent: *" and
+# indented rules. urllib.robotparser alone drops every rule here and allows all.
+ECFR_ROBOTS = """\
+# See http://www.robotstxt.org/robotstxt.html for documentation
+
+User-agent: *
+
+  Sitemap: https://www.ecfr.gov/sitemaps/sitemap.xml.gz
+  Disallow: /search
+  Disallow: /on/
+  # Don't index developer tool links
+  Disallow: /api/renderer/v1/content/
+  Disallow: /api/versioner/v1/full/
+"""
+
+
+@pytest.mark.parametrize(
+    "path, allowed",
+    [
+        ("/api/renderer/v1/content/enhanced/current/title-14?section=107.31", False),
+        ("/api/versioner/v1/full/2026-10-01/title-14.xml", False),
+        ("/search?q=drone", False),
+        ("/api/versioner/v1/titles.json", True),
+        ("/current/title-14/section-107.31", True),
+    ],
+)
+def test_robots_blank_line_after_user_agent_does_not_drop_the_rules(path, allowed):
+    checker = RobotsChecker(UA, lambda url: (200, ECFR_ROBOTS))
+    assert checker.allowed(f"{ECFR}{path}") is allowed
+
+
+def test_robots_groups_still_split_at_the_next_user_agent():
+    robots = "User-agent: other-bot\n\nDisallow: /\n\nUser-agent: *\n\nDisallow: /private\n"
+    checker = RobotsChecker(UA, lambda url: (200, robots))
+    assert checker.allowed(f"{KBYF}/public") is True
+    assert checker.allowed(f"{KBYF}/private/x") is False
+
+
+def test_robots_group_for_our_user_agent_wins_over_star():
+    robots = "User-agent: *\nDisallow: /\n\nUser-agent: SkyRulesAI-MSAI633\nAllow: /\n"
+    checker = RobotsChecker(UA, lambda url: (200, robots))
+    assert checker.allowed(f"{KBYF}/anything") is True
+
+
 # --- Scope and exclusions ---------------------------------------------------
 
 
 @pytest.mark.parametrize(
-    "url, kind, reason",
+    "url, kind, reason, source",
     [
-        (f"{BASE}/uas", CRAWL, "drone_section"),
-        (f"{BASE}/uas/recreational_flyers", CRAWL, "drone_section"),
-        (f"{BASE}/sites/faa.gov/files/uas/resources/guide.pdf", CRAWL, "drone_section"),
-        (
-            f"{BASE}/documentLibrary/media/Advisory_Circular/AC_107-2A.pdf",
-            LEAF,
-            "linked_from_drone_section",
-        ),
-        (
-            f"{BASE}/regulations_policies/advisory_circulars/index.cfm/go/document.information",
-            LEAF,
-            "linked_from_drone_section",
-        ),
-        (f"{BASE}/uas/contact_us", SKIP, "excluded_contact_page"),
-        (f"{BASE}/uas/public_safety_gov/contacts", SKIP, "excluded_contact_page"),
-        (f"{BASE}/uas/commercial_operators/waivers_issued", SKIP, "excluded_waivers_issued"),
-        (f"{BASE}/uas/resources/public_records/uas_sightings_report", SKIP, "excluded_sightings"),
-        (f"{BASE}/uas/espanol", SKIP, "excluded_spanish"),
-        (f"{BASE}/uas/espanol/inicio", SKIP, "excluded_spanish"),
-        (f"{BASE}/search?q=drone", SKIP, "excluded_search"),
-        (f"{BASE}/user/login", SKIP, "excluded_user_account"),
-        ("https://faadronezone-access.faa.gov/", SKIP, "other_host"),
-        ("https://www.example.com/uas/", SKIP, "other_host"),
-        (f"{BASE}/air_traffic/publications", SKIP, "out_of_scope"),
-        (f"{BASE}/uas/images/drone.png", SKIP, "unsupported_file_type"),
+        # FAA (rule 2 exclusions kept from the original crawler)
+        (f"{BASE}/uas", CRAWL, "in_scope", "faa"),
+        (f"{BASE}/uas/recreational_flyers", CRAWL, "in_scope", "faa"),
+        (f"{BASE}/sites/faa.gov/files/uas/resources/guide.pdf", CRAWL, "in_scope", "faa"),
+        (f"{BASE}/documentLibrary/media/Advisory_Circular/AC_107-2A.pdf", LEAF, None, "faa"),
+        (f"{BASE}/regulations_policies/advisory_circulars/index.cfm", LEAF, None, "faa"),
+        (f"{BASE}/uas/contact_us", SKIP, "excluded_contact_page", "faa"),
+        (f"{BASE}/uas/public_safety_gov/contacts", SKIP, "excluded_contact_page", "faa"),
+        (f"{BASE}/uas/part_107_waivers/waivers_issued", SKIP, "excluded_waivers_issued", "faa"),
+        (f"{BASE}/uas/resources/uas_sightings_report", SKIP, "excluded_sightings", "faa"),
+        (f"{BASE}/uas/espanol/inicio", SKIP, "excluded_spanish", "faa"),
+        (f"{BASE}/search?q=drone", SKIP, "excluded_search", "faa"),
+        (f"{BASE}/user/login", SKIP, "excluded_login", "faa"),
+        (f"{BASE}/air_traffic/publications", SKIP, "out_of_scope", "faa"),
+        (f"{BASE}/uas/images/drone.png", SKIP, "unsupported_file_type", "faa"),
+        # eCFR is disabled (its robots.txt disallows the renderer API): never requested
+        (f"{ECFR_SECTION}107.31", SKIP, "other_host", None),
+        (f"{ECFR}/current/title-14/section-107.31", SKIP, "other_host", None),
+        # Federal Register: only the full text of the listed drone rules
+        (f"{FR}/documents/full_text/html/2021/01/15/2020-28948.html", LEAF, None, None),
+        (f"{FR}/documents/full_text/html/2021/01/15/2021-00001.html", SKIP, "out_of_scope", None),
+        (f"{FR}/d/2020-28948", SKIP, "out_of_scope", "federalregister"),
+        # govinfo: only Federal Register PDFs, as leaves
+        (f"{GOVINFO}/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf", LEAF, None, "govinfo"),
+        (f"{GOVINFO}/app/collection/fr", SKIP, "out_of_scope", "govinfo"),
+        # Know Before You Fly: guidance sections only, not the news posts
+        (f"{KBYF}/", CRAWL, "in_scope", "knowbeforeyoufly"),
+        (f"{KBYF}/whos-flying/recreational/", CRAWL, "in_scope", "knowbeforeyoufly"),
+        (f"{KBYF}/get-started/register-your-drone/", CRAWL, "in_scope", "knowbeforeyoufly"),
+        (f"{KBYF}/good-drone-news-in-the-empire-state", SKIP, "out_of_scope", None),
+        (f"{KBYF}/wp-content/uploads/2024/01/guide.pdf", LEAF, None, "knowbeforeyoufly"),
+        (f"{KBYF}/contact-us/", SKIP, "excluded_contact_page", "knowbeforeyoufly"),
+        (f"{KBYF}/wp-admin/", SKIP, "excluded_site_admin", "knowbeforeyoufly"),
+        (f"{KBYF}/wp-login.php", SKIP, "excluded_login", "knowbeforeyoufly"),
+        (f"{KBYF}/sign-in?redirect_to=x", SKIP, "excluded_login", "knowbeforeyoufly"),
+        (f"{KBYF}/?s=drone", SKIP, "excluded_search", "knowbeforeyoufly"),
+        (f"{KBYF}/tag/safety/", SKIP, "excluded_archive_listing", "knowbeforeyoufly"),
+        (f"{KBYF}/feed/", SKIP, "excluded_feed", "knowbeforeyoufly"),
+        # Never listed, never requested
+        ("https://faadronezone-access.faa.gov/", SKIP, "other_host", None),
+        ("https://web.archive.org/web/2026/https://www.faa.gov/uas", SKIP, "other_host", None),
     ],
 )
-def test_scope_rules(url, kind, reason):
-    assert scope(url) == (kind, reason)
+def test_scope_rules(url, kind, reason, source):
+    got_kind, got_reason, got_source = SOURCES.scope(url)
+    assert got_kind == kind
+    if reason:
+        assert got_reason == reason
+    if source:
+        assert got_source == source
 
 
-def test_normalize_link_makes_absolute_canonical_https_urls():
+def test_disabled_sources_are_not_loaded():
+    assert {"wayback", "ecfr"}.isdisjoint(s.name for s in SOURCES.sources)
+    with pytest.raises(ValueError):
+        SourceSet.load(only=["wayback"])
+
+
+def test_normalize_maps_aliases_to_the_main_host_over_https():
     base = f"{BASE}/uas/getting_started"
-    assert normalize_link("../uas/recreational_flyers/#rules", base) == (
+    assert SOURCES.normalize("../uas/recreational_flyers/#rules", base) == (
         f"{BASE}/uas/recreational_flyers"
     )
-    assert normalize_link("http://faa.gov/uas/", base) == f"{BASE}/uas"
-    assert normalize_link("mailto:someone@faa.gov", base) is None
-    assert normalize_link("javascript:void(0)", base) is None
+    assert SOURCES.normalize("http://faa.gov/uas/", base) == f"{BASE}/uas"
+    assert SOURCES.normalize("http://www.knowbeforeyoufly.org/x", base) == f"{KBYF}/x"
+    assert SOURCES.normalize("mailto:someone@faa.gov", base) is None
+    assert SOURCES.normalize("javascript:void(0)", base) is None
 
 
 def test_extract_links_dedupes_in_page_order():
     body = page("/uas/b", "/uas/a", "/uas/b#x", "tel:123")
-    assert extract_links(body, f"{BASE}/uas") == [f"{BASE}/uas/b", f"{BASE}/uas/a"]
+    assert extract_links(body, f"{BASE}/uas", SOURCES) == [f"{BASE}/uas/b", f"{BASE}/uas/a"]
 
 
 def test_excluded_and_offsite_links_are_never_requested(tmp_path):
@@ -294,6 +421,48 @@ def test_leaf_pages_are_fetched_but_not_expanded(tmp_path):
     crawler, _ = make_crawler(tmp_path, site)
     crawler.run([f"{BASE}/uas"])
     assert site.fetched() == [f"{BASE}/uas", ac]
+
+
+def test_federal_register_full_text_is_saved_but_its_links_are_not_followed(tmp_path):
+    doc = f"{FR}/documents/full_text/html/2021/01/15/2020-28948.html"
+    pdf = f"{GOVINFO}/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf"
+    site = FakeSite(
+        {
+            doc: FakeResponse(body=page(f"{FR}/documents/2021/01/15/2021-00001/unrelated")),
+            pdf: FakeResponse(body=b"%PDF-1.7 rule", content_type="application/pdf"),
+        }
+    )
+    crawler, _ = make_crawler(tmp_path, site)
+    crawler.run([doc, pdf])
+    assert site.fetched() == [doc, pdf]
+    assert crawler.saved_by_source == {"federalregister": 1, "govinfo": 1}
+    assert {e["content_type"] for e in manifest(tmp_path)} == {"text/html", "application/pdf"}
+
+
+def test_ecfr_index_lists_sections_which_are_saved_one_document_each(tmp_path):
+    part = f"{ECFR}/api/renderer/v1/content/enhanced/current/title-14?part=107"
+    full = f"{part}&chapter=I&subchapter=F"
+    index_html = (
+        '<div class="part"><div class="section" id="107.1">a</div>'
+        '<div class="section" id="107.31">b</div><div class="section" id="107.1">dup</div>'
+        '<div class="section" id="101.1">balloons</div>'
+        "</div>"
+    )
+    sources = SourceSet.load(only=["ecfr"], include_disabled=True)
+    sources.sources[0] = replace(sources.sources[0], index_urls=(part,))
+    site = FakeSite(
+        {
+            part: FakeResponse(302, location=full),
+            full: FakeResponse(body=index_html.encode()),
+            f"{ECFR_SECTION}107.1": FakeResponse(body=b"<h4>107.1 Applicability</h4>"),
+            f"{ECFR_SECTION}107.31": FakeResponse(body=b"<h4>107.31 Visual line of sight</h4>"),
+        }
+    )
+    crawler, _ = make_crawler(tmp_path, site, sources=sources)
+    seeds = crawler.index_seeds()
+    assert seeds == [f"{ECFR_SECTION}{n}" for n in ("107.1", "107.31")]  # not 101.1
+    crawler.run(seeds)
+    assert [e["url"] for e in manifest(tmp_path)] == seeds  # the index page itself is not saved
 
 
 # --- Raw store and manifest -------------------------------------------------
@@ -429,7 +598,7 @@ def test_max_depth_stops_the_crawl(tmp_path):
     assert skipped(tmp_path)[f"{BASE}/uas/d4"] == "max_depth"
 
 
-def test_max_urls_caps_the_crawl(tmp_path):
+def test_max_urls_caps_the_whole_crawl(tmp_path):
     site = FakeSite(
         {
             f"{BASE}/uas": FakeResponse(body=page("/uas/a", "/uas/b", "/uas/c")),
@@ -440,6 +609,21 @@ def test_max_urls_caps_the_crawl(tmp_path):
     crawler.run([f"{BASE}/uas"])
     assert len(site.fetched()) == 2
     assert skipped(tmp_path)[f"{BASE}/uas/b"] == "max_urls"
+
+
+def test_per_source_cap_leaves_room_for_other_sources(tmp_path):
+    site = FakeSite(
+        {
+            f"{BASE}/uas": FakeResponse(body=page("/uas/a", "/uas/b")),
+            **{f"{BASE}/uas/{x}": FakeResponse(body=page()) for x in "ab"},
+            f"{KBYF}/": FakeResponse(body=page("/get-started")),
+            f"{KBYF}/get-started": FakeResponse(body=page()),
+        }
+    )
+    crawler, _ = make_crawler(tmp_path, site, sources=SourceSet.load(cap=2))
+    crawler.run([f"{BASE}/uas", f"{KBYF}/"])
+    assert crawler.saved_by_source == {"faa": 2, "knowbeforeyoufly": 2}
+    assert skipped(tmp_path)[f"{BASE}/uas/b"] == "max_urls_for_source"
 
 
 def test_resume_skips_fetched_urls_but_follows_their_saved_links(tmp_path):
@@ -467,23 +651,25 @@ def test_refuses_a_second_full_crawl_without_force(tmp_path):
     assert not should_refuse(path, force=True)
 
 
-def test_sitemap_seeds_keep_only_drone_pages(tmp_path):
+def test_sitemap_seeds_keep_only_in_scope_pages_of_that_source(tmp_path):
     ns = 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'
     index = (
-        f"<sitemapindex {ns}><sitemap><loc>{BASE}/sitemap.xml?page=2</loc></sitemap></sitemapindex>"
+        f"<sitemapindex {ns}><sitemap><loc>{KBYF}/page-sitemap.xml</loc></sitemap>"
+        f"<sitemap><loc>https://evil.example.com/sitemap.xml</loc></sitemap></sitemapindex>"
     )
-    urls = ["/uas/getting_started", "/air_traffic", "/uas/contact_us", "/uas/getting_started/"]
-    urlset = f"<urlset {ns}>" + "".join(f"<url><loc>{BASE}{u}</loc></url>" for u in urls)
+    urls = [f"{KBYF}/get-started/", f"{KBYF}/contact-us/", f"{BASE}/uas", f"{KBYF}/a-news-post"]
+    urlset = f"<urlset {ns}>" + "".join(f"<url><loc>{u}</loc></url>" for u in urls)
     urlset += "</urlset>"
     site = FakeSite(
         {
-            f"{BASE}/sitemap.xml": FakeResponse(
+            f"{KBYF}/sitemap_index.xml": FakeResponse(
                 body=index.encode(), content_type="application/xml"
             ),
-            f"{BASE}/sitemap.xml?page=2": FakeResponse(
+            f"{KBYF}/page-sitemap.xml": FakeResponse(
                 body=urlset.encode(), content_type="application/xml"
             ),
         }
     )
-    crawler, _ = make_crawler(tmp_path, site)
-    assert crawler.sitemap_seeds() == [f"{BASE}/uas/getting_started"]
+    crawler, _ = make_crawler(tmp_path, site, sources=SourceSet.load(only=["knowbeforeyoufly"]))
+    assert crawler.sitemap_seeds() == [f"{KBYF}/get-started"]
+    assert not any("evil.example.com" in u for u in site.fetched())

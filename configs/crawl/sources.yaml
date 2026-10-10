@@ -1,0 +1,164 @@
+# Sites the crawler may fetch (CLAUDE.md rule 1). Read by src/crawl/sources.py.
+#
+# For each source, a URL on its host is:
+#   - skipped if its path (plus query) matches an `exclude_all` or source `exclude` pattern
+#     (checked first; rule 2: no PII, logins, contact pages or directories);
+#   - crawled (fetched AND links followed) if its path matches a `crawl` pattern;
+#   - fetched as a leaf (saved, links NOT followed) if its path matches a `leaf` pattern;
+#   - otherwise skipped as out of scope.
+# Links are only ever taken from crawled pages, so a leaf is always something a
+# crawled page linked to. Patterns are Python regexes on the lowercased path.
+# Any host not listed here is never requested.
+
+max_urls_total: 600
+
+exclude_all:
+  contact_page: '/contact'
+  login: 'log[_-]?in|sign[_-]?in|/my-?account|/account(/|$)'
+  user_account: '^/user(/|$)'
+  search: '^/search(/|$)|[?&](s|q|search)='
+  site_admin: '^/(wp-admin|wp-json|wp-includes|xmlrpc\.php)'
+  feed: '/feed/?$'
+
+sources:
+  # Blocked by Akamai (403 on robots.txt) as of 2026-10-10; kept so that the crawler
+  # records the refusal and picks it up if the FAA allows our User-Agent.
+  - name: faa
+    host: www.faa.gov
+    aliases: [faa.gov]
+    seeds: ['https://www.faa.gov/uas']
+    sitemap: 'https://www.faa.gov/sitemap.xml'
+    max_urls: 400
+    crawl: ['^/uas(/|$)', '^/sites/faa\.gov/files/uas/']
+    leaf:
+      - '\.pdf$'
+      - '^/regulations_policies/advisory_circulars/'
+      - '^/documentlibrary/media/advisory_circular/'
+    exclude:
+      waivers_issued: 'waivers?_issued'
+      sightings: 'sighting'
+      spanish: '^/uas/espanol(/|$)'
+
+  # The drone regulations themselves: 14 CFR Parts 107 (small UAS), 89 (Remote ID),
+  # 48 (registration) and Part 101 Subpart E (recreational, sections 101.41 to 101.49).
+  # eCFR and the Federal Register send automated page requests to
+  # unblock.federalregister.gov, which says programmatic access is limited to
+  # their developer APIs. So both are read only through those APIs.
+  #
+  # The drone regulations: 14 CFR Parts 107 (small UAS), 89 (Remote ID) and
+  # 48 (registration). Current Part 101 has no Subpart E: the old model-aircraft
+  # rule was replaced by the statute 49 U.S.C. 44809, which is not in the CFR, so
+  # recreational rules come from the other sources. Each `index` URL is
+  # one whole part from the renderer API; it is read only to list its section
+  # numbers (like a sitemap, not saved), and each section is then fetched and
+  # saved as its own document through the same API.
+  # DISABLED 2026-10-10: eCFR's robots.txt disallows /api/renderer/v1/content/.
+  # A parser bug (blank line after "User-agent: *") hid that rule, so the first
+  # crawl fetched these sections against robots.txt. Those files are quarantined
+  # and not used; the regulation text needs another, robots-compliant route.
+  - name: ecfr
+    enabled: false
+    host: www.ecfr.gov
+    aliases: [ecfr.gov]
+    seeds: []
+    sitemap: null
+    index:
+      urls:
+        - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=107'
+        - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=89'
+        - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=48'
+      pattern: 'class="section" id="((?:107|89|48)\.\d+)"'
+      template: 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?section={0}'
+    max_urls: 200
+    crawl: []
+    leaf: ['^/api/renderer/v1/content/enhanced/current/title-14$']
+    exclude: {}
+
+  # The FAA's drone rules as published, full text via the API's full_text route
+  # (document numbers and URLs from /api/v1/documents/<numbers>.json):
+  #   2020-28948 Rule      2021-01-15 Remote Identification of Unmanned Aircraft
+  #   2020-28947 Rule      2021-01-15 Operation of Small UAS Over People
+  #   2019-28100 Proposed  2019-12-31 Remote Identification of UAS
+  #   2019-00765 Rule      2019-02-13 External Marking Requirement for Small UA
+  #   2019-00758 Proposed  2019-02-13 Safe and Secure Operations of Small UAS
+  #   2019-00732 Proposed  2019-02-13 Operation of Small UAS Over People
+  #   2016-15079 Rule      2016-06-28 Operation and Certification of Small UAS (Part 107)
+  #   2015-31750 Rule      2015-12-16 Registration and Marking Requirements for Small UA
+  - name: federalregister
+    host: www.federalregister.gov
+    aliases: [federalregister.gov]
+    seeds:
+      - 'https://www.federalregister.gov/documents/full_text/html/2021/01/15/2020-28948.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2021/01/15/2020-28947.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2019/12/31/2019-28100.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2019/02/13/2019-00765.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2019/02/13/2019-00758.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2019/02/13/2019-00732.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2016/06/28/2016-15079.html'
+      - 'https://www.federalregister.gov/documents/full_text/html/2015/12/16/2015-31750.html'
+    sitemap: null
+    # Titles and publication dates as returned by the Federal Register API; the
+    # full_text route has no title. Used by extraction for both the HTML and the
+    # govinfo PDF of each document.
+    documents:
+      '2020-28948': {title: 'Remote Identification of Unmanned Aircraft', type: Rule, published: '2021-01-15', audience: general}
+      '2020-28947': {title: 'Operation of Small Unmanned Aircraft Systems Over People', type: Rule, published: '2021-01-15', audience: part107}
+      '2019-28100': {title: 'Remote Identification of Unmanned Aircraft Systems', type: Proposed Rule, published: '2019-12-31', audience: general}
+      '2019-00765': {title: 'External Marking Requirement for Small Unmanned Aircraft', type: Rule, published: '2019-02-13', audience: general}
+      '2019-00758': {title: 'Safe and Secure Operations of Small Unmanned Aircraft Systems', type: Proposed Rule, published: '2019-02-13', audience: general}
+      '2019-00732': {title: 'Operation of Small Unmanned Aircraft Systems Over People', type: Proposed Rule, published: '2019-02-13', audience: part107}
+      '2016-15079': {title: 'Operation and Certification of Small Unmanned Aircraft Systems', type: Rule, published: '2016-06-28', audience: part107}
+      '2015-31750': {title: 'Registration and Marking Requirements for Small Unmanned Aircraft', type: Rule, published: '2015-12-16', audience: general}
+    max_urls: 20
+    crawl: []
+    leaf:
+      - '^/documents/full_text/html/\d{4}/\d{2}/\d{2}/(2020-28948|2020-28947|2019-28100|2019-00765|2019-00758|2019-00732|2016-15079|2015-31750)\.html$'
+    exclude: {}
+
+  # Official PDF ("printed version") of each Federal Register document above.
+  - name: govinfo
+    host: www.govinfo.gov
+    aliases: [govinfo.gov]
+    seeds:
+      - 'https://www.govinfo.gov/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2021-01-15/pdf/2020-28947.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2019-12-31/pdf/2019-28100.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2019-02-13/pdf/2019-00765.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2019-02-13/pdf/2019-00758.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2019-02-13/pdf/2019-00732.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2016-06-28/pdf/2016-15079.pdf'
+      - 'https://www.govinfo.gov/content/pkg/FR-2015-12-16/pdf/2015-31750.pdf'
+    sitemap: null
+    max_urls: 20
+    crawl: []
+    leaf: ['^/content/pkg/fr-\d{4}-\d{2}-\d{2}/pdf/\d{4}-\d+\.pdf$']
+    exclude: {}
+
+  # Know Before You Fly: plain-language drone safety guidance, an education campaign
+  # run in partnership with the FAA (not the FAA itself). robots.txt allows all paths.
+  # Only the guidance sections are crawled; the site's news posts sit at root-level
+  # slugs and are out of scope. Seeds come from the page sitemap (not the post one).
+  - name: knowbeforeyoufly
+    host: knowbeforeyoufly.org
+    aliases: [www.knowbeforeyoufly.org]
+    seeds: ['https://knowbeforeyoufly.org/']
+    sitemap: 'https://knowbeforeyoufly.org/page-sitemap.xml'
+    max_urls: 100
+    crawl:
+      - '^/$'
+      - '^/(get-started|compliance-and-safety|whos-flying|knowledge-library|about)(/|$)'
+    leaf: ['^/wp-content/uploads/.*\.pdf$']
+    exclude:
+      archive_listing: '^/(tag|author|category|page)/'
+
+  # Internet Archive copies of faa.gov/uas. Disabled until the instructor approves it.
+  - name: wayback
+    enabled: false
+    host: web.archive.org
+    aliases: []
+    seeds: []
+    sitemap: null
+    max_urls: 400
+    crawl: []
+    leaf: []
+    exclude: {}
