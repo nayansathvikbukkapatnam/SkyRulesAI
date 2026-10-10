@@ -8,7 +8,7 @@ One JSON object per line. Items are written by team members from the live FAA pa
 | `category` | all | `single_hop`, `multi_hop`, `comparative`, `temporal`, `unanswerable`, `ambiguous` |
 | `question` | all | As a real user would ask it |
 | `gold_answer` | all except `unanswerable` | Taken from the page, not from memory |
-| `source_url` | `single_hop`, `multi_hop`, `comparative`, `temporal` (optional for `ambiguous`) | The faa.gov page the answer is on. For items that combine pages, a list of URLs |
+| `source_url` | `single_hop`, `multi_hop`, `comparative`, `temporal` (optional for `ambiguous`) | The page or document the answer is on, from an approved source (CLAUDE.md, October 10 section): an eCFR section, a Federal Register document, a GovInfo PDF or a Know Before You Fly guidance page. For items that combine pages, a list of URLs |
 | `evidence_quote` | same as `source_url` | 25 words or fewer, copied exactly from the page. For a list of URLs, a list of quotes in the same order |
 | `searched_for` | `unanswerable` | What you searched for and where, to show the answer is absent |
 | `author` | all | Your first name |
@@ -20,7 +20,7 @@ One JSON object per line. Items are written by team members from the live FAA pa
 Shape only (placeholders, not a real item):
 
 ```json
-{"id": "<name>-01", "category": "single_hop", "question": "<question>", "gold_answer": "<answer from the page>", "source_url": "https://www.faa.gov/uas/<page>", "evidence_quote": "<exact words from the page>", "author": "<name>", "verified_by": "<other name>", "verified_date": "2026-10-10"}
+{"id": "<name>-01", "category": "single_hop", "question": "<question>", "gold_answer": "<answer from the page>", "source_url": "https://www.ecfr.gov/current/title-14/chapter-I/subchapter-F/part-107/section-107.<number>", "evidence_quote": "<exact words from the page>", "author": "<name>", "verified_by": "<other name>", "verified_date": "2026-10-10"}
 ```
 
 Check the file with `make golden-check`. Until `data/normalized/` exists, `make golden-check NO_QUOTES=1` checks everything except whether each quote appears on its saved page. The full check must pass before the split (`make split`).

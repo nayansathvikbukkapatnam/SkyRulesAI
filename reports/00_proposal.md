@@ -406,3 +406,11 @@ Items are written from the FAA pages on Friday, **before the chatbot works**. Ea
 ## 14. AI Usage
 
 AI assistance (Claude) was used to brainstorm candidate domains, check robots.txt files for candidate sites, and draft this proposal. The team reviewed and edited the content and is responsible for every design decision in it. All golden set items will be written and verified by team members against the FAA pages. AI use at each milestone will be logged in the README, as required by §10.
+
+---
+
+## 15. Changes after submission (October 10)
+
+**Corpus.** www.faa.gov returned 403 to our crawler (its CDN blocks automated access, even for robots.txt), so we could not collect the planned FAA drone pages. The instructor approved similar official sources instead: eCFR (14 CFR Parts 107, 89, 48 and sections 101.41 to 101.49, via its official API), the Federal Register (the FAA drone rule documents, final and proposed, via its official API), GovInfo (the official PDFs of those rules) and Know Before You Fly (guidance pages only, labelled in the UI as an FAA partner campaign, not the FAA). The blocked faa.gov requests stay in the crawl log as evidence; nothing from faa.gov is in the corpus.
+
+**LLM.** The generator is still Claude Haiku 5.5, with the same prompts and price, but it is now called through the Claude API instead of AWS Bedrock, because the new AWS account had no Bedrock access for Claude. The client supports both providers behind one setting (`LLM_PROVIDER`). Haiku 5.5 does not accept a temperature setting, so temperature is not sent, and thinking is off by default.
