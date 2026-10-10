@@ -35,6 +35,7 @@ from src.generate import checks as answer_checks
 from src.generate import claim_check
 from src.generate.generate import generate, rewrite_followup
 from src.generate.llm import LLMClient, LLMResult, make_judge
+from src.generate.log import log_query
 from src.generate.router import route
 
 STAGES = ("route", "retrieve", "rerank", "generate", "check")
@@ -198,10 +199,6 @@ def _citations(
     return citations
 
 
-def log_query(question: str, result: Mapping[str, Any]) -> None:  # STUB until generate/logging
-    """Append the query to logs/queries.jsonl. Replaced by src/generate/log.py (P9)."""
-
-
 def answer(
     question: str,
     history: Sequence[Mapping[str, str]],
@@ -249,7 +246,7 @@ def answer(
             "latency_ms": latency,
             "cost_usd": llm.cost_usd,
         }
-        log_query(question, result)
+        log_query(question, result, config_name=config.get("name"), pilot_type=pilot_type)
         return result
 
     def refuse(stage: str, reason: str, passages: Sequence[Mapping[str, Any]] = ()):
