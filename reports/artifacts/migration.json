@@ -1,0 +1,25 @@
+{
+  "from": "fixed@v1",
+  "to": "struct@v1",
+  "commit": "44e6731",
+  "run_at": "2026-10-10T22:03:36+00:00",
+  "n_docs": 160,
+  "before": {
+    "fixed@v1": 3656
+  },
+  "generated": 4905,
+  "deleted_old": 3656,
+  "deleted_stale_new": 0,
+  "upserted": 4905,
+  "after": {
+    "struct@v1": 4905
+  },
+  "bm25": "built",
+  "orphan_check": {
+    "passed": true,
+    "index_minus_manifest": 0,
+    "manifest_minus_index": 0,
+    "old_strategy_count": 0
+  },
+  "seconds": 241.4
+}

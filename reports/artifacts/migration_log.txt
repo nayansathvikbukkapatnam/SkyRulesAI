@@ -1,0 +1,20 @@
+Re-chunk migration fixed@v1 -> struct@v1
+run at 2026-10-10T22:03:36+00:00, commit 44e6731
+source: 160 normalized documents from data/normalized (no re-crawl)
+
+index before: {'fixed@v1': 3656}
+generated 4905 struct@v1 chunks -> data/chunks/struct@v1.jsonl
+manifest: data/chunks/struct@v1.manifest.json (4905 chunk IDs)
+deleted 3656 fixed@v1 chunks (metadata filter strategy == fixed@v1)
+deleted 0 stale struct@v1 chunks not in the manifest
+upserted 4905 struct@v1 chunks
+BM25: built
+index after: {'struct@v1': 4905}
+
+orphan check: PASS
+  index IDs - manifest IDs (must be 0): 0
+  manifest IDs - index IDs (must be 0): 0
+  chunks still tagged fixed@v1 (must be 0): 0
+
+took 241.4s
+next: re-run the dev evaluation on the new chunks and report the change
