@@ -101,11 +101,18 @@ _LIVE_TIME = _rx(
 _LIVE_PLACE = _rx(
     r"\bnear\s+me\b",
     r"\bnearby\b",
-    r"\bhere\b",
+    # "here" is a place only after a flying verb ("Can I fly my drone here?") or at the
+    # end of the question; "Is there a rule here about night flying?" is not.
+    r"\b(?:fly|flying|launch|launching|land|landing|take\s+off|operate|operating)\b"
+    r"(?:\s+(?:a|an|my|the|our|this|that|your))?(?:\s+(?:drone|uas|uav|aircraft|quadcopter))?"
+    r"\s+(?:right\s+)?here\b",
+    r"\bhere\s*\?*\s*$",
     r"\bmy\s+(?:house|home|backyard|yard|neighbou?rhood|street|city|town|area|location|school)\b",
     r"\bthis\s+(?:park|area|location|place|spot|beach|field)\b",
     r"\bzip\s*code\b",
-    r"\b\d{5}\b",
+    # A ZIP code, but not a 5-digit quantity ("10000 feet", "25000 lb") or part of an ID.
+    r"(?<![\w.,$-])\d{5}(?![\w.,-])(?!\s*(?:feet|foot|ft|lbs?|pounds?|grams?|kg|kilograms?"
+    r"|meters?|miles?|mi|knots?|kts?|mph|percent|%|dollars?)\b)",
 )
 _TFR = _rx(r"\btfrs?\b", r"\btemporary\s+flight\s+restrictions?\b")
 
@@ -122,6 +129,8 @@ _NOT_PLACES = {
     Recreational Exception Limited Operations Section Knowledge Test AC Advisory Circular
     Unmanned Aircraft General Small Standard Broadcast Module Airman Certification CFR Title
     English Spanish Night Waiver Certificate I The A An My Your Order Rule Rules Act
+    Know Before Federal Register GovInfo Code Regulations Subpart Subchapter Chapter
+    Appendix Docket Amendment Paragraph Volume Notice NPRM
     U.S. US USA America United States
     January February March April May June July August September October November December
     Monday Tuesday Wednesday Thursday Friday Saturday Sunday
@@ -253,7 +262,7 @@ def route(question: str, pilot_type: str | None = "not_sure") -> RouteResult:
     return {
         "router_tag": tag,
         "referral": referral,
-        "reasons": reasons,
+        "reasons": list(dict.fromkeys(reasons)),  # each rule once, in match order
         "question": q,
         "instructions": PILOT_UNCLEAR_INSTRUCTIONS if unclear else None,
     }

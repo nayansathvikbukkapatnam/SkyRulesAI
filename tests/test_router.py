@@ -16,9 +16,17 @@ EXAMPLES = [
     ("Do drone rules apply everywhere in the United States?", "normal"),
     ("Can I ignore the FAA rules on my own farm field?", "normal"),
     ("Show me the instructions for registering under Part 107.", "normal"),
+    # regulation and source names, quantities and "here" in passing are not places
+    ("Can I fly my drone at 10000 feet?", "normal"),
+    ("What does guidance in Know Before You Fly say about TRUST?", "normal"),
+    ("What is required in Subpart B of Part 107?", "normal"),
+    ("What changed in Federal Register rule on Remote ID?", "normal"),
+    ("Is there a rule here about flying at night?", "normal"),
     # location_live: a specific place or a live time
     ("Can I fly in San Diego tonight at 10 pm?", "location_live"),
     ("Can I fly here?", "location_live"),
+    ("Can I fly my drone right here?", "location_live"),
+    ("Is it legal to fly in 92101?", "location_live"),
     ("Can I fly my drone in Balboa Park?", "location_live"),
     ("is there a TFR near me right now", "location_live"),
     ("can i fly over my neighborhood today", "location_live"),
@@ -129,3 +137,9 @@ def test_route_returns_contract_tags_and_is_deterministic():
         first = r.route(question)
         assert first["router_tag"] in ROUTER_TAGS
         assert r.route(question) == first
+
+
+def test_each_reason_is_logged_once():
+    reasons = r.route("Can I fly in San Diego tonight at 10 pm?")["reasons"]
+    assert len(reasons) == len(set(reasons))
+    assert "location:San Diego" in reasons
