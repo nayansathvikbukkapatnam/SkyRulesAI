@@ -83,7 +83,7 @@ There is no shared database or server to connect to. Every laptop runs the whole
 
 - **Code comes through git.** You pull Pavan's server, Sai's retrieval and everyone else's code from `main`.
 - **Data comes through git too, but only `data/normalized/`** (the cleaned text). Nobody else needs `data/raw/`.
-- **You build your own index:** `make chunk STRATEGY=fixed && make index STRATEGY=fixed` creates your own `data/chunks/`, `data/index/` (BM25) and `chroma/` from `data/normalized/`. Chunk IDs are deterministic, so every laptop builds the same index. Re-run it whenever `data/normalized/` changes on `main`.
+- **You build your own index, both strategies:** `make chunk STRATEGY=fixed && make index STRATEGY=fixed`, then `make chunk STRATEGY=struct && make index STRATEGY=struct` creates your own `data/chunks/`, `data/index/` (BM25) and `chroma/` from `data/normalized/`. The app needs both: the main answer uses B3 (`struct@v1`) and the B2 vs B3 compare view also runs B2 (`fixed@v1`). Chunk IDs are deterministic, so every laptop builds the same index. Re-run both whenever `data/normalized/` changes on `main`.
 - **`make app` starts the server on your own machine** at `http://localhost:8000`. It reads your own `chroma/` and BM25 files and calls Claude with your own key from `.env`.
 - **Before a dependency merges,** use fixtures, a stub with the exact section 5 signature, or recorded mock events (the frontend). Never point at someone else's laptop.
 - **For the demo,** the presenter's laptop runs everything.
@@ -305,7 +305,7 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 | `make extract` | raw to `data/normalized/` plus `reports/artifacts/ingestion_stats.json` (Adinath) |
 | `make chunk STRATEGY=fixed` or `STRATEGY=struct` | normalized to `data/chunks/` plus chunk stats (everyone, locally) |
 | `make index STRATEGY=fixed` or `STRATEGY=struct` | embed and upsert into Chroma, build BM25 (everyone, locally) |
-| `make migrate FROM=fixed@v1 TO=struct@v1` | re-chunk migration with orphan check, writes `reports/artifacts/migration_log.txt` |
+| `make migrate FROM=fixed@v1 TO=struct@v1` | re-chunk migration with orphan check, writes `reports/artifacts/migration_log.txt`. It deletes the old strategy's vectors: the re-chunk experiment only, never on a laptop running the app (rebuild with `make index STRATEGY=fixed` if you ran it) |
 | `make golden-check` | validate `eval/golden.jsonl` (schema, quotas, quotes found, verifier is not author; `NO_QUOTES=1` before extraction) |
 | `make split` | stratified 60/40 split, seed 42, writes `eval/split.json` (refuses to overwrite) |
 | `make retrieval-eval CONFIG=b2 SPLIT=dev` | Recall@5/20, MRR, nDCG@10 |
@@ -314,7 +314,7 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 | `make app` | start the FastAPI app at http://localhost:8000 |
 | `make test` / `make lint` | pytest / ruff |
 
-**To get a working local index after pulling `main` (re-run it whenever `data/normalized/` changes):** `make chunk STRATEGY=fixed && make index STRATEGY=fixed`, then `make migrate FROM=fixed@v1 TO=struct@v1` when you need the structure-aware index.
+**To get a working local index after pulling `main` (re-run it whenever `data/normalized/` changes):** `make chunk STRATEGY=fixed && make index STRATEGY=fixed`, then `make chunk STRATEGY=struct && make index STRATEGY=struct`. Do not use `make migrate` for this: it deletes the `fixed@v1` vectors, so B2 (and the compare view) would retrieve nothing.
 
 ---
 
@@ -483,7 +483,7 @@ Every member: `data/normalized/` (160 documents) is on `main`, so pull and build
 - **Upstream stage not merged:** use `tests/fixtures/` (and `tests/fixtures/real_sample/` once it exists), and keep the interface exactly as in section 5.
 - **A contract seems wrong:** open a small PR changing `contracts.py` and tag every affected owner; do not silently diverge.
 - **LLM access fails:** keep working with the mocked client and tell Pavan.
-- **No local index yet:** pull `main`, then `make chunk STRATEGY=fixed && make index STRATEGY=fixed`.
+- **No local index yet:** pull `main`, then `make chunk STRATEGY=fixed && make index STRATEGY=fixed`, then `make chunk STRATEGY=struct && make index STRATEGY=struct`.
 - **Anything about the crawl or the test split:** ask the user before acting.
 
 ---
