@@ -45,8 +45,10 @@ sources:
   # unblock.federalregister.gov, which says programmatic access is limited to
   # their developer APIs. So both are read only through those APIs.
   #
-  # The drone regulations: 14 CFR Parts 107 (small UAS), 89 (Remote ID),
-  # 48 (registration) and Part 101 Subpart E (recreational). Each `index` URL is
+  # The drone regulations: 14 CFR Parts 107 (small UAS), 89 (Remote ID) and
+  # 48 (registration). Current Part 101 has no Subpart E: the old model-aircraft
+  # rule was replaced by the statute 49 U.S.C. 44809, which is not in the CFR, so
+  # recreational rules come from the other sources. Each `index` URL is
   # one whole part from the renderer API; it is read only to list its section
   # numbers (like a sitemap, not saved), and each section is then fetched and
   # saved as its own document through the same API.
@@ -60,9 +62,7 @@ sources:
         - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=107'
         - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=89'
         - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=48'
-        - 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?part=101'
-      # Part 101 is indexed whole; only Subpart E (101.41 to 101.49) is kept.
-      pattern: 'class="section" id="((?:107|89|48)\.\d+|101\.4\d)"'
+      pattern: 'class="section" id="((?:107|89|48)\.\d+)"'
       template: 'https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-14?section={0}'
     max_urls: 200
     crawl: []

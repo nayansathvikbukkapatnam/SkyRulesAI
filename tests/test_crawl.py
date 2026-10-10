@@ -408,7 +408,7 @@ def test_ecfr_index_lists_sections_which_are_saved_one_document_each(tmp_path):
     index_html = (
         '<div class="part"><div class="section" id="107.1">a</div>'
         '<div class="section" id="107.31">b</div><div class="section" id="107.1">dup</div>'
-        '<div class="section" id="101.1">balloons</div><div class="section" id="101.41">e</div>'
+        '<div class="section" id="101.1">balloons</div>'
         "</div>"
     )
     sources = SourceSet.load(only=["ecfr"])
@@ -419,12 +419,11 @@ def test_ecfr_index_lists_sections_which_are_saved_one_document_each(tmp_path):
             full: FakeResponse(body=index_html.encode()),
             f"{ECFR_SECTION}107.1": FakeResponse(body=b"<h4>107.1 Applicability</h4>"),
             f"{ECFR_SECTION}107.31": FakeResponse(body=b"<h4>107.31 Visual line of sight</h4>"),
-            f"{ECFR_SECTION}101.41": FakeResponse(body=b"<h4>101.41 Applicability</h4>"),
         }
     )
     crawler, _ = make_crawler(tmp_path, site, sources=sources)
     seeds = crawler.index_seeds()
-    assert seeds == [f"{ECFR_SECTION}{n}" for n in ("107.1", "107.31", "101.41")]
+    assert seeds == [f"{ECFR_SECTION}{n}" for n in ("107.1", "107.31")]  # not 101.1
     crawler.run(seeds)
     assert [e["url"] for e in manifest(tmp_path)] == seeds  # the index page itself is not saved
 
