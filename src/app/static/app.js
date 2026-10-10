@@ -455,13 +455,20 @@
     ]);
   }
 
+  // The router tag ("Location-specific" and so on), shown on answer and refusal cards alike.
+  function tagPill(a) {
+    return a.router_tag && a.router_tag !== "normal"
+      ? el("span", { class: "pill tag", text: TAG_LABELS[a.router_tag] || a.router_tag })
+      : null;
+  }
+
   function answerCard(turn, a) {
     const byId = Object.fromEntries((a.trace && a.trace.reranked || []).map((p) => [p.chunk_id, p]));
     const citeById = Object.fromEntries(a.citations.map((c) => [c.chunk_id, c]));
     const head = el("div", { class: "answer-head" }, [
       el("span", { class: "answer-title", text: "Verified answer" }),
       el("span", { class: "pill pilot", text: "For: " + (PILOT_NAMES[turn.pilot] || PILOT_NAMES.not_sure) }),
-      a.router_tag && a.router_tag !== "normal" ? el("span", { class: "pill tag", text: TAG_LABELS[a.router_tag] || a.router_tag }) : null,
+      tagPill(a),
     ]);
     const list = el("div", { class: "sentences" });
     const card = el("article", { class: "card answer sr-fade", "aria-label": "Verified answer" }, [head, keyFigure(a), list]);
@@ -506,7 +513,9 @@
   }
 
   function refusalCard(a) {
+    const tag = tagPill(a);
     return el("article", { class: "refusal sr-fade", "aria-label": "Refusal" }, [
+      tag ? el("div", { class: "answer-head" }, [tag]) : null,
       el("div", { class: "refusal-head" }, [icon(ICONS.refusal), el("span", { class: "refusal-title", text: REFUSAL_TEXT })]),
       el("p", { text: REFUSAL_HINT }),
       el("div", { class: "refusal-foot" }, [

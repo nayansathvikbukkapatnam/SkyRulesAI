@@ -195,3 +195,11 @@ def test_mock_file_is_up_to_date(monkeypatch, tmp_path):
     except ImportError:
         pass
     assert mock_events.build() == MOCK, "run: python -m src.app.mock_events"
+
+
+def test_router_tag_shows_on_refusal_cards_too():
+    # A refused location question still says "Location-specific" (demo script, San Diego).
+    refusal = APP_JS.split("function refusalCard(a)")[1].split("function errorCard")[0]
+    answer = APP_JS.split("function answerCard(turn, a)")[1].split("function ")[0]
+    assert "tagPill(a)" in refusal and "tagPill(a)" in answer
+    assert 'location_live: "Location-specific"' in APP_JS
