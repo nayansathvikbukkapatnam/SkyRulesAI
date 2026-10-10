@@ -32,7 +32,8 @@ Team shortcuts (committed in `.claude/skills/`):
 
    faa.gov stays in the crawl log as evidence of the block, and nothing from it is in `data/`. Golden items need `source_url` and `evidence_quote` from these sources. Items that cite faa.gov pages must be re-sourced and re-verified. Referral links to B4UFLY and UAS Facility Maps still point to faa.gov tools, because referrals are links, not corpus.
 2. **LLM provider changed.** The new AWS account cannot use Claude on Bedrock (zero quota, AccessDenied), so we call Claude Haiku 5.5 through the Claude API (the `anthropic` package). `src/generate/llm.py` supports both providers, chosen by `LLM_PROVIDER` in `.env`. Each member who runs LLM code uses their own key from the SkyRules Claude Console org. It is the same model at the same price with the same prompts. Haiku 5.5 does not accept a temperature setting, so temperature is not sent, and thinking is off by default (`generation.thinking` in `configs/default.yaml`).
-3. **Everything else is unchanged:** crawl etiquette, chunking, embeddings, Chroma, retrieval, the harness, the evaluation plan and the build order.
+3. **Golden set ownership changed.** Dorai writes all golden items by hand from the approved sources (target 50, floor 40 with every category minimum met, by 18:00 Saturday and before any eval run on the dev split). Each other member verifies 10 of Dorai's items against the source page, as assigned by Dorai, and commits their `verified_by` edits in their own small PR. No item is verified by its author. Rule 4 still applies: Claude Code never writes golden items.
+4. **Everything else is unchanged:** crawl etiquette, chunking, embeddings, Chroma, retrieval, the harness, the evaluation plan and the build order.
 
 ---
 
@@ -61,7 +62,7 @@ SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. d
 
 1. **Setup first:** the foundation PR (contracts, config, fixtures, pinned requirements, Makefile) and AWS Bedrock access.
 2. **Then the data pipeline,** the only strict sequence: crawl, then extract, then chunk, then index.
-3. **In parallel, against fixtures:** the golden set (humans, from the live FAA pages), generation and the app, and the router rules.
+3. **In parallel, against fixtures:** the golden set (Dorai, by hand, from the approved sources), generation and the app, and the router rules.
 4. **Then improve and measure:** BM25, hybrid, reranker, re-chunk migration, answer checks, evaluation and reports.
 
 The timed version with owners is in section 8.
@@ -232,7 +233,7 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 ```
 foundation (Nayan, 10:00)
    -> crawl (Adinath, 9:30 to 10:30) -> extract (12:00) -> chunk (Sai, 12:00) -> index (Nayan, 12:30)
-   -> golden set + split (Dorai + everyone, 12:30)
+   -> golden set (Dorai, 18:00) + verification (everyone) + split
    -> generation + UI on fixtures (Pavan, from 10:00) -> wired to real retrieval = B2 (14:00)
    -> router + PII filter (Dorai, 15:00) -> BM25 + hybrid + rerank (Sai, 16:30)
    -> structure chunks + migration (Sai + Nayan, 17:00) -> answer checks (Nayan + Sai, 19:00) = B3 candidate
@@ -254,7 +255,7 @@ Nobody waits: if your input stage is not merged yet, use `tests/fixtures/`.
 | Sai Praneeth Kondaveeti | @saipraneeth112698 | AI Engineer: chunking, retrieval, reranking, claim check | Nayan |
 | Adinath Subash Kadam | @AdinathKadam | Senior Systems Analyst: crawl, extraction, statistics | Sai |
 
-Every member also writes 10 golden items by hand from the approved sources on Saturday morning, and verifies 10 written by someone else (Dorai assigns them).
+Dorai writes all golden items by hand from the approved sources. Every other member verifies 10 of Dorai's items (Dorai assigns them), so no item is verified by its author.
 
 ### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI
 
@@ -375,11 +376,12 @@ Every member also writes 10 golden items by hand from the approved sources on Sa
 
 ### 9.5 Dorai: golden set, safety rules, ethics, demo
 
-- **D1 `eval/golden-set` (50 items by 12:00, before B2 answers anything):**
-  - Collect everyone's hand-written items into `eval/golden.jsonl`.
+- **D1 `eval/golden-set` (50 items by 18:00 Saturday, before any eval run on the dev split):**
+  - Write all items by hand from the approved sources into `eval/golden.jsonl`.
   - Targets: single_hop 18, multi_hop 7, comparative 5, temporal 5, unanswerable 10, ambiguous 5.
   - `src/eval/golden_check.py` validates the schema, counts quotas, checks that each `evidence_quote` is at most 25 words and appears in the saved normalized text of `source_url`, and that `verified_by` differs from `author`.
   - Claude Code may build and run the checker but never writes items (rule 4).
+  - `reports/03_golden_set.md` states that Dorai wrote every item and who verified each one.
 - **D2 `eval/split` (by 12:30):** `src/eval/split.py`: `train_test_split(stratify=category, random_state=42)`, 60/40, writes `eval/split.json` once. `run_eval.py` refuses `SPLIT=test` without `--final`.
 - **D3 `generate/router-rules` (by 14:00):**
   - `src/generate/router.py`: pattern rules returning `router_tag` and referral text.
