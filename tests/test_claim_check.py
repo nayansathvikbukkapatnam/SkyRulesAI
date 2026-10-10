@@ -193,3 +193,19 @@ def test_bad_arguments_are_rejected():
 
 def test_empty_answer_is_not_ok():
     assert check_sentences([], CHUNKS, yes_judge)["ok"] is False
+
+
+def test_hyphenated_units_attach_to_their_number():
+    facts = extract_facts("A 300-gram drone, a 400-ft ceiling and a three-year registration.")
+    assert facts["numbers"] == {("300", "gram"), ("400", "feet"), ("3", "year")}
+    assert extract_facts("Part 107-certified pilots, rule 2024-03-16.") == {
+        "dates": {"2024-03-16"},
+        "numbers": {("107", None)},
+    }
+
+
+def test_computed_conversion_is_still_caught():
+    # Seen in the app: the model converted 300 g to 0.66 lb itself. No source says so.
+    chunk = "You need to register your drone if it weighs over 0.55 pounds."
+    result = number_date_check("A 300-gram drone is about 0.66 pounds.", [chunk])
+    assert not result["ok"] and "0.66 pound" in result["missing"]

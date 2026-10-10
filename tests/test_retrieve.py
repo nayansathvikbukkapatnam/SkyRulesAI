@@ -103,3 +103,31 @@ def test_bad_mode_and_filter_are_rejected(retriever):
         retriever.retrieve("x", mode="magic")
     with pytest.raises(ValueError):
         retriever.retrieve("x", filters={"audience": "part107"})
+
+
+def test_opening_the_store_loads_the_embedding_model(monkeypatch):
+    # The app warms up by touching `store`; the slow part is the embedding model.
+    loaded = []
+
+    class LazyEmbedder:
+        @property
+        def model(self):
+            loaded.append("bge")
+            return object()
+
+    class Store:
+        embedder = LazyEmbedder()
+
+    monkeypatch.setattr("src.index.store.ChunkStore.open", classmethod(lambda cls, cfg: Store()))
+    retriever = Retriever(load_config("default"))
+    _ = retriever.store
+    assert loaded == ["bge"]
+    _ = retriever.store  # opened once
+    assert loaded == ["bge"]
+
+
+def test_warm_up_loads_bm25_for_each_strategy(retriever, monkeypatch):
+    seen = []
+    monkeypatch.setattr(BM25Index, "load", classmethod(lambda cls, tag: seen.append(tag) or tag))
+    retriever.warm_up(("struct@v1", "fixed@v1"))
+    assert seen == ["fixed@v1"]  # struct@v1 was already loaded by the fixture
