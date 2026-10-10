@@ -29,11 +29,12 @@
   },
   "extraction_method": {
     "bs4-federalregister": 8,
-    "pdfplumber": 19,
+    "pdfplumber": 14,
     "trafilatura": 22,
+    "pdfplumber+tesseract": 5,
     "xml-cfr": 111
   },
-  "sections": 1868,
+  "sections": 1871,
   "tables": 157,
   "documents_with_tables": 17,
   "duplicates_removed": 0,
@@ -48,12 +49,16 @@
     "govinfo.gov": 119,
     "knowbeforeyoufly.org": 33
   },
-  "documents_needing_ocr": 5,
-  "pages_needing_ocr": 24,
+  "documents_needing_ocr": 0,
+  "pages_needing_ocr": 0,
+  "ocr_engine": "5.4.0.20240606",
+  "documents_with_ocr": 5,
+  "pages_ocr_text_kept": 22,
+  "pages_ocr_failed_or_empty": 2,
   "pii_redactions": {
     "phone": 18,
     "street_address": 60,
     "email": 18
   },
-  "stale_files_removed": 111
+  "stale_files_removed": 0
 }

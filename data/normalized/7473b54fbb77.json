@@ -6,8 +6,13 @@
   "audience": "general",
   "effective_date": "2025-12-31",
   "crawl_ts": "2026-10-10T19:03:07+00:00",
-  "content_hash": "e721cd5592d12e4e167c4491d28ac2bc41ce814a03aae46abefe1d56e65eef69",
+  "content_hash": "640aed9a18b1d85f01121e5887e17395581079f456f1c23debaa1c2f1355edf7",
   "sections": [
+    {
+      "heading_path": [],
+      "text": "7< KNOW BEFORE YOU — STUDENT DRONE Kit UNIT oF STUDY An educational experience designed for students in grades 9-12 Next Generation Science Standards-compliant Special thanks to Rick for his input on this drone unit of study. TABLE OF CONTENTS This unit of study includes the following sections:\n\nIntroduction Background Information Safety and Regulatory Information Build the Drone(s) Flying the Drones Career Pathway Investigation Drone Science: Forces and Motion Designing and Flying a Drone Obstacle Course",
+      "tables": []
+    },
     {
       "heading_path": [
         "Introduction"
@@ -231,11 +236,10 @@
     }
   ],
   "extraction": {
-    "method": "pdfplumber",
-    "ocr_used": false,
+    "method": "pdfplumber+tesseract",
+    "ocr_used": true,
     "warnings": [
-      "page 1: no text layer (needs OCR)",
-      "page 2: no text layer (needs OCR)"
+      "page 1: OCR found no confident text"
     ]
   }
 }

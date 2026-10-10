@@ -133,11 +133,20 @@ Source: `reports/artifacts/crawl_stats.json`.
 | Extraction method | Documents |
 |---|---|
 | `bs4-federalregister` | 8 |
-| `pdfplumber` | 19 |
+| `pdfplumber` | 14 |
 | `trafilatura` | 22 |
+| `pdfplumber+tesseract` | 5 |
 | `xml-cfr` | 111 |
 
-Image-only PDF pages (no text layer, OCR not run): 24 pages in 5 documents. Source: `reports/artifacts/ingestion_stats.json`.
+| OCR (pages with no text layer) | Value |
+|---|---|
+| OCR engine | 5.4.0.20240606 |
+| Documents with OCR text | 5 |
+| Pages whose text came from OCR | 22 |
+| Pages where OCR failed or found no confident text | 2 |
+| Pages still without text (OCR not available) | 0 |
+
+Source: `reports/artifacts/ingestion_stats.json`.
 <!-- END AUTO:methods -->
 
 <!-- BEGIN AUTO:corpus -->
@@ -157,7 +166,7 @@ Image-only PDF pages (no text layer, OCR not run): 24 pages in 5 documents. Sour
 | &nbsp;&nbsp;by audience: `part107` | 68 |
 | &nbsp;&nbsp;by audience: `recreational` | 3 |
 | &nbsp;&nbsp;by audience: `public_safety` | 2 |
-| Sections | 1868 |
+| Sections | 1871 |
 | Tables kept as Markdown | 157 |
 | Documents with at least one table | 17 |
 | Duplicates removed (same bytes or same extracted content) | 0 |
