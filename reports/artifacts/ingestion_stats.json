@@ -1,54 +1,59 @@
 {
   "command": "make extract",
-  "manifest_entries": 161,
-  "excluded_disabled_sources": {
-    "www.ecfr.gov": 112
+  "manifest_entries": 385,
+  "excluded_by_source_config": {
+    "www.ecfr.gov (source disabled)": 112,
+    "www.govinfo.gov (no longer in scope)": 112
   },
-  "documents_written": 49,
+  "documents_written": 160,
   "by_content_type": {
     "text/html": 30,
-    "application/pdf": 19
+    "application/pdf": 19,
+    "application/xml": 111
   },
   "by_source": {
     "federalregister.gov": 8,
-    "govinfo.gov": 8,
+    "govinfo.gov": 119,
     "knowbeforeyoufly.org": 33
   },
   "by_page_type": {
-    "regulation_summary": 16,
+    "regulation_summary": 127,
     "guide_page": 22,
     "toolkit_pdf": 11
   },
   "by_audience": {
-    "general": 37,
-    "part107": 7,
+    "general": 87,
+    "part107": 68,
     "recreational": 3,
     "public_safety": 2
   },
   "extraction_method": {
     "bs4-federalregister": 8,
     "pdfplumber": 19,
-    "trafilatura": 22
+    "trafilatura": 22,
+    "xml-cfr": 111
   },
-  "sections": 1757,
+  "sections": 1868,
   "tables": 157,
   "documents_with_tables": 17,
   "duplicates_removed": 0,
   "duplicates": [],
   "failures": [],
-  "reserved_sections_skipped": [],
-  "effective_date_found": 49,
+  "reserved_sections_skipped": [
+    "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-5.xml"
+  ],
+  "effective_date_found": 160,
   "effective_date_found_by_source": {
     "federalregister.gov": 8,
-    "govinfo.gov": 8,
+    "govinfo.gov": 119,
     "knowbeforeyoufly.org": 33
   },
   "documents_needing_ocr": 5,
   "pages_needing_ocr": 24,
   "pii_redactions": {
-    "phone": 16,
-    "street_address": 58,
-    "email": 16
+    "phone": 18,
+    "street_address": 60,
+    "email": 18
   },
-  "stale_files_removed": 0
+  "stale_files_removed": 111
 }

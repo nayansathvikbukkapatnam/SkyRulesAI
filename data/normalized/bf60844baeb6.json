@@ -1,0 +1,24 @@
+{
+  "doc_id": "bf60844baeb6",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-115.xml",
+  "title": "14 CFR § 48.115 Requirement to maintain current information. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:36+00:00",
+  "content_hash": "10c49531ac2f4c633318f7c3b61d7350e525d61ef4cde14fad72ba8fee3dbeaa",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.115 Requirement to maintain current information. (2025 edition)"
+      ],
+      "text": "(a) The holder of a Certificate of Aircraft Registration must ensure that the information provided under § 48.110 remains accurate.\n\n(b) The holder of a Certificate of Aircraft Registration must update the information using the web-based small unmanned aircraft registration system within 14 calendar days of the following:\n\n(1) A change in the information provided under § 48.110.\n\n(2) When aircraft registration requires cancellation for any reason including sale or transfer, destruction, or export.\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015. Redesignated and amended by Doc. No. FAA-2019-1100; Amdt. No. 48-3, 86 FR 4504, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

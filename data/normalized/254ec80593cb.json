@@ -1,0 +1,24 @@
+{
+  "doc_id": "254ec80593cb",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-43.xml",
+  "title": "14 CFR § 107.43 Operation in the vicinity of airports. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:48+00:00",
+  "content_hash": "d496aa196e6f66112a01b7cfb5c5a521a9fe463aa6fb50262077bb74bfe553b7",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.43 Operation in the vicinity of airports. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft in a manner that interferes with operations and traffic patterns at any airport, heliport, or seaplane base.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

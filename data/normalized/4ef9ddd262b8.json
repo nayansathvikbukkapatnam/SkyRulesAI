@@ -1,0 +1,24 @@
+{
+  "doc_id": "4ef9ddd262b8",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-64.xml",
+  "title": "14 CFR § 107.64 Temporary certificate. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:00+00:00",
+  "content_hash": "9cc4741580aa2985079996105d809d021f578916d100ce42ae7ef0cc712f3d8c",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.64 Temporary certificate. (2025 edition)"
+      ],
+      "text": "(a) A temporary remote pilot certificate with a small UAS rating is issued for up to 120 calendar days, at which time a permanent certificate will be issued to a person whom the Administrator finds qualified under this part.\n\n(b) A temporary remote pilot certificate with a small UAS rating expires:\n\n(1) On the expiration date shown on the certificate;\n\n(2) Upon receipt of the permanent certificate; or\n\n(3) Upon receipt of a notice that the certificate sought is denied or revoked.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

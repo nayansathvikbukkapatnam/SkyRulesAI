@@ -1,12 +1,12 @@
 {
   "command": "make crawl",
-  "started_at": "2026-10-10T19:57:06+00:00",
-  "finished_at": "2026-10-10T19:59:01+00:00",
+  "started_at": "2026-10-10T20:24:04+00:00",
+  "finished_at": "2026-10-10T20:24:40+00:00",
   "user_agent": "SkyRulesAI-MSAI633 (+<CRAWL_CONTACT_EMAIL>)",
   "sources": {
     "govinfo": {
       "host": "www.govinfo.gov",
-      "max_urls": 200
+      "max_urls": 300
     }
   },
   "limits": {
@@ -16,28 +16,30 @@
     "effective_min_interval_s": 1.0,
     "max_attempts": 4
   },
-  "requests_this_run": 116,
+  "requests_this_run": 36,
   "min_gap_between_requests_s": 1.0,
   "robots": {
-    "checks": 115,
+    "checks": 35,
     "disallowed": 0
   },
   "seeds": 120,
-  "saved_this_run": 112,
+  "saved_this_run": 32,
   "saved_this_run_by_source": {
-    "govinfo": 112
+    "govinfo": 32
   },
-  "resumed_from_manifest": 8,
+  "resumed_from_manifest": 88,
   "manifest": {
-    "entries": 273,
-    "unique_sha256": 273,
+    "entries": 385,
+    "unique_sha256": 385,
     "by_content_type": {
       "text/html": 142,
-      "application/pdf": 131
+      "application/pdf": 131,
+      "application/xml": 112
     },
     "by_source": {
       "govinfo": {
-        "application/pdf": 120
+        "application/pdf": 120,
+        "application/xml": 112
       },
       "unknown": {
         "text/html": 142,

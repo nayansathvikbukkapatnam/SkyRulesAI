@@ -1,0 +1,24 @@
+{
+  "doc_id": "7fa8a8c96b57",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-135.xml",
+  "title": "14 CFR § 107.135 Labeling by remote pilot in command for Category 2 and 3 operations. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:16+00:00",
+  "content_hash": "4904eb42b0759f67abd1478bfa98bc4109d33d4eabbeebcc06f13ac2473f3122",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.135 Labeling by remote pilot in command for Category 2 and 3 operations. (2025 edition)"
+      ],
+      "text": "If a Category 2 or Category 3 label affixed to a small unmanned aircraft is damaged, destroyed, or missing, a remote pilot in command must label the aircraft in English such that the label is legible, prominent, and will remain on the small unmanned aircraft for the duration of the operation before conducting operations over human beings. The label must correctly identify the category or categories of operation over human beings that the small unmanned aircraft is qualified to conduct in accordance with this subpart.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

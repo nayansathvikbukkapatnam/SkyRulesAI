@@ -1,0 +1,24 @@
+{
+  "doc_id": "2bec2693bd82",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-415.xml",
+  "title": "14 CFR § 89.415 Rescission. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:14+00:00",
+  "content_hash": "0897f377669be2483e0a35627a952b32421bd4f0b0291b2a89087d2ed925e16f",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.415 Rescission. (2025 edition)"
+      ],
+      "text": "(a) Rescission of an FAA-accepted means of compliance. (1) A means of compliance is subject to ongoing review by the Administrator. The Administrator may rescind acceptance of a means of compliance if the Administrator determines that a means of compliance does not meet any or all of the requirements of subpart D or E of this part.\n\n(2) The Administrator will publish a notice of rescission in the Federal Register .\n\n(b) Inapplicability of part 13, subpart D, of this chapter. Part 13, subpart D, of this chapter does not apply to the procedures of paragraph (a) of this section.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

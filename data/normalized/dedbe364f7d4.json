@@ -1,0 +1,24 @@
+{
+  "doc_id": "dedbe364f7d4",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-52.xml",
+  "title": "14 CFR § 107.52 ATC transponder equipment prohibition. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:53+00:00",
+  "content_hash": "f59836ab6645b650e8cc1b28a63d3452f53886acd349f6911e6386e0d4d62fdc",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.52 ATC transponder equipment prohibition. (2025 edition)"
+      ],
+      "text": "Unless otherwise authorized by the Administrator, no person may operate a small unmanned aircraft system under this part with a transponder on.\n\n[Amdt. 107-7, 86 FR 4513, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

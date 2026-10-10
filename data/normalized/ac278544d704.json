@@ -1,0 +1,24 @@
+{
+  "doc_id": "ac278544d704",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-74.xml",
+  "title": "14 CFR § 107.74 Small unmanned aircraft system training. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:06+00:00",
+  "content_hash": "ae291178528864c62c5902f122bf37760ab0304351f020ce4b1d2f1d7ed03f77",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.74 Small unmanned aircraft system training. (2025 edition)"
+      ],
+      "text": "Training for pilots who hold a pilot certificate (other than a student pilot certificate) issued under part 61 of this chapter and meet the flight review requirements specified in § 61.56 covers the following areas of knowledge:\n\n(a) Applicable regulations relating to small unmanned aircraft system rating privileges, limitations, and flight operation;\n\n(b) Effects of weather on small unmanned aircraft performance;\n\n(c) Small unmanned aircraft loading;\n\n(d) Emergency procedures;\n\n(e) Crew resource management;\n\n(f) Determining the performance of the small unmanned aircraft;\n\n(g) Maintenance and preflight inspection procedures; and\n\n(h) Operation at night.\n\n[Amdt. 107-8, 86 FR 4383, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

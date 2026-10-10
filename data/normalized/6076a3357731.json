@@ -1,0 +1,24 @@
+{
+  "doc_id": "6076a3357731",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-15.xml",
+  "title": "14 CFR § 107.15 Condition for safe operation. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:33+00:00",
+  "content_hash": "8a666975eea017409167f2284f36ee8b7a5c8b274dcb007590e28abb36dc5307",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.15 Condition for safe operation. (2025 edition)"
+      ],
+      "text": "(a) No person may operate a civil small unmanned aircraft system unless it is in a condition for safe operation. Prior to each flight, the remote pilot in command must check the small unmanned aircraft system to determine whether it is in a condition for safe operation.\n\n(b) No person may continue flight of the small unmanned aircraft when he or she knows or has reason to know that the small unmanned aircraft system is no longer in a condition for safe operation.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "1887af2b7dce",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-21.xml",
+  "title": "14 CFR § 107.21 In-flight emergency. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:36+00:00",
+  "content_hash": "0f6188d7da96f504e7518d4f26e8a78554925a41ec9b3cdc3c00eb88d9d4a1ed",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.21 In-flight emergency. (2025 edition)"
+      ],
+      "text": "(a) In an in-flight emergency requiring immediate action, the remote pilot in command may deviate from any rule of this part to the extent necessary to meet that emergency.\n\n(b) Each remote pilot in command who deviates from a rule under paragraph (a) of this section must, upon request of the Administrator, send a written report of that deviation to the Administrator.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

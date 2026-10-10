@@ -1,0 +1,24 @@
+{
+  "doc_id": "eb5f7fc42ef7",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-125.xml",
+  "title": "14 CFR § 89.125 Automatic Dependent Surveillance-Broadcast (ADS-B) Out prohibition. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:32+00:00",
+  "content_hash": "2c1797e8179e90ded645bbb2777339c5b3cccbb582bfbae2be8ffdfd86fec429",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.125 Automatic Dependent Surveillance-Broadcast (ADS-B) Out prohibition. (2025 edition)"
+      ],
+      "text": "Automatic Dependent Surveillance-Broadcast (ADS-B) Out equipment cannot be used to comply with the remote identification requirements of this part.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "d1e6f2fa8128",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-37.xml",
+  "title": "14 CFR § 107.37 Operation near aircraft; right-of-way rules. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:45+00:00",
+  "content_hash": "031b7dad950798d34f0bd8b26a24ac6f69b95a991fe28285c09de4d66ed71f05",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.37 Operation near aircraft; right-of-way rules. (2025 edition)"
+      ],
+      "text": "(a) Each small unmanned aircraft must yield the right of way to all aircraft, airborne vehicles, and launch and reentry vehicles. Yielding the right of way means that the small unmanned aircraft must give way to the aircraft or vehicle and may not pass over, under, or ahead of it unless well clear.\n\n(b) No person may operate a small unmanned aircraft so close to another aircraft as to create a collision hazard.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "1644149c2648",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-210.xml",
+  "title": "14 CFR § 89.210 Requests for establishment of an FAA-recognized identification area. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:36+00:00",
+  "content_hash": "f52e050736a060eb35e677a4f7d9124e79b40522c3c104c87ef30458b822f33d",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.210 Requests for establishment of an FAA-recognized identification area. (2025 edition)"
+      ],
+      "text": "(a) Application. An eligible person requesting the establishment of an FAA-recognized identification area under this subpart may submit an application in a form and manner acceptable to the Administrator.\n\n(b) Required documentation. A request under this subpart must contain all of the following information:\n\n(1) The name of the eligible person under § 89.205.\n\n(2) The name of the individual making the request on behalf of the eligible person.\n\n(3) A declaration that the individual making the request has the authority to act on behalf of the community-based organization or educational institution.\n\n(4) The name and contact information of the primary point of contact for communications with the FAA.\n\n(5) The physical address of the proposed FAA-recognized identification area.\n\n(6) The location of the proposed FAA-recognized identification area in a form and manner prescribed by the Administrator.\n\n(7) If applicable, a copy of any existing letter of agreement regarding the flying site.\n\n(8) Description of the intended purpose of the FAA-recognized identification area and why the proposed FAA-recognized identification area is necessary for that purpose.\n\n(9) Any other information required by the Administrator.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

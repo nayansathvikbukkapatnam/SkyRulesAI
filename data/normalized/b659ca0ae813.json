@@ -1,0 +1,24 @@
+{
+  "doc_id": "b659ca0ae813",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-29.xml",
+  "title": "14 CFR § 107.29 Operation at night. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:40+00:00",
+  "content_hash": "2bd36b37c64dd46781bd9a94cb88d4a0489fcb7e6619f328712657e79f98c5ed",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.29 Operation at night. (2025 edition)"
+      ],
+      "text": "(a) Except as provided in paragraph (d) of this section, no person may operate a small unmanned aircraft system at night unless—\n\n(1) The remote pilot in command of the small unmanned aircraft has completed an initial knowledge test or training, as applicable, under § 107.65 after April 6, 2021; and\n\n(2) The small unmanned aircraft has lighted anti-collision lighting visible for at least 3 statute miles that has a flash rate sufficient to avoid a collision. The remote pilot in command may reduce the intensity of, but may not extinguish, the anti-collision lighting if he or she determines that, because of operating conditions, it would be in the interest of safety to do so.\n\n(b) No person may operate a small unmanned aircraft system during periods of civil twilight unless the small unmanned aircraft has lighted anti-collision lighting visible for at least 3 statute miles that has a flash rate sufficient to avoid a collision. The remote pilot in command may reduce the intensity of, but may not extinguish, the anti-collision lighting if he or she determines that, because of operating conditions, it would be in the interest of safety to do so.\n\n(c) For purposes of paragraph (b) of this section, civil twilight refers to the following:\n\n(1) Except for Alaska, a period of time that begins 30 minutes before official sunrise and ends at official sunrise;\n\n(2) Except for Alaska, a period of time that begins at official sunset and ends 30 minutes after official sunset; and\n\n(3) In Alaska, the period of civil twilight as defined in the Air Almanac.\n\n(d) After May 17, 2021, no person may operate a small unmanned aircraft system at night in accordance with a certificate of waiver issued prior to April 21, 2021 under § 107.200. The certificates of waiver issued prior to March 16, 2021 under § 107.200 that authorize deviation from § 107.29 terminate on May 17, 2021.\n\n[Docket FAA-2015-0150, Amdt. 107-1, 81 FR 42209, June 28, 2016, as amended by Amdt. 107-8, 86 FR 4382, Jan. 15, 2021; 86 FR 13631, Mar. 10, 2020]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

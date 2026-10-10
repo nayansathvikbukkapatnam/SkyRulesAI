@@ -1,0 +1,24 @@
+{
+  "doc_id": "55249e1585d2",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-79.xml",
+  "title": "14 CFR § 107.79 Voluntary surrender of certificate. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:08+00:00",
+  "content_hash": "4188e5ddcaf8076ec674c0dbb0d8feb2637d57eff743810e507f5986b3af4286",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.79 Voluntary surrender of certificate. (2025 edition)"
+      ],
+      "text": "(a) The holder of a certificate issued under this subpart may voluntarily surrender it for cancellation.\n\n(b) Any request made under paragraph (a) of this section must include the following signed statement or its equivalent: “I voluntarily surrender my remote pilot certificate with a small UAS rating for cancellation. This request is made for my own reasons, with full knowledge that my certificate will not be reissued to me unless I again complete the requirements specified in §§ 107.61 and 107.63.”",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

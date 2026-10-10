@@ -1,0 +1,24 @@
+{
+  "doc_id": "a36050a0e038",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-145.xml",
+  "title": "14 CFR § 107.145 Operations over moving vehicles. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:18+00:00",
+  "content_hash": "51c0bb786b06f94e016f24ca1a2c972fefc596daf0ecd311e9bb8e1fc5ca71d8",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.145 Operations over moving vehicles. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft over a human being located inside a moving vehicle unless the following conditions are met:\n\n(a) The operation occurs in accordance with § 107.110 for Category 1 operations; § 107.115 for Category 2 operations; § 107.125 for Category 3 operations; or § 107.140 for Category 4 operations.\n\n(b) For an operation under Category 1, Category 2, or Category 3, the small unmanned aircraft, throughout the operation—\n\n(1) Must remain within or over a closed- or restricted-access site, and all human beings located inside a moving vehicle within the closed- or restricted-access site must be on notice that a small unmanned aircraft may fly over them; or\n\n(2) Must not maintain sustained flight over moving vehicles.\n\n(c) For a Category 4 operation, the small unmanned aircraft must—\n\n(1) Have an airworthiness certificate issued under part 21 of this chapter.\n\n(2) Be operated in accordance with the operating limitations specified in the approved Flight Manual or as otherwise specified by the Administrator. The operating limitations must not prohibit operations over human beings located inside moving vehicles.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

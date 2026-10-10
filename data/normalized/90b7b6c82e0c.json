@@ -1,0 +1,24 @@
+{
+  "doc_id": "90b7b6c82e0c",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-205.xml",
+  "title": "14 CFR § 48.205 Display and location of unique identifier. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:40+00:00",
+  "content_hash": "11121c6b1fbf96819b2b514094a127d6db7395a612159d9bf6caf7acf95c65c1",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.205 Display and location of unique identifier. (2025 edition)"
+      ],
+      "text": "(a) The unique identifier must be maintained in a condition that is legible.\n\n(b) The unique identifier must be affixed to the small unmanned aircraft by any means necessary to ensure that it will remain affixed for the duration of each operation.\n\n(c) The unique identifier must be legibly displayed on an external surface of the small unmanned aircraft.\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015, as amended by Doc. No. FAA-2018-1084, 84 FR 3673, Feb. 13, 2019]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

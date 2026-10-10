@@ -1,0 +1,24 @@
+{
+  "doc_id": "3dea240b7d08",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-59.xml",
+  "title": "14 CFR § 107.59 Refusal to submit to an alcohol test or to furnish test results. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:57+00:00",
+  "content_hash": "7b1caa533372c14486591a626490e4868b90f539454fb4461def4057ba351810",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.59 Refusal to submit to an alcohol test or to furnish test results. (2025 edition)"
+      ],
+      "text": "A refusal to submit to a test to indicate the percentage by weight of alcohol in the blood, when requested by a law enforcement officer in accordance with § 91.17(c) of this chapter, or a refusal to furnish or authorize the release of the test results requested by the Administrator in accordance with § 91.17(c) or (d) of this chapter, is grounds for:\n\n(a) Denial of an application for a remote pilot certificate with a small UAS rating for a period of up to 1 year after the date of that refusal; or\n\n(b) Suspension or revocation of a remote pilot certificate with a small UAS rating.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

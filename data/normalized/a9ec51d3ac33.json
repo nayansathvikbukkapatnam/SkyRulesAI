@@ -1,0 +1,24 @@
+{
+  "doc_id": "a9ec51d3ac33",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-69.xml",
+  "title": "14 CFR § 107.69 Knowledge tests: Cheating or other unauthorized conduct. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:03+00:00",
+  "content_hash": "9a75106fcf6b7b1960780d759dffa2be634193ba9a976d423d3d42ef98195214",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.69 Knowledge tests: Cheating or other unauthorized conduct. (2025 edition)"
+      ],
+      "text": "(a) An applicant for a knowledge test may not:\n\n(1) Copy or intentionally remove any knowledge test;\n\n(2) Give to another applicant or receive from another applicant any part or copy of a knowledge test;\n\n(3) Give or receive assistance on a knowledge test during the period that test is being given;\n\n(4) Take any part of a knowledge test on behalf of another person;\n\n(5) Be represented by, or represent, another person for a knowledge test;\n\n(6) Use any material or aid during the period that the test is being given, unless specifically authorized to do so by the Administrator; and\n\n(7) Intentionally cause, assist, or participate in any act prohibited by this paragraph.\n\n(b) An applicant who the Administrator finds has committed an act prohibited by paragraph (a) of this section is prohibited, for 1 year after the date of committing that act, from:\n\n(1) Applying for any certificate, rating, or authorization issued under this chapter; and\n\n(2) Applying for and taking any test under this chapter.\n\n(c) Any certificate or rating held by an applicant may be suspended or revoked if the Administrator finds that person has committed an act prohibited by paragraph (a) of this section.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

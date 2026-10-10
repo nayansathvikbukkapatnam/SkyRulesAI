@@ -1,0 +1,24 @@
+{
+  "doc_id": "6db3baa6938d",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-7.xml",
+  "title": "14 CFR § 107.7 Inspection, testing, and demonstration of compliance. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:28+00:00",
+  "content_hash": "19a4ce1a679d72443f1e642502d6d41b1af3021c7d589224f3ec9433a33f854b",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.7 Inspection, testing, and demonstration of compliance. (2025 edition)"
+      ],
+      "text": "(a) A remote pilot in command, owner, or person manipulating the flight controls of a small unmanned aircraft system must—\n\n(1) Have in that person's physical possession and readily accessible the remote pilot certificate with a small UAS rating and identification when exercising the privileges of that remote pilot certificate.\n\n(2) Present his or her remote pilot certificate with a small UAS rating and identification that contains the information listed at § 107.67(b)(1) through (3) for inspection upon a request from—\n\n(i) The Administrator;\n\n(ii) An authorized representative of the National Transportation Safety Board;\n\n(iii) Any Federal, State, or local law enforcement officer; or\n\n(iv) An authorized representative of the Transportation Security Administration.\n\n(3) Make available, upon request, to the Administrator any document, record, or report required to be kept under the regulations of this chapter.\n\n(b) The remote pilot in command, visual observer, owner, operator, or person manipulating the flight controls of a small unmanned aircraft system must, upon request, allow the Administrator to make any test or inspection of the small unmanned aircraft system, the remote pilot in command, the person manipulating the flight controls of a small unmanned aircraft system, and, if applicable, the visual observer to determine compliance with this part.\n\n(c) Any person holding an FAA-accepted declaration of compliance under subpart D of this part must, upon request, make available to the Administrator:\n\n(1) The declaration of compliance required under subpart D of this part; and\n\n(2) Any other document, record, or report required to be kept under the regulations of this chapter.\n\n(d) Any person holding an FAA-accepted declaration of compliance under subpart D of this part must, upon request, allow the Administrator to inspect its facilities, technical data, and any manufactured small UAS and witness any tests necessary to determine compliance with that subpart.\n\n[Amdt. 107-8, 86 FR 4381, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

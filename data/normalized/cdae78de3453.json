@@ -1,0 +1,24 @@
+{
+  "doc_id": "cdae78de3453",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-1.xml",
+  "title": "14 CFR § 89.1 Definitions. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:25+00:00",
+  "content_hash": "e690d5e564737373265ed3fe9605ea9c3b8309ef5e04b36d782ec715183ed54c",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.1 Definitions. (2025 edition)"
+      ],
+      "text": "The following definitions apply to this part.\n\nDeclaration of compliance means a record submitted to the FAA by the producer of a standard remote identification unmanned aircraft or remote identification broadcast module to attest that all the requirements of subpart F of this part have been met.\n\nHome-built unmanned aircraft means an unmanned aircraft that an individual built solely for education or recreation.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

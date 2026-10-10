@@ -1,0 +1,24 @@
+{
+  "doc_id": "096db3c5b8e7",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-20.xml",
+  "title": "14 CFR § 48.20 Eligibility for registration. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:30+00:00",
+  "content_hash": "fd626a444850988748fda000610b363006d5a3b6ea524e6f975e5cb06d8e4567",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.20 Eligibility for registration. (2025 edition)"
+      ],
+      "text": "A small unmanned aircraft may be registered under 49 U.S.C. 44103 and under this part only when the aircraft is not registered under the laws of a foreign country and is—\n\n(a) Owned by a U.S. citizen;\n\n(b) Owned by an individual citizen of a foreign country lawfully admitted for permanent residence in the United States;\n\n(c) Owned by a corporation not a citizen of the United States when the corporation is organized and doing business under the laws of the United States or a State within the United States, and the aircraft is based and primarily used in the United States; or\n\n(d) An aircraft of—\n\n(1) The United States Government; or\n\n(2) A State, the District of Columbia, a territory or possession of the United States, or a political subdivision of a State, territory, or possession.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

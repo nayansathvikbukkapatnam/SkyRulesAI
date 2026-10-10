@@ -1,0 +1,24 @@
+{
+  "doc_id": "c84da06f5f62",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-150.xml",
+  "title": "14 CFR § 107.150 Variable mode and variable configuration of small unmanned aircraft systems. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:19+00:00",
+  "content_hash": "87933a3bd7b68425e24d8800ef16c3cd7a18fe816ae19c7f22e41f82d41fb431",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.150 Variable mode and variable configuration of small unmanned aircraft systems. (2025 edition)"
+      ],
+      "text": "A small unmanned aircraft system may be eligible for one or more categories of operation over human beings under this subpart, as long as a remote pilot in command cannot inadvertently switch between modes or configurations.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

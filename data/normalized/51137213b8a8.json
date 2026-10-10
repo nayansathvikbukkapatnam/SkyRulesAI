@@ -1,0 +1,24 @@
+{
+  "doc_id": "51137213b8a8",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-301.xml",
+  "title": "14 CFR § 89.301 Applicability. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:41+00:00",
+  "content_hash": "93e9d126d0bb690528d1f8e0f7a98705b9d36156b399d1a0dbe275b43324153b",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.301 Applicability. (2025 edition)"
+      ],
+      "text": "This subpart prescribes the minimum message element set and minimum performance requirements for standard remote identification unmanned aircraft and remote identification broadcast modules.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

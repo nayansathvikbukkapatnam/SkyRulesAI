@@ -1,0 +1,24 @@
+{
+  "doc_id": "7d3a8b7639f2",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-1.xml",
+  "title": "14 CFR § 48.1 Applicability. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:26+00:00",
+  "content_hash": "e436dcbdf1a64c26e4c8c9c66d3d9382e85e1df78531dd07022f442f4ab48830",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.1 Applicability. (2025 edition)"
+      ],
+      "text": "(a) This part provides registration and identification requirements for small unmanned aircraft that are part of a small unmanned aircraft system as defined in § 1.1 of this chapter.\n\n(b) Small unmanned aircraft eligible for registration in the United States must be registered and identified in accordance with either:\n\n(1) The registration and identification requirements in this part; or\n\n(2) The registration requirements in part 47 and the identification and registration marking requirements in subparts A and C of part 45.\n\n(c) Small unmanned aircraft intended to be operated outside of the territorial airspace of the United States, or registered through a trust or voting trust, must be registered in accordance with subparts A and B of part 47 and satisfy the identification and registration marking requirements of subparts A and C of part 45.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

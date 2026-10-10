@@ -1,0 +1,24 @@
+{
+  "doc_id": "e79490b05f09",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-525.xml",
+  "title": "14 CFR § 89.525 Labeling. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:21+00:00",
+  "content_hash": "a8b1175729a9a3826153383a00290300a10a9c4589ea73a76b8020e3cdeb3295",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.525 Labeling. (2025 edition)"
+      ],
+      "text": "(a) No person may produce a standard remote identification unmanned aircraft under § 89.515 unless it displays a label indicating that the unmanned aircraft meets the requirements of this part. The label must be in English and be legible, prominent, and permanently affixed to the unmanned aircraft.\n\n(b) No person may produce a remote identification broadcast module under § 89.520 unless it displays a label indicating that the equipment meets the requirements of this part. The label must be in English and be legible, prominent, and permanently affixed to the broadcast module.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

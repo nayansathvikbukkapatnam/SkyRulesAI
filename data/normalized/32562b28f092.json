@@ -1,0 +1,24 @@
+{
+  "doc_id": "32562b28f092",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-1.xml",
+  "title": "14 CFR § 107.1 Applicability. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:24+00:00",
+  "content_hash": "91cddf64ee5bad8616d0f09a8b96fe4fb451e18e0a0cc3fd3e62e1763d0b38fe",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.1 Applicability. (2025 edition)"
+      ],
+      "text": "(a) Except as provided in paragraph (b) of this section, this part applies to the registration, airman certification, and operation of civil small unmanned aircraft systems within the United States. This part also applies to the eligibility of civil small unmanned aircraft systems to operate over human beings in the United States.\n\n(b) This part does not apply to the following:\n\n(1) Air carrier operations;\n\n(2) Any aircraft subject to the provisions of 49 U.S.C. 44809;\n\n(3) Any operation that the holder of an exemption under section 333 of Public Law 112-95 or 49 U.S.C. 44807 elects to conduct pursuant to the exemption, unless otherwise specified in the exemption; or\n\n(4) Any operation that a person elects to conduct under part 91 of this chapter with a small unmanned aircraft system that has been issued an airworthiness certificate.\n\n[Amdt. 107-8, 86 FR 4381, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

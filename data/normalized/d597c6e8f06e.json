@@ -1,0 +1,24 @@
+{
+  "doc_id": "d597c6e8f06e",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-110.xml",
+  "title": "14 CFR § 48.110 Application. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:35+00:00",
+  "content_hash": "d049ee9e7f20ecc9c47e291dd0a89fad90ff79c7c08ffd185db9daad453e621d",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.110 Application. (2025 edition)"
+      ],
+      "text": "(a) Required information. Each applicant for a Certificate of Aircraft Registration issued under this part must submit all of the following information to the Registry:\n\n(1) Applicant's name and, for an applicant other than an individual, the name of the authorized representative applying for a Certificate of Aircraft Registration.\n\n(2) Applicant's physical address and, for an applicant other than an individual, the physical address of the authorized representative. If the applicant or authorized representative cannot receive mail at a physical address, then provide a mailing address.\n\n(3) Applicant's email address or, for applicants other than individuals, the email address of the authorized representative.\n\n(4) Applicant's telephone number(s) and, for an applicant other than an individual, the telephone number(s) of the authorized representative.\n\n(5) The aircraft manufacturer and model name.\n\n(6) For any standard remote identification unmanned aircraft, the serial number issued by the manufacturer of the unmanned aircraft in accordance with the design and production requirements of part 89 of this chapter. The serial number provided in this application must not be listed on more than one Certificate of Aircraft Registration at the same time.\n\n(7) For any unmanned aircraft equipped with a remote identification broadcast module, the serial number issued by the manufacturer of the remote identification broadcast module in accordance with the design and production requirements of part 89 of this chapter. An applicant may submit the serial number of more than one remote identification broadcast module as part of the application for aircraft registration under § 48.105. The serial number of a remote identification broadcast module provided in this application must not be listed on more than one Certificate of Aircraft Registration at the same time.\n\n(8) Other information as required by the Administrator.\n\n(b) Provision of information. The information identified in paragraph (a) of this section must be submitted to the Registry through the web-based small unmanned aircraft registration system in a form and manner prescribed by the Administrator.\n\n(c) Issuance of Certificate of Aircraft Registration. The FAA will issue a Certificate of Aircraft Registration upon completion of the application requirements provided in paragraph (a) of this section.\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015. Redesignated and amended by Doc. No. FAA-2019-1100; Amdt. No. 48-3, 86 FR 4504, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

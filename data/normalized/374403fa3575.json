@@ -1,0 +1,24 @@
+{
+  "doc_id": "374403fa3575",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-220.xml",
+  "title": "14 CFR § 89.220 Amendment. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:38+00:00",
+  "content_hash": "7a28991c11bdd6cfa78cbf223e86f8dd1a7405e3b137f14faacaae3eb3c3136c",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.220 Amendment. (2025 edition)"
+      ],
+      "text": "(a) From the time of application until expiration or termination of an FAA-recognized identification area, any change to the information submitted in the application including but not limited to a change to the point of contact for the FAA-recognized identification area or a change to the FAA-recognized identification area's organizational affiliation must be submitted to the FAA within 10 calendar days of the change.\n\n(b) If the person who has been granted an FAA-recognized identification area wishes to change the geographic boundaries of the FAA-recognized identification area, the person must submit a request describing the change to the FAA for review. The geographic boundaries of the FAA-recognized identification area will not change unless the requested change is approved in accordance with § 89.215.\n\n(c) The establishment of an FAA-recognized identification area is subject to ongoing review in accordance with § 89.215 by the Administrator that may result in the termination of the FAA-recognized identification area pursuant to § 89.230 or modification of the FAA-recognized identification area.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

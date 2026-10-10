@@ -1,0 +1,24 @@
+{
+  "doc_id": "9818fcef2030",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-115.xml",
+  "title": "14 CFR § 107.115 Category 2 operations: Operating requirements. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:12+00:00",
+  "content_hash": "d98eaf7b6e380a072efa9e60bb1aff56117bb08531a8b8e896cdc08676ecb665",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.115 Category 2 operations: Operating requirements. (2025 edition)"
+      ],
+      "text": "To conduct Category 2 operations—\n\n(a) A remote pilot in command must use a small unmanned aircraft that—\n\n(1) Is eligible for Category 2 operations pursuant to § 107.120(a);\n\n(2) Is listed on an FAA-accepted declaration of compliance as eligible for Category 2 operations in accordance with § 107.160; and\n\n(3) Is labeled as eligible to conduct Category 2 operations in accordance with § 107.120(b)(1).\n\n(b) No remote pilot in command may operate a small unmanned aircraft in sustained flight over open-air assemblies of human beings unless the operation meets the requirements of either § 89.110 or § 89.115(a) of this chapter.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

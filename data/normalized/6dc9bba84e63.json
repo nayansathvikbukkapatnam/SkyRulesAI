@@ -1,0 +1,24 @@
+{
+  "doc_id": "6dc9bba84e63",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-65.xml",
+  "title": "14 CFR § 107.65 Aeronautical knowledge recency. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:01+00:00",
+  "content_hash": "de4308ae85d00c9a3446fe55b6bf331fc1784820e903bcbbbd0c729ecf2173e3",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.65 Aeronautical knowledge recency. (2025 edition)"
+      ],
+      "text": "A person may not exercise the privileges of a remote pilot in command with small UAS rating unless that person has accomplished one of the following in a manner acceptable to the Administrator within the previous 24 calendar months:\n\n(a) Passed an initial aeronautical knowledge test covering the areas of knowledge specified in § 107.73;\n\n(b) Completed recurrent training covering the areas of knowledge specified in § 107.73; or\n\n(c) If a person holds a pilot certificate (other than a student pilot certificate) issued under part 61 of this chapter and meets the flight review requirements specified in § 61.56, completed training covering the areas of knowledge specified in § 107.74.\n\n(d) A person who has passed a recurrent aeronautical knowledge test in a manner acceptable to the Administrator or who has satisfied the training requirement of paragraph (c) of this section prior to April 6, 2021 within the previous 24 calendar months is considered to be in compliance with the requirement of paragraph (b) or (c) of this section, as applicable.\n\n[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021; 86 FR 13631, Mar. 10, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

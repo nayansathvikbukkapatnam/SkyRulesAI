@@ -1,0 +1,24 @@
+{
+  "doc_id": "e6e2215fec74",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-420.xml",
+  "title": "14 CFR § 89.420 Record retention. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:15+00:00",
+  "content_hash": "e699ded9394c9482a1312608c950d873f62fe886df1fc036d7088ea248ec3dd2",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.420 Record retention. (2025 edition)"
+      ],
+      "text": "A person who submits a means of compliance that is accepted by the Administrator under this subpart must retain the following information for as long as the means of compliance is accepted plus an additional 24 calendar months, and must make available for inspection by the Administrator the following:\n\n(a) All documentation and substantiating data submitted to the FAA for acceptance of the means of compliance.\n\n(b) Records of all test procedures, methodology, and other procedures, as applicable.\n\n(c) Any other information necessary to justify and substantiate how the means of compliance enables compliance with the remote identification requirements of this part.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "46ddc0d31638",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-10.xml",
+  "title": "14 CFR § 48.10 Definitions. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:28+00:00",
+  "content_hash": "90d3883612d13729ae6871bb86535646ca0ff31fdfccb66f9f2a4aa55f28eae4",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.10 Definitions. (2025 edition)"
+      ],
+      "text": "For purposes of this part, the following definitions apply:\n\nCitizen of the United States or U.S. citizen means one of the following:\n\n(1) An individual who is a citizen of the United States or one of its possessions.\n\n(2) A partnership each of whose partners is an individual who is a citizen of the United States.\n\n(3) A corporation or association organized under the laws of the United States or a State, the District of Columbia, or a territory or possession of the United States, of which the president and at least two-thirds of the board of directors and other managing officers are citizens of the United States, which is under the actual control of citizens of the United States, and in which at least 75 percent of the voting interest is owned or controlled by persons that are citizens of the United States.\n\nRegistry means the FAA, Civil Aviation Registry, Aircraft Registration Branch.\n\nResident alien means an individual citizen of a foreign country lawfully admitted for permanent residence in the United States as an immigrant in conformity with the regulations of the Department of Homeland Security (8 CFR Chapter 1).",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}
