@@ -54,7 +54,7 @@ MAX_REDIRECTS = 5
 MAX_SITEMAPS_PER_SOURCE = 50
 REFUSE_AT = 150
 
-HTML, PDF = "text/html", "application/pdf"
+HTML, PDF, XML = "text/html", "application/pdf", "application/xml"
 REDIRECT_CODES = frozenset({301, 302, 303, 307, 308})
 
 
@@ -63,12 +63,14 @@ def user_agent_for(email: str) -> str:
 
 
 def content_kind(resp, url: str) -> str | None:
-    """HTML or PDF from the Content-Type header (or PDF magic bytes); None for anything else."""
+    """HTML, PDF or XML from the Content-Type header (or PDF magic bytes); else None."""
     ctype = (resp.headers.get("Content-Type") or "").split(";")[0].strip().lower()
     if ctype == PDF or resp.content[:5] == b"%PDF-":
         return PDF
     if ctype in (HTML, "application/xhtml+xml"):
         return HTML
+    if ctype in (XML, "text/xml") and url.lower().endswith(".xml"):
+        return XML  # structured documents such as govinfo CFR sections; never expanded
     return None
 
 

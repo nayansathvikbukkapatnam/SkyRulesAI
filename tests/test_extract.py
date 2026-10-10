@@ -6,7 +6,8 @@ import pytest
 
 from src.common.contracts import validate_normalized_doc
 from src.extract import html as html_x
-from src.extract.normalize import FR_CONTACT, _effective_date, normalize, trim_cfr_section
+from src.extract.cfr import cfr_section
+from src.extract.normalize import FR_CONTACT, _effective_date, normalize
 from src.extract.pdf import _columns, _join, _pdf_date, table_to_markdown
 from src.extract.pii import redact
 
@@ -174,35 +175,36 @@ def test_effective_date_comes_from_dates_section_else_publication_date():
     assert _effective_date(proposed, "2019-12-31") == "2019-12-31"
 
 
-def test_cfr_section_is_trimmed_to_its_own_text_and_caption_mended():
-    t = "14 CFR § 107.31"
-
-    def sec(heading, text, tables=()):
-        return {"heading_path": [t, *heading], "text": text, "tables": list(tables)}
-
-    sections = [
-        sec([], "end of 107.29 from the same page."),
-        sec(["§107.31 Visual line of sight aircraft op-"], "eration.\n\n(a) With vision unaided."),
-        sec(["Note to paragraph (a)"], "A note.", ["| a | b |"]),
-        sec(["§107.35 Operation of multiple small"], "unmanned aircraft. Next section."),
-    ]
-    caption, [section] = trim_cfr_section(sections, "107.31")
-    assert caption == "Visual line of sight aircraft operation."
-    assert section["heading_path"] == [t]
-    assert section["text"] == "(a) With vision unaided.\n\nNote to paragraph (a)\n\nA note."
-    assert section["tables"] == ["| a | b |"]
-    assert "107.29" not in section["text"] and "Next section" not in section["text"]
+CFR_XML = """<?xml version="1.0"?>
+<CFRGRANULE><FDSYS><CFRTITLE>14</CFRTITLE><DATE>2025-01-01</DATE></FDSYS>
+<SECTION><SECTNO>§ 107.31</SECTNO>
+<SUBJECT>Visual line of sight aircraft operation.</SUBJECT>
+<P>(a) With vision that is <E T="03">unaided</E> by any device.</P>
+<P>(b) Fixture paragraph two.</P>
+<CITA>[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021]</CITA>
+</SECTION></CFRGRANULE>""".encode()
 
 
-def test_cfr_section_without_its_heading_is_left_whole():
-    sections = [{"heading_path": ["x"], "text": "no heading here", "tables": []}]
-    assert trim_cfr_section(sections, "107.31") == (None, sections)
+def test_cfr_section_xml_gives_title_paragraphs_and_edition_date():
+    ext, number, edition = cfr_section(CFR_XML)
+    assert (number, edition) == ("107.31", "2025-01-01")
+    assert ext.title == "14 CFR § 107.31 Visual line of sight aircraft operation. (2025 edition)"
+    [section] = ext.sections
+    assert section["heading_path"] == [ext.title]
+    assert section["text"] == (
+        "(a) With vision that is unaided by any device.\n\n(b) Fixture paragraph two.\n\n"
+        "[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021]"
+    )
 
 
-def test_reserved_cfr_section_caption():
-    sections = [{"heading_path": ["x", "§ 107.5 [Reserved]"], "text": "", "tables": []}]
-    caption, _ = trim_cfr_section(sections, "107.5")
-    assert caption == "[Reserved]"
+def test_reserved_cfr_section_xml_has_no_sections():
+    raw = (
+        "<CFRGRANULE><SECTION><SECTNO>§ 107.5</SECTNO>"
+        "<RESERVED>[Reserved]</RESERVED></SECTION></CFRGRANULE>"
+    ).encode()
+    ext, number, _ = cfr_section(raw)
+    assert number == "107.5" and ext.sections == []
+    assert ext.warnings == ["reserved section (no text)"]
 
 
 def test_pdf_contact_block_is_removed_up_to_supplementary_information():
@@ -305,7 +307,7 @@ def test_normalize_writes_valid_docs_stats_and_counts_only_pii_log(tmp_path):
     assert docs["https://knowbeforeyoufly.org/whos-flying/commercial"]["page_type"] == "guide_page"
 
     assert stats["documents_written"] == 2
-    assert stats["excluded_disabled_sources"] == {"www.ecfr.gov": 1}
+    assert stats["excluded_by_source_config"] == {"www.ecfr.gov (source disabled)": 1}
     assert stats["duplicates_removed"] == 1  # the copy has the same extracted content
     assert stats["documents_with_tables"] == 1
     saved = json.loads((artifacts / "ingestion_stats.json").read_text())

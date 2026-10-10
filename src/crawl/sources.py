@@ -154,10 +154,11 @@ class SourceSet:
         for reason, pattern in (*self.exclude_all, *source.exclude):
             if pattern.search(target):
                 return SKIP, f"excluded_{reason}", source.name
-        if PurePosixPath(path).suffix in SKIP_EXTENSIONS:
+        is_leaf = any(p.search(path) for p in source.leaf)
+        if PurePosixPath(path).suffix in SKIP_EXTENSIONS and not is_leaf:
             return SKIP, "unsupported_file_type", source.name
         if any(p.search(path) for p in source.crawl):
             return CRAWL, "in_scope", source.name
-        if any(p.search(path) for p in source.leaf):
+        if is_leaf:
             return LEAF, "linked_document", source.name
         return SKIP, "out_of_scope", source.name

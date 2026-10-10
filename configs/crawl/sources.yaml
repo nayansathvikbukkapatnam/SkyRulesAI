@@ -131,25 +131,27 @@ sources:
     sitemap: null
     # The drone regulations themselves, replacing eCFR: the official annual CFR
     # edition (14 CFR revised as of January 1, 2025; the 2026 edition was not yet
-    # published on 2026-10-10), one PDF per section. Each part's XML lists its
-    # section numbers and is read for discovery only, like a sitemap. govinfo's
-    # robots.txt allows /content/pkg/ (it disallows /app/search/).
+    # published on 2026-10-10), one XML file per section. The section PDFs print
+    # whole pages, and in about a fifth of them the section's own text is not in
+    # the text layer, so the structured section XML is used instead. Each part's
+    # XML lists its section numbers and is read for discovery only, like a sitemap.
+    # govinfo's robots.txt allows /content/pkg/ (it disallows /app/search/).
     #   Volume 2: Part 107 (small UAS) and Part 89 (Remote ID); Volume 1: Part 48 (registration)
     index:
       - urls:
           - 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-part107.xml'
           - 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-part89.xml'
         pattern: '<SECTNO>\s*§+\s*(\d+)\.(\d+)\s*</SECTNO>'
-        template: 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec{0}-{1}.pdf'
+        template: 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec{0}-{1}.xml'
       - urls:
           - 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-part48.xml'
         pattern: '<SECTNO>\s*§+\s*(\d+)\.(\d+)\s*</SECTNO>'
-        template: 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/pdf/CFR-2025-title14-vol1-sec{0}-{1}.pdf'
-    max_urls: 200
+        template: 'https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec{0}-{1}.xml'
+    max_urls: 300  # 16 FR + 112 CFR section XMLs (+112 earlier section PDFs, no longer used)
     crawl: []
     leaf:
       - '^/content/pkg/fr-\d{4}-\d{2}-\d{2}/pdf/\d{4}-\d+\.pdf$'
-      - '^/content/pkg/cfr-2025-title14-vol[12]/pdf/cfr-2025-title14-vol[12]-sec(107|89|48)-\d+\.pdf$'
+      - '^/content/pkg/cfr-2025-title14-vol[12]/xml/cfr-2025-title14-vol[12]-sec(107|89|48)-\d+\.xml$'
     exclude: {}
 
   # Know Before You Fly: plain-language drone safety guidance, an education campaign
