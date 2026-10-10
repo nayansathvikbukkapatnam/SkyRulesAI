@@ -29,6 +29,7 @@ class Extracted:
     method: str
     date: str | None = None  # a date the extractor found in page metadata, if any
     warnings: list[str] = field(default_factory=list)
+    ocr_pages: int = 0  # PDF pages whose text came from OCR
 
 
 def clean(text: str) -> str:

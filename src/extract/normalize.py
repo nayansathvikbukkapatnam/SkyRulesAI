@@ -32,6 +32,7 @@ from src.crawl.crawler import read_manifest
 from src.crawl.sources import SKIP, SOURCES_FILE, SourceSet
 from src.extract import html as html_x
 from src.extract.cfr import cfr_section
+from src.extract.ocr import version as ocr_version
 from src.extract.pdf import extract_pdf
 from src.extract.pii import redact
 
@@ -206,7 +207,8 @@ def normalize(
     }
     seen_raw: set[str] = set()
     seen_content: dict[str, str] = {}
-    failures, duplicates, reserved, ocr_needed = [], [], [], {}
+    failures, duplicates, reserved, ocr_needed, ocr_done = [], [], [], {}, {}
+    ocr_failed = 0
     pii_total: Counter = Counter()
     pii_by_doc: dict[str, dict] = {}
     dates_found: Counter = Counter()
@@ -252,7 +254,11 @@ def normalize(
             crawl_ts=entry["fetched_at"],
             content_hash="",
             sections=ext.sections,
-            extraction={"method": ext.method, "ocr_used": False, "warnings": ext.warnings},
+            extraction={
+                "method": ext.method,
+                "ocr_used": ext.ocr_pages > 0,
+                "warnings": ext.warnings,
+            },
         )
         pii = _redact_doc(doc)
         doc["content_hash"] = content_hash(doc["sections"])
@@ -289,6 +295,9 @@ def normalize(
         ocr_pages = [w for w in ext.warnings if "needs OCR" in w]
         if ocr_pages:
             ocr_needed[doc_id] = len(ocr_pages)
+        if ext.ocr_pages:
+            ocr_done[doc_id] = ext.ocr_pages
+        ocr_failed += sum(1 for w in ext.warnings if "OCR failed" in w or "no confident" in w)
         if pii:
             pii_total += pii
             pii_by_doc[doc_id] = dict(pii)
@@ -321,6 +330,10 @@ def normalize(
         "effective_date_found_by_source": dict(dates_found),
         "documents_needing_ocr": len(ocr_needed),
         "pages_needing_ocr": sum(ocr_needed.values()),
+        "ocr_engine": ocr_version(),
+        "documents_with_ocr": len(ocr_done),
+        "pages_ocr_text_kept": sum(ocr_done.values()),
+        "pages_ocr_failed_or_empty": ocr_failed,
         "pii_redactions": dict(pii_total),
         "stale_files_removed": len(stale),
     }

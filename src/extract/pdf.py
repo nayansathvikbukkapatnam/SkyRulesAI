@@ -4,7 +4,8 @@ Federal Register PDFs are set in three columns with sideways print-production
 text in the margin, so each page is split at its column gutters (vertical
 strips that almost no word crosses) and read column by column; rotated words
 are dropped. Headings are lines noticeably larger than the body text, or short
-bold lines. Pages with no text layer are reported for OCR (task A3).
+bold lines. Pages with no text layer are read with OCR (src/extract/ocr.py, task A3)
+when Tesseract is installed, and reported as needing OCR otherwise.
 """
 
 from __future__ import annotations
@@ -17,6 +18,7 @@ from statistics import median
 import pdfplumber
 
 from src.common.contracts import Section
+from src.extract import ocr
 from src.extract.html import Extracted, clean
 
 MIN_PAGE_CHARS = 20
@@ -100,8 +102,26 @@ def _inside(word: dict, boxes: list[tuple]) -> bool:
     )
 
 
-def extract_pdf(raw: bytes, title_hint: str | None = None) -> Extracted:
+def _ocr_lines(page, number: int, warnings: list[str]) -> list[dict]:
+    """OCR a page with no text layer. Failures are logged as warnings, never raised."""
+    if not ocr.available():
+        warnings.append(f"page {number}: no text layer (needs OCR; Tesseract not installed)")
+        return []
+    try:
+        texts = ocr.ocr_page(page)
+    except Exception as e:  # a bad page must not stop the document
+        warnings.append(f"page {number}: OCR failed ({type(e).__name__})")
+        return []
+    if sum(len(t) for t in texts) < MIN_PAGE_CHARS:
+        warnings.append(f"page {number}: OCR found no confident text")
+        return []
+    # OCR gives no font size; size 0 keeps these lines out of heading detection.
+    return [{"text": clean(t), "size": 0, "bold": False} for t in texts]
+
+
+def extract_pdf(raw: bytes, title_hint: str | None = None, use_ocr: bool = True) -> Extracted:
     warnings: list[str] = []
+    ocr_pages = 0
     page_lines: list[list[dict]] = []
     page_tables: list[list[str]] = []
     with pdfplumber.open(io.BytesIO(raw)) as pdf:
@@ -118,16 +138,26 @@ def extract_pdf(raw: bytes, title_hint: str | None = None) -> Extracted:
                 )
                 if w.get("upright", True) and not _inside(w, boxes)
             ]
-            if sum(len(w["text"]) for w in words) < MIN_PAGE_CHARS and not tables:
-                warnings.append(f"page {number}: no text layer (needs OCR)")
             lines = []
+            if sum(len(w["text"]) for w in words) < MIN_PAGE_CHARS and not tables:
+                lines = _ocr_lines(page, number, warnings) if use_ocr else []
+                if lines:
+                    ocr_pages += 1
+                elif not use_ocr:
+                    warnings.append(f"page {number}: no text layer (needs OCR)")
             for x0, x1 in _columns(words, page.width):
                 column = [w for w in words if x0 <= (w["x0"] + w["x1"]) / 2 < x1]
                 lines += [ln for ln in _lines(column) if not BOILERPLATE.search(ln["text"])]
             page_lines.append(lines)
             page_tables.append(tables)
 
-    sizes = Counter(round(ln["size"]) for lines in page_lines for ln in lines for _ in ln["text"])
+    sizes = Counter(
+        round(ln["size"])
+        for lines in page_lines
+        for ln in lines
+        if ln["size"] > 0
+        for _ in ln["text"]
+    )
     body = sizes.most_common(1)[0][0] if sizes else 10
     title = title_hint or meta_title
     if not title:
@@ -172,7 +202,8 @@ def extract_pdf(raw: bytes, title_hint: str | None = None) -> Extracted:
                     paragraph.clear()
         tables.extend(page_tbls)
     flush()
-    return Extracted(title, sections, "pdfplumber", _pdf_date(date), warnings)
+    method = "pdfplumber+tesseract" if ocr_pages else "pdfplumber"
+    return Extracted(title, sections, method, _pdf_date(date), warnings, ocr_pages)
 
 
 def _join(lines: list[str]) -> str:
