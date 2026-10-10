@@ -17,29 +17,70 @@ Team shortcuts (committed in `.claude/skills/`):
    - Compare with the GitHub handle in the team table (section 9).
    - If they do not match, stop and tell the user. Commits must come from their own account, because individual contribution is graded.
 3. Run `git fetch origin && git status` and check open PRs (`gh pr list`) and the member's issues (`gh issue list --assignee @me`).
-4. Read `docs/DELIVERABLES.md` (what the finished project must contain) and that member's playbook in section 9. Work out which tasks are already done (merged PRs, files present, tests passing) and propose the next task in their list, with its branch name.
+4. Read the "Current status and plan" section below, `docs/DELIVERABLES.md` (what the finished project must contain) and that member's playbook in section 9. Work out which tasks are already done (merged PRs, files present, tests passing) and propose the next task in their list, with its branch name.
 5. Work only on that member's tasks. If the user asks to do another member's task, warn them that the spec grades individual contributions and that a repo where one person commits everything is a red flag, then do it only if they confirm.
 
 ---
 
-## Changes on Saturday, October 10 (read first)
+## Current status and plan (Saturday, October 10, from 15:00; read first)
 
-1. **Corpus sources changed.** faa.gov blocks automated access (its CDN returns 403 even for robots.txt), and the instructor approved similar official sources. The corpus is now:
-   - **eCFR:** 14 CFR Parts 107, 89, 48 and sections 101.41 to 101.49, via its official API.
-   - **Federal Register:** the FAA drone rule documents, final and proposed, via its official API.
-   - **GovInfo:** the official PDFs of those rules.
-   - **Know Before You Fly:** guidance pages only. It is an FAA partner campaign, not the FAA, and the UI labels it that way.
+### What changed today
 
-   faa.gov stays in the crawl log as evidence of the block, and nothing from it is in `data/`. Golden items need `source_url` and `evidence_quote` from these sources. Items that cite faa.gov pages must be re-sourced and re-verified. Referral links to B4UFLY and UAS Facility Maps still point to faa.gov tools, because referrals are links, not corpus.
-2. **LLM provider changed.** The new AWS account cannot use Claude on Bedrock (zero quota, AccessDenied), so we call Claude Haiku 5.5 through the Claude API (the `anthropic` package). `src/generate/llm.py` supports both providers, chosen by `LLM_PROVIDER` in `.env`. Each member who runs LLM code uses their own key from the SkyRules Claude Console org. It is the same model at the same price with the same prompts. Haiku 5.5 does not accept a temperature setting, so temperature is not sent, and thinking is off by default (`generation.thinking` in `configs/default.yaml`).
-3. **Golden set ownership changed.** Dorai writes all golden items by hand from the approved sources (target 50, floor 40 with every category minimum met, by 18:00 Saturday and before any eval run on the dev split). Each other member verifies 10 of Dorai's items against the source page, as assigned by Dorai, and commits their `verified_by` edits in their own small PR. No item is verified by its author. Rule 4 still applies: Claude Code never writes golden items.
-4. **Everything else is unchanged:** crawl etiquette, chunking, embeddings, Chroma, retrieval, the harness, the evaluation plan and the build order.
+1. **Corpus sources changed.** faa.gov blocks automated access (its CDN returns 403 even for robots.txt), and the instructor approved similar official sources. The approved sources, with hosts, seeds and paths, are in `configs/crawl/sources.yaml`:
+   - **GovInfo, 2025 annual edition of 14 CFR:** the drone regulations, one document per section. Parts 107 (small UAS) and 89 (Remote ID) are in volume 2 and Part 48 (registration) is in volume 1, under `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol<N>/`, for example `.../CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-51.xml`. The edition date is January 1, 2025, and it is shown as the content age.
+   - **Federal Register:** the 8 FAA drone rule documents (final and proposed), full text through the `full_text` route.
+   - **GovInfo PDFs:** the official printed PDF of each of those 8 rules.
+   - **Know Before You Fly:** guidance pages and PDFs only. It is an education campaign run in partnership with the FAA, not the FAA, and the UI labels it that way.
+   - **Not used:** faa.gov (blocked; kept in the crawl log as evidence), eCFR (its robots.txt disallows the API paths we would need; see the incident below) and the Wayback Machine (disabled).
+   - Referral links to B4UFLY and UAS Facility Maps still point to faa.gov tools, because referrals are links, not corpus.
+2. **eCFR incident.** A robots.txt parser bug (a blank line after `User-agent: *`) hid eCFR's disallow rule, so the first crawl fetched 112 eCFR API pages against robots.txt. The parser is fixed with a test on eCFR's exact file (PR #29), eCFR is disabled, and those files are quarantined: they are never extracted, chunked or indexed. `reports/01_ingestion.md` and `reports/07_ethics.md` describe it honestly.
+3. **LLM provider changed.** The new AWS account cannot use Claude on Bedrock (zero quota, AccessDenied), so we call Claude Haiku 5.5 through the Claude API (the `anthropic` package). `src/generate/llm.py` supports both providers, chosen by `LLM_PROVIDER` in `.env`. Each member who runs LLM code uses their own key from the SkyRules Claude Console org. Haiku 5.5 does not accept a temperature setting, so temperature is not sent, and thinking is off by default (`generation.thinking` in `configs/default.yaml`).
+4. **Golden set ownership changed.** Dorai writes all golden items by hand from the approved sources. Each other member verifies 10 of Dorai's items against the source page, as assigned by Dorai, and commits their `verified_by` edits in their own small PR. No item is verified by its author. Rule 4 still applies: Claude Code never writes golden items.
+5. **Ownership changed.** Nayan now owns the backend (`answer.py`, `server.py`, `log.py`). Pavan owns the LLM client, the prompt and the generation step (`llm.py`, `prompt.py`, `generate.py`), the frontend and report 05. Sai also owns the evaluation runner and answer metrics (`run_eval.py`, `answer_metrics.py`). Section 9 has the details.
+6. **How everyone gets the data.** Adinath commits `data/normalized/` (small, public, cleaned text). Every member then builds their own chunks, BM25 index and Chroma locally from it with `make chunk` and `make index`. Deterministic chunk IDs mean everyone gets the same index. `data/raw/`, `data/chunks/`, `data/index/` and `chroma/` are never committed.
+
+### Done (merged on main)
+
+| Stage | What | PR |
+|---|---|---|
+| Foundation | contracts, config, paths, fixtures, pinned requirements, Makefile, CI | #13, #34 |
+| Crawl | multi-source crawler, robots.txt per host (fixed parser), 1 req/s, raw bytes and manifest | #28, #29 |
+| Extraction | HTML and PDF extraction, PII filter, `data/normalized/` committed (49 documents: 8 Federal Register rules, their 8 GovInfo PDFs, 33 Know Before You Fly pages and PDFs), 5 real samples | #36 |
+| Chunking | fixed-size, structure-aware, chunk stats | #17, #18, #19 |
+| Index | bge embeddings, cosine Chroma with `page_type` filter, re-chunk migration with orphan check | #14, #22 |
+| Retrieval | BM25, hybrid RRF, cross-encoder rerank, retrieval metrics | #20, #31, #23, #24 |
+| Checks | citation validity, 25-word quote limit, claim check with LLM judge, number and date match | #32, #26 |
+| LLM | one client, Claude API and Bedrock backends, cache, `make_judge` | #30 |
+| Docs | rules update, report 02 scaffold, README | #33, #35 |
+
+Open: golden items (#16), split (#25), router (#27), all by Dorai.
+
+### Critical path from now
+
+```
+Now: data/normalized/ (49 docs) is on main -> everyone: git pull, make chunk + make index      (now)
+Adinath: GovInfo CFR sections (crawl once) + CFR XML extraction -> updated data/normalized/    (by 17:00)
+   -> everyone: git pull, re-run make chunk + make index (about 160 docs)                       (17:00 to 17:30)
+   -> Sai + Nayan: real chunk stats, real index, migration fixed@v1 -> struct@v1                (17:30 to 19:00)
+Adinath: OCR for the 5 PDFs (24 pages) whose tables are images                                  (by 19:00)
+Dorai: golden items by hand from the live source pages                                          (by 18:00)
+   -> make golden-check once data/normalized/ exists, fix quotes, verification by others        (18:30 to 20:00)
+   -> merge split (#25), make split                                                             (by 20:30)
+Nayan: answer.py + server.py + log.py on fixtures, then on the real index = B2 end to end       (by 19:30)
+Pavan: prompt.py + generate.py (by 16:30), then the frontend against the SSE contract           (16:30 to 21:00)
+Sai: run_eval.py + answer_metrics.py on fixtures (by 18:30), then dev runs B0 to B3 after split (20:30 to 23:00)
+Reports 01 to 04: Saturday 22:30
+Sunday: tune on dev (8:00) -> tag b3-frozen (9:00) -> test split once (9:00 to 10:00)
+        -> stats + failure labels -> reports 05 to 07 + README -> demo rehearsal
+```
+
+Nobody waits: if your input is not on main yet, build and test against `tests/fixtures/` (and `tests/fixtures/real_sample/` once Adinath adds it).
 
 ---
 
 ## 1. The project in one paragraph
 
-SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. drone rules using only official documents from the approved sources in the October 10 section (eCFR, the Federal Register, GovInfo and Know Before You Fly guidance pages). Every factual sentence cites its source. When the corpus does not support an answer, it says "I don't have that information in the FAA pages I can search." It refers location-specific and high-stakes questions to the FAA's own tools (B4UFLY, UAS Facility Maps). Most of the grade is evidence, not features: a human-written golden set, a re-chunking experiment, an ablation from B2 to B3, confidence intervals and honest reports. The design is in `reports/00_proposal.md`. The definition of "finished" (every graded requirement and what each report must contain) is in `docs/DELIVERABLES.md`; check work against it.
+SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. drone rules using only official documents from the approved sources listed above (the GovInfo edition of 14 CFR, the Federal Register drone rules and their GovInfo PDFs, and Know Before You Fly guidance). Every factual sentence cites its source. When the corpus does not support an answer, it says "I don't have that information in the sources I can search." It refers location-specific and high-stakes questions to the FAA's own tools (B4UFLY, UAS Facility Maps). Most of the grade is evidence, not features: a human-written golden set, a re-chunking experiment, an ablation from B2 to B3, confidence intervals and honest reports. The design is in `reports/00_proposal.md`. The definition of "finished" (every graded requirement and what each report must contain) is in `docs/DELIVERABLES.md`; check work against it.
 
 ### 1.1 How the system runs (local only)
 
@@ -48,39 +89,40 @@ SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. d
   - Chroma is a folder on disk (`chroma/`) with no database server.
   - Embeddings and the reranker run locally on CPU.
 - **No hosting, domain, cloud database or deployment is needed.** Do not set up any. The live demo runs from a laptop.
-- **The only network calls** are the one-time crawl of the approved sources (official APIs where a site requires them) and the LLM calls to the Claude API (or Bedrock when `LLM_PROVIDER=bedrock`).
+- **The only network calls** are Adinath's one-time crawl of the approved sources and the LLM calls to the Claude API (or Bedrock when `LLM_PROVIDER=bedrock`).
 
 ### 1.2 Data flow: where data is stored, in order
 
-1. **Crawl to files, not a database:** raw bytes go to `data/raw/{sha256}.bin`, with one line per fetch in `data/raw/manifest.jsonl`. The spec requires saving raw bytes before any parsing.
-2. **Extract to normalized JSON:** `data/normalized/{doc_id}.json`, one per document. These files are the source of truth for everything after this point. Re-chunking always starts here, never from a re-crawl.
-3. **Chunk to JSONL:** `data/chunks/{strategy}@{version}.jsonl`.
-4. **Index last:** embed the chunks and upsert them into Chroma, and build the BM25 index from the same chunk file. Chroma holds chunks and vectors only, never raw pages.
-5. **Query time (read only):** question, router, retrieve (Chroma + BM25), rerank, LLM, checks, answer, with each query appended to `logs/queries.jsonl`.
+1. **Crawl to files, not a database (Adinath, once):** raw bytes go to `data/raw/{sha256}.bin`, with one line per fetch in `data/raw/manifest.jsonl`. The spec requires saving raw bytes before any parsing. `data/raw/` stays on Adinath's laptop.
+2. **Extract to normalized JSON (Adinath):** `data/normalized/{doc_id}.json`, one per document, **committed to git**. These files are the source of truth for everything after this point. Re-chunking always starts here, never from a re-crawl.
+3. **Chunk to JSONL (each member, locally):** `make chunk` writes `data/chunks/{strategy}@{version}.jsonl`.
+4. **Index last (each member, locally):** `make index` embeds the chunks into Chroma (`chroma/`) and builds the BM25 index from the same chunk file (`data/index/`). Chroma holds chunks and vectors only, never raw pages.
+5. **Query time (read only):** question, router, retrieve (Chroma + BM25), rerank, evidence gate, LLM, checks, answer, with each query appended to `logs/queries.jsonl`.
 
 ### 1.3 Order of work
 
-1. **Setup first:** the foundation PR (contracts, config, fixtures, pinned requirements, Makefile) and AWS Bedrock access.
-2. **Then the data pipeline,** the only strict sequence: crawl, then extract, then chunk, then index.
-3. **In parallel, against fixtures:** the golden set (Dorai, by hand, from the approved sources), generation and the app, and the router rules.
-4. **Then improve and measure:** BM25, hybrid, reranker, re-chunk migration, answer checks, evaluation and reports.
+1. **Setup:** done (foundation, CI, Claude API keys).
+2. **The data pipeline, the only strict sequence:** crawl, then extract, then chunk, then index.
+3. **In parallel, against fixtures:** the golden set (Dorai, by hand), generation and the app, the router rules, and the eval runner.
+4. **Then measure:** dev runs for B0 to B3 and the ablation, statistics and reports.
 
-The timed version with owners is in section 8.
+The timed version with owners is in "Current status and plan" above.
 
 ---
 
 ## 2. Hard rules (graded or ethical; never break these)
 
 1. **Crawl etiquette:**
-   - Crawl `www.faa.gov` only, within the allowed prefixes in section 9 (Adinath).
-   - Check robots.txt in code before every fetch.
+   - Fetch only the hosts and paths in `configs/crawl/sources.yaml`.
+   - Check robots.txt in code before every fetch, including API URLs and redirect hops. If robots.txt disallows a path, never fetch it, even if the site says automated users should use that path.
    - At most 1 request per second.
    - Descriptive User-Agent with the team contact email (`CRAWL_CONTACT_EMAIL` in `.env`).
    - Save raw bytes with URL, timestamp and SHA-256 BEFORE parsing.
-   - Crawl once. Re-chunking and re-indexing use saved files, never a re-crawl.
-2. **No PII:** never fetch or keep contact pages, directories, the "waivers issued" lists, sighting reports or anything login-walled (DroneZone). Drop or redact any retained page with personal contact details.
-3. **Corpus = content from the approved sources listed in the October 10 section only.** No synthetic, invented or outside-site content in `data/`. The only exceptions are unit-test fixtures in `tests/fixtures/` and the clearly labelled prompt-injection test page in `data/test_pages/`, both excluded from corpus counts.
-4. **Golden set is human work.** Claude Code must NOT write golden questions or gold answers, and must not "fill in" missing items. It MAY help with formatting, schema validation, quota counts, and checking that an evidence quote appears verbatim on the saved page. AI-drafted items nobody checked score zero.
+   - Crawl once. A dry run that fetches every page counts as the crawl. Re-chunking and re-indexing use saved files, never a re-crawl.
+   - Only Adinath runs the crawler.
+2. **No PII:** never fetch or keep contact pages, directories, the "waivers issued" lists, sighting reports or anything login-walled. Drop or redact any retained page with personal contact details.
+3. **Corpus = content from the approved sources in `configs/crawl/sources.yaml` only.** No synthetic, invented or outside-site content in `data/`. The quarantined eCFR files are never used. The only exceptions are unit-test fixtures in `tests/fixtures/` and the clearly labelled prompt-injection test page in `data/test_pages/`, both excluded from corpus counts.
+4. **Golden set is human work.** Claude Code must NOT write golden questions or gold answers, and must not "fill in" or "fix" items. It MAY help with formatting, schema validation, quota counts, and checking that an evidence quote appears verbatim on the saved page. AI-drafted items nobody checked score zero.
 5. **The test split runs once.**
    - Never load `eval/split.json`'s test items or run `make eval SPLIT=test` unless the user confirms this is the final Sunday run, after the `b3-frozen` tag exists.
    - All tuning uses `SPLIT=dev`.
@@ -90,13 +132,14 @@ The timed version with owners is in section 8.
    - Every sentence cites at least one retrieved `chunk_id`.
    - No run of more than 25 consecutive words copied from a page.
    - Refuse when evidence is insufficient.
-   - Fail closed: any check error means refuse.
-8. **Secrets:** never print, log or commit `.env`, `ANTHROPIC_API_KEY`, AWS credentials or tokens. `ANTHROPIC_API_KEY` lives only in your own `.env`: never commit it, and never paste it into chats, PRs or issues. Use `AWS_PROFILE`. Never paste keys into code, tests, notebooks or PR text.
+   - Fail closed: any check error, judge error or truncated LLM reply means refuse.
+8. **Secrets:** never print, log or commit `.env`, `ANTHROPIC_API_KEY`, AWS credentials or tokens. `ANTHROPIC_API_KEY` lives only in your own `.env`: never commit it, and never paste it into chats, PRs or issues. Claude Code never asks for the key and never reads `.env` values into the conversation.
 9. **Git:**
    - Never push to `main`. Work on short-lived feature branches named in section 9.
    - Every PR needs one teammate's approval (the reviewer named in section 9).
    - Commit messages: present tense with a type prefix (`feat:`, `fix:`, `test:`, `docs:`, `chore:`, `refactor:`), describing what changed and why. Never "update", "wip" or GitHub's default "Update file.md".
    - Never force-push over a teammate's work. Resolve merge conflicts deliberately and explain the resolution in the PR description.
+   - Pull `main` before starting each task, and rebase your branch on `main` before opening the PR.
 10. **Embedding metric:** embeddings are L2-normalized and the Chroma collection uses cosine distance. Chroma's default is L2, so set it explicitly. A unit test must confirm both.
 11. **The member must understand the code.** After writing code, explain it in a short paragraph and list what the member should check by hand. Any member can be asked about any stage in Q&A.
 
@@ -107,22 +150,21 @@ The timed version with owners is in section 8.
 | Purpose | Choice |
 |---|---|
 | Language | Python 3.11, virtual env in `.venv/` |
-| Crawl | `requests`, `urllib.robotparser`, `tenacity` |
+| Crawl | `requests`, robots.txt rules with RFC 9309 wildcards (`src/crawl/robots.py`), `tenacity` |
 | HTML extraction | `trafilatura` (fallback `beautifulsoup4`) |
-| PDF extraction | `pdfplumber` (text and tables); `pytesseract` + `Pillow` for tables stored as images |
+| XML extraction (GovInfo CFR sections) | `lxml` or the standard library XML parser |
+| PDF extraction | `pdfplumber` (text and tables); `pytesseract` + `Pillow` only for tables stored as images |
 | Tokenizer and embeddings | `sentence-transformers` with `BAAI/bge-small-en-v1.5` (384 dim, normalized), its tokenizer for token counts |
 | Vector DB | `chromadb` `PersistentClient` at `chroma/`, collection `skyrules`, cosine |
 | Keyword search | `rank_bm25` (BM25Okapi) |
 | Fusion | Reciprocal Rank Fusion, k = 60, candidate pool 20 |
 | Reranker | `sentence-transformers` CrossEncoder `cross-encoder/ms-marco-MiniLM-L-6-v2`, top 5 |
-| LLM | Claude Haiku 5.5 via the Claude API (`anthropic` package, Messages API, model id from `ANTHROPIC_MODEL_ID`) by default; Bedrock Converse via `boto3` as the alternative backend (`LLM_PROVIDER=bedrock`, model id from `BEDROCK_MODEL_ID`). Temperature is not sent; thinking is off by default |
+| LLM | Claude Haiku 5.5 via the Claude API (`anthropic` package, Messages API, model id from `ANTHROPIC_MODEL_ID`) by default; Bedrock Converse via `boto3` as the alternative backend (`LLM_PROVIDER=bedrock`). Temperature is not sent; thinking is off by default |
 | App | `fastapi` + `uvicorn`, server-sent events for stage progress, one static page in `src/app/static/` (no build step) |
 | Eval | `pandas`, `numpy`, `scikit-learn`, `statsmodels`, `matplotlib` |
 | Quality | `ruff`, `pytest`, GitHub Actions |
 
-Embeddings run locally, so `BEDROCK_EMBEDDING_MODEL_ID` in `.env.example` is not used. Leave it blank or remove it in the foundation PR.
-
-UI reference: build the UI from `docs/UI_SPEC.md` (tokens, layout, every component, state and on-screen wording), with the approved mockup's source in `docs/ui/mockup_reference.dc.html` for exact styles. Do not invent a different design.
+UI reference: build the UI from `docs/UI_SPEC.md` (tokens, layout, every component, state and on-screen wording), with the approved mockup's source in `docs/ui/mockup_reference.dc.html` for exact styles. Do not invent a different design. Where the spec says "FAA source", show the real source name (GovInfo 14 CFR, Federal Register, or Know Before You Fly, labelled "FAA partner campaign").
 
 ---
 
@@ -131,20 +173,21 @@ UI reference: build the UI from `docs/UI_SPEC.md` (tokens, layout, every compone
 ```
 src/
   common/        config.py (loads configs/*.yaml + .env), paths.py, contracts.py
-  crawl/         crawler.py, robots.py, ratelimit.py
-  extract/       html.py, pdf.py, ocr.py, pii.py, normalize.py
+  crawl/         crawler.py, robots.py, ratelimit.py, sources.py
+  extract/       html.py, xml_cfr.py, pdf.py, ocr.py, pii.py, normalize.py
   chunk/         fixed.py, structure.py, stats.py
   index/         embed.py, store.py, migrate.py
   retrieve/      bm25.py, retrieve.py, rerank.py
-  generate/      llm.py, prompt.py, router.py, checks.py, claim_check.py, answer.py, log.py
+  generate/      llm.py, prompt.py, generate.py, router.py, checks.py, claim_check.py, answer.py, log.py
   eval/          golden_check.py, split.py, run_eval.py, retrieval_metrics.py, answer_metrics.py, stats.py
+  reports/       chunking.py (and one filler per report as needed)
   app/           server.py, static/index.html, static/app.js, static/styles.css
-configs/         b0.yaml b1.yaml b2.yaml a1.yaml a2.yaml a3.yaml b3.yaml
+configs/         default.yaml, b0.yaml b1.yaml b2.yaml a1.yaml a2.yaml a3.yaml b3.yaml, crawl/sources.yaml
 eval/            golden.jsonl, split.json
 data/            raw/ (gitignored) normalized/ (committed) chunks/ index/ (gitignored) test_pages/
 reports/         00_proposal.md ... 07_ethics.md, artifacts/ (json, png, logs produced by make)
-tests/           fixtures/, test_*.py
-docs/diagrams/   figures + Mermaid source
+tests/           fixtures/, fixtures/real_sample/, test_*.py
+docs/            DELIVERABLES.md, UI_SPEC.md, ui/, diagrams/
 ```
 
 `.gitignore` must include: `.env`, `.venv/`, `data/raw/`, `data/chunks/`, `data/index/`, `chroma/`, `.cache/`, `logs/`, `__pycache__/`.
@@ -165,18 +208,25 @@ def chunk_id_for(doc_id, strategy, version, ordinal) -> str:
   `url, final_url, fetched_at, status, content_type, sha256, path, robots_allowed`
 - `data/normalized/{doc_id}.json`:
   `doc_id, source_url, title, page_type, audience, effective_date, crawl_ts, content_hash, sections: [{heading_path: [str], text: str, tables: [markdown str]}], extraction: {method, ocr_used, warnings}`
-- `page_type` values: `guide_page, faq, regulation_summary, advisory_circular, study_guide, toolkit_pdf, data_list, test_injection`
+- `page_type` values: `guide_page, faq, regulation_summary, advisory_circular, study_guide, toolkit_pdf, data_list, test_injection`. Mapping for our sources: GovInfo CFR sections, Federal Register rules and their GovInfo PDFs are `regulation_summary`; Know Before You Fly pages are `guide_page` and its PDFs are `toolkit_pdf`.
 - `audience` values: `recreational, part107, public_safety, general`
+- `effective_date`: the CFR edition date (2025-01-01) for CFR sections, the publication date for Federal Register rules and their PDFs, and the page's "last updated" date for Know Before You Fly when present (else null).
 - `data/chunks/{strategy}@{version}.jsonl`:
   `chunk_id, doc_id, strategy, version, ordinal, text, heading_path, page_type, source_url, title, effective_date, n_tokens, chunk_hash`
 - `retrieve(query, k=20, mode="hybrid"|"dense"|"bm25", filters=None, strategy="struct@v1") -> list[Candidate]`
   where `Candidate = {chunk_id, text, source_url, title, effective_date, page_type, dense_score, bm25_score, fused_score}`
 - `rerank(query, candidates, top_n=5) -> list[Candidate + rerank_score]`
-- `answer(question, history, config) -> Answer`:
+- `route(question, pilot_type) -> RouteResult` (Dorai, `src/generate/router.py`): `router_tag`, referral, and the question with any injection text stripped.
+- **Generation step (Pavan, `src/generate/generate.py`):**
+  - `rewrite_followup(question, history, client) -> str`: one LLM call, only when there is history; returns a standalone question.
+  - `generate(question, passages, cfg, client, closed_book=False) -> Generation`, where `passages` are the reranked candidates and
+    `Generation = {status: "answered" | "insufficient" | "error", sentences: [{text, chunk_ids}], raw_text, error, usage: {input_tokens, output_tokens, cost_usd, latency_ms}}`.
+    It builds the prompt from `prompt.py` with numbered passages, calls the LLM, parses the JSON, repairs it once with one more call if needed, and maps passage numbers to `chunk_id`s. A truncated or unparseable reply returns `status: "error"`. In closed-book mode (B0) there are no passages and no citations.
+- **Pipeline (Nayan, `src/generate/answer.py`):** `answer(question, history, config, pilot_type="not_sure") -> Answer`:
   ```json
   {"status": "answered" | "refused",
    "sentences": [{"text": "...", "chunk_ids": ["..."]}],
-   "citations": [{"n": 1, "chunk_id": "...", "url": "...", "title": "...", "effective_date": "..."}],
+   "citations": [{"n": 1, "chunk_id": "...", "url": "...", "title": "...", "effective_date": "...", "source_name": "..."}],
    "referral": null | {"kind": "location" | "high_stakes", "text": "..."},
    "router_tag": "normal" | "location_live" | "high_stakes" | "pilot_unclear" | "injection",
    "rewritten_question": null | "...",
@@ -184,6 +234,9 @@ def chunk_id_for(doc_id, strategy, version, ordinal) -> str:
    "latency_ms": {"route": 0, "retrieve": 0, "rerank": 0, "generate": 0, "check": 0, "total": 0},
    "cost_usd": 0.0}
   ```
+  `answer()` accepts an optional `on_stage(name, status, ms)` callback so the server can stream progress.
+- **Server (Nayan, `src/app/server.py`):** `GET /` serves the static page, `GET /api/health`, and `POST /api/ask` with `{question, history, pilot_type, compare}` streams server-sent events: `stage` events `{name, status, ms}` for `route`, `retrieve`, `rerank`, `generate`, `check`, then one `answer` event with the Answer above. With `compare: true` it returns answers for configs b2 and b3. No answer text is streamed before the checks pass.
+- **Eval results (Sai, `src/eval/run_eval.py`):** `reports/artifacts/eval_<config>_<split>.json` with one record per golden item: `id, category, question, answer (the Answer above), retrieved chunk_ids, pass/fail per metric`, plus the git commit and timestamp.
 - `eval/golden.jsonl`, one item per line:
   `id, category (single_hop|multi_hop|comparative|temporal|unanswerable|ambiguous), question, gold_answer, source_url, evidence_quote (<= 25 words), searched_for (unanswerable only), author, verified_by, verified_date`
 - `configs/*.yaml` switches:
@@ -198,17 +251,20 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 | Command | Does |
 |---|---|
 | `make setup` | create `.venv`, install pinned requirements |
-| `make crawl` | crawl once into `data/raw/` (refuses if a manifest with 150+ docs exists unless `FORCE=1`) |
-| `make extract` | raw to `data/normalized/` plus `reports/artifacts/ingestion_stats.json` |
-| `make chunk STRATEGY=fixed` or `STRATEGY=struct` | normalized to `data/chunks/` plus chunk stats |
-| `make index STRATEGY=fixed` or `STRATEGY=struct` | embed and upsert into Chroma, build BM25 |
+| `make crawl` | crawl once into `data/raw/` (Adinath only; refuses if a full manifest exists unless `FORCE=1`) |
+| `make extract` | raw to `data/normalized/` plus `reports/artifacts/ingestion_stats.json` (Adinath) |
+| `make chunk STRATEGY=fixed` or `STRATEGY=struct` | normalized to `data/chunks/` plus chunk stats (everyone, locally) |
+| `make index STRATEGY=fixed` or `STRATEGY=struct` | embed and upsert into Chroma, build BM25 (everyone, locally) |
 | `make migrate FROM=fixed@v1 TO=struct@v1` | re-chunk migration with orphan check, writes `reports/artifacts/migration_log.txt` |
-| `make golden-check` | validate `eval/golden.jsonl` (schema, quotas, quotes found, verifier is not author) |
+| `make golden-check` | validate `eval/golden.jsonl` (schema, quotas, quotes found, verifier is not author; `NO_QUOTES=1` before extraction) |
 | `make split` | stratified 60/40 split, seed 42, writes `eval/split.json` (refuses to overwrite) |
+| `make retrieval-eval CONFIG=b2 SPLIT=dev` | Recall@5/20, MRR, nDCG@10 |
 | `make eval CONFIG=b2 SPLIT=dev` | run a config on a split, writes `reports/artifacts/eval_<config>_<split>.json` |
 | `make stats` | bootstrap intervals and McNemar tests from saved eval runs |
 | `make app` | start the FastAPI app at http://localhost:8000 |
 | `make test` / `make lint` | pytest / ruff |
+
+**To get a working local index after pulling `main` (re-run it whenever `data/normalized/` changes):** `make chunk STRATEGY=fixed && make index STRATEGY=fixed`, then `make migrate FROM=fixed@v1 TO=struct@v1` when you need the structure-aware index.
 
 ---
 
@@ -217,31 +273,31 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 1. `git checkout main && git pull`
 2. `git checkout -b <branch from section 9>`
 3. Write code and tests. Run `make lint test`.
-4. Commit with a type-prefixed message, for example `feat: add robots-aware crawler with 1 req/s limit`.
-5. `git push -u origin <branch>`, then `gh pr create --fill` with:
+4. Commit with a type-prefixed message, for example `feat: add GovInfo CFR section extraction`.
+5. `git fetch origin && git rebase origin/main`, then `make lint test` again.
+6. `git push -u origin <branch>`, then `gh pr create` with:
    - what changed and why
    - how it was tested
    - the AI usage line (section 11)
    - any merge-conflict explanation
-6. Request review from the reviewer named in your playbook: `gh pr edit --add-reviewer <handle>`.
-7. Move the issue on the project board.
+7. Request review from the reviewer named in section 9: `gh pr edit --add-reviewer <handle>`.
+8. Move the issue on the project board.
+9. After merging, tell the team in the group chat if your PR changes something others use (a contract, a Makefile target, data/normalized/).
 
 ---
 
 ## 8. Build order (what depends on what)
 
 ```
-foundation (Nayan, 10:00)
-   -> crawl (Adinath, 9:30 to 10:30) -> extract (12:00) -> chunk (Sai, 12:00) -> index (Nayan, 12:30)
-   -> golden set (Dorai, 18:00) + verification (everyone) + split
-   -> generation + UI on fixtures (Pavan, from 10:00) -> wired to real retrieval = B2 (14:00)
-   -> router + PII filter (Dorai, 15:00) -> BM25 + hybrid + rerank (Sai, 16:30)
-   -> structure chunks + migration (Sai + Nayan, 17:00) -> answer checks (Nayan + Sai, 19:00) = B3 candidate
-   -> reports 01 to 04 (21:00)
-Sunday: tune on dev (8:00) -> tag b3-frozen (9:00) -> test split once (9:00 to 10:00) -> stats + failure labels -> reports 05 to 07 + README -> demo rehearsal
+crawl (Adinath) -> extract + PII filter (Adinath) -> data/normalized/ committed
+   -> chunk (everyone locally; Sai reports stats) -> index (everyone locally; Nayan reports embedding record)
+   -> retrieve + rerank (Sai, done) -> answer() pipeline (Nayan) <- generate() (Pavan) <- router (Dorai)
+   -> server (Nayan) -> frontend (Pavan)
+golden set (Dorai) -> golden-check with quotes (after extraction) -> verification (everyone) -> split (Dorai)
+   -> run_eval + answer_metrics (Sai) -> dev runs B0..B3 + ablation (Sai, Adinath) -> stats (Adinath)
 ```
 
-Nobody waits: if your input stage is not merged yet, use `tests/fixtures/`.
+Times are in "Current status and plan" above. Nobody waits: if your input stage is not merged yet, use `tests/fixtures/`.
 
 ---
 
@@ -249,172 +305,145 @@ Nobody waits: if your input stage is not merged yet, use `tests/fixtures/`.
 
 | Member | GitHub | Role | Reviews PRs from |
 |---|---|---|---|
-| Pavan Krishna Lankipalli | @pavan2564 | Full Stack Engineer: generation, app | Dorai, Sai |
+| Pavan Krishna Lankipalli | @pavan2564 | Full Stack Engineer: LLM client, prompt and generation step, frontend | Dorai, Sai |
 | Dorai Saketh Guntur | @sakethguntur | Product Manager: golden set, safety rules, ethics, demo | Pavan |
-| Nayan Sathvik Bukkapatnam | @nayansathvikbukkapatnam | Software Developer: foundation, embeddings, vector DB, migration, CI | Adinath |
-| Sai Praneeth Kondaveeti | @saipraneeth112698 | AI Engineer: chunking, retrieval, reranking, claim check | Nayan |
+| Nayan Sathvik Bukkapatnam | @nayansathvikbukkapatnam | Software Developer: foundation, embeddings, vector DB, migration, CI, backend | Adinath |
+| Sai Praneeth Kondaveeti | @saipraneeth112698 | AI Engineer: chunking, retrieval, reranking, claim check, eval runner | Nayan |
 | Adinath Subash Kadam | @AdinathKadam | Senior Systems Analyst: crawl, extraction, statistics | Sai |
 
 Dorai writes all golden items by hand from the approved sources. Every other member verifies 10 of Dorai's items (Dorai assigns them), so no item is verified by its author.
 
-### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI
+Every member: `data/normalized/` is on `main`, so pull and build your own local index now (section 6), re-run it when the GovInfo CFR sections land, and run the app against it before the demo.
 
-- **N1 `chore/foundation` (by 10:00, first PR of the day):**
-  - Commit this `CLAUDE.md`, the full `reports/00_proposal.md` and `docs/diagrams/`.
-  - `src/common/contracts.py` (section 5) with unit tests for `doc_id_for` and `chunk_id_for`.
-  - `src/common/config.py` and `src/common/paths.py`.
-  - `tests/fixtures/`: 5 small hand-made normalized docs, labelled as fixtures.
-  - Pinned `requirements.txt` (all of section 3; `pip freeze` after install).
-  - Real `Makefile` targets (stubs may print "not implemented yet").
-  - `.gitignore` additions from section 4, and `.env.example` keys: `AWS_REGION`, `AWS_PROFILE`, `BEDROCK_MODEL_ID`, `CRAWL_CONTACT_EMAIL`.
-  - Configs `configs/b0.yaml` to `b3.yaml` and `a1` to `a3`.
-  - Acceptance: `make test` passes on a fresh clone.
-- **N2 `index/embed-chroma` (by 12:30):**
-  - `src/index/embed.py`: batch embed with `normalize_embeddings=True`.
-  - `src/index/store.py`: a Chroma collection created with cosine distance. Check the installed `chromadb` version for the right setting and assert it after creation.
-  - Upsert by `chunk_id`, `query(text, k, where)` with a `page_type` filter, `delete(where={"strategy": ...})`.
-  - Record the model name, Hugging Face revision, dimension, metric and normalization to `reports/artifacts/embedding_info.json`.
-  - Tests: vector norms are 1.0 within 1e-3; the collection metric is cosine; re-upserting the same chunks keeps the count unchanged; the filter returns only the requested `page_type`.
-- **N3 `index/rechunk-migration` (by 17:00):**
-  - `src/index/migrate.py` reads `data/normalized/` (never the crawler), generates the new strategy's chunks, writes the new manifest, deletes the old strategy by filter, upserts the new one and rebuilds BM25.
-  - Orphan check: index IDs minus manifest IDs must be empty, manifest IDs minus index IDs must be empty, and the old-strategy count must be 0. Exit non-zero on any mismatch.
-  - Writes `reports/artifacts/migration_log.txt`. Test on fixtures.
-- **N4 `generate/answer-checks` (by 18:00, ethics safeguard 2):**
-  - `src/generate/checks.py`: `citation_validity(sentences, retrieved_ids)`, and `quote_limit(sentences, chunk_texts, max_words=25)` using a word n-gram match.
-  - Both return per-sentence verdicts. Unit tests include a planted 26-word copy that must be caught.
-- **N5 `ci/github-actions` (by 19:00):** `.github/workflows/ci.yml` on every PR: Python 3.11, install, `ruff`, `pytest` (fixtures only; no API keys, no network calls).
-- **N6:** `reports/02_chunking.md` with Sai (Saturday 21:00). README setup and reproduce commands, known limitations and the AI usage summary (Sunday).
+### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI, backend
+
+- **Done:** N1 foundation (#13), N2 embeddings and Chroma (#14), N3 re-chunk migration (#22), N4 answer checks (#32), N5 CI (#34), report 02 scaffold and README (#35).
+- **N7 `generate/answer` (next, by 18:00 on fixtures):**
+  - `src/generate/answer.py`: the `answer()` contract in section 5, in this order:
+    1. Follow-up rewrite: `rewrite_followup()` from Pavan's `generate.py`, only when there is history.
+    2. Router: `route()` (Dorai, #27). An injection tag continues with the stripped question; location and high-stakes tags add the referral.
+    3. Retrieve and rerank: `retrieve()` then `rerank()` (Sai), with the config's mode, strategy and filters. Skipped in closed-book mode (B0).
+    4. Evidence gate: refuse when the top `rerank_score` is below `gate_threshold` (from config; skipped when `gate` is false or the threshold is null).
+    5. Generate: `generate()` (Pavan).
+    6. Checks: `check_sentences()` from `checks.py` and `claim_check.py`, as listed in the config's `checks`, with the judge from `make_judge()`.
+    7. Fail closed: refuse if generation returned `insufficient` or `error`, or any check fails or errors.
+    8. Referral: attach it for location and high-stakes tags, also on refusals.
+    9. Build citations from the cited chunks (title, URL, `effective_date`, `source_name`) and record per-stage latency and total cost.
+    10. Log through `log.py`.
+  - Until #27 and Pavan's `generate.py` merge, call them through small stubs with the section 5 signatures, and replace the stubs when they land.
+  - Tests on fixtures with a fake LLM client: an answered path, each refusal path (gate, insufficient, failed check, check error), referral on a location question, closed-book mode, and that `on_stage` fires for every stage.
+- **N8 `app/backend` (by 19:00):**
+  - `src/app/server.py`: the server contract in section 5 (SSE `stage` events, then `answer`; `compare` runs b2 and b3).
+  - Load the config, retrieval indexes, reranker and LLM client once at startup, not per request.
+  - Tests with FastAPI's test client and a fake `answer()`: event order, the final answer event, compare mode, and a clean error event when `answer()` raises.
+  - `make app` works on a laptop with the real local index. Demo B2 end to end to the team by 19:30.
+- **N9 `generate/logging`:** `src/generate/log.py`: append every query to `logs/queries.jsonl` (question, rewrite, router tag, candidate IDs and scores, check verdicts, latency per stage, cost). Never log credentials.
+- **N10 real index and report 02 (with Sai, 18:00 to 21:00):** build `fixed@v1` on the real corpus, run the migration to `struct@v1` with the orphan check, run `make report-chunking`, update report 02's wording for the new sources (GovInfo CFR sections instead of eCFR). Report 02 by Saturday 22:30.
 
 ### 9.2 Adinath: crawl, extraction, statistics
 
-- **A1 `scrape/crawler` (start by 9:30, finished by 10:30):**
-  - `src/crawl/crawler.py`, `robots.py`, `ratelimit.py`.
-  - Sources, seeds, allowed paths and excludes: the per-source table in Adinath's multi-source PR, robots.txt checked per host, official APIs where a site requires them.
-  - Behavior:
-    - Check robots.txt before each fetch.
-    - A 1.0 s minimum gap between requests.
-    - User-Agent `SkyRulesAI-MSAI633 (+<CRAWL_CONTACT_EMAIL>)`.
-    - `tenacity` backoff on 429 and 5xx errors.
-    - Depth 3, at most 400 URLs.
-    - Resume support: skip URLs already in the manifest.
-    - Raw bytes to `data/raw/{sha256}.bin`, then a manifest line.
-    - Skipped URLs with their reason to `data/raw/skipped.jsonl`.
-  - Tests: a robots disallow is respected (mocked), the rate limiter gap holds, exclusion patterns work.
-- **A2 `extract/html-pdf` (by 12:00):**
-  - `src/extract/html.py`: trafilatura with headings kept as Markdown `#` levels and tables kept as Markdown tables, with a bs4 fallback.
-  - `src/extract/pdf.py`: pdfplumber text per page, tables to Markdown, headings detected by font size and section numbering.
+- **Done:** A1 crawler (#28), the multi-source crawler with the fixed robots parser (#29), and A2 plus A4 for HTML and PDF: extraction, the PII filter, `data/normalized/` with 49 documents and `tests/fixtures/real_sample/` (#36).
+- **A1b `scrape/govinfo-cfr` (in progress, by 17:00):**
+  - Add a `govinfo_cfr` source to `configs/crawl/sources.yaml` for the 2025 annual edition of 14 CFR: Parts 107 and 89 (volume 2) and Part 48 (volume 1), one document per section, for example `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-51.xml`.
+  - Find the section list from a part-level document, read only as an index (like a sitemap, not saved), then fetch each section.
+  - Check GovInfo's robots.txt for every path used, first. Fetch 2 or 3 sample sections, inspect them, then crawl once.
+  - Post the new counts (documents per source, PDFs, table pages) in the group chat.
+- **A2b `extract/cfr-xml` (with A1b, by 17:00):** add `src/extract/xml_cfr.py` for the GovInfo CFR sections (spec below), re-run `make extract`, and commit the updated `data/normalized/` and `ingestion_stats.json`. Tell the group chat, because everyone re-runs `make chunk` and `make index` after it.
+- **A2 `extract/normalize` (done for HTML and PDF in #36; the spec stays here for reference):**
+  - `src/extract/html.py` (Federal Register and Know Before You Fly): trafilatura with headings kept as Markdown `#` levels and tables kept as Markdown tables, with a bs4 fallback. Strip navigation, footers and banners.
+  - `src/extract/xml_cfr.py` (GovInfo CFR sections): section number and heading as the heading path ("14 CFR Part 107 > Subpart B > 107.51 Operating limitations for small unmanned aircraft"), paragraphs as text, and the edition date as `effective_date`.
+  - `src/extract/pdf.py` (GovInfo and Know Before You Fly PDFs): pdfplumber text per page, tables to Markdown, headings by font size and section numbering.
   - `src/extract/normalize.py`:
-    - Reads the manifest and dedupes by content hash.
-    - Fills `page_type` and `audience` with URL and filename rules.
-    - Finds `effective_date` from "Last updated" text on HTML pages, or the PDF metadata or cover date.
-    - Writes `data/normalized/` and `reports/artifacts/ingestion_stats.json` (counts of HTML pages, PDFs, pages with tables, failures).
-  - Push 5 real normalized docs to `tests/fixtures/real_sample/` as soon as they exist, so others can test on real data.
-- **A3 `extract/ocr-tables` (by 15:00):**
-  - `src/extract/ocr.py` runs pytesseract on image regions that look like tables (for example in the study guide).
-  - Mark `extraction.ocr_used: true` and log failures as extraction failures. Report the final table-page count in the stats file.
-- **A4 `extract/pii-filter` (by 15:00, with Dorai, ethics safeguard 1):**
-  - `src/extract/pii.py`: email, phone and street-address regex that drops or redacts, and logs counts to `reports/artifacts/pii_log.json`.
-  - FAA organizational footer contacts are removed as boilerplate.
-- **A5:** `reports/01_ingestion.md` (Saturday 20:00), using only numbers from the artifacts.
-- **A6 `eval/stats` (Sunday 10:00):**
-  - `src/eval/stats.py`: bootstrap 95% intervals (10,000 resamples over items) and McNemar's test on per-item pass/fail between configs.
-  - Report the B0-incorrect subset. Then `reports/06_final_performance.md`.
+    - Reads the manifest, skips the quarantined eCFR entries and anything not in an enabled source, and dedupes by content hash (a Federal Register HTML document and its GovInfo PDF are different documents; keep both).
+    - Fills `page_type`, `audience`, `title` and `effective_date` by the rules in section 5 and `sources.yaml`.
+    - Writes `data/normalized/` and `reports/artifacts/ingestion_stats.json` (documents per source and type, PDFs, pages with tables, duplicates removed, extraction failures, how often `effective_date` was found).
+  - Commit `data/normalized/` in this PR, and copy 5 real normalized docs to `tests/fixtures/real_sample/`.
+  - Tell the group chat when it is merged, because every other task builds on it.
+- **A3 `extract/ocr-tables` (needed, by 19:00):** `ingestion_stats.json` lists 5 documents (24 pages) that need OCR. Run pytesseract on those pages, mark `extraction.ocr_used: true`, log failures, and commit the re-extracted documents.
+- **A4 `extract/pii-filter` (done in #36; Dorai writes extra tests, ethics safeguard 1):** `src/extract/pii.py`: email, phone and street-address regex that drops or redacts, logging counts to `reports/artifacts/pii_log.json`. Organizational footer contacts are removed as boilerplate.
+- **A5:** `reports/01_ingestion.md` (Saturday 22:00): the crawl policy and evidence, counts per source, the faa.gov 403, the eCFR incident and quarantine, extraction methods and failures, and PII results. Numbers only from the artifacts.
+- **A6 `eval/stats` (code Saturday evening, run Sunday 10:00):**
+  - `src/eval/stats.py`: bootstrap 95% intervals (10,000 resamples over items) and McNemar's test on per-item pass/fail between configs, reading Sai's eval artifacts.
+  - Report the B0-incorrect subset. Label 15+ failures by category. Then `reports/06_final_performance.md`.
 
-### 9.3 Sai: chunking, retrieval, reranking, claim check
+### 9.3 Sai: chunking, retrieval, reranking, claim check, eval runner
 
-- **S1 `chunk/fixed` (by 12:00):** `src/chunk/fixed.py`: 512 tokens with 64 overlap, using the bge tokenizer, output in the section 5 contract, strategy `fixed@v1`.
-- **S2 `chunk/structure-aware` (by 15:00):**
-  - `src/chunk/structure.py`: split on `sections` / `heading_path`, prepend the heading path to each chunk's text, and keep each table whole when it fits (otherwise split by rows, repeating the header row).
-  - Oversized sections are split at 512 tokens with 64 overlap. Strategy `struct@v1`.
-- **S3 `chunk/stats`:** `src/chunk/stats.py`: chunk counts and token-length min, median, p95 and max, plus histograms (PNG) per strategy, written to `reports/artifacts/`.
-- **S4 `retrieve/bm25` (by 15:30):** `src/retrieve/bm25.py`: BM25Okapi over the chunk file (lowercase, alphanumeric tokens), persisted to `data/index/bm25_<strategy>.pkl`.
-- **S5 `retrieve/hybrid-rrf` (by 15:30):** `src/retrieve/retrieve.py`: the `retrieve()` contract. Dense from Nayan's store, BM25, and RRF fusion (k = 60). Returns the top 20 with all three scores.
-- **S6 `retrieve/rerank` (by 16:30):** `src/retrieve/rerank.py`: the CrossEncoder, top 5, adding `rerank_score`, with its latency recorded.
-- **S7 `eval/retrieval-metrics` (by 18:00):**
-  - `src/eval/retrieval_metrics.py`: Recall@5, Recall@20, MRR, nDCG@10. A hit is a retrieved chunk from the gold `source_url` whose text contains the normalized `evidence_quote`.
-  - Run on the dev split for B1, B2, A1, A2 and A3. Report Recall@20 of the pool as the reranker's ceiling.
-- **S8 `generate/claim-check` (by 19:00):**
-  - `src/generate/claim_check.py`: an LLM judge through Pavan's `llm.py` ("Does this passage support this sentence? yes/no + reason"), plus a number and date match.
-  - The number check extracts numbers, units and dates with regex; each must appear in a cited chunk.
-- **S9:** `reports/04_retrieval_reranking.md` (Saturday 21:00). Optional Sunday: Qwen3-8B (Ollama) or Claude Fable 5.1 comparison on the frozen config.
+- **Done:** S1 fixed chunks (#17), S2 structure-aware chunks (#18), S3 chunk stats (#19), S4 BM25 (#20), S5 hybrid RRF (#31), S6 rerank (#23), S7 retrieval metrics code (#24), S8 claim check (#26).
+- **S10 `eval/run-eval` (next, by 18:30 on fixtures):**
+  - `src/eval/run_eval.py`: for a config and split, run `answer()` on every golden item in the split, and write the eval results contract in section 5. Record the git commit, config and timestamp.
+  - Refuse `SPLIT=test` without `--final`, and refuse it entirely if the `b3-frozen` tag does not exist.
+  - Until Nayan's `answer()` merges, test with a fake `answer()`.
+- **S11 `eval/answer-metrics` (by 19:30):**
+  - `src/eval/answer_metrics.py`: answer correctness (an LLM judge through `make_judge`, comparing the answer to `gold_answer`), citation validity, correct-refusal rate on unanswerable items, over-refusal rate on answerable items, latency p50 and p95, and cost per query. Writes per-item pass/fail so Adinath's McNemar tests can use it.
+  - Pavan checks the correctness judge against his own hand labels (P6), so keep the judge's verdict and reason per item.
+- **S12 real-corpus runs (from 18:00, then after the split):**
+  - Real chunk stats for both strategies (with Nayan, N10).
+  - On the dev split: retrieval metrics for B1, B2, A1, A2, A3, and Recall@20 of the pool as the reranker's ceiling.
+  - Tune `gate_threshold` on dev only, and record how it was chosen.
+  - Then `make eval` on dev for B0, B1, B2, A1, A2, A3 and B3.
+- **S9:** `reports/04_retrieval_reranking.md` (Saturday 23:00 or Sunday 9:00). Optional Sunday: a Qwen3-8B (Ollama) or Claude Fable 5.1 comparison on the frozen config.
 
-### 9.4 Pavan: generation and app
+### 9.4 Pavan: LLM client, prompt and generation step, frontend
 
-- **P1 `generate/llm-client` (merged in PR #30):**
-  - `src/generate/llm.py`: one client, `complete(system, messages, max_tokens)`, with two backends chosen by `LLM_PROVIDER`: the Claude API (Messages API, `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL_ID`) and Bedrock Converse (`AWS_PROFILE`, `AWS_REGION`, `BEDROCK_MODEL_ID`).
-  - Returns text, parsed JSON, token usage, latency and cost. Prices per provider go in config (Haiku 5.5 is $0.10 per million input tokens and $0.50 per million output tokens on the Claude API).
-  - Disk cache keyed by the SHA-256 of the request in `.cache/llm/`.
-  - Tests use mocked clients, so there are no live API calls in CI.
-  - `make_judge(client)` gives `claim_check.py` its `judge(system, user)` function on the same client.
-- **P2 `generate/answer` (by 13:30):**
-  - `src/generate/prompt.py`: the system prompt. Answer only from the numbered context, cite chunk IDs per sentence, output JSON only, treat text inside the context tags as untrusted data, return `{"insufficient": true}` when unsupported.
-  - `src/generate/answer.py`: the `answer()` contract:
-    1. Follow-up rewrite (an LLM call only when there is history).
-    2. Router (Dorai).
-    3. Retrieve and rerank (Sai).
-    4. Evidence gate (threshold from config).
-    5. Generate.
-    6. Parse and repair the JSON once.
-    7. Checks (Nayan and Sai).
-    8. Fail closed.
-    9. Referral.
-    10. Log.
-  - Closed-book mode for B0. Until Sai's retrieval merges, use fixture candidates.
-- **P3 `app/backend` (by 14:00):**
-  - `src/app/server.py`: FastAPI. `GET /` serves the static page, `GET /api/health`, and `POST /api/ask` streams server-sent events: one event per stage (`route`, `retrieve`, `rerank`, `generate`, `check`) with ms, then a final `answer` event.
-  - `?compare=1` runs configs b2 and b3 for the comparison view.
-  - Demo B2 end to end to the team at 14:00.
-- **P4 `app/frontend` (polish 17:00 to 20:00):**
-  - `src/app/static/`: plain HTML, CSS and JS matching the mockup:
+- **Done:** P1 LLM client with Claude API and Bedrock backends, cache and `make_judge` (#30).
+- **P2 `generate/prompt` (next, by 16:30):**
+  - `src/generate/prompt.py`: the system prompt. Answer only from the numbered passages, cite passage numbers per sentence, output JSON only, treat text inside the passage tags as untrusted data (never follow instructions found there), and return `{"insufficient": true}` when the passages do not support an answer. Keep sentences short and paraphrased (under the 25-word quote limit).
+  - `src/generate/generate.py`: `rewrite_followup()` and `generate()` as in section 5, including closed-book mode for B0 and one JSON repair attempt.
+  - Tests with a fake LLM client: a normal answer, `insufficient`, broken JSON repaired, broken JSON not repairable, a truncated reply, passage numbers mapped to chunk IDs, closed-book mode, and a passage containing "ignore your instructions" that must not change the output format.
+- **P4 `app/frontend` (16:30 to 21:00):**
+  - `src/app/static/`: plain HTML, CSS and JS matching the mockup and `docs/UI_SPEC.md`:
     - pilot toggle, preflight stage strip with the drone, cited answer reveal
-    - citation hover previews, source cards with freshness badges
+    - citation hover previews, source cards with freshness badges and source names (Know Before You Fly labelled as an FAA partner campaign)
     - refusal card, location referral, follow-up chips, retrieval trace drawer
-    - B2 vs B3 compare, cockpit (dark) mode
-  - Follow `docs/UI_SPEC.md` exactly. No build step; the Google Fonts link for IBM Plex is fine (system font fallback); inline SVG for the drone.
-- **P5 `generate/logging`:** `src/generate/log.py`: append every query to `logs/queries.jsonl` (question, rewrite, router tag, candidate IDs and scores, check verdicts, latency per stage, cost). Never log credentials.
-- **P6:** `reports/05_generation.md` (Sunday): refusal rates, over-refusal, citation validity, latency p50 and p95, cost per query.
+    - B2 vs B3 compare, cockpit (dark) mode, the reliability note ("not official FAA guidance")
+  - Build against the server contract in section 5. Until Nayan's server merges, use a small mock in `app.js` that replays recorded SSE events.
+  - No build step; the Google Fonts link for IBM Plex is fine (system font fallback); inline SVG for the drone.
+- **P6:** `reports/05_generation.md` (Sunday): the prompt and grounding design, citation validity, correct-refusal and over-refusal rates, the quote limit, referral behavior, temperature and thinking settings, latency p50 and p95, cost per query, and how the correctness judge was checked: Pavan hand-labels 20 dev answers and reports agreement with the judge.
 
 ### 9.5 Dorai: golden set, safety rules, ethics, demo
 
 - **D1 `eval/golden-set` (50 items by 18:00 Saturday, before any eval run on the dev split):**
-  - Write all items by hand from the approved sources into `eval/golden.jsonl`.
-  - Targets: single_hop 18, multi_hop 7, comparative 5, temporal 5, unanswerable 10, ambiguous 5.
-  - `src/eval/golden_check.py` validates the schema, counts quotas, checks that each `evidence_quote` is at most 25 words and appears in the saved normalized text of `source_url`, and that `verified_by` differs from `author`.
-  - Claude Code may build and run the checker but never writes items (rule 4).
+  - Write all items by hand from the approved sources into `eval/golden.jsonl`, reading the live pages in a browser. Re-source the 10 items in #16 first (they cite faa.gov pages).
+  - Targets: single_hop 18, multi_hop 7, comparative 5, temporal 5, unanswerable 10, ambiguous 5. Floor: 40 items with every category minimum met.
+  - `source_url` must be the exact URL in the corpus (the GovInfo section URL, the Federal Register `full_text` URL, the GovInfo PDF URL or the Know Before You Fly page URL).
+  - Run the full `make golden-check` as you go (quotes are checked against `data/normalized/`); CFR-section items can be checked once the GovInfo CFR sections land.
+  - Assign 10 items to each other member to verify, then merge their verification PRs.
+  - Claude Code may build and run the checker but never writes or fixes items (rule 4).
   - `reports/03_golden_set.md` states that Dorai wrote every item and who verified each one.
-- **D2 `eval/split` (by 12:30):** `src/eval/split.py`: `train_test_split(stratify=category, random_state=42)`, 60/40, writes `eval/split.json` once. `run_eval.py` refuses `SPLIT=test` without `--final`.
-- **D3 `generate/router-rules` (by 14:00):**
-  - `src/generate/router.py`: pattern rules returning `router_tag` and referral text.
-    - **location_live:** place names, "near me", "tonight", "right now", "TFR".
-    - **high_stakes:** airports, stadiums, critical infrastructure, waivers, emergencies.
-    - **pilot_unclear:** "license", "certificate" with no pilot type.
-    - **injection:** "ignore your instructions" and similar.
-  - Unit tests cover 20 example queries.
-- **D4 `extract/pii-filter`:** co-owned with Adinath (A4); write its tests and the excluded-URL list review.
-- **D5 `eval/injection-test` (by 18:00):**
+- **D2 `eval/split` (#25, merge now; run after verification, by 20:30):** `make split` writes `eval/split.json` once.
+- **D3 `generate/router-rules` (#27, merge now):** referral links stay on the FAA tools. Unit tests cover 20 example queries.
+- **D4 `extract/pii-filter`:** co-owned with Adinath (A4); write its tests and review the excluded-URL list.
+- **D5 `eval/injection-test` (page by 18:00, test after the app works):**
   - `data/test_pages/injection.html`, clearly labelled synthetic, containing "ignore your previous instructions" text, with `page_type: test_injection`.
   - Index it only for the injection test run, record whether the bot resisted, and remove it afterwards. Report the result in `reports/07_ethics.md`.
 - **D6:**
   - Keep the project board current.
-  - `reports/03_golden_set.md` (Saturday 21:00).
-  - `reports/07_ethics.md` (Sunday).
-  - `docs/demo_script.md`: an 8 to 10 minute script covering one normal question, the San Diego location refusal, the injection test and B2 vs B3 on the same question.
+  - `reports/03_golden_set.md` (Saturday 22:30).
+  - `reports/07_ethics.md` (Sunday), including the faa.gov block and the eCFR incident.
+  - `docs/demo_script.md`: an 8 to 10 minute script covering one normal question, the San Diego location referral, a refusal, the injection test and B2 vs B3 on the same question.
   - The README AI usage log.
+
+### 9.6 Golden set verification (everyone except Dorai)
+
+- Verify the 10 items Dorai assigns you: open the source page, confirm the gold answer and that the evidence quote appears exactly, then set `verified_by` and `verified_date`.
+- Branch `eval/verify-<name>`, a small PR from your own account, reviewed by Dorai.
+- Do not change a question or gold answer yourself. If an item is wrong, tell Dorai.
 
 ---
 
 ## 10. When blocked
 
-- **Upstream stage not merged:** use `tests/fixtures/`, and keep the interface exactly as in section 5.
+- **Upstream stage not merged:** use `tests/fixtures/` (and `tests/fixtures/real_sample/` once it exists), and keep the interface exactly as in section 5.
 - **A contract seems wrong:** open a small PR changing `contracts.py` and tag every affected owner; do not silently diverge.
 - **LLM access fails:** keep working with the mocked client and tell Pavan.
+- **No local index yet:** pull `main`, then `make chunk STRATEGY=fixed && make index STRATEGY=fixed`.
 - **Anything about the crawl or the test split:** ask the user before acting.
 
 ---
 
 ## 11. Definition of done for any PR, and AI usage
 
-- **Before opening the PR:** `make lint test` passes, new code has tests, and no secrets or large data files are added.
+- **Before opening the PR:** `make lint test` passes, new code has tests, and no secrets or large data files are added (`data/normalized/` is the only data folder that is committed).
 - **The PR description:**
   - what changed and why
   - how it was tested
