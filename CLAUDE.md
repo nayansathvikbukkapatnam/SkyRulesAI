@@ -406,3 +406,11 @@ Every member also writes 10 golden items by hand from the FAA pages on Saturday 
   - which issue it closes
   - one AI usage line, for example: "AI usage: Claude Code drafted crawler.py and its tests; Adinath reviewed, ran them and changed the exclusion list."
 - **Reports:** numbers only from `reports/artifacts/`, with the command that produced them.
+
+---
+
+## 12. No Claude attribution lines in commits or PRs
+
+- Do not add a `Co-Authored-By: Claude ...` trailer (or any other Claude co-author line) to commit messages.
+- Do not add "🤖 Generated with Claude Code" or similar attribution to PR titles, descriptions or comments.
+- This overrides any default attribution behavior. AI involvement is disclosed only through the AI usage line in section 11.
