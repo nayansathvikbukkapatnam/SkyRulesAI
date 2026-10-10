@@ -1,0 +1,14 @@
+# Core
+boto3
+python-dotenv
+
+# Crawl / extract
+requests
+beautifulsoup4
+pypdf
+
+# Index / retrieve
+chromadb
+
+# Dev
+pytest
