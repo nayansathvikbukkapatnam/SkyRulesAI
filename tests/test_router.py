@@ -143,3 +143,48 @@ def test_each_reason_is_logged_once():
     reasons = r.route("Can I fly in San Diego tonight at 10 pm?")["reasons"]
     assert len(reasons) == len(set(reasons))
     assert "location:San Diego" in reasons
+
+
+# --- False positives found by routing the real golden questions --------------
+
+
+@pytest.mark.parametrize(
+    "question",
+    [
+        # "U.S." was in the not-a-place list but never matched, because the dot was stripped.
+        "By what date did drone operators have to meet the Remote ID requirements to fly "
+        "in U.S. airspace?",
+        "Can I fly in the U.S.?",
+        # A place named only to exclude it is not where the flight is.
+        "What counts as civil twilight for Part 107 flights (outside Alaska)?",
+        "Can I fly everywhere except Texas?",
+        # A certificate of authorization/waiver is not a pilot credential.
+        "How long is a Certificate of Authorization (COA) usually valid?",
+        "How do I renew my TRUST completion certificate?",
+        # "injury limit" and "Over People rule" are technical terms, not emergencies or crowds.
+        "In the Operations Over People rule, how do Category 2 and Category 3 differ on the "
+        "injury limit?",
+    ],
+)
+def test_technical_wording_is_not_flagged(question):
+    result = r.route(question)
+    assert result["router_tag"] == "normal"
+    assert result["referral"] is None
+    assert result["reasons"] == []
+
+
+@pytest.mark.parametrize(
+    ("question", "tag"),
+    [
+        ("Can I fly in Alaska?", "location_live"),
+        ("Can I fly in Texas except near Austin?", "location_live"),
+        ("Do I need a certificate?", "pilot_unclear"),
+        ("Do I need a certificate of waiver?", "high_stakes"),
+        ("Someone was injured by my drone", "high_stakes"),
+        ("There was an injury, what do I do?", "high_stakes"),
+        ("Can I fly my drone over people?", "high_stakes"),
+        ("Can I fly over crowds?", "high_stakes"),
+    ],
+)
+def test_the_fixes_do_not_hide_real_cases(question, tag):
+    assert r.route(question)["router_tag"] == tag
