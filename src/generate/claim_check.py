@@ -77,13 +77,13 @@ _DAY_FIRST = re.compile(rf"\b(?P<d>\d{{1,2}})\s+{_MONTH}\s+(?P<y>(?:19|20)\d{{2}
 _MONTH_YEAR = re.compile(rf"\b{_MONTH}\s+(?P<y>(?:19|20)\d{{2}})\b", re.I)
 _NUM = re.compile(
     rf"(?P<cur>\$)\s?(?P<v1>\d[\d,]*(?:\.\d+)?)"
-    rf"|(?<![\w.])(?P<v2>\d[\d,]*(?:\.\d+)?|\.\d+)(?:\s?(?P<unit>%|(?:{_UNIT_RE})s?\b))?",
+    rf"|(?<![\w.])(?P<v2>\d[\d,]*(?:\.\d+)?|\.\d+)(?:[\s-]?(?P<unit>%|(?:{_UNIT_RE})s?\b))?",
     re.I,
 )
 _WORD_NUM = re.compile(
     # Spelled-out numbers count only with a unit ("three years"), so "one number" or
     # "no one" in ordinary prose never becomes a claim the chunks must back.
-    r"\b(" + "|".join(_NUMBER_WORDS) + rf")\s(?P<unit>(?:{_UNIT_RE})s?)\b",
+    r"\b(" + "|".join(_NUMBER_WORDS) + rf")[\s-](?P<unit>(?:{_UNIT_RE})s?)\b",
     re.I,
 )
 _CITATION_MARK = re.compile(r"\[\d+\]")

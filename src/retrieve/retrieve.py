@@ -64,7 +64,16 @@ class Retriever:
             from src.index.store import ChunkStore
 
             self._store = ChunkStore.open(self.cfg)
+            # Load the embedding model now, not on the first query: it takes seconds,
+            # and the app's start-up warm-up touches `store` for exactly this reason.
+            _ = self._store.embedder.model
         return self._store
+
+    def warm_up(self, strategies: Sequence[str] = ("fixed@v1", "struct@v1")) -> None:
+        """Load the store, the embedding model and the BM25 indexes before any query."""
+        _ = self.store
+        for strategy in strategies:
+            self.bm25(strategy)
 
     def bm25(self, strategy: str) -> BM25Index:
         if strategy not in self._bm25:
