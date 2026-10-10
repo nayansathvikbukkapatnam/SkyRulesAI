@@ -1,0 +1,49 @@
+{
+  "golden_file": "eval/golden.jsonl",
+  "ok": true,
+  "total_items": 50,
+  "items_with_errors": 0,
+  "quotes_checked": true,
+  "quotas": {
+    "single_hop": {
+      "count": 18,
+      "minimum": 15,
+      "target": 18
+    },
+    "multi_hop": {
+      "count": 7,
+      "minimum": 6,
+      "target": 7
+    },
+    "comparative": {
+      "count": 5,
+      "minimum": 4,
+      "target": 5
+    },
+    "temporal": {
+      "count": 5,
+      "minimum": 4,
+      "target": 5
+    },
+    "unanswerable": {
+      "count": 10,
+      "minimum": 8,
+      "target": 10
+    },
+    "ambiguous": {
+      "count": 5,
+      "minimum": 3,
+      "target": 5
+    }
+  },
+  "items_by_author": {
+    "Dorai": 50
+  },
+  "items_by_verifier": {
+    "Nayan": 13,
+    "Pavan": 13,
+    "Sai": 24
+  },
+  "errors": [],
+  "warnings": []
+}
