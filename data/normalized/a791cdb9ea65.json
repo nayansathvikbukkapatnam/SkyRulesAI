@@ -1,0 +1,24 @@
+{
+  "doc_id": "a791cdb9ea65",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-3.xml",
+  "title": "14 CFR § 107.3 Definitions. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:26+00:00",
+  "content_hash": "59904bb932a77702492763307c75df2a68d41542f4ab049f10f18b6f0833c76e",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.3 Definitions. (2025 edition)"
+      ],
+      "text": "The following definitions apply to this part. If there is a conflict between the definitions of this part and definitions specified in § 1.1 of this chapter, the definitions in this part control for purposes of this part:\n\nControl station means an interface used by the remote pilot to control the flight path of the small unmanned aircraft.\n\nCorrective lenses means spectacles or contact lenses.\n\nDeclaration of compliance means a record submitted to the FAA that certifies the small unmanned aircraft conforms to the Category 2 or Category 3 requirements under subpart D of this part.\n\nSmall unmanned aircraft means an unmanned aircraft weighing less than 55 pounds on takeoff, including everything that is on board or otherwise attached to the aircraft.\n\nSmall unmanned aircraft system (small UAS) means a small unmanned aircraft and its associated elements (including communication links and the components that control the small unmanned aircraft) that are required for the safe and efficient operation of the small unmanned aircraft in the national airspace system.\n\nUnmanned aircraft means an aircraft operated without the possibility of direct human intervention from within or on the aircraft.\n\nVisual observer means a person who is designated by the remote pilot in command to assist the remote pilot in command and the person manipulating the flight controls of the small UAS to see and avoid other air traffic or objects aloft or on the ground.\n\n[Docket FAA-2015-0150, Amdt. 107-1, 81 FR 42209, June 28, 2016, as amended by Amdt. 107-8, 86 FR 4381, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

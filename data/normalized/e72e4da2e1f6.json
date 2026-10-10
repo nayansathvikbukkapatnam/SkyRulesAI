@@ -1,0 +1,24 @@
+{
+  "doc_id": "e72e4da2e1f6",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-305.xml",
+  "title": "14 CFR § 89.305 Minimum message elements broadcast by standard remote identification unmanned aircraft. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:42+00:00",
+  "content_hash": "e8ba1609dc36cd69956afadfb2931a3059a6549a33092202432bdc79b789a6f1",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.305 Minimum message elements broadcast by standard remote identification unmanned aircraft. (2025 edition)"
+      ],
+      "text": "A standard remote identification unmanned aircraft must be capable of broadcasting the following remote identification message elements:\n\n(a) The identity of the unmanned aircraft, consisting of:\n\n(1) A serial number assigned to the unmanned aircraft by the person responsible for the production of the standard remote identification unmanned aircraft; or\n\n(2) A session ID.\n\n(b) An indication of the latitude and longitude of the control station.\n\n(c) An indication of the geometric altitude of the control station.\n\n(d) An indication of the latitude and longitude of the unmanned aircraft.\n\n(e) An indication of the geometric altitude of the unmanned aircraft.\n\n(f) An indication of the velocity of the unmanned aircraft.\n\n(g) A time mark identifying the Coordinated Universal Time (UTC) time of applicability of a position source output.\n\n(h) An indication of the emergency status of the unmanned aircraft.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

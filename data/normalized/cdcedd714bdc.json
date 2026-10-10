@@ -1,0 +1,24 @@
+{
+  "doc_id": "cdcedd714bdc",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-25.xml",
+  "title": "14 CFR § 48.25 Applicants. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:31+00:00",
+  "content_hash": "ed2c6bfa01041e447ebb21cdc49719c07110ff76cc2edcdcbdb334fbb1ae6b5b",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.25 Applicants. (2025 edition)"
+      ],
+      "text": "(a) To register a small unmanned aircraft in the United States under this part, a person must provide the information required by § 48.110 to the Registry in a form and manner prescribed by the Administrator. Upon submission of this information, the FAA issues a Certificate of Aircraft Registration to that person.\n\n(b) A small unmanned aircraft must be registered by its owner using the legal name of its owner, unless the owner is less than 13 years of age. If the owner is less than 13 years of age, then the small unmanned aircraft must be registered by a person who is at least 13 years of age.\n\n(c) In accordance with 49 U.S.C. 44103(c), registration is not evidence of aircraft ownership in any proceeding in which ownership of an unmanned aircraft by a particular person is in issue.\n\n(d) In this part, “owner” includes a buyer in possession, a bailee, a lessee of a small unmanned aircraft under a contract of conditional sale, and the assignee of that person.\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015, as amended by Doc. No. FAA-2019-1100; Amdt. No. 48-3; 86 FR 4504, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

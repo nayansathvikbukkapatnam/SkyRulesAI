@@ -1,0 +1,24 @@
+{
+  "doc_id": "22e7665e36ac",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-100.xml",
+  "title": "14 CFR § 48.100 Registration: Small unmanned aircraft operated for any purpose other than exclusively limited recreational operations. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:33+00:00",
+  "content_hash": "114a8691a32abbf072bd9cfea53d0c7f5a013a2ee11ea26c9883f912670d237f",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.100 Registration: Small unmanned aircraft operated for any purpose other than exclusively limited recreational operations. (2025 edition)"
+      ],
+      "text": "(a) Certificate of Aircraft Registration. A Certificate of Aircraft Registration issued in accordance with § 48.110 to a small unmanned aircraft used for any purpose other than operating exclusively in compliance with 49 U.S.C. 44809 constitutes registration for the small unmanned aircraft identified on the application.\n\n(b) Effective date of registration. An aircraft is registered when the applicant receives a Certificate of Aircraft Registration for the specific aircraft. The effective date of registration is shown by the date of issue on the Certificate of Aircraft Registration issued for the aircraft.\n\n(c) Registration renewal. A Certificate of Aircraft registration issued under this part expires 3 years after the date of issue unless it is renewed.\n\n(1) The holder of a Certificate of Aircraft Registration must renew the Certificate by verifying, in a form and manner prescribed by the Administrator, that the information provided in accordance with § 48.110 is accurate and if it is not, provide updated information. The verification may take place at any time within the six months preceding the month in which the Certificate of Aircraft registration expires.\n\n(2) A certificate issued under this paragraph expires three years from the expiration date of the previous certificate.\n\n(d) Other events affecting effectiveness of Certificate. Each Certificate of Aircraft Registration issued by the FAA under this subpart is effective, unless registration has ended by reason of having been revoked, canceled, expired, or the ownership is transferred, until the date upon which one of the following events occurs:\n\n(1) Subject to the Convention on the International Recognition of Rights in Aircraft when applicable, the aircraft is registered under the laws of a foreign country.\n\n(2) The small unmanned aircraft is totally destroyed or scrapped.\n\n(3) The holder of the Certificate of Aircraft Registration loses U.S. citizenship.\n\n(4) Thirty days have elapsed since the death of the holder of the Certificate of Aircraft Registration.\n\n(5) The owner, if an individual who is not a citizen of the United States, loses status as a resident alien, unless that person becomes a citizen of the United States at the same time.\n\n(6) The owner is a corporation other than a corporation which is a citizen of the United States and one of the following events occurs:\n\n(i) The corporation ceases to be lawfully organized and doing business under the laws of the United States or any State thereof; or\n\n(ii) The aircraft was not operated exclusively within the United States during the period of registration under this part.\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015. Redesignated and amended by Doc. No. FAA-2019-1100; Amdt. No. 48-3, 86 FR 4504, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

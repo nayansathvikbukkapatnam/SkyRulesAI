@@ -1,0 +1,24 @@
+{
+  "doc_id": "29d8bc489c27",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-505.xml",
+  "title": "14 CFR § 89.505 Serial numbers. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:17+00:00",
+  "content_hash": "d942fde232f979573480290a43e974d47c773dfdc184829f93d9bca58dcd397c",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.505 Serial numbers. (2025 edition)"
+      ],
+      "text": "No person may produce a standard remote identification unmanned aircraft under § 89.510 or § 89.515 or a remote identification broadcast module under § 89.520, unless the producer assigns to the unmanned aircraft or remote identification broadcast module a serial number that complies with ANSI/CTA-2063-A. ANSI/CTA-2063-A, Small Unmanned Aerial Systems Serial Numbers (September 2019) is incorporated by reference into this section with the approval of the Director of the Office of the Federal Register under 5 U.S.C. 552(a) and 1 CFR part 51. All approved material is available for inspection at the FAA's Office of Rulemaking (ARM-1), [REDACTED STREET_ADDRESS], Washington, DC 20590 (telephone [REDACTED PHONE]) and is available from Consumer Technology Association (CTA), [REDACTED STREET_ADDRESS], Arlington, VA 22202, [REDACTED EMAIL] , [REDACTED PHONE] or at https://www.cta.tech. It is also available for inspection at the National Archives and Records Administration (NARA). For information on the availability of this material at NARA, email [REDACTED EMAIL], or go to www.archives.gov/federal-register/cfr/ibr-locations.html.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

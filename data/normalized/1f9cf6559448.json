@@ -1,0 +1,24 @@
+{
+  "doc_id": "1f9cf6559448",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-23.xml",
+  "title": "14 CFR § 107.23 Hazardous operation. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:37+00:00",
+  "content_hash": "b76b13cea6d496ae37d9260ce2ce768b8c402d66b4c34eb437964c1c5cb34bcc",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.23 Hazardous operation. (2025 edition)"
+      ],
+      "text": "No person may:\n\n(a) Operate a small unmanned aircraft system in a careless or reckless manner so as to endanger the life or property of another; or\n\n(b) Allow an object to be dropped from a small unmanned aircraft in a manner that creates an undue hazard to persons or property.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

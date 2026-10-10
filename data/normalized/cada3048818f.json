@@ -1,0 +1,24 @@
+{
+  "doc_id": "cada3048818f",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-35.xml",
+  "title": "14 CFR § 107.35 Operation of multiple small unmanned aircraft. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:43+00:00",
+  "content_hash": "60a870d6b3a67af66773332d0db6861e8381065f3c0dcdaccc43daaacb0e3821",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.35 Operation of multiple small unmanned aircraft. (2025 edition)"
+      ],
+      "text": "A person may not manipulate flight controls or act as a remote pilot in command or visual observer in the operation of more than one unmanned aircraft at the same time.\n\n[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "262dcb85b902",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-31.xml",
+  "title": "14 CFR § 107.31 Visual line of sight aircraft operation. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:41+00:00",
+  "content_hash": "8f4357956b19faafb1406635d19814fb3d49f2f839434c0fc6cc632401800159",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.31 Visual line of sight aircraft operation. (2025 edition)"
+      ],
+      "text": "(a) With vision that is unaided by any device other than corrective lenses, the remote pilot in command, the visual observer (if one is used), and the person manipulating the flight control of the small unmanned aircraft system must be able to see the unmanned aircraft throughout the entire flight in order to:\n\n(1) Know the unmanned aircraft's location;\n\n(2) Determine the unmanned aircraft's attitude, altitude, and direction of flight;\n\n(3) Observe the airspace for other air traffic or hazards; and\n\n(4) Determine that the unmanned aircraft does not endanger the life or property of another.\n\n(b) Throughout the entire flight of the small unmanned aircraft, the ability described in paragraph (a) of this section must be exercised by either:\n\n(1) The remote pilot in command and the person manipulating the flight controls of the small unmanned aircraft system; or\n\n(2) A visual observer.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

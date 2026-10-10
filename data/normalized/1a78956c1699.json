@@ -1,0 +1,24 @@
+{
+  "doc_id": "1a78956c1699",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-405.xml",
+  "title": "14 CFR § 89.405 Submission of a means of compliance for FAA acceptance. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:12+00:00",
+  "content_hash": "1331b7435ce3f162d1b88a9a7014f822a1f9e060884c91aad6703df53adcca27",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.405 Submission of a means of compliance for FAA acceptance. (2025 edition)"
+      ],
+      "text": "(a) Eligibility. Any person may submit a means of compliance for acceptance by the FAA.\n\n(b) Required information. A person requesting acceptance of a means of compliance must submit the following information to the FAA in a form and manner acceptable to the Administrator:\n\n(1) The name of the person or entity submitting the means of compliance, the name of the main point of contact for communications with the FAA, the physical address, email address, and other contact information.\n\n(2) A detailed description of the means of compliance.\n\n(3) An explanation of how the means of compliance addresses all of the minimum performance requirements established in subpart D of this part so that any standard remote identification unmanned aircraft or remote identification broadcast module designed and produced in accordance with such means of compliance meets the remote identification requirements of this part.\n\n(4) Any substantiating material the person wishes the FAA to consider as part of the request.\n\n(c) Testing and validation. A means of compliance submitted for acceptance by the FAA must include testing and validation procedures for persons responsible for the production of standard remote identification unmanned aircraft or remote identification broadcast modules to demonstrate through analysis, ground test, or flight test, as appropriate, how the standard remote identification unmanned aircraft or the remote identification broadcast module performs its intended functions and meets the requirements in subpart D of this part, including any applicable FAA performance requirements for radio station operation.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

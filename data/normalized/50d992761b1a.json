@@ -1,0 +1,24 @@
+{
+  "doc_id": "50d992761b1a",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-100.xml",
+  "title": "14 CFR § 107.100 Applicability. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:09+00:00",
+  "content_hash": "2d35086a4f67935d82f58021178c5c4fa2bfdc514fa30b1e18a42658ca11a54b",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.100 Applicability. (2025 edition)"
+      ],
+      "text": "This subpart prescribes the eligibility and operating requirements for civil small unmanned aircraft to operate over human beings or over moving vehicles in the United States, in addition to those operations permitted by § 107.39(a) and (b).",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

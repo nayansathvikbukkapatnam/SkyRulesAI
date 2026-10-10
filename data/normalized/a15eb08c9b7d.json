@@ -1,0 +1,24 @@
+{
+  "doc_id": "a15eb08c9b7d",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-205.xml",
+  "title": "14 CFR § 107.205 List of regulations subject to waiver. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:24+00:00",
+  "content_hash": "14f82b6e9294ed593f9af69ef7716223b8ce4b81959e60d41b367898b6ba2375",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.205 List of regulations subject to waiver. (2025 edition)"
+      ],
+      "text": "A certificate of waiver issued pursuant to § 107.200 may authorize a deviation from the following regulations of this part:\n\n(a) Section 107.25—Operation from a moving vehicle or aircraft. However, no waiver of this provision will be issued to allow the carriage of property of another by aircraft for compensation or hire.\n\n(b) Section 107.29(a)(2) and (b)—Anti-collision light required for operations at night and during periods of civil twilight.\n\n(c) Section 107.31—Visual line of sight aircraft operation. However, no waiver of this provision will be issued to allow the carriage of property of another by aircraft for compensation or hire.\n\n(d) Section 107.33—Visual observer.\n\n(e) Section 107.35—Operation of multiple small unmanned aircraft systems.\n\n(f) Section 107.37(a)—Yielding the right of way.\n\n(g) Section 107.39—Operation over people.\n\n(h) Section 107.41—Operation in certain airspace.\n\n(i) Section 107.51—Operating limitations for small unmanned aircraft.\n\n(j) Section 107.145—Operations over moving vehicles.\n\n[Docket FAA-2015-0150, Amdt. 107-1, 81 FR 42209, June 28, 2016, as amended by Amdt. 107-8, 86 FR 4387, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

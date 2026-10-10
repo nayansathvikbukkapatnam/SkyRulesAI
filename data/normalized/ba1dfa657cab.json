@@ -1,0 +1,24 @@
+{
+  "doc_id": "ba1dfa657cab",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-33.xml",
+  "title": "14 CFR § 107.33 Visual observer. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:42+00:00",
+  "content_hash": "dab19ee0d7b1770659bf07674a1418018e5b4b5175325fb1222f24f6ca0d51df",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.33 Visual observer. (2025 edition)"
+      ],
+      "text": "If a visual observer is used during the aircraft operation, all of the following requirements must be met:\n\n(a) The remote pilot in command, the person manipulating the flight controls of the small unmanned aircraft system, and the visual observer must maintain effective communication with each other at all times.\n\n(b) The remote pilot in command must ensure that the visual observer is able to see the unmanned aircraft in the manner specified in § 107.31.\n\n(c) The remote pilot in command, the person manipulating the flight controls of the small unmanned aircraft system, and the visual observer must coordinate to do the following:\n\n(1) Scan the airspace where the small unmanned aircraft is operating for any potential collision hazard; and\n\n(2) Maintain awareness of the position of the small unmanned aircraft through direct visual observation.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

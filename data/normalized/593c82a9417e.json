@@ -1,0 +1,24 @@
+{
+  "doc_id": "593c82a9417e",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-41.xml",
+  "title": "14 CFR § 107.41 Operation in certain airspace. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:47+00:00",
+  "content_hash": "d4e5db535f78d851eae239ee2680fb1bb6d492f35521d8690974f6a6dc891c77",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.41 Operation in certain airspace. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft in Class B, Class C, or Class D airspace or within the lateral boundaries of the surface area of Class E airspace designated for an airport unless that person has prior authorization from Air Traffic Control (ATC).",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

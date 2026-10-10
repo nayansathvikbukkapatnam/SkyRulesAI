@@ -1,0 +1,24 @@
+{
+  "doc_id": "5bba93faa54b",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-39.xml",
+  "title": "14 CFR § 107.39 Operation over human beings. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:46+00:00",
+  "content_hash": "f791025319280fbdf0683d34365425d6dc269fdee5c4d8db0360cb022e93d65b",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.39 Operation over human beings. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft over a human being unless—\n\n(a) That human being is directly participating in the operation of the small unmanned aircraft;\n\n(b) That human being is located under a covered structure or inside a stationary vehicle that can provide reasonable protection from a falling small unmanned aircraft; or\n\n(c) The operation meets the requirements of at least one of the operational categories specified in subpart D of this part.\n\n[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

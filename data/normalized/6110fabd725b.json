@@ -1,0 +1,24 @@
+{
+  "doc_id": "6110fabd725b",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-205.xml",
+  "title": "14 CFR § 89.205 Eligibility. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:35+00:00",
+  "content_hash": "a4f64c000c165501cc35708fcb9c4ee8b3784688e489f72fd5384fe6342cae4f",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.205 Eligibility. (2025 edition)"
+      ],
+      "text": "Only the following persons are eligible to apply for the establishment of an FAA-recognized identification area under this subpart:\n\n(a) A community-based organization recognized by the Administrator.\n\n(b) An educational institution, including primary and secondary educational institutions, trade schools, colleges, and universities.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

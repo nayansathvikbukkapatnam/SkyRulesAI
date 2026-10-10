@@ -1,0 +1,24 @@
+{
+  "doc_id": "222e9a728931",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-12.xml",
+  "title": "14 CFR § 107.12 Requirement for a remote pilot certificate with a small UAS rating. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:31+00:00",
+  "content_hash": "e938fd24b5e809027c56dd18fa58e3c234af268e7cf909ea2bc88d25207ca407",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.12 Requirement for a remote pilot certificate with a small UAS rating. (2025 edition)"
+      ],
+      "text": "(a) Except as provided in paragraph (c) of this section, no person may manipulate the flight controls of a small unmanned aircraft system unless:\n\n(1) That person has a remote pilot certificate with a small UAS rating issued pursuant to subpart C of this part and satisfies the requirements of § 107.65; or\n\n(2) That person is under the direct supervision of a remote pilot in command and the remote pilot in command has the ability to immediately take direct control of the flight of the small unmanned aircraft.\n\n(b) Except as provided in paragraph (c) of this section, no person may act as a remote pilot in command unless that person has a remote pilot certificate with a small UAS rating issued pursuant to Subpart C of this part and satisfies the requirements of § 107.65.\n\n(c) The Administrator may, consistent with international standards, authorize an airman to operate a civil foreign-registered small unmanned aircraft without an FAA-issued remote pilot certificate with a small UAS rating.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

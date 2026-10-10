@@ -338,15 +338,15 @@ def test_robots_group_for_our_user_agent_wins_over_star():
         (f"{GOVINFO}/content/pkg/FR-2021-01-15/pdf/2020-28948.pdf", LEAF, None, "govinfo"),
         (f"{GOVINFO}/app/collection/fr", SKIP, "out_of_scope", "govinfo"),
         (
-            f"{GOVINFO}/content/pkg/CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec107-31.pdf",
+            f"{GOVINFO}/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-31.xml",
             LEAF,
             None,
             "govinfo",
         ),
         (
-            f"{GOVINFO}/content/pkg/CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec91-1.pdf",
+            f"{GOVINFO}/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec91-1.xml",
             SKIP,
-            "out_of_scope",
+            "unsupported_file_type",
             "govinfo",
         ),
         # Know Before You Fly: guidance sections only, not the news posts

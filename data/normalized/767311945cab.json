@@ -1,0 +1,24 @@
+{
+  "doc_id": "767311945cab",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-2.xml",
+  "title": "14 CFR § 107.2 Applicability of certification procedures for products and articles. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:25+00:00",
+  "content_hash": "4bd1bfd216f0be7d1f96b5693fedf82432c4c78c296ccc7678d6d2838d230055",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.2 Applicability of certification procedures for products and articles. (2025 edition)"
+      ],
+      "text": "The provisions of part 21 of this chapter do not apply to small unmanned aircraft systems operated under this part unless the small unmanned aircraft system will operate over human beings in accordance with § 107.140.\n\n[Amdt. 107-8, 86 FR 4381, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

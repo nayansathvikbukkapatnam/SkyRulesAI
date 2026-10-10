@@ -1,0 +1,24 @@
+{
+  "doc_id": "7fa9ab9b9fae",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-13.xml",
+  "title": "14 CFR § 107.13 Registration. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:32+00:00",
+  "content_hash": "72f4a402360d70d5eb0b4db4ad94a34999c2845830ee239a1fc44fbd9dfabb92",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.13 Registration. (2025 edition)"
+      ],
+      "text": "A person operating a civil small unmanned aircraft system for purposes of flight must comply with the provisions of § 91.203(a)(2) of this chapter.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

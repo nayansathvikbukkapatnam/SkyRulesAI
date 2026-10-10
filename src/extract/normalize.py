@@ -24,23 +24,23 @@ import yaml
 from src.common import paths
 from src.common.contracts import (
     NormalizedDoc,
-    Section,
     doc_id_for,
     sha256_hex,
     validate_normalized_doc,
 )
 from src.crawl.crawler import read_manifest
-from src.crawl.sources import SOURCES_FILE, SourceSet
+from src.crawl.sources import SKIP, SOURCES_FILE, SourceSet
 from src.extract import html as html_x
+from src.extract.cfr import cfr_section
 from src.extract.pdf import extract_pdf
 from src.extract.pii import redact
 
 log = logging.getLogger(__name__)
 
-HTML, PDF = "text/html", "application/pdf"
+HTML, PDF, XML = "text/html", "application/pdf", "application/xml"
 FR_NUMBER = re.compile(r"(\d{4}-\d{5})\.(?:html|pdf)$")
-# govinfo annual CFR edition, one PDF per section, e.g. CFR-2025-title14-vol2-sec107-31.pdf
-CFR_SECTION = re.compile(r"CFR-(\d{4})-title14-vol\d-sec(\d+)-(\d+)\.pdf$")
+# govinfo annual CFR edition, one XML per section, e.g. CFR-2025-title14-vol2-sec107-31.xml
+CFR_SECTION = re.compile(r"CFR-(\d{4})-title14-vol\d-sec(\d+)-(\d+)\.xml$")
 MONTH_DATE = (
     r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
     r"\s+\d{1,2},\s+\d{4}"
@@ -74,42 +74,6 @@ def _effective_date(sections, published: str | None) -> str | None:
         if m:
             return _iso(m.group(1))
     return published
-
-
-def trim_cfr_section(sections, number: str) -> tuple[str | None, list]:
-    """Keep only section `number` from a CFR section PDF, which prints whole pages.
-
-    A govinfo section PDF also carries the end of the previous section and the
-    start of the next ones. The section runs from its own "§ <number>" heading to
-    the next "§" heading. Returns its caption (mended where the PDF hyphenated it
-    across lines) and one section holding its text and tables; (None, sections)
-    when the heading is not found.
-    """
-    own = re.compile(rf"^§\s*{re.escape(number)}\s+(.*)$")
-    other = re.compile(r"^§\s*\d+\.\d+\s")
-    start = next((i for i, s in enumerate(sections) if own.match(s["heading_path"][-1])), None)
-    if start is None or len(sections[start]["heading_path"]) < 2:
-        return None, sections
-    caption = own.match(sections[start]["heading_path"][-1]).group(1).strip()
-    texts, tables = [], []
-    for i in range(start, len(sections)):
-        heading = sections[i]["heading_path"][-1]
-        if i > start and other.match(heading):
-            break
-        if i > start and len(sections[i]["heading_path"]) > 1:
-            texts.append(heading)  # a sub-heading inside the section stays as text
-        texts.append(sections[i]["text"])
-        tables += sections[i]["tables"]
-    body = "\n\n".join(t for t in texts if t)
-    if not re.search(r"[.\]]$", caption):
-        # "Visual line of sight aircraft op-" + "eration." -> "...operation."
-        m = re.match(r"^\s*(\S[^\n]*?[.\]])(?:\s|$)", body)
-        if m:
-            rest = m.group(1)
-            caption = caption[:-1] + rest if caption.endswith("-") else f"{caption} {rest}"
-            body = body[m.end() :].lstrip()
-    root = sections[start]["heading_path"][:1]
-    return caption, [Section(heading_path=list(root), text=body, tables=tables)]
 
 
 def _keyword_audience(url: str) -> str:
@@ -146,26 +110,14 @@ def extract_entry(
             ext.warnings.append("no public eCFR path found; source_url is the API URL")
         return meta, ext
 
-    if host == "www.govinfo.gov" and (cfr := CFR_SECTION.search(url)):
-        year, part, sec = cfr.groups()
-        number = f"{part}.{sec}"
-        ext = extract_pdf(raw, title_hint=f"14 CFR § {number}")
-        caption, ext.sections = trim_cfr_section(ext.sections, number)
-        if caption is None:
-            ext.warnings.append(f"heading for § {number} not found; kept the whole page text")
-        if caption and "Reserved" in caption:
-            ext.sections = []
-            ext.warnings.append("reserved section (no text)")
-        title = f"14 CFR § {number} {caption or ''}".strip() + f" ({year} edition)"
-        ext.title = title
-        for section in ext.sections:
-            section["heading_path"][0] = title
+    if host == "www.govinfo.gov" and kind == XML and CFR_SECTION.search(url):
+        ext, number, edition = cfr_section(raw)
         meta = {
             "source_url": url,
             "page_type": "regulation_summary",
-            "audience": "part107" if part == "107" else "general",
-            # The annual edition is the text in force on January 1 of that year.
-            "effective_date": f"{year}-01-01",
+            "audience": "part107" if (number or "").startswith("107.") else "general",
+            # The annual edition is the text in force on its date (January 1).
+            "effective_date": edition,
         }
         return meta, ext
 
@@ -242,8 +194,8 @@ def normalize(
 ) -> dict:
     entries = read_manifest(manifest_path)
     fr_docs = fr_documents()
-    # Only sources enabled in sources.yaml: a disabled source's files (eCFR, fetched
-    # against its robots.txt) are never part of the corpus.
+    # Only files that sources.yaml still covers: a disabled source's files (eCFR,
+    # fetched against its robots.txt) and replaced files are never in the corpus.
     enabled = SourceSet.load()
     out_dir.mkdir(parents=True, exist_ok=True)
     artifacts.mkdir(parents=True, exist_ok=True)
@@ -262,8 +214,13 @@ def normalize(
     written: set[str] = set()
 
     for entry in entries:
+        host = urlsplit(entry["final_url"]).hostname or "?"
         if enabled.source_for(entry["final_url"]) is None:
-            excluded_sources[urlsplit(entry["final_url"]).hostname or "?"] += 1
+            excluded_sources[f"{host} (source disabled)"] += 1
+            continue
+        if enabled.scope(entry["final_url"])[0] == SKIP:
+            # e.g. the govinfo CFR section PDFs, replaced by the section XML
+            excluded_sources[f"{host} (no longer in scope)"] += 1
             continue
         if entry["sha256"] in seen_raw:
             duplicates.append({"url": entry["url"], "reason": "same raw bytes"})
@@ -346,7 +303,7 @@ def normalize(
     stats_out = {
         "command": "make extract",
         "manifest_entries": len(entries),
-        "excluded_disabled_sources": dict(excluded_sources),
+        "excluded_by_source_config": dict(excluded_sources),
         "documents_written": stats["documents"],
         "by_content_type": dict(by["content_type"]),
         "by_source": dict(by["source"]),

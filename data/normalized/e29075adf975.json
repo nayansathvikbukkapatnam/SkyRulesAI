@@ -1,0 +1,24 @@
+{
+  "doc_id": "e29075adf975",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-520.xml",
+  "title": "14 CFR § 89.520 Production requirements for remote identification broadcast modules. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:20+00:00",
+  "content_hash": "7f4d6e1a6db6a5f0bd12870978a4c712c45d48548c57799841bfbcb3436bd924",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.520 Production requirements for remote identification broadcast modules. (2025 edition)"
+      ],
+      "text": "After April 21, 2021, no person may produce remote identification broadcast modules unless:\n\n(a) The remote identification broadcast module is designed and produced to meet the minimum performance requirements for remote identification broadcast modules established in § 89.320 in accordance with an FAA-accepted means of compliance; and\n\n(b) All of the following conditions are met:\n\n(1) Inspection requirements for production of remote identification broadcast modules. A person responsible for the production of remote identification broadcast modules must, upon request, allow the Administrator to inspect the person's facilities, technical data, and any remote identification broadcast modules the person produces, and to witness any tests necessary to determine compliance with this subpart.\n\n(2) Audit requirements. A person responsible for the production of remote identification broadcast modules must cause independent audits to be performed on a recurring basis, and additionally whenever the FAA provides notice of noncompliance or potential noncompliance, to demonstrate the remote identification broadcast modules listed under a declaration of compliance meet the requirements of this subpart. The person responsible for the production of remote identification broadcast modules must provide the results of all such audits to the FAA upon request.\n\n(3) Product support and notification. A person responsible for the production of remote identification broadcast modules must maintain product support and notification procedures to notify the public and the FAA of any defect or condition that causes the remote identification broadcast module to no longer meet the requirements of this subpart, within 15 calendar days of the date the person becomes aware of the defect or condition.\n\n(4) Instructions. A person responsible for the production of a remote identification broadcast module must make available instructions for installing and operating the remote identification broadcast module to any person operating an unmanned aircraft with the remote identification broadcast module.\n\n[Amdt. 89-1, 86 FR 4505, Jan. 15, 2021; 86 FR 13630, Mar. 10, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "2ef3003c3eb0",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-57.xml",
+  "title": "14 CFR § 107.57 Offenses involving alcohol or drugs. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:56+00:00",
+  "content_hash": "6585330db94dcfcd812436e4a5de9aaefba08c0fe8652c10cc1c9401d81eff1b",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.57 Offenses involving alcohol or drugs. (2025 edition)"
+      ],
+      "text": "(a) A conviction for the violation of any Federal or State statute relating to the growing, processing, manufacture, sale, disposition, possession, transportation, or importation of narcotic drugs, marijuana, or depressant or stimulant drugs or substances is grounds for:\n\n(1) Denial of an application for a remote pilot certificate with a small UAS rating for a period of up to 1 year after the date of final conviction; or\n\n(2) Suspension or revocation of a remote pilot certificate with a small UAS rating.\n\n(b) Committing an act prohibited by § 91.17(a) or § 91.19(a) of this chapter is grounds for:\n\n(1) Denial of an application for a remote pilot certificate with a small UAS rating for a period of up to 1 year after the date of that act; or\n\n(2) Suspension or revocation of a remote pilot certificate with a small UAS rating.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

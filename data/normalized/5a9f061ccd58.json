@@ -1,0 +1,24 @@
+{
+  "doc_id": "5a9f061ccd58",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-125.xml",
+  "title": "14 CFR § 48.125 Foreign civil aircraft. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:38+00:00",
+  "content_hash": "7dc86fb65a9487928c5051684d6ccffea60a81d9af6b0a9636227618343b2fe6",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.125 Foreign civil aircraft. (2025 edition)"
+      ],
+      "text": "Except for corporations eligible to register under § 48.20(c), the FAA will issue a recognition of ownership to persons required to comply with the provisions of this part pursuant to an authorization to operate issued under part 375 of this title. The recognition of ownership does not have the effect of U.S. aircraft registration.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

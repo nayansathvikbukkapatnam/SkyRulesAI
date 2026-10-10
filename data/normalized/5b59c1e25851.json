@@ -1,0 +1,24 @@
+{
+  "doc_id": "5b59c1e25851",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-101.xml",
+  "title": "14 CFR § 89.101 Applicability. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:27+00:00",
+  "content_hash": "a783e914900c420cabd0e033e0150cab495dd499456f2a3f2989748e46403b9d",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.101 Applicability. (2025 edition)"
+      ],
+      "text": "(a) Except as provided in paragraph (b) of this section, this subpart applies to the following:\n\n(1) Persons operating unmanned aircraft registered or required to be registered under part 47 or 48 of this chapter.\n\n(2) Persons operating foreign civil unmanned aircraft in the United States.\n\n(b) This subpart does not apply to unmanned aircraft operations under part 91 of this chapter that are transmitting ADS-B Out pursuant to § 91.225.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

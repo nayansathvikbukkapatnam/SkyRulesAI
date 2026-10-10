@@ -1,0 +1,24 @@
+{
+  "doc_id": "c09a33fb8dcf",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-315.xml",
+  "title": "14 CFR § 89.315 Minimum message elements broadcast by remote identification broadcast modules. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:09+00:00",
+  "content_hash": "11831f0f6255295373f431784dc21f8f67fdbc44f6ee4b0868f5380da3bda630",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.315 Minimum message elements broadcast by remote identification broadcast modules. (2025 edition)"
+      ],
+      "text": "Remote identification broadcast modules must be capable of broadcasting the following remote identification message elements:\n\n(a) The identity of the unmanned aircraft, consisting of the serial number assigned to the remote identification broadcast module by the person responsible for the production of the remote identification broadcast module.\n\n(b) An indication of the latitude and longitude of the unmanned aircraft.\n\n(c) An indication of the geometric altitude of the unmanned aircraft.\n\n(d) An indication of the velocity of the unmanned aircraft.\n\n(e) An indication of the latitude and longitude of the take-off location of the unmanned aircraft.\n\n(f) An indication of the geometric altitude of the take-off location of the unmanned aircraft.\n\n(g) A time mark identifying the Coordinated Universal Time (UTC) time of applicability of a position source output.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

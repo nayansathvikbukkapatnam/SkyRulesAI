@@ -1,0 +1,24 @@
+{
+  "doc_id": "2d78ebe47b84",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-535.xml",
+  "title": "14 CFR § 89.535 Acceptance of a declaration of compliance. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:23+00:00",
+  "content_hash": "b9ca0c8fd25bd6e2538d0303802b4249ca491c479d7f48359a00eccec8af7ded",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.535 Acceptance of a declaration of compliance. (2025 edition)"
+      ],
+      "text": "(a) The Administrator will evaluate a declaration of compliance that is submitted to the FAA and may request additional information or documentation, as needed, to supplement the declaration of compliance.\n\n(b) If the Administrator determines that the submitter has demonstrated compliance with the requirements of this subpart, the FAA will notify the submitter that the Administrator has accepted the declaration of compliance.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

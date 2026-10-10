@@ -1,0 +1,24 @@
+{
+  "doc_id": "c6740ad87f2b",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-5.xml",
+  "title": "14 CFR § 107.5 Falsification, reproduction, or alteration. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:27+00:00",
+  "content_hash": "95c67177d4ea85db7d219e206c058fdbb0508eab4ebf95bd0718f28c01e06014",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.5 Falsification, reproduction, or alteration. (2025 edition)"
+      ],
+      "text": "(a) No person may make or cause to be made—\n\n(1) Any fraudulent or intentionally false record or report that is required to be made, kept, or used to show compliance with any requirement under this part.\n\n(2) Any reproduction or alteration, for fraudulent purpose, of any certificate, rating, authorization, record or report under this part.\n\n(b) The commission by any person of an act prohibited under paragraph (a) of this section is a basis for any of the following:\n\n(1) Denial of an application for a remote pilot certificate or a certificate of waiver;\n\n(2) Denial of a declaration of compliance;\n\n(3) Suspension or revocation of any certificate, waiver, or declaration of compliance issued or accepted by the Administrator under this part and held by that person; or\n\n(4) A civil penalty.\n\n[Docket FAA-2015-0150, Amdt. 107-1, 81 FR 42209, June 28, 2016, as amended by Amdt. 107-8, 86 FR 4381, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

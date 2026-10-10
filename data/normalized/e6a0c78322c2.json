@@ -1,0 +1,24 @@
+{
+  "doc_id": "e6a0c78322c2",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-110.xml",
+  "title": "14 CFR § 107.110 Category 1 operations. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:11+00:00",
+  "content_hash": "0dc8bd77618d5939d8e504d8c468c370bfa8fdbf13359b148e5d16ec77eaa2da",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.110 Category 1 operations. (2025 edition)"
+      ],
+      "text": "To conduct Category 1 operations—\n\n(a) A remote pilot in command must use a small unmanned aircraft that—\n\n(1) Weighs 0.55 pounds or less on takeoff and throughout the duration of each operation under Category 1, including everything that is on board or otherwise attached to the aircraft; and\n\n(2) Does not contain any exposed rotating parts that would lacerate human skin upon impact with a human being.\n\n(b) No remote pilot in command may operate a small unmanned aircraft in sustained flight over open-air assemblies of human beings unless the operation meets the requirements of either § 89.110 or § 89.115(a) of this chapter.\n\n[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021, as amended by 86 FR 62473, Nov. 10, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

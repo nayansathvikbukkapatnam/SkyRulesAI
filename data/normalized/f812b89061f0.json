@@ -1,0 +1,24 @@
+{
+  "doc_id": "f812b89061f0",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-15.xml",
+  "title": "14 CFR § 48.15 Requirement to register. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:29+00:00",
+  "content_hash": "e38f1b820c5227a40b8462bce8a7dff5a481b0eebe3edef1a672bb77fb337b70",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.15 Requirement to register. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft that is eligible for registration under 49 U.S.C. 44101-44103 unless one of the following criteria has been satisfied:\n\n(a) The owner has registered and marked the aircraft in accordance with this part;\n\n(b) The aircraft is operated exclusively in compliance with 49 U.S.C. 44809 and weighs 0.55 pounds or less on takeoff, including everything that is on board or otherwise attached to the aircraft; or\n\n(c) The aircraft is an aircraft of the Armed Forces of the United States.\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015, as amended by Doc. No. FAA-2019-1100; Amdt. No. 48-3; 86 FR 4504, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

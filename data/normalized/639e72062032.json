@@ -1,0 +1,24 @@
+{
+  "doc_id": "639e72062032",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-515.xml",
+  "title": "14 CFR § 89.515 Production requirements for unmanned aircraft without design approval or production approval issued under part 21 of this chapter. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:19+00:00",
+  "content_hash": "e04b5ee2d50c62714a759c0fc6daabd634a4adc4c3100dc6c62e3f83b06ee058",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.515 Production requirements for unmanned aircraft without design approval or production approval issued under part 21 of this chapter. (2025 edition)"
+      ],
+      "text": "Except as provided in § 89.510, after September 16, 2022, no person may produce an unmanned aircraft for operation in the airspace of the United States unless—\n\n(a) The unmanned aircraft is designed and produced to meet the minimum performance requirements for standard remote identification unmanned aircraft established in § 89.310 in accordance with an FAA-accepted means of compliance; and\n\n(b) All of the following conditions are met:\n\n(1) Inspection requirements for production of standard unmanned aircraft. A person responsible for the production of standard remote identification unmanned aircraft must, upon request, allow the Administrator to inspect the person's facilities, technical data, and any standard remote identification unmanned aircraft the person produces, and to witness any tests necessary to determine compliance with this subpart.\n\n(2) Audit requirements. A person responsible for the production of standard remote identification unmanned aircraft must cause independent audits to be performed on a recurring basis, and additionally whenever the FAA provides notice of noncompliance or potential noncompliance, to demonstrate the unmanned aircraft listed under a declaration of compliance meet the requirements of this subpart. The person responsible for the production of standard remote identification unmanned aircraft must provide the results of all such audits to the FAA upon request.\n\n(3) Product support and notification. A person responsible for the production of standard remote identification unmanned aircraft must maintain product support and notification procedures to notify the public and the FAA of any defect or condition that causes an unmanned aircraft to no longer meet the requirements of this subpart, within 15 calendar days of the date the person becomes aware of the defect or condition.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

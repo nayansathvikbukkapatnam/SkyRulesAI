@@ -1,0 +1,24 @@
+{
+  "doc_id": "7a76932c38e8",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-545.xml",
+  "title": "14 CFR § 89.545 Record retention. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:25+00:00",
+  "content_hash": "a9e1c32f665094bfe1ad09ef6f3985c86741911b9a28fae9f9db691ccb1c66fb",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.545 Record retention. (2025 edition)"
+      ],
+      "text": "A person who submits a declaration of compliance under this subpart that is accepted by the Administrator must retain the following information for as long as the standard remote identification unmanned aircraft or remote identification broadcast module listed on that declaration of compliance is produced plus an additional 24 calendar months, and must make available for inspection by the Administrator the following:\n\n(a) The means of compliance, all documentation, and substantiating data related to the means of compliance used.\n\n(b) Records of all test results.\n\n(c) Any other information necessary to demonstrate compliance with the means of compliance so that the standard remote identification unmanned aircraft or remote identification broadcast module meets the remote identification requirements and the design and production requirements of this part.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

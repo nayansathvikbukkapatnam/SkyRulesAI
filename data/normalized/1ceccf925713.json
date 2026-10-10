@@ -1,0 +1,24 @@
+{
+  "doc_id": "1ceccf925713",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-120.xml",
+  "title": "14 CFR § 89.120 Operations for aeronautical research or to show compliance with regulations. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:31+00:00",
+  "content_hash": "4777eb5a54017bea12e12c915aced26846dd6ce067395a598b41f5867a864869",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.120 Operations for aeronautical research or to show compliance with regulations. (2025 edition)"
+      ],
+      "text": "The Administrator may authorize operations without remote identification where the operation is solely for the purpose of aeronautical research or to show compliance with regulations.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

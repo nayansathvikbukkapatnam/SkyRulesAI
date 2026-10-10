@@ -1,0 +1,24 @@
+{
+  "doc_id": "6406b3043178",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-125.xml",
+  "title": "14 CFR § 107.125 Category 3 operations: Operating requirements. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:14+00:00",
+  "content_hash": "06794ecea95d63ae585ec44a09a1ed7323aad3a48c6a1929c463cebc31d94f75",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.125 Category 3 operations: Operating requirements. (2025 edition)"
+      ],
+      "text": "To conduct Category 3 operations, a remote pilot in command—\n\n(a) Must use a small unmanned aircraft that—\n\n(1) Is eligible for Category 3 operations pursuant to § 107.130(a);\n\n(2) Is listed on an FAA-accepted declaration of compliance as eligible for Category 3 operations in accordance with § 107.160; and\n\n(3) Is labeled as eligible for Category 3 operations in accordance with § 107.130(b)(1);\n\n(b) Must not operate the small unmanned aircraft over open-air assemblies of human beings; and\n\n(c) May only operate the small unmanned aircraft above any human being if operation meets one of the following conditions:\n\n(1) The operation is within or over a closed- or restricted-access site and all human beings located within the closed- or restricted-access site must be on notice that a small unmanned aircraft may fly over them; or\n\n(2) The small unmanned aircraft does not maintain sustained flight over any human being unless that human being is—\n\n(i) Directly participating in the operation of the small unmanned aircraft; or\n\n(ii) Located under a covered structure or inside a stationary vehicle that can provide reasonable protection from a falling small unmanned aircraft.\n\n[Amdt. 107-8, 86 FR 4382, Jan. 15, 2021, as amended by 86 FR 62473, Nov. 10, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

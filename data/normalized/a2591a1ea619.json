@@ -1,0 +1,24 @@
+{
+  "doc_id": "a2591a1ea619",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-200.xml",
+  "title": "14 CFR § 107.200 Waiver policy and requirements. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:23+00:00",
+  "content_hash": "126ab72b089c49affa8535dc8da503443b6c5f16b64f75c94d03dfbbcf662883",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.200 Waiver policy and requirements. (2025 edition)"
+      ],
+      "text": "(a) The Administrator may issue a certificate of waiver authorizing a deviation from any regulation specified in § 107.205 if the Administrator finds that a proposed small UAS operation can safely be conducted under the terms of that certificate of waiver.\n\n(b) A request for a certificate of waiver must contain a complete description of the proposed operation and justification that establishes that the operation can safely be conducted under the terms of a certificate of waiver.\n\n(c) The Administrator may prescribe additional limitations that the Administrator considers necessary.\n\n(d) A person who receives a certificate of waiver issued under this section:\n\n(1) May deviate from the regulations of this part to the extent specified in the certificate of waiver; and\n\n(2) Must comply with any conditions or limitations that are specified in the certificate of waiver.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

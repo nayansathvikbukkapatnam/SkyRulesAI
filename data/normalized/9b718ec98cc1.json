@@ -1,0 +1,24 @@
+{
+  "doc_id": "9b718ec98cc1",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-501.xml",
+  "title": "14 CFR § 89.501 Applicability. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:16+00:00",
+  "content_hash": "869255d20cfc7b595bb3cc14e91a9df24c8585a2aae2aaf6a722f7e41f987478",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.501 Applicability. (2025 edition)"
+      ],
+      "text": "(a) This subpart prescribes—\n\n(1) Requirements for the design and production of unmanned aircraft with remote identification produced for operation in the airspace of the United States.\n\n(2) Requirements for the design and production of remote identification broadcast modules.\n\n(3) Procedural requirements for the submission, acceptance, and rescission of declarations of compliance.\n\n(4) Rules governing persons submitting declarations of compliance for FAA acceptance under this part.\n\n(b) Except as provided in paragraph (c) of this section, this subpart applies to the design and production of all unmanned aircraft operated in the airspace of the United States.\n\n(c) Except for unmanned aircraft designed and produced to be standard remote identification unmanned aircraft, this subpart does not apply to the design or production of:\n\n(1) Home-built unmanned aircraft.\n\n(2) Unmanned aircraft of the United States Government.\n\n(3) Unmanned aircraft that weigh 0.55 pounds or less on takeoff, including everything that is on board or otherwise attached to the aircraft.\n\n(4) Unmanned aircraft designed or produced exclusively for the purpose of aeronautical research or to show compliance with regulations.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

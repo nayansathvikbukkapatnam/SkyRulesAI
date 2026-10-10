@@ -1,0 +1,24 @@
+{
+  "doc_id": "dbb65c5addee",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-19.xml",
+  "title": "14 CFR § 107.19 Remote pilot in command. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:35+00:00",
+  "content_hash": "e624555db07fd4f3cd972268383a97eb4f929f21a78c37fce247d421768895aa",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.19 Remote pilot in command. (2025 edition)"
+      ],
+      "text": "(a) A remote pilot in command must be designated before or during the flight of the small unmanned aircraft.\n\n(b) The remote pilot in command is directly responsible for and is the final authority as to the operation of the small unmanned aircraft system.\n\n(c) The remote pilot in command must ensure that the small unmanned aircraft will pose no undue hazard to other people, other aircraft, or other property in the event of a loss of control of the small unmanned aircraft for any reason.\n\n(d) The remote pilot in command must ensure that the small UAS operation complies with all applicable regulations of this chapter.\n\n(e) The remote pilot in command must have the ability to direct the small unmanned aircraft to ensure compliance with the applicable provisions of this chapter.\n\n[Docket FAA-2015-0150, Amdt. 107-1, 81 FR 42209, June 28, 2016, as amended by Amdt. 107-8, 86 FR 4382, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

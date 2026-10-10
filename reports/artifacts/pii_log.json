@@ -2,11 +2,11 @@
   "command": "make extract",
   "note": "counts only; matched values are never logged",
   "totals": {
-    "phone": 16,
-    "street_address": 58,
-    "email": 16
+    "phone": 18,
+    "street_address": 60,
+    "email": 18
   },
-  "documents_with_redactions": 19,
+  "documents_with_redactions": 20,
   "by_doc": {
     "d98d42a3eebf": {
       "phone": 3,
@@ -81,6 +81,11 @@
     "82ced57d690e": {
       "email": 1,
       "phone": 1
+    },
+    "29d8bc489c27": {
+      "email": 2,
+      "phone": 2,
+      "street_address": 2
     }
   }
 }

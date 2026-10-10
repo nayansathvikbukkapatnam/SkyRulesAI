@@ -1,0 +1,24 @@
+{
+  "doc_id": "9fdc779b3a29",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-67.xml",
+  "title": "14 CFR § 107.67 Knowledge tests: General procedures and passing grades. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:02+00:00",
+  "content_hash": "233262093c0ec7ad0d94afbc40178c198dc92d21516b3ab224a922bd4bfd4aab",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.67 Knowledge tests: General procedures and passing grades. (2025 edition)"
+      ],
+      "text": "(a) Knowledge tests prescribed by or under this part are given by persons and in the manner designated by the Administrator.\n\n(b) An applicant for a knowledge test must have proper identification at the time of application that contains the applicant's:\n\n(1) Photograph;\n\n(2) Signature;\n\n(3) Date of birth, which shows the applicant meets or will meet the age requirements of this part for the certificate and rating sought before the expiration date of the airman knowledge test report; and\n\n(4) Permanent mailing address. If the applicant's permanent mailing address is a post office box number, then the applicant must also provide a current residential address.\n\n(c) The minimum passing grade for the knowledge test will be specified by the Administrator.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

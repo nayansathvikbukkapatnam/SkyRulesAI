@@ -1,0 +1,24 @@
+{
+  "doc_id": "62a08721351b",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol1/xml/CFR-2025-title14-vol1-sec48-200.xml",
+  "title": "14 CFR § 48.200 General. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:39+00:00",
+  "content_hash": "183ba67c332da35a42e715b7f60a40c328a16fa74fca808efb733ff865babe3d",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 48.200 General. (2025 edition)"
+      ],
+      "text": "(a) No person may operate a small unmanned aircraft registered in accordance with this part unless the aircraft displays a unique identifier in accordance with the requirements of § 48.205 of this subpart.\n\n(b) A unique identifier is one of the following:\n\n(1) The registration number issued to an individual or the registration number issued to the aircraft by the Registry upon completion of the registration process provided by this part; or\n\n(2) If authorized by the Administrator, the small unmanned aircraft serial number provided with the application for Certificate of Aircraft Registration under § 48.110(a).\n\n[Doc. No. FAA-2015-7396; Amdt. No. 48-1; 80 FR 78645, Dec. 16, 2015. Redesignated and amended by Doc. No. FAA-2019-1100; Amdt. No. 48-3, 86 FR 4504, Jan. 15, 2021]",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

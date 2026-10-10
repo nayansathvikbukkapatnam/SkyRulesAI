@@ -1,0 +1,24 @@
+{
+  "doc_id": "6eb95a41efbf",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-51.xml",
+  "title": "14 CFR § 107.51 Operating limitations for small unmanned aircraft. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:52+00:00",
+  "content_hash": "4f5dbebf334b19f2e60c22a647992081886489b17f44fdd03c4aaf3a8b892531",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.51 Operating limitations for small unmanned aircraft. (2025 edition)"
+      ],
+      "text": "A remote pilot in command and the person manipulating the flight controls of the small unmanned aircraft system must comply with all of the following operating limitations when operating a small unmanned aircraft system:\n\n(a) The groundspeed of the small unmanned aircraft may not exceed 87 knots (100 miles per hour).\n\n(b) The altitude of the small unmanned aircraft cannot be higher than 400 feet above ground level, unless the small unmanned aircraft:\n\n(1) Is flown within a 400-foot radius of a structure; and\n\n(2) Does not fly higher than 400 feet above the structure's immediate uppermost limit.\n\n(c) The minimum flight visibility, as observed from the location of the control station must be no less than 3 statute miles. For purposes of this section, flight visibility means the average slant distance from the control station at which prominent unlighted objects may be seen and identified by day and prominent lighted objects may be seen and identified by night.\n\n(d) The minimum distance of the small unmanned aircraft from clouds must be no less than:\n\n(1) 500 feet below the cloud; and\n\n(2) 2,000 feet horizontally from the cloud.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

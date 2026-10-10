@@ -1,0 +1,24 @@
+{
+  "doc_id": "5e4673075c86",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-25.xml",
+  "title": "14 CFR § 107.25 Operation from a moving vehicle or aircraft. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:38+00:00",
+  "content_hash": "a767d3481867808b43cf37c13d152a21aafed6def014d03f0878d166cac38732",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.25 Operation from a moving vehicle or aircraft. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft system—\n\n(a) From a moving aircraft; or\n\n(b) From a moving land or water-borne vehicle unless the small unmanned aircraft is flown over a sparsely populated area and is not transporting another person's property for compensation or hire.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

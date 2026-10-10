@@ -1,0 +1,24 @@
+{
+  "doc_id": "b491cd6dc4e7",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-510.xml",
+  "title": "14 CFR § 89.510 Production requirements for unmanned aircraft produced under a design approval or production approval issued under part 21 of this chapter. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:24:18+00:00",
+  "content_hash": "0ce4a0800e927b27a80ddf348e6178b513385beb47a3d07386fcc2e66a39ee48",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.510 Production requirements for unmanned aircraft produced under a design approval or production approval issued under part 21 of this chapter. (2025 edition)"
+      ],
+      "text": "After September 16, 2022, no person may produce an unmanned aircraft for operation in the airspace of the United States under a design approval or production approval issued under part 21 of this chapter unless:\n\n(a) All applicable requirements of part 21 of this chapter are met; and\n\n(b) The unmanned aircraft is—\n\n(1) Designed and produced to meet the minimum performance requirements for standard remote identification unmanned aircraft established in § 89.310 in accordance with an FAA-accepted means of compliance; or\n\n(2) Equipped with Automatic Dependent Surveillance-Broadcast (ADS-B) Out equipment that meets the requirements of § 91.225 of this chapter.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "doc_id": "41c4b4b63998",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-45.xml",
+  "title": "14 CFR § 107.45 Operation in prohibited or restricted areas. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "part107",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:22:49+00:00",
+  "content_hash": "8ca29059c47489b8131986d03950087372b45b9888aacde4e2ccc037b0f29e3f",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 107.45 Operation in prohibited or restricted areas. (2025 edition)"
+      ],
+      "text": "No person may operate a small unmanned aircraft in prohibited or restricted areas unless that person has permission from the using or controlling agency, as appropriate.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

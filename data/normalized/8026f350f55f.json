@@ -1,0 +1,24 @@
+{
+  "doc_id": "8026f350f55f",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-110.xml",
+  "title": "14 CFR § 89.110 Operation of standard remote identification unmanned aircraft. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:29+00:00",
+  "content_hash": "77156357536efd6117f5d909242f7da18c4aec58693d256c326044950c6c3058",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.110 Operation of standard remote identification unmanned aircraft. (2025 edition)"
+      ],
+      "text": "Unless otherwise authorized by the Administrator, a person may comply with the remote identification requirement of § 89.105 by operating a standard remote identification unmanned aircraft under the following conditions:\n\n(a) Operational requirements. A person may operate a standard remote identification unmanned aircraft only if the person operating the standard remote identification unmanned aircraft ensures that all of the following conditions are met:\n\n(1) From takeoff to shutdown, the standard remote identification unmanned aircraft must broadcast the message elements of § 89.305.\n\n(2) The person manipulating the flight controls of the unmanned aircraft system must land the unmanned aircraft as soon as practicable if the standard remote identification unmanned aircraft is no longer broadcasting the message elements of § 89.305.\n\n(b) Standard remote identification unmanned aircraft requirements. A person may operate a standard remote identification unmanned aircraft only if the unmanned aircraft meets all of the following requirements:\n\n(1) Its serial number is listed on an FAA-accepted declaration of compliance, or the standard remote identification unmanned aircraft is covered by a design approval or production approval issued under part 21 of this chapter and meets the requirements of subpart F of this part.\n\n(2) Its remote identification equipment is functional and complies with the requirements of this part from takeoff to shutdown.\n\n(3) Its remote identification equipment and functionality have not been disabled.\n\n(4) The Certificate of Aircraft Registration of the unmanned aircraft used in the operation must include the serial number of the unmanned aircraft, as per applicable requirements of parts 47 and 48 of this chapter, or the serial number of the unmanned aircraft must be provided to the FAA in a notice of identification pursuant to § 89.130 prior to the operation.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}

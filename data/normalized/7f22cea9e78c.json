@@ -1,0 +1,24 @@
+{
+  "doc_id": "7f22cea9e78c",
+  "source_url": "https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec89-105.xml",
+  "title": "14 CFR § 89.105 Remote identification requirement. (2025 edition)",
+  "page_type": "regulation_summary",
+  "audience": "general",
+  "effective_date": "2025-01-01",
+  "crawl_ts": "2026-10-10T20:23:28+00:00",
+  "content_hash": "b92c232df441e8a64647a9b5ba8bfa6a32d0b626f85bc81d263b04b9931672b9",
+  "sections": [
+    {
+      "heading_path": [
+        "14 CFR § 89.105 Remote identification requirement. (2025 edition)"
+      ],
+      "text": "Except as otherwise authorized by the Administrator or as provided in § 89.120, after September 16, 2023, no person may operate an unmanned aircraft within the airspace of the United States unless the operation meets the requirements of § 89.110 or § 89.115.",
+      "tables": []
+    }
+  ],
+  "extraction": {
+    "method": "xml-cfr",
+    "ocr_used": false,
+    "warnings": []
+  }
+}
