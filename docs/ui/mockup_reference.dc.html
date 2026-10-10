@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SkyRules AI chat screen</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F2F4F6}
+a{color:#1D5FA8}a:hover{color:#123F73}
+button{font-family:inherit}
+button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #4C8BD6;outline-offset:2px}
+input::placeholder{color:#7F90A4}
+@keyframes sr-spin{to{transform:rotate(360deg)}}
+@keyframes sr-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes sr-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sr-rotor{transform-box:fill-box;transform-origin:center;animation:sr-spin .22s linear infinite}
+.sr-bob{animation:sr-bob 2.4s ease-in-out infinite}
+.sr-spinner{animation:sr-spin .8s linear infinite;transform-origin:center}
+.sr-fade{animation:sr-fade .35s ease-out both}
+@media (prefers-reduced-motion: reduce){.sr-rotor,.sr-bob,.sr-spinner,.sr-fade{animation:none}}
+</style>
+</helmet>
+<div style="{{rootStyle}}">
+
+<header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 32px; background: var(--head); color: #FFFFFF; border-bottom: 1px solid var(--headLine)">
+<div style="display: flex; align-items: center; gap: 12px">
+<svg width="40" height="40" viewBox="0 0 64 64" aria-hidden="true">
+<rect x="26" y="26" width="12" height="12" rx="3" fill="#D9480F"></rect>
+<line x1="28" y1="28" x2="14" y2="14" stroke="#C9D3DD" stroke-width="3" stroke-linecap="round"></line>
+<line x1="36" y1="28" x2="50" y2="14" stroke="#C9D3DD" stroke-width="3" stroke-linecap="round"></line>
+<line x1="28" y1="36" x2="14" y2="50" stroke="#C9D3DD" stroke-width="3" stroke-linecap="round"></line>
+<line x1="36" y1="36" x2="50" y2="50" stroke="#C9D3DD" stroke-width="3" stroke-linecap="round"></line>
+<ellipse class="sr-rotor" cx="14" cy="14" rx="10" ry="2.5" fill="#FFFFFF" fill-opacity="0.8"></ellipse>
+<ellipse class="sr-rotor" cx="50" cy="14" rx="10" ry="2.5" fill="#FFFFFF" fill-opacity="0.8"></ellipse>
+<ellipse class="sr-rotor" cx="14" cy="50" rx="10" ry="2.5" fill="#FFFFFF" fill-opacity="0.8"></ellipse>
+<ellipse class="sr-rotor" cx="50" cy="50" rx="10" ry="2.5" fill="#FFFFFF" fill-opacity="0.8"></ellipse>
+</svg>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 20px; font-weight: 700; letter-spacing: 0.01em">SkyRules AI</span>
+<span style="font-size: 13px; color: #B8C4D2">U.S. drone rules, answered from FAA pages</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+<span id="pilot-label" style="font-size: 13px; color: #B8C4D2">I fly as</span>
+<div role="group" aria-labelledby="pilot-label" style="display: flex; gap: 4px; padding: 4px; background: #1B2B40; border-radius: 10px">
+<sc-for list="{{pilots}}" as="p" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{p.pressed}}" onClick="{{p.pick}}" style="{{p.style}}">{{p.label}}</button>
+</sc-for>
+</div>
+<button type="button" aria-pressed="{{comparePressed}}" onClick="{{toggleCompare}}" style="{{compareStyle}}">
+<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="5.5" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect><rect x="9" y="2.5" width="5.5" height="11" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect></svg>
+<span>Compare B2 vs B3</span>
+</button>
+<button type="button" aria-pressed="{{darkPressed}}" onClick="{{toggleDark}}" style="min-height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; background: transparent; color: #FFFFFF; border: 1px solid #4A5868">
+<sc-if value="{{isLight}}" hint-placeholder-val="{{ true }}">
+<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.8 5.8 0 1 0 7.1 7.1z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+<span>Cockpit mode</span>
+</sc-if>
+<sc-if value="{{isDark}}" hint-placeholder-val="{{ false }}">
+<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.5"></circle><path d="M8 1.2v1.6M8 13.2v1.6M1.2 8h1.6M13.2 8h1.6M3.2 3.2l1.1 1.1M11.7 11.7l1.1 1.1M3.2 12.8l1.1-1.1M11.7 4.3l1.1-1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>
+<span>Daylight mode</span>
+</sc-if>
+</button>
+<span style="font-size: 12px; font-family: 'IBM Plex Mono', monospace; color: #FFC9AE; border: 1px solid #6B3A24; padding: 4px 8px; border-radius: 6px">Mockup · sample data</span>
+</div>
+</header>
+
+<div style="padding: 8px 32px; background: var(--tint); color: var(--tintInk); font-size: 13px">Student project, not official FAA guidance. Check the linked FAA page before you fly.</div>
+
+<main style="flex: 1; width: 100%; max-width: 1440px; box-sizing: border-box; margin: 0 auto; padding: 24px 32px 32px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+
+<section aria-label="Conversation" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+
+<sc-if value="{{isEmpty}}" hint-placeholder-val="{{ true }}">
+<div style="position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 48px 32px">
+<svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 900 420" preserveAspectRatio="xMidYMid slice" style="position: absolute; left: 0; top: 0; pointer-events: none">
+<g fill="none" stroke="#4C8BD6" stroke-opacity="0.2" stroke-width="1.5">
+<circle cx="760" cy="90" r="70" stroke-dasharray="10 6"></circle>
+<circle cx="760" cy="90" r="140" stroke-dasharray="10 6"></circle>
+<circle cx="760" cy="90" r="220" stroke-dasharray="10 6"></circle>
+</g>
+<g fill="none" stroke="#7F90A4" stroke-opacity="0.22" stroke-width="1.2">
+<path d="M-20 330 C 120 280, 220 360, 360 320 S 600 250, 720 300 S 880 360, 940 330"></path>
+<path d="M-20 360 C 140 310, 240 390, 380 350 S 610 285, 730 330 S 890 390, 940 365"></path>
+<path d="M-20 390 C 160 345, 260 415, 400 380 S 620 320, 740 360 S 900 415, 940 400"></path>
+<path d="M-20 60 C 90 90, 160 30, 260 60 S 420 110, 520 70"></path>
+<path d="M-20 90 C 100 120, 170 60, 270 92 S 430 140, 540 100"></path>
+</g>
+<g fill="#4C8BD6" fill-opacity="0.28">
+<path d="M760 82 l8 8 l-8 8 l-8 -8z"></path>
+</g>
+</svg>
+<div style="position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px">
+<svg class="sr-bob" width="168" height="120" viewBox="0 0 168 120" role="img" aria-label="Drone hovering">
+<ellipse cx="84" cy="112" rx="40" ry="5" style="fill: var(--ink); fill-opacity: 0.1"></ellipse>
+<line x1="60" y1="50" x2="30" y2="32" stroke="#7F90A4" stroke-width="5" stroke-linecap="round"></line>
+<line x1="108" y1="50" x2="138" y2="32" stroke="#7F90A4" stroke-width="5" stroke-linecap="round"></line>
+<line x1="60" y1="66" x2="30" y2="84" stroke="#7F90A4" stroke-width="5" stroke-linecap="round"></line>
+<line x1="108" y1="66" x2="138" y2="84" stroke="#7F90A4" stroke-width="5" stroke-linecap="round"></line>
+<rect x="58" y="44" width="52" height="28" rx="10" style="fill: var(--droneBody)"></rect>
+<circle cx="84" cy="58" r="7" fill="#D9480F"></circle>
+<circle cx="84" cy="58" r="3" fill="#FFFFFF"></circle>
+<rect x="28" y="28" width="5" height="8" rx="2" fill="#7F90A4"></rect>
+<rect x="135" y="28" width="5" height="8" rx="2" fill="#7F90A4"></rect>
+<rect x="28" y="80" width="5" height="8" rx="2" fill="#7F90A4"></rect>
+<rect x="135" y="80" width="5" height="8" rx="2" fill="#7F90A4"></rect>
+<ellipse class="sr-rotor" cx="30" cy="27" rx="24" ry="4" fill="#4C8BD6" fill-opacity="0.4"></ellipse>
+<ellipse class="sr-rotor" cx="138" cy="27" rx="24" ry="4" fill="#4C8BD6" fill-opacity="0.4"></ellipse>
+<ellipse class="sr-rotor" cx="30" cy="79" rx="24" ry="4" fill="#4C8BD6" fill-opacity="0.4"></ellipse>
+<ellipse class="sr-rotor" cx="138" cy="79" rx="24" ry="4" fill="#4C8BD6" fill-opacity="0.4"></ellipse>
+</svg>
+<h1 style="margin: 0; font-size: 32px; line-height: 1.2; font-weight: 700; color: var(--ink)">Ask about U.S. drone rules</h1>
+<p style="margin: 0; max-width: 560px; color: var(--muted)">Every answer comes only from FAA pages, with a source on each claim. If the pages don't cover your question, SkyRules says so instead of guessing.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 8px">
+<sc-for list="{{examples}}" as="ex" hint-placeholder-count="3">
+<button type="button" onClick="{{ex.pick}}" style="min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line3); background: var(--card); color: var(--ink); font-size: 15px; cursor: pointer">{{ex.question}}</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasConversation}}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+<span style="font-size: 13px; color: var(--muted)">{{turnLabel}}</span>
+<button type="button" onClick="{{newChat}}" style="min-height: 36px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line3); background: var(--card); color: var(--ink); font-size: 14px; cursor: pointer">New chat</button>
+</div>
+
+<sc-for list="{{history}}" as="h" hint-placeholder-count="0">
+<div style="display: flex; flex-direction: column; gap: 8px; opacity: 0.85">
+<div style="display: flex; justify-content: flex-end">
+<div style="max-width: 80%; background: var(--bubbleOld); color: #FFFFFF; padding: 10px 14px; border-radius: 14px 14px 4px 14px; font-size: 15px">{{h.question}}</div>
+</div>
+<div style="background: var(--card); border: 1px solid var(--line2); border-radius: 12px; padding: 10px 14px; font-size: 14px; color: var(--muted)">{{h.summary}}</div>
+</div>
+</sc-for>
+
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 4px">
+<div style="max-width: 80%; background: var(--bubble); color: #FFFFFF; padding: 12px 16px; border-radius: 16px 16px 4px 16px; font-size: 16px">{{question}}</div>
+<sc-if value="{{hasRewrite}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; color: var(--muted); font-family: 'IBM Plex Mono', monospace">Rewritten with chat history: {{rewrite}}</span>
+</sc-if>
+</div>
+
+<div style="background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap">
+<div style="display: flex; align-items: baseline; gap: 10px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: var(--muted); font-family: 'IBM Plex Mono', monospace">PREFLIGHT</span>
+<span style="{{stageHeadingStyle}}">{{stageHeading}}</span>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted)">{{elapsedLabel}}</span>
+</div>
+<div aria-hidden="true" style="position: relative; height: 56px; margin: 0 12px">
+<div style="position: absolute; left: 0; right: 0; top: 38px; border-top: 2px dashed var(--line3)"></div>
+<div style="{{trackFillStyle}}"></div>
+<sc-for list="{{waypoints}}" as="w" hint-placeholder-count="5">
+<div style="{{w.style}}"></div>
+</sc-for>
+<div style="{{droneStyle}}">
+<svg width="40" height="28" viewBox="0 0 40 28">
+<rect x="14" y="10" width="12" height="8" rx="3" fill="#D9480F"></rect>
+<line x1="15" y1="12" x2="6" y2="6" stroke="#7F90A4" stroke-width="2" stroke-linecap="round"></line>
+<line x1="25" y1="12" x2="34" y2="6" stroke="#7F90A4" stroke-width="2" stroke-linecap="round"></line>
+<ellipse class="sr-rotor" cx="6" cy="5" rx="6" ry="1.6" fill="#4C8BD6" fill-opacity="0.7"></ellipse>
+<ellipse class="sr-rotor" cx="34" cy="5" rx="6" ry="1.6" fill="#4C8BD6" fill-opacity="0.7"></ellipse>
+</svg>
+</div>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px">
+<sc-for list="{{stages}}" as="s" hint-placeholder-count="5">
+<li style="{{s.rowStyle}}">
+<span style="width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; flex: none">
+<sc-if value="{{s.isDone}}" hint-placeholder-val="{{ true }}">
+<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="#1E7A46"></circle><path d="M6 10.5l2.6 2.6L14 7.6" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</sc-if>
+<sc-if value="{{s.isActive}}" hint-placeholder-val="{{ false }}">
+<svg class="sr-spinner" width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#F3D3C2" stroke-opacity="0.6" stroke-width="3"></circle><path d="M10 2a8 8 0 0 1 8 8" fill="none" stroke="#D9480F" stroke-width="3" stroke-linecap="round"></path></svg>
+</sc-if>
+<sc-if value="{{s.isPending}}" hint-placeholder-val="{{ false }}">
+<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8" fill="none" stroke="#9AA9BC" stroke-width="2"></circle></svg>
+</sc-if>
+<sc-if value="{{s.isStopped}}" hint-placeholder-val="{{ false }}">
+<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="#D9480F"></circle><path d="M10 5.5v5.5M10 14v.5" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"></path></svg>
+</sc-if>
+</span>
+<span style="display: flex; flex-direction: column; min-width: 0">
+<span style="{{s.labelStyle}}">{{s.label}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted)">{{s.msLabel}}</span>
+</span>
+</li>
+</sc-for>
+</ol>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: stretch">
+
+<sc-if value="{{showB2}}" hint-placeholder-val="{{ false }}">
+<article class="sr-fade" aria-label="B2 baseline answer" style="flex: 1 1 300px; min-width: 0; background: var(--card2); border: 1px dashed var(--faint); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted)">B2 BASELINE</span>
+<span style="font-size: 13px; color: var(--muted)">Dense retrieval, fixed chunks, no reranker, no answer checks</span>
+</div>
+<sc-for list="{{b2Sentences}}" as="b" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 16px; color: var(--ink2)">{{b.text}}</p>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--warnInk); background: var(--warnBg); border: 1px solid var(--warnLine); padding: 2px 8px; border-radius: 6px">
+<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 1.5l4.8 8.5H1.2z" fill="none" stroke="#D9480F" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+{{b.flag}}
+</span>
+</div>
+</sc-for>
+<span style="margin-top: auto; border-top: 1px solid var(--line2); padding-top: 10px; font-size: 12px; color: var(--muted)">Illustrative sample of a B2 failure, not a real run</span>
+</article>
+</sc-if>
+
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<sc-if value="{{showB3Label}}" hint-placeholder-val="{{ false }}">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--blue)">B3 FINAL SYSTEM</span>
+</sc-if>
+
+<sc-if value="{{showAnswer}}" hint-placeholder-val="{{ false }}">
+<article class="sr-fade" aria-label="Verified answer" style="background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<span style="font-weight: 600; font-size: 17px; color: var(--ink)">Verified answer</span>
+<span style="font-size: 12px; font-weight: 500; color: var(--tintInk); background: var(--tint); padding: 3px 10px; border-radius: 999px">For: {{pilotLabel}}</span>
+<sc-if value="{{hasTag}}" hint-placeholder-val="{{ false }}">
+<span style="font-size: 12px; font-weight: 500; color: var(--warnInk); background: var(--warnBg); padding: 3px 10px; border-radius: 999px">{{routerTag}}</span>
+</sc-if>
+</div>
+
+<sc-if value="{{showFigure}}" hint-placeholder-val="{{ false }}">
+<div class="sr-fade" style="display: flex; align-items: center; gap: 20px; background: #0E1A2B; color: #FFFFFF; border: 1px solid var(--headLine); border-radius: 14px; padding: 16px 20px">
+<div style="display: flex; align-items: baseline; gap: 6px; padding: 6px 14px; border: 1px solid #33435A; border-radius: 10px; background: #0A1421">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: 0.02em">{{figureValue}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 16px; font-weight: 600; color: #FF9A6B">{{figureUnit}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 12px; letter-spacing: 0.08em; color: #B8C4D2; font-family: 'IBM Plex Mono', monospace">KEY FIGURE</span>
+<span style="font-size: 15px; color: #FFFFFF">{{figureCaption}}</span>
+</div>
+</div>
+</sc-if>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<sc-for list="{{visibleSentences}}" as="sen" hint-placeholder-count="2">
+<p class="sr-fade" style="margin: 0; font-size: 17px; line-height: 1.6; color: var(--ink)">{{sen.text}}
+<sc-for list="{{sen.cites}}" as="c" hint-placeholder-count="1">
+<span style="position: relative; display: inline-block">
+<button type="button" onClick="{{c.pick}}" onMouseEnter="{{c.show}}" onMouseLeave="{{c.hide}}" onFocus="{{c.show}}" onBlur="{{c.hide}}" aria-label="{{c.aria}}" style="{{c.style}}">{{c.n}}</button>
+<sc-if value="{{c.showPreview}}" hint-placeholder-val="{{ false }}">
+<span role="tooltip" style="position: absolute; left: -8px; bottom: calc(100% + 8px); z-index: 5; width: 300px; display: flex; flex-direction: column; gap: 6px; background: var(--tip); color: #E6ECF2; border: 1px solid var(--headLine); border-radius: 10px; padding: 12px 14px; font-size: 13px; line-height: 1.5; box-shadow: 0 8px 24px rgba(5, 10, 18, 0.3)">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.06em; color: #B8C4D2">PASSAGE FROM SOURCE {{c.n}}</span>
+<span>“{{c.pre}}<mark style="background: #FFD8C2; color: #0E1A2B; padding: 0 2px; border-radius: 2px">{{c.hl}}</mark>{{c.post}}”</span>
+<span style="font-size: 11px; color: #B8C4D2">{{c.source}}</span>
+</span>
+</sc-if>
+</span>
+</sc-for>
+</p>
+</sc-for>
+</div>
+
+<sc-if value="{{showReferral}}" hint-placeholder-val="{{ false }}">
+<div class="sr-fade" style="background: var(--warnBg); border: 1px solid var(--warnLine); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--warnInk)">
+<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5l8 14H2z" fill="none" stroke="#D9480F" stroke-width="1.8" stroke-linejoin="round"></path><path d="M10 8v4M10 14.5v.3" stroke="#D9480F" stroke-width="1.8" stroke-linecap="round"></path></svg>
+<span>Check your exact location before you fly</span>
+</div>
+<p style="margin: 0; font-size: 15px; color: var(--warnText)">{{referralText}}</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="https://www.faa.gov/uas/getting_started/b4ufly" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 10px; background: var(--solid); color: var(--onSolid); text-decoration: none; font-size: 15px; font-weight: 500">Open B4UFLY</a>
+<a href="https://www.faa.gov/uas/commercial_operators/uas_facility_maps" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border-radius: 10px; border: 1px solid var(--solid); color: var(--solid); text-decoration: none; font-size: 15px; font-weight: 500">UAS Facility Maps</a>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{showChecks}}" hint-placeholder-val="{{ false }}">
+<div class="sr-fade" style="border-top: 1px solid var(--line2); padding-top: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; color: var(--ink2)">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--good)">CLEARED 4/4</span>
+<sc-for list="{{checks}}" as="k" hint-placeholder-count="4">
+<span style="display: inline-flex; align-items: center; gap: 4px">
+<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.4l2.4 2.4L11 4.4" fill="none" stroke="#2E9E5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+{{k.label}}
+</span>
+</sc-for>
+</div>
+<span style="font-family: 'IBM Plex Mono', monospace; color: var(--muted)">{{answeredIn}}</span>
+</div>
+</sc-if>
+</article>
+</sc-if>
+
+<sc-if value="{{showRefusal}}" hint-placeholder-val="{{ false }}">
+<article class="sr-fade" aria-label="Refusal" style="background: var(--card); border: 2px solid #D9480F; border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12.5" fill="#D9480F" fill-opacity="0.14" stroke="#D9480F" stroke-width="1.5"></circle><path d="M14 8v7M14 19.5v.3" stroke="#D9480F" stroke-width="2.4" stroke-linecap="round"></path></svg>
+<span style="font-size: 19px; font-weight: 600; color: var(--ink)">I don't have that information in the FAA pages I can search.</span>
+</div>
+<p style="margin: 0; color: var(--muted)">SkyRules only answers from official FAA drone pages, so it won't guess. Try a question about registration, airspace, Remote ID or night flying.</p>
+<div style="border-top: 1px solid var(--line2); padding-top: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--muted)">
+<span>Evidence gate: no passage scored above the threshold</span>
+<span style="font-family: 'IBM Plex Mono', monospace">{{answeredIn}}</span>
+</div>
+</article>
+</sc-if>
+</div>
+</div>
+
+<sc-if value="{{showFollowups}}" hint-placeholder-val="{{ false }}">
+<div class="sr-fade" style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<span style="font-size: 13px; color: var(--muted)">Ask next</span>
+<sc-for list="{{followups}}" as="f" hint-placeholder-count="2">
+<button type="button" onClick="{{f.pick}}" style="min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--tintLine); background: var(--tint); color: var(--tintInk); font-size: 14px; cursor: pointer">{{f.q}}</button>
+</sc-for>
+</div>
+</sc-if>
+</sc-if>
+
+<form onSubmit="{{submit}}" style="display: flex; gap: 8px; background: var(--card); border: 1px solid var(--line3); border-radius: 14px; padding: 8px">
+<label for="ask-input" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Your drone question</label>
+<input id="ask-input" type="text" value="{{input}}" onChange="{{onInput}}" placeholder="Ask about registration, airspace, Remote ID, night flying..." style="flex: 1; min-width: 0; min-height: 44px; border: none; background: transparent; font-size: 16px; padding: 0 12px; color: var(--ink); font-family: inherit">
+<button type="submit" style="min-height: 44px; padding: 0 20px; border: none; border-radius: 10px; background: #1D5FA8; color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer">Ask</button>
+</form>
+</section>
+
+<aside aria-label="Sources and trace" style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<div style="background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<h2 style="margin: 0; font-size: 17px; font-weight: 600; color: var(--ink)">Sources</h2>
+<span style="font-size: 13px; color: var(--muted)">{{sourceCount}}</span>
+</div>
+<sc-if value="{{noSources}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 0; font-size: 14px; color: var(--muted)">The FAA pages behind each answer appear here, with how recently each page was updated.</p>
+</sc-if>
+<sc-for list="{{sources}}" as="src" hint-placeholder-count="2">
+<div style="{{src.style}}">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; color: var(--blue)">[{{src.n}}]</span>
+<span style="font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 1px 8px; border-radius: 999px">{{src.type}}</span>
+<span style="{{src.freshStyle}}">
+<span style="{{src.freshDot}}"></span>
+{{src.freshLabel}}
+</span>
+</div>
+<a href="{{src.url}}" style="font-weight: 600; font-size: 15px; text-decoration: none; color: var(--blue)">{{src.title}}</a>
+<span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted)">{{src.path}}</span>
+<span style="font-size: 13px; color: var(--muted)">Last updated: {{src.updated}}</span>
+</div>
+</sc-for>
+</div>
+
+<div style="background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 8px 20px 20px; display: flex; flex-direction: column; gap: 12px">
+<button type="button" onClick="{{toggleTrace}}" aria-expanded="{{traceExpanded}}" style="min-height: 44px; display: flex; justify-content: space-between; align-items: center; background: none; border: none; padding: 0; font-size: 17px; font-weight: 600; color: var(--ink); cursor: pointer">
+<span>Retrieval trace</span>
+<span style="font-size: 13px; font-weight: 500; color: var(--blue)">{{traceToggleLabel}}</span>
+</button>
+<sc-if value="{{showTrace}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; font-size: 12px; color: var(--muted)">Top 6 of 20 candidates, sample values. Highlighted rows passed reranking into the top 5.</p>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{traceRows}}" as="t" hint-placeholder-count="6">
+<div style="{{t.rowStyle}}">
+<div style="display: flex; justify-content: space-between; gap: 8px; font-size: 13px">
+<span style="font-weight: 500; min-width: 0; color: var(--ink)">{{t.label}}</span>
+<span style="font-family: 'IBM Plex Mono', monospace; color: var(--muted); flex: none">{{t.scoreLabel}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace">
+<span style="width: 52px; flex: none">dense</span>
+<div style="flex: 1; height: 6px; background: var(--track); border-radius: 3px"><div style="{{t.denseBar}}"></div></div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); font-family: 'IBM Plex Mono', monospace">
+<span style="width: 52px; flex: none">rerank</span>
+<div style="flex: 1; height: 6px; background: var(--track); border-radius: 3px"><div style="{{t.rerankBar}}"></div></div>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+</div>
+</aside>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1080}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { phase: 'empty', scenario: null, question: '', stage: 0, revealed: 0, pilot: 'unsure', activeCite: null, preview: null, traceOpen: false, compare: false, dark: false, input: '', history: [] };
+    this.timers = [];
+  }
+  componentWillUnmount() { this.clearTimers(); }
+  clearTimers() { this.timers.forEach((t) => clearTimeout(t)); this.timers = []; }
+  theme(dark) {
+    if (dark) {
+      return {
+        bg: '#0B1522', card: '#13233A', card2: '#101E31', ink: '#E8EEF5', ink2: '#C9D3DD', muted: '#A3B3C5', faint: '#5E7088',
+        line: '#2A3D57', line2: '#22344C', line3: '#3A5072', sel: '#18304F', tint: '#1A3253', tintInk: '#C4DAF4', tintLine: '#2F5585',
+        track: '#22344C', blue: '#7DB2EE', warnBg: '#36200F', warnLine: '#7A3D1F', warnInk: '#FFB892', warnText: '#F3D9CA',
+        activeBg: '#2C1F16', good: '#5BCB8D', goodBg: '#123526', solid: '#E8EEF5', onSolid: '#0B1522', bubble: '#2B4A73', bubbleOld: '#26364C',
+        tip: '#22344C', head: '#08111C', headLine: '#22344C', droneBody: '#C9D3DD'
+      };
+    }
+    return {
+      bg: '#F2F4F6', card: '#FFFFFF', card2: '#FAFBFC', ink: '#0E1A2B', ink2: '#33435A', muted: '#4A5868', faint: '#9AA9BC',
+      line: '#D5DCE3', line2: '#E1E6EB', line3: '#C9D3DD', sel: '#F3F7FC', tint: '#E7EFF8', tintInk: '#173F6E', tintLine: '#B9CEE6',
+      track: '#EEF1F4', blue: '#1D5FA8', warnBg: '#FDEEE6', warnLine: '#F0B999', warnInk: '#8A2F08', warnText: '#3B2417',
+      activeBg: '#FFF5EF', good: '#1E7A46', goodBg: '#E5F4EB', solid: '#0E1A2B', onSolid: '#FFFFFF', bubble: '#0E1A2B', bubbleOld: '#33435A',
+      tip: '#0E1A2B', head: '#0E1A2B', headLine: '#0E1A2B', droneBody: '#0E1A2B'
+    };
+  }
+  scenarios() {
+    const rec = { n: 1, title: 'Recreational Flyers', path: 'faa.gov/uas/recreational_flyers', url: 'https://www.faa.gov/uas/recreational_flyers', type: 'Guide page', updated: '[date from page]', iso: null };
+    return {
+      altitude: {
+        kind: 'answer', tag: null, rewrite: null,
+        question: 'How high can I fly as a hobby flyer?',
+        figure: { value: '400', unit: 'FT', caption: 'Recreational ceiling in Class G (uncontrolled) airspace' },
+        sentences: [
+          { text: 'As a recreational flyer, fly at or below 400 feet in Class G (uncontrolled) airspace.', cites: [{ n: 1, pre: 'Fly at or below ', hl: '400 feet in Class G (uncontrolled) airspace', post: '.' }] },
+          { text: 'Around airports, in Class B, C, D or surface Class E airspace, you need FAA authorization before you fly.', cites: [{ n: 1, pre: '…you may fly there ', hl: 'only with prior FAA authorization', post: ' by using LAANC or DroneZone.' }] }
+        ],
+        b2: [
+          { text: 'You can fly up to 400 feet.', flag: 'Missing: applies to Class G airspace only' },
+          { text: 'No other permission is needed for hobby flying.', flag: 'Contradicts source: airports need authorization' }
+        ],
+        sources: [rec],
+        referral: null,
+        followups: [{ q: 'And near an airport?', key: 'airport' }, { q: 'Can I fly in San Diego tonight at 10 pm?', key: 'location' }]
+      },
+      airport: {
+        kind: 'answer', tag: null,
+        question: 'And near an airport?',
+        rewrite: 'Do recreational flyers need permission to fly near an airport?',
+        figure: null,
+        sentences: [
+          { text: 'Yes. In Class B, C, D or surface Class E airspace around airports, recreational flyers need prior FAA authorization.', cites: [{ n: 1, pre: '…you may fly there ', hl: 'only with prior FAA authorization', post: ' by using LAANC or DroneZone.' }] },
+          { text: 'You request that authorization through LAANC or DroneZone before the flight.', cites: [{ n: 1, pre: '…only with prior FAA authorization ', hl: 'by using LAANC or DroneZone', post: '.' }] }
+        ],
+        b2: [
+          { text: 'You need a Part 107 certificate to fly near an airport.', flag: 'Wrong pilot category for a hobby flyer' }
+        ],
+        sources: [rec],
+        referral: null,
+        followups: [{ q: 'Can I fly in San Diego tonight at 10 pm?', key: 'location' }, { q: 'Which drone should I buy?', key: 'buy' }]
+      },
+      location: {
+        kind: 'answer', tag: 'Location-specific', rewrite: null,
+        question: 'Can I fly in San Diego tonight at 10 pm?',
+        figure: null,
+        sentences: [
+          { text: 'Part 107 pilots may fly at night without a waiver if they meet the rule’s requirements.', cites: [{ n: 1, pre: '…', hl: 'may fly at night', post: ', over people and moving vehicles without a waiver…' }] },
+          { text: 'In controlled airspace, recreational flyers need prior FAA authorization through LAANC or DroneZone.', cites: [{ n: 2, pre: '…', hl: 'only with prior FAA authorization', post: ' by using LAANC or DroneZone.' }] }
+        ],
+        b2: [
+          { text: 'Yes, you can fly at night in San Diego up to 400 feet.', flag: 'Unverifiable: no location data in the corpus' },
+          { text: 'No authorization is needed at night.', flag: 'Contradicts source' }
+        ],
+        sources: [
+          { n: 1, title: 'Certificated Remote Pilots (Part 107)', path: 'faa.gov/uas/commercial_operators', url: 'https://www.faa.gov/uas/commercial_operators', type: 'Guide page', updated: '[date from page]', iso: null },
+          { n: 2, title: 'Recreational Flyers', path: 'faa.gov/uas/recreational_flyers', url: 'https://www.faa.gov/uas/recreational_flyers', type: 'Guide page', updated: '[date from page]', iso: null },
+          { n: 3, title: 'Where Can I Fly?', path: 'faa.gov/uas/getting_started/where_can_i_fly', url: 'https://www.faa.gov/uas/getting_started/where_can_i_fly', type: 'Guide page', updated: 'March 8, 2024', iso: '2024-03-08' }
+        ],
+        referral: 'I can’t check the airspace at a specific spot like San Diego. Airspace rules depend on location and can change with temporary flight restrictions, so check the FAA’s own tools for your exact spot and time.',
+        followups: [{ q: 'How high can I fly as a hobby flyer?', key: 'altitude' }, { q: 'Which drone should I buy?', key: 'buy' }]
+      },
+      buy: {
+        kind: 'refusal', tag: 'Out of scope', rewrite: null,
+        question: 'Which drone should I buy?',
+        figure: null, sentences: [], sources: [], referral: null,
+        b2: [
+          { text: 'A drone under 250 grams is a good first choice.', flag: 'Not supported by any retrieved FAA passage' }
+        ],
+        followups: [{ q: 'How high can I fly as a hobby flyer?', key: 'altitude' }, { q: 'Can I fly in San Diego tonight at 10 pm?', key: 'location' }]
+      }
+    };
+  }
+  stageDefs(kind) {
+    if (kind === 'refusal') {
+      return [
+        { label: 'Understanding question', ms: 40 },
+        { label: 'Searching 20 FAA passages', ms: 180 },
+        { label: 'Reranking to top 5', ms: 220 },
+        { label: 'Evidence gate: not enough support', ms: 5, stop: true }
+      ];
+    }
+    return [
+      { label: 'Understanding question', ms: 40 },
+      { label: 'Searching 20 FAA passages', ms: 180 },
+      { label: 'Reranking to top 5', ms: 220 },
+      { label: 'Writing answer', ms: 1450 },
+      { label: 'Checking 4 safeguards', ms: 380 }
+    ];
+  }
+  freshness(iso) {
+    const pill = 'display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; padding: 1px 8px; border-radius: 999px; ';
+    const dot = (c) => 'width: 7px; height: 7px; border-radius: 50%; background: ' + c;
+    if (!iso) return { label: 'Date not checked yet', style: pill + 'color: var(--muted); border: 1px dashed var(--line3)', dot: dot('#9AA9BC') };
+    const years = (Date.now() - Date.parse(iso)) / (365.25 * 864e5);
+    if (years < 1) return { label: 'Updated within a year', style: pill + 'color: var(--good); background: var(--goodBg)', dot: dot('#2E9E5E') };
+    if (years < 2) return { label: 'Over a year old', style: pill + 'color: var(--tintInk); background: var(--tint)', dot: dot('#4C8BD6') };
+    return { label: 'Over 2 years old, check for changes', style: pill + 'color: var(--warnInk); background: var(--warnBg)', dot: dot('#D9480F') };
+  }
+  summaryFor(key) {
+    const sc = this.scenarios()[key];
+    if (sc.kind === 'refusal') return 'Refused: not covered by the FAA pages.';
+    return 'Verified answer, ' + sc.sources.length + (sc.sources.length === 1 ? ' source' : ' sources') + ', 4 of 4 checks passed.';
+  }
+  run(key, typedQuestion) {
+    this.clearTimers();
+    const s = this.state;
+    const sc = this.scenarios()[key];
+    const n = this.stageDefs(sc.kind).length;
+    const q = typedQuestion || sc.question;
+    const history = s.phase === 'done' && s.scenario ? s.history.concat([{ question: s.question, summary: this.summaryFor(s.scenario) }]) : s.history;
+    this.setState({ phase: 'running', scenario: key, question: q, stage: 0, revealed: 0, activeCite: null, preview: null, input: '', history });
+    for (let i = 1; i <= n; i++) {
+      this.timers.push(setTimeout(() => this.setState({ stage: i }), i * 520));
+    }
+    this.timers.push(setTimeout(() => this.setState({ phase: 'done' }), n * 520 + 80));
+    const count = sc.sentences.length + (sc.referral ? 1 : 0) + 2;
+    for (let j = 1; j <= count; j++) {
+      this.timers.push(setTimeout(() => this.setState({ revealed: j }), n * 520 + 80 + j * 380));
+    }
+  }
+  routeTyped(text) {
+    const t = text.toLowerCase();
+    if (/(airport|controlled airspace)/.test(t)) return 'airport';
+    if (/(san diego|tonight|night|here|near me|park|city)/.test(t)) return 'location';
+    if (/(high|altitude|feet|400|tall)/.test(t)) return 'altitude';
+    return 'buy';
+  }
+  renderVals() {
+    const s = this.state;
+    const T = this.theme(s.dark);
+    const rootStyle = 'min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink); font-family: \'IBM Plex Sans\', system-ui, sans-serif; font-size: 16px; line-height: 1.5; transition: background .25s; ' + Object.keys(T).map((k) => '--' + k + ': ' + T[k]).join('; ');
+    const all = this.scenarios();
+    const sc = s.scenario ? all[s.scenario] : null;
+    const defs = sc ? this.stageDefs(sc.kind) : [];
+    const n = defs.length;
+    const mono = '\'IBM Plex Mono\', monospace';
+    const pilotNames = { rec: 'Recreational flyer', p107: 'Part 107 pilot', unsure: 'Not sure, covering both' };
+    const pilots = [
+      { key: 'rec', label: 'Recreational' },
+      { key: 'p107', label: 'Part 107' },
+      { key: 'unsure', label: 'Not sure' }
+    ].map((p) => {
+      const on = s.pilot === p.key;
+      return {
+        label: p.label,
+        pressed: on ? 'true' : 'false',
+        pick: () => this.setState({ pilot: p.key }),
+        style: 'min-height: 36px; padding: 0 14px; border: none; border-radius: 7px; font-size: 14px; font-weight: 500; cursor: pointer; ' + (on ? 'background: #FFFFFF; color: #0B1522;' : 'background: transparent; color: #DCE3EA;')
+      };
+    });
+    const examples = ['altitude', 'location', 'buy'].map((k) => ({ question: all[k].question, pick: () => this.run(k) }));
+    let elapsed = 0;
+    const stages = defs.map((d, i) => {
+      const done = i < s.stage;
+      const active = i === s.stage && s.phase === 'running';
+      if (done) elapsed += d.ms;
+      const stopped = done && d.stop;
+      return {
+        label: d.label,
+        isDone: done && !d.stop,
+        isStopped: stopped,
+        isActive: active,
+        isPending: !done && !active,
+        msLabel: done ? d.ms + ' ms' : (active ? 'in progress' : 'waiting'),
+        rowStyle: 'display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 10px; font-size: 14px; ' + (active ? 'background: var(--activeBg); border: 1px solid var(--warnLine);' : (stopped ? 'background: var(--warnBg); border: 1px solid var(--warnLine);' : 'background: var(--card2); border: 1px solid var(--line2);')),
+        labelStyle: 'font-weight: 500; ' + (done || active ? 'color: var(--ink);' : 'color: var(--faint);') + (stopped ? ' color: var(--warnInk); font-weight: 600;' : '')
+      };
+    });
+    const pct = n ? Math.min(s.stage, n) / n * 100 : 0;
+    const finished = s.phase === 'done';
+    const isRefusal = !!(sc && sc.kind === 'refusal');
+    const waypoints = defs.map((d, i) => {
+      const at = (i + 1) / n * 100;
+      const reached = s.stage > i;
+      const current = s.stage === i && s.phase === 'running';
+      const color = d.stop && reached ? '#D9480F' : (reached ? '#1D5FA8' : 'var(--card)');
+      return {
+        style: 'position: absolute; top: 33px; left: calc(' + at + '% - 6px); width: 12px; height: 12px; transform: rotate(45deg); border-radius: 2px; background: ' + color + '; border: 2px solid ' + (reached ? color : 'var(--faint)') + '; box-sizing: border-box' + (current ? '; outline: 3px solid rgba(217, 72, 15, 0.35)' : '')
+      };
+    });
+    const visibleCount = Math.max(0, Math.min(s.revealed, sc ? sc.sentences.length : 0));
+    const sourceTitle = (num) => {
+      const src = sc ? sc.sources.find((x) => x.n === num) : null;
+      return src ? src.title + ' · ' + src.path : '';
+    };
+    const visibleSentences = sc ? sc.sentences.slice(0, visibleCount).map((x, si) => ({
+      text: x.text,
+      cites: x.cites.map((c) => {
+        const key = si + '-' + c.n;
+        const on = s.activeCite === c.n || s.preview === key;
+        return {
+          n: c.n,
+          pre: c.pre, hl: c.hl, post: c.post,
+          source: sourceTitle(c.n),
+          aria: 'Source ' + c.n + ': ' + sourceTitle(c.n),
+          showPreview: s.preview === key,
+          show: () => this.setState({ preview: key }),
+          hide: () => this.setState({ preview: null }),
+          pick: () => this.setState({ activeCite: c.n }),
+          style: 'margin-left: 4px; min-width: 28px; height: 26px; padding: 0 6px; border-radius: 6px; font-family: ' + mono + '; font-size: 13px; font-weight: 500; cursor: pointer; vertical-align: 2px; ' + (on ? 'background: #1D5FA8; color: #FFFFFF; border: 1px solid #1D5FA8;' : 'background: var(--tint); color: var(--blue); border: 1px solid var(--tintLine);')
+        };
+      })
+    })) : [];
+    const doneCount = sc ? sc.sentences.length + (sc.referral ? 1 : 0) : 0;
+    const showReferral = !!(sc && sc.referral && finished && s.revealed > sc.sentences.length);
+    const showChecks = !!(sc && !isRefusal && finished && s.revealed > doneCount);
+    const showFollowups = !!(sc && finished && (isRefusal ? s.revealed >= 1 : s.revealed > doneCount + 1));
+    const sources = sc && finished ? sc.sources.map((src) => {
+      const f = this.freshness(src.iso);
+      return {
+        ...src,
+        freshLabel: f.label,
+        freshStyle: f.style,
+        freshDot: f.dot,
+        style: 'display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 12px; ' + (s.activeCite === src.n ? 'border: 2px solid var(--blue); background: var(--sel);' : 'border: 1px solid var(--line2); background: var(--card);')
+      };
+    }) : [];
+    const rows = [
+      { label: 'Recreational Flyers › Class G airspace', dense: 0.82, rerank: 0.91 },
+      { label: 'Certificated Remote Pilots › Night operations', dense: 0.79, rerank: 0.84 },
+      { label: 'Where Can I Fly? › Airspace restrictions', dense: 0.74, rerank: 0.77 },
+      { label: 'Part 107 Summary (PDF) › Operational limits', dense: 0.71, rerank: 0.70 },
+      { label: 'LAANC › Airspace authorizations', dense: 0.69, rerank: 0.66 },
+      { label: 'Remote ID › Overview', dense: 0.66, rerank: 0.31 }
+    ];
+    const traceRows = rows.map((r, i) => {
+      const rer = isRefusal ? Math.round(r.rerank * 30) / 100 : r.rerank;
+      const kept = !isRefusal && i < 5;
+      return {
+        label: r.label,
+        scoreLabel: rer.toFixed(2),
+        rowStyle: 'display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; border-radius: 10px; ' + (kept ? 'background: var(--sel); border: 1px solid var(--tintLine);' : 'background: var(--card); border: 1px solid var(--line2);'),
+        denseBar: 'height: 6px; border-radius: 3px; background: var(--faint); width: ' + Math.round(r.dense * 100) + '%',
+        rerankBar: 'height: 6px; border-radius: 3px; background: ' + (kept ? '#4C8BD6' : 'var(--line3)') + '; width: ' + Math.round(rer * 100) + '%'
+      };
+    });
+    const figureShown = !!(sc && sc.figure && finished && visibleCount >= 1);
+    const showB2 = !!(s.compare && sc && finished);
+    return {
+      rootStyle,
+      isLight: !s.dark,
+      isDark: s.dark,
+      darkPressed: s.dark ? 'true' : 'false',
+      toggleDark: () => this.setState({ dark: !s.dark }),
+      pilots,
+      examples,
+      comparePressed: s.compare ? 'true' : 'false',
+      toggleCompare: () => this.setState({ compare: !s.compare }),
+      compareStyle: 'min-height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; ' + (s.compare ? 'background: #D9480F; color: #FFFFFF; border: 1px solid #D9480F;' : 'background: transparent; color: #FFFFFF; border: 1px solid #4A5868;'),
+      isEmpty: s.phase === 'empty',
+      hasConversation: s.phase !== 'empty',
+      turnLabel: 'Turn ' + (s.history.length + 1) + ' · chat history is used to understand follow-ups',
+      newChat: () => { this.clearTimers(); this.setState({ phase: 'empty', scenario: null, question: '', stage: 0, revealed: 0, activeCite: null, preview: null, history: [] }); },
+      history: s.history,
+      question: s.question,
+      hasRewrite: !!(sc && sc.rewrite && s.history.length > 0),
+      rewrite: sc && sc.rewrite ? sc.rewrite : '',
+      stages,
+      waypoints,
+      stageHeading: finished ? (isRefusal ? 'Not cleared: not enough support in FAA pages' : 'Cleared: answer verified') : 'Running checklist',
+      stageHeadingStyle: 'font-weight: 600; ' + (finished ? (isRefusal ? 'color: var(--warnInk);' : 'color: var(--good);') : 'color: var(--ink);'),
+      elapsedLabel: (elapsed / 1000).toFixed(2) + ' s',
+      droneStyle: 'position: absolute; top: 0; left: calc(' + pct + '% - 20px); transition: left .5s cubic-bezier(.3,.7,.3,1)',
+      trackFillStyle: 'position: absolute; left: 0; top: 38px; border-top: 2px solid ' + (isRefusal && finished ? '#D9480F' : '#4C8BD6') + '; width: ' + pct + '%; transition: width .5s cubic-bezier(.3,.7,.3,1)',
+      showB2,
+      b2Sentences: sc ? sc.b2 : [],
+      showB3Label: showB2,
+      showAnswer: !!(sc && !isRefusal && finished),
+      showRefusal: !!(isRefusal && finished),
+      pilotLabel: pilotNames[s.pilot],
+      hasTag: !!(sc && sc.tag),
+      routerTag: sc && sc.tag ? sc.tag : '',
+      showFigure: figureShown,
+      figureValue: sc && sc.figure ? sc.figure.value : '',
+      figureUnit: sc && sc.figure ? sc.figure.unit : '',
+      figureCaption: sc && sc.figure ? sc.figure.caption : '',
+      visibleSentences,
+      showReferral,
+      referralText: sc && sc.referral ? sc.referral : '',
+      showChecks,
+      checks: [{ label: 'Citations' }, { label: 'Claims' }, { label: 'Numbers' }, { label: 'Quotes' }],
+      answeredIn: 'Answered in ' + (elapsed / 1000).toFixed(2) + ' s',
+      showFollowups,
+      followups: sc ? sc.followups.map((f) => ({ q: f.q, pick: () => this.run(f.key) })) : [],
+      sources,
+      noSources: sources.length === 0,
+      sourceCount: sources.length ? sources.length + (sources.length === 1 ? ' page' : ' pages') : '',
+      showTrace: s.traceOpen && s.phase !== 'empty',
+      traceExpanded: s.traceOpen ? 'true' : 'false',
+      traceToggleLabel: s.phase === 'empty' ? 'Ask a question first' : (s.traceOpen ? 'Hide' : 'Show'),
+      toggleTrace: () => this.setState({ traceOpen: !s.traceOpen }),
+      traceRows,
+      input: s.input,
+      onInput: (e) => this.setState({ input: e.target.value }),
+      submit: (e) => {
+        if (e && e.preventDefault) e.preventDefault();
+        const text = (s.input || '').trim();
+        if (!text) return;
+        this.run(this.routeTyped(text), text);
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
