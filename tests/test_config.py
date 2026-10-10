@@ -67,6 +67,7 @@ def test_fixed_settings_match_the_stack(monkeypatch):
         "dimension": 384,
         "normalize": True,
         "batch_size": 64,
+        "query_instruction": "Represent this sentence for searching relevant passages: ",
     }
     assert (cfg["retrieval"]["pool_size"], cfg["retrieval"]["rrf_k"]) == (20, 60)
     assert cfg["rerank_settings"]["top_n"] == 5

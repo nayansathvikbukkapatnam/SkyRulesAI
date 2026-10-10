@@ -8,6 +8,10 @@ requires-python = ">=3.11,<3.12"
 testpaths = ["tests"]
 pythonpath = ["."]
 addopts = "-q"
+filterwarnings = [
+    # chromadb 1.5 warns about its own stored config when embedding_function=None
+    "ignore:legacy embedding function config:DeprecationWarning",
+]
 
 [tool.ruff]
 line-length = 100

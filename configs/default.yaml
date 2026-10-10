@@ -20,6 +20,8 @@ embedding:
   dimension: 384
   normalize: true
   batch_size: 64
+  # bge v1.5's recommended prefix for short queries searching passages (queries only)
+  query_instruction: "Represent this sentence for searching relevant passages: "
 vector_db:
   collection: skyrules
   distance: cosine             # Chroma's default is L2, so this is set explicitly
