@@ -160,16 +160,19 @@ def number_date_check(sentence: str, cited_texts: Sequence[str]) -> dict[str, An
         found["numbers"] |= facts["numbers"]
     values = {v for v, _ in found["numbers"]}
     bare = {v for v, u in found["numbers"] if u is None}
-    # A full date in a chunk also supports a sentence giving only its month and year.
+    # A full date in a chunk also supports a sentence giving only its month and year,
+    # or only its year ("in 2023" against "September 16, 2023").
     months = {d[:7] for d in found["dates"]}
+    years = {d[:4] for d in found["dates"]}
 
     missing: list[str] = []
     for d in sorted(claimed["dates"]):
         if d not in found["dates"] and not (len(d) == 7 and d in months):
             missing.append(d)
     for value, unit in sorted(claimed["numbers"], key=lambda n: (n[0], n[1] or "")):
+        is_year = unit is None and re.fullmatch(r"(19|20)\d{2}", value) is not None
         ok = (
-            value in values
+            (value in values or (is_year and value in years))
             if unit is None
             else ((value, unit) in found["numbers"] or value in bare)
         )

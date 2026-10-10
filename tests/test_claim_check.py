@@ -81,6 +81,15 @@ def test_dates_must_match_and_month_year_is_enough():
     assert result["missing"] == ["2024-03-17"]
 
 
+def test_year_only_sentence_matches_a_full_date_in_the_chunk():
+    chunk = "Drone pilots must comply with Remote ID by September 16, 2023."
+    assert number_date_check("Remote ID became required in 2023.", [chunk]) == {
+        "ok": True,
+        "missing": [],
+    }
+    assert number_date_check("Remote ID became required in 2024.", [chunk])["missing"] == ["2024"]
+
+
 def test_sentence_without_numbers_passes():
     assert number_date_check("Recreational flyers must pass a safety test.", [ALTITUDE])["ok"]
 
