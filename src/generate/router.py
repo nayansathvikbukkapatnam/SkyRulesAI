@@ -122,8 +122,13 @@ _PLACE_AFTER_PREP = re.compile(
     r"\b(?i:in|at|over|near|around|above|by)\s+(?i:the\s+)?"
     r"([A-Z][a-zA-Z.'-]+(?:\s+[A-Z][a-zA-Z.'-]+){0,3})"
 )
+def _plain(word: str) -> str:
+    """Case- and dot-insensitive form, so "U.S." and "u.s" compare equal."""
+    return word.casefold().replace(".", "")
+
+
 _NOT_PLACES = {
-    w.casefold()
+    _plain(w)
     for w in """
     FAA UAS UAV UAG sUAS Part Class Remote ID TRUST LAANC DroneZone B4UFLY IACRA FRIA
     Recreational Exception Limited Operations Section Knowledge Test AC Advisory Circular
@@ -169,11 +174,15 @@ _HIGH_STAKES = {
         r"\bwildfires?\b",
         r"\bcrash(?:ed|es)?\b",
         r"\baccidents?\b",
-        r"\binjur(?:y|ies|ed)\b",
+        r"\binjur(?:ies|ed)\b",
+        r"\binjury\b(?!\s+(?:limits?|severity|risk|thresholds?|levels?|potential|criteria))",
         r"\bhurt\b",
         r"\bfly-?aways?\b",
     ),
-    "people": _rx(r"\bover\s+(?:people|crowds?)\b", r"\bcrowds?\b"),
+    "people": _rx(
+        r"\bover\s+(?:people|crowds?)\b(?!\s+(?:final\s+|proposed\s+)?(?:rule|rules|rulemaking)\b)",
+        r"\bcrowds?\b",
+    ),
     "bvlos": _rx(r"\bbeyond\s+(?:the\s+)?visual\s+line\s+of\s+sight\b", r"\bbvlos\b"),
 }
 
@@ -194,6 +203,16 @@ _PILOT_STATED = _rx(
 )
 
 
+# Documents that are not a pilot credential, so asking about them is not "pilot type unclear".
+_NOT_A_CREDENTIAL = _rx(
+    r"\bcertificates?\s+of\s+(?:waiver|authorization|aircraft\s+registration|airworthiness"
+    r"|compliance)\b",
+    r"\bcoas?\b",
+    r"\bdeclarations?\s+of\s+compliance\b",
+    r"\bcompletion\s+certificates?\b",
+)
+
+
 def _strip_injection(question: str) -> tuple[str, bool]:
     """Drop the sentences that carry injected instructions; keep the rest."""
     sentences = re.split(r"(?<=[.!?;])\s+|\n+", question.strip())
@@ -201,11 +220,21 @@ def _strip_injection(question: str) -> tuple[str, bool]:
     return " ".join(kept).strip(), len(kept) < len([s for s in sentences if s])
 
 
+# "(outside Alaska)", "except Hawaii", "other than Texas": the place is excluded from
+# the question, so it must not trigger the location referral.
+_EXCLUDED_PLACE = re.compile(
+    r"\b(?:outside(?:\s+of)?|except(?:\s+for)?|excluding|other\s+than|besides)\s+(?:the\s+)?"
+    r"[A-Za-z][\w.'-]*(?:\s+[A-Z][\w.'-]*){0,2}",
+    re.IGNORECASE,
+)
+
+
 def _places(question: str) -> list[str]:
+    question = _EXCLUDED_PLACE.sub(" ", question)
     found = []
     for m in _PLACE_AFTER_PREP.finditer(question):
         words = m.group(1).split()
-        if words[0].casefold().rstrip(".") not in _NOT_PLACES:
+        if _plain(words[0]) not in _NOT_PLACES:
             found.append(m.group(1))
     found += [m.group(0) for m in _KNOWN_PLACES.finditer(question)]
     return found
@@ -231,7 +260,7 @@ def route(question: str, pilot_type: str | None = "not_sure") -> RouteResult:
 
     unclear = (
         pilot_type in ("not_sure", None)
-        and _CREDENTIAL.search(q) is not None
+        and _CREDENTIAL.search(_NOT_A_CREDENTIAL.sub(" ", q)) is not None
         and _PILOT_STATED.search(q) is None
     )
     if unclear:
