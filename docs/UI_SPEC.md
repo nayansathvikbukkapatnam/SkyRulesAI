@@ -62,8 +62,8 @@ Contrast: text at least 4.5:1 on its background in both modes.
 
 ## 3. Layout
 
-1. **Header bar** (`--head`): drone mark + "SkyRules AI" + "U.S. drone rules, answered from FAA pages"; on the right, the pilot toggle, "Compare B2 vs B3", and "Cockpit mode" / "Daylight mode". Wraps on narrow screens.
-2. **Reliability banner** (`--tint`): "Student project, not official FAA guidance. Check the linked FAA page before you fly."
+1. **Header bar** (`--head`): drone mark + "SkyRules AI" + "U.S. drone rules, answered from official sources"; on the right, the pilot toggle, "Compare B2 vs B3", and "Cockpit mode" / "Daylight mode". Wraps on narrow screens.
+2. **Reliability banner** (`--tint`): "Student project, not official FAA guidance. Check the linked source before you fly."
 3. **Main area:** max width 1440 px, 24 to 32 px padding, two columns that wrap:
    - **Conversation** (`flex: 999 1 560px`)
    - **Side panel** (`flex: 1 1 340px`): Sources card, then the Retrieval trace card
@@ -78,7 +78,7 @@ A segmented control: "Recreational", "Part 107", "Not sure" (default). It uses `
 - **Background:** a faint sectional-chart pattern of three dashed airspace rings and a few contour lines, in SVG with low opacity.
 - **Drone:** a hovering drone with spinning rotors.
 - **Title:** "Ask about U.S. drone rules"
-- **Text:** "Every answer comes only from FAA pages, with a source on each claim. If the pages don't cover your question, SkyRules says so instead of guessing."
+- **Text:** "Every answer comes only from official sources (the drone regulations, FAA rule documents and Know Before You Fly guidance), with a source on each claim. If the sources don't cover your question, SkyRules says so instead of guessing."
 - **Example chips** (the demo questions):
   - "How high can I fly as a hobby flyer?"
   - "Can I fly in San Diego tonight at 10 pm?"
@@ -86,19 +86,20 @@ A segmented control: "Recreational", "Part 107", "Not sure" (default). It uses `
 
 ### 4.3 Conversation
 - **Turn label** "Turn N · chat history is used to understand follow-ups", plus a "New chat" button that clears history.
-- **Earlier turns:** a compact question bubble (`--bubbleOld`) and a one-line summary, for example "Verified answer, 1 source, 4 of 4 checks passed." or "Refused: not covered by the FAA pages."
+- **Earlier turns:** a compact question bubble (`--bubbleOld`) and a one-line summary, for example "Verified answer, 1 source, 4 of 4 checks passed." or "Refused: not covered by the sources SkyRules searches."
 - **Current question:** a right-aligned bubble (`--bubble`). If `rewritten_question` is set, show under it in mono 12 px: "Rewritten with chat history: …".
 
 ### 4.4 Preflight card (driven by server-sent events)
 - **Header:** the mono label "PREFLIGHT" plus a status line:
   - "Running checklist" (ink) while running
   - "Cleared: answer verified" (`--good`) when answered
-  - "Not cleared: not enough support in FAA pages" (`--warnInk`) when refused
+  - "Not cleared: not enough support in the sources" (`--warnInk`) when refused
+  - "Not cleared: something went wrong" (`--warnInk`) when the stream fails
   - elapsed seconds on the right
 - **Flight path:** a dashed line, with a solid fill growing to the current stage, one diamond waypoint per stage (filled when reached, orange when stopped) and the small drone moving along it with a 0.5 s ease.
-- **Stage grid:** one tile per stage, with a status icon (green check, orange spinner, grey ring, or orange "!" when stopped), its name and "N ms" / "in progress" / "waiting".
-- **Stages for an answer:** "Understanding question", "Searching 20 FAA passages", "Reranking to top 5", "Writing answer", "Checking 4 safeguards".
-- **Stages for a refusal at the gate:** the first three, then "Evidence gate: not enough support" (stopped).
+- **Stage grid:** one tile per stage, with a status icon (green check, orange spinner, grey ring, or orange "!" when stopped), its name and "N ms" / "in progress" / "waiting" / "not used" (a stage the config skips, such as rerank in B2).
+- **Stages for an answer:** "Understanding question", "Searching 20 passages", "Reranking to top 5", "Writing answer", "Checking N safeguards" (N from `trace.checks.requested`).
+- **Stages for a refusal at the gate:** the first three, then "Evidence gate: not enough support" (stopped). Stages skipped after a stop are hidden.
 
 ### 4.5 Verified answer card
 - **Header:** "Verified answer", the pilot badge and, when `router_tag` isn't normal, a warning-colored tag such as "Location-specific".
@@ -115,8 +116,8 @@ A segmented control: "Recreational", "Part 107", "Not sure" (default). It uses `
 
 ### 4.6 Refusal card
 - **Style:** a 2 px orange border.
-- **Text:** "I don't have that information in the FAA pages I can search."
-- **Second line:** "SkyRules only answers from official FAA drone pages, so it won't guess. Try a question about registration, airspace, Remote ID or night flying."
+- **Text:** "I don't have that information in the official sources I can search."
+- **Second line:** "SkyRules only answers from the federal drone regulations, FAA rule documents and Know Before You Fly guidance, so it won't guess. Try a question about registration, airspace, Remote ID or night flying."
 - **Footer:** "Evidence gate: no passage scored above the threshold" (or which check failed) and the time.
 
 ### 4.7 Compare B2 vs B3
@@ -135,10 +136,10 @@ One card per citation:
   - **within 1 year:** green, "Updated within a year"
   - **1 to 2 years:** blue, "Over a year old"
   - **over 2 years:** amber, "Over 2 years old, check for changes"
-  - **unknown:** dashed, "Date not found on page"
-- The title as a link to `source_url`, the mono path, and "Last updated: <date>".
+  - **unknown:** dashed, "Date not found in the source"
+- The title as a link to `source_url`, the `source_name` from the citation (Know Before You Fly shows as "Know Before You Fly (FAA partner campaign)", never as the FAA), the mono path, and "Last updated: <date>".
 
-The empty state text is "The FAA pages behind each answer appear here, with how recently each page was updated."
+The empty state text is "The sources behind each answer appear here, with how recently each one was updated."
 
 ### 4.10 Retrieval trace card
 A collapsible card: "Retrieval trace" with "Show" / "Hide" (`aria-expanded`).
@@ -151,13 +152,17 @@ A text field labelled "Your drone question" (visually hidden label), with the pl
 ## 5. Behavior and data
 
 - **`POST /api/ask`** with `{question, history, pilot_type, compare}` returns a server-sent event stream:
-  - `stage`: `{name, status: started|done|stopped, ms}`
-  - `answer`: the full `answer()` contract
-  - with `compare`, a second `answer` event with `config: "b2"`
+  - `stage`: `{name, status: started|done|stopped|skipped, ms, config}`; the preflight card follows `config: "b3"`
+  - `answer`: the full `answer()` contract, plus `config`
+  - with `compare`, a second `answer` event with `config: "b2"` and `b3_check_flags` (the flag text per B2 sentence)
+  - `error`: `{message}` when `answer()` raised, then `done`
 - **History:** kept in the page (the last 6 turns) and sent with each request; `answer()` uses it only for the follow-up rewrite.
 - **Remove the "Mockup · sample data" tag;** every number on screen comes from the real response.
+- **Mock mode for building the page:** `?mock=1` replays `src/app/static/mock_events.json` (built by `python -m src.app.mock_events` from the labelled `[FIXTURE]` passages) and shows a "Mock events, not a real run" tag in the header.
+- **Refusal footer:** names the reason from `trace.refusal_reason` (the evidence gate, not enough support, the failed check, a check that could not run, or an answer that could not be written in a checkable form).
 - **Motion:** rotor spin, hero hover and reveal fades; all off under `prefers-reduced-motion`.
-- **Errors:** if the stream fails, show the refusal card with "Something went wrong, so SkyRules did not answer. Try again." Never show a partial answer.
+- **Errors:** if the stream fails, show the refusal card with "Something went wrong, so SkyRules did not answer. Try again." and the error message as a detail line. Never show a partial answer.
+- **Untrusted text:** answers, passages and titles are inserted as text, never as HTML, and links are only built from `http` or `https` URLs.
 
 ## 6. Accessibility
 

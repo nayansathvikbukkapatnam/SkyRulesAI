@@ -1,0 +1,1728 @@
+{
+ "note": "Recorded with fixture passages and a scripted LLM. Not real answers.",
+ "scenarios": {
+  "answer": [
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "done",
+     "ms": 42.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "done",
+     "ms": 186.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "done",
+     "ms": 231.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "done",
+     "ms": 1430.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "done",
+     "ms": 395.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "answer",
+    "data": {
+     "status": "answered",
+     "sentences": [
+      {
+       "text": "In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+       "chunk_ids": [
+        "adb67bc3d658::struct@v1::0001"
+       ]
+      }
+     ],
+     "citations": [
+      {
+       "n": 1,
+       "chunk_id": "adb67bc3d658::struct@v1::0001",
+       "url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+       "title": "[FIXTURE] Recreational Flyers",
+       "effective_date": "2025-06-12",
+       "source_name": "fixtures.skyrules.test"
+      }
+     ],
+     "referral": null,
+     "router_tag": "normal",
+     "rewritten_question": null,
+     "trace": {
+      "candidates": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       },
+       {
+        "chunk_id": "c8091d823bb2::struct@v1::0000",
+        "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+        "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+        "title": "[FIXTURE] Register Your Drone",
+        "effective_date": null,
+        "page_type": "faq",
+        "dense_score": 0.52,
+        "bm25_score": 2.0,
+        "fused_score": 0.030303
+       }
+      ],
+      "reranked": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258,
+        "rerank_score": 6.8
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787,
+        "rerank_score": 3.1
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746,
+        "rerank_score": 1.2
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125,
+        "rerank_score": -0.4
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769,
+        "rerank_score": -2.5
+       }
+      ],
+      "gate_score": 6.8,
+      "checks": {
+       "ok": true,
+       "requested": [
+        "citation_validity",
+        "quote_limit",
+        "claim_support",
+        "number_date"
+       ],
+       "per_check": {
+        "citation_validity": true,
+        "quote_limit": true,
+        "number_date": true,
+        "claim_support": true
+       },
+       "sentences": [
+        {
+         "text": "In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+         "chunk_ids": [
+          "adb67bc3d658::struct@v1::0001"
+         ],
+         "citation_validity": {
+          "ok": true,
+          "reason": null
+         },
+         "quote_limit": {
+          "ok": true,
+          "longest_run": 14,
+          "chunk_id": null,
+          "copied": null
+         },
+         "claim_support": {
+          "supported": true,
+          "reason": "Scripted verdict for the mock."
+         },
+         "number_date": {
+          "ok": true,
+          "missing": []
+         },
+         "ok": true
+        }
+       ]
+      },
+      "refusal_reason": null,
+      "stopped_at": null,
+      "route_reasons": [],
+      "generation": {
+       "status": "answered",
+       "error": null,
+       "raw_text": "{\"sentences\": [{\"text\": \"In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.\", \"passages\": [1]}]}",
+       "usage": {
+        "input_tokens": 980,
+        "output_tokens": 48,
+        "cost_usd": 0.000122,
+        "latency_ms": 900
+       }
+      }
+     },
+     "latency_ms": {
+      "route": 42.0,
+      "retrieve": 186.0,
+      "rerank": 231.0,
+      "generate": 1430.0,
+      "check": 395.0,
+      "total": 2284.0
+     },
+     "cost_usd": 0.000244,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "done",
+     "ms": 42.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "done",
+     "ms": 186.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "skipped",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "done",
+     "ms": 1430.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "done",
+     "ms": 395.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "answer",
+    "data": {
+     "status": "answered",
+     "sentences": [
+      {
+       "text": "Recreational flyers can fly up to 500 feet.",
+       "chunk_ids": [
+        "adb67bc3d658::struct@v1::0001"
+       ]
+      },
+      {
+       "text": "No permission is needed.",
+       "chunk_ids": []
+      }
+     ],
+     "citations": [
+      {
+       "n": 1,
+       "chunk_id": "adb67bc3d658::struct@v1::0001",
+       "url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+       "title": "[FIXTURE] Recreational Flyers",
+       "effective_date": "2025-06-12",
+       "source_name": "fixtures.skyrules.test"
+      }
+     ],
+     "referral": null,
+     "router_tag": "normal",
+     "rewritten_question": null,
+     "trace": {
+      "candidates": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       },
+       {
+        "chunk_id": "c8091d823bb2::struct@v1::0000",
+        "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+        "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+        "title": "[FIXTURE] Register Your Drone",
+        "effective_date": null,
+        "page_type": "faq",
+        "dense_score": 0.52,
+        "bm25_score": 2.0,
+        "fused_score": 0.030303
+       }
+      ],
+      "reranked": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       }
+      ],
+      "gate_score": null,
+      "checks": {
+       "ok": true,
+       "requested": [],
+       "per_check": {},
+       "sentences": []
+      },
+      "refusal_reason": null,
+      "stopped_at": null,
+      "route_reasons": [],
+      "generation": {
+       "status": "answered",
+       "error": null,
+       "raw_text": "{\"sentences\": [{\"text\": \"Recreational flyers can fly up to 500 feet.\", \"passages\": [2]}, {\"text\": \"No permission is needed.\", \"passages\": []}]}",
+       "usage": {
+        "input_tokens": 980,
+        "output_tokens": 48,
+        "cost_usd": 0.000122,
+        "latency_ms": 900
+       }
+      }
+     },
+     "latency_ms": {
+      "route": 42.0,
+      "retrieve": 186.0,
+      "rerank": 231.0,
+      "generate": 1430.0,
+      "check": 395.0,
+      "total": 2284.0
+     },
+     "cost_usd": 0.000122,
+     "config": "b2",
+     "b3_check_flags": [
+      [
+       "Number not found in source"
+      ],
+      [
+       "No citation"
+      ]
+     ]
+    }
+   },
+   {
+    "event": "done",
+    "data": {}
+   }
+  ],
+  "location": [
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "done",
+     "ms": 42.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "done",
+     "ms": 186.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "done",
+     "ms": 231.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "done",
+     "ms": 1430.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "done",
+     "ms": 395.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "answer",
+    "data": {
+     "status": "answered",
+     "sentences": [
+      {
+       "text": "In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+       "chunk_ids": [
+        "adb67bc3d658::struct@v1::0001"
+       ]
+      }
+     ],
+     "citations": [
+      {
+       "n": 1,
+       "chunk_id": "adb67bc3d658::struct@v1::0001",
+       "url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+       "title": "[FIXTURE] Recreational Flyers",
+       "effective_date": "2025-06-12",
+       "source_name": "fixtures.skyrules.test"
+      }
+     ],
+     "referral": {
+      "kind": "location",
+      "text": "SkyRules can't check whether a specific place is open to drones right now. Airspace, temporary flight restrictions and local rules depend on the exact place and time, and those live FAA maps aren't in the pages SkyRules searches. Check B4UFLY or the UAS Facility Maps for your exact location before you fly."
+     },
+     "router_tag": "location_live",
+     "rewritten_question": null,
+     "trace": {
+      "candidates": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       },
+       {
+        "chunk_id": "c8091d823bb2::struct@v1::0000",
+        "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+        "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+        "title": "[FIXTURE] Register Your Drone",
+        "effective_date": null,
+        "page_type": "faq",
+        "dense_score": 0.52,
+        "bm25_score": 2.0,
+        "fused_score": 0.030303
+       }
+      ],
+      "reranked": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258,
+        "rerank_score": 6.8
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787,
+        "rerank_score": 3.1
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746,
+        "rerank_score": 1.2
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125,
+        "rerank_score": -0.4
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769,
+        "rerank_score": -2.5
+       }
+      ],
+      "gate_score": 6.8,
+      "checks": {
+       "ok": true,
+       "requested": [
+        "citation_validity",
+        "quote_limit",
+        "claim_support",
+        "number_date"
+       ],
+       "per_check": {
+        "citation_validity": true,
+        "quote_limit": true,
+        "number_date": true,
+        "claim_support": true
+       },
+       "sentences": [
+        {
+         "text": "In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+         "chunk_ids": [
+          "adb67bc3d658::struct@v1::0001"
+         ],
+         "citation_validity": {
+          "ok": true,
+          "reason": null
+         },
+         "quote_limit": {
+          "ok": true,
+          "longest_run": 14,
+          "chunk_id": null,
+          "copied": null
+         },
+         "claim_support": {
+          "supported": true,
+          "reason": "Scripted verdict for the mock."
+         },
+         "number_date": {
+          "ok": true,
+          "missing": []
+         },
+         "ok": true
+        }
+       ]
+      },
+      "refusal_reason": null,
+      "stopped_at": null,
+      "route_reasons": [
+       "location:San Diego",
+       "live:tonight",
+       "live:at 10 pm"
+      ],
+      "generation": {
+       "status": "answered",
+       "error": null,
+       "raw_text": "{\"sentences\": [{\"text\": \"In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.\", \"passages\": [1]}]}",
+       "usage": {
+        "input_tokens": 980,
+        "output_tokens": 48,
+        "cost_usd": 0.000122,
+        "latency_ms": 900
+       }
+      }
+     },
+     "latency_ms": {
+      "route": 42.0,
+      "retrieve": 186.0,
+      "rerank": 231.0,
+      "generate": 1430.0,
+      "check": 395.0,
+      "total": 2284.0
+     },
+     "cost_usd": 0.000244,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "done",
+     "ms": 42.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "done",
+     "ms": 186.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "skipped",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "done",
+     "ms": 1430.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "done",
+     "ms": 395.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "answer",
+    "data": {
+     "status": "answered",
+     "sentences": [
+      {
+       "text": "Yes, you can fly in San Diego tonight.",
+       "chunk_ids": []
+      }
+     ],
+     "citations": [],
+     "referral": {
+      "kind": "location",
+      "text": "SkyRules can't check whether a specific place is open to drones right now. Airspace, temporary flight restrictions and local rules depend on the exact place and time, and those live FAA maps aren't in the pages SkyRules searches. Check B4UFLY or the UAS Facility Maps for your exact location before you fly."
+     },
+     "router_tag": "location_live",
+     "rewritten_question": null,
+     "trace": {
+      "candidates": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       },
+       {
+        "chunk_id": "c8091d823bb2::struct@v1::0000",
+        "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+        "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+        "title": "[FIXTURE] Register Your Drone",
+        "effective_date": null,
+        "page_type": "faq",
+        "dense_score": 0.52,
+        "bm25_score": 2.0,
+        "fused_score": 0.030303
+       }
+      ],
+      "reranked": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       }
+      ],
+      "gate_score": null,
+      "checks": {
+       "ok": true,
+       "requested": [],
+       "per_check": {},
+       "sentences": []
+      },
+      "refusal_reason": null,
+      "stopped_at": null,
+      "route_reasons": [
+       "location:San Diego",
+       "live:tonight",
+       "live:at 10 pm"
+      ],
+      "generation": {
+       "status": "answered",
+       "error": null,
+       "raw_text": "{\"sentences\": [{\"text\": \"Yes, you can fly in San Diego tonight.\", \"passages\": []}]}",
+       "usage": {
+        "input_tokens": 980,
+        "output_tokens": 48,
+        "cost_usd": 0.000122,
+        "latency_ms": 900
+       }
+      }
+     },
+     "latency_ms": {
+      "route": 42.0,
+      "retrieve": 186.0,
+      "rerank": 231.0,
+      "generate": 1430.0,
+      "check": 395.0,
+      "total": 2284.0
+     },
+     "cost_usd": 0.000122,
+     "config": "b2",
+     "b3_check_flags": [
+      [
+       "No citation"
+      ]
+     ]
+    }
+   },
+   {
+    "event": "done",
+    "data": {}
+   }
+  ],
+  "refusal": [
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "done",
+     "ms": 42.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "done",
+     "ms": 186.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "done",
+     "ms": 231.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "stopped",
+     "ms": 1430.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "skipped",
+     "ms": 0.0,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "answer",
+    "data": {
+     "status": "refused",
+     "sentences": [],
+     "citations": [],
+     "referral": null,
+     "router_tag": "normal",
+     "rewritten_question": null,
+     "trace": {
+      "candidates": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       },
+       {
+        "chunk_id": "c8091d823bb2::struct@v1::0000",
+        "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+        "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+        "title": "[FIXTURE] Register Your Drone",
+        "effective_date": null,
+        "page_type": "faq",
+        "dense_score": 0.52,
+        "bm25_score": 2.0,
+        "fused_score": 0.030303
+       }
+      ],
+      "reranked": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258,
+        "rerank_score": 6.8
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787,
+        "rerank_score": 3.1
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746,
+        "rerank_score": 1.2
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125,
+        "rerank_score": -0.4
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769,
+        "rerank_score": -2.5
+       }
+      ],
+      "gate_score": 6.8,
+      "checks": {},
+      "refusal_reason": "not enough support in the passages",
+      "stopped_at": "generate",
+      "route_reasons": [],
+      "generation": {
+       "status": "insufficient",
+       "error": null,
+       "raw_text": "{\"insufficient\": true}",
+       "usage": {
+        "input_tokens": 980,
+        "output_tokens": 48,
+        "cost_usd": 0.000122,
+        "latency_ms": 900
+       }
+      }
+     },
+     "latency_ms": {
+      "route": 42.0,
+      "retrieve": 186.0,
+      "rerank": 231.0,
+      "generate": 1430.0,
+      "check": 395.0,
+      "total": 2284.0
+     },
+     "cost_usd": 0.000122,
+     "config": "b3"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "route",
+     "status": "done",
+     "ms": 42.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "retrieve",
+     "status": "done",
+     "ms": 186.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "rerank",
+     "status": "skipped",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "generate",
+     "status": "done",
+     "ms": 1430.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "started",
+     "ms": 0.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "stage",
+    "data": {
+     "name": "check",
+     "status": "done",
+     "ms": 395.0,
+     "config": "b2"
+    }
+   },
+   {
+    "event": "answer",
+    "data": {
+     "status": "answered",
+     "sentences": [
+      {
+       "text": "A small drone is a good first choice.",
+       "chunk_ids": [
+        "adb67bc3d658::struct@v1::0002"
+       ]
+      }
+     ],
+     "citations": [
+      {
+       "n": 1,
+       "chunk_id": "adb67bc3d658::struct@v1::0002",
+       "url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+       "title": "[FIXTURE] Recreational Flyers",
+       "effective_date": "2025-06-12",
+       "source_name": "fixtures.skyrules.test"
+      }
+     ],
+     "referral": null,
+     "router_tag": "normal",
+     "rewritten_question": null,
+     "trace": {
+      "candidates": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       },
+       {
+        "chunk_id": "c8091d823bb2::struct@v1::0000",
+        "text": "Register Your Drone > Who must register\n\nFixture text. Drones that weigh more than 0.55 pounds are registered before they fly. Registration lasts 3 years.\n\n| Drone use | Registration | Fee |\n| --- | --- | --- |\n| Recreational | One number for all your drones | $5 |\n| Part 107 | One number per drone | $5 per drone |",
+        "source_url": "https://fixtures.skyrules.test/uas/getting_started/register",
+        "title": "[FIXTURE] Register Your Drone",
+        "effective_date": null,
+        "page_type": "faq",
+        "dense_score": 0.52,
+        "bm25_score": 2.0,
+        "fused_score": 0.030303
+       }
+      ],
+      "reranked": [
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0000",
+        "text": "Recreational Flyers\n\nFixture text. Flying for fun follows the recreational rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.82,
+        "bm25_score": 7.5,
+        "fused_score": 0.032787
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0001",
+        "text": "Recreational Flyers > Fly at or below 400 feet\n\nFixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet above ground level.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.76,
+        "bm25_score": 6.4,
+        "fused_score": 0.032258
+       },
+       {
+        "chunk_id": "adb67bc3d658::struct@v1::0002",
+        "text": "Recreational Flyers > Take the safety test\n\nFixture text. Recreational flyers pass a free online safety test and carry proof of passing when they fly.",
+        "source_url": "https://fixtures.skyrules.test/uas/recreational_flyers",
+        "title": "[FIXTURE] Recreational Flyers",
+        "effective_date": "2025-06-12",
+        "page_type": "guide_page",
+        "dense_score": 0.7,
+        "bm25_score": 5.3,
+        "fused_score": 0.031746
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0000",
+        "text": "Certificated Remote Pilots\n\nFixture text. Flying for work or business is covered by the Part 107 rules.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.64,
+        "bm25_score": 4.2,
+        "fused_score": 0.03125
+       },
+       {
+        "chunk_id": "a71ad3767684::struct@v1::0001",
+        "text": "Certificated Remote Pilots > Get a remote pilot certificate\n\nFixture text. A Part 107 pilot passes a knowledge test and holds a remote pilot certificate before flying commercially.",
+        "source_url": "https://fixtures.skyrules.test/uas/commercial_operators",
+        "title": "[FIXTURE] Certificated Remote Pilots",
+        "effective_date": "2024-11-03",
+        "page_type": "guide_page",
+        "dense_score": 0.58,
+        "bm25_score": 3.1,
+        "fused_score": 0.030769
+       }
+      ],
+      "gate_score": null,
+      "checks": {
+       "ok": true,
+       "requested": [],
+       "per_check": {},
+       "sentences": []
+      },
+      "refusal_reason": null,
+      "stopped_at": null,
+      "route_reasons": [],
+      "generation": {
+       "status": "answered",
+       "error": null,
+       "raw_text": "{\"sentences\": [{\"text\": \"A small drone is a good first choice.\", \"passages\": [3]}]}",
+       "usage": {
+        "input_tokens": 980,
+        "output_tokens": 48,
+        "cost_usd": 0.000122,
+        "latency_ms": 900
+       }
+      }
+     },
+     "latency_ms": {
+      "route": 42.0,
+      "retrieve": 186.0,
+      "rerank": 231.0,
+      "generate": 1430.0,
+      "check": 395.0,
+      "total": 2284.0
+     },
+     "cost_usd": 0.000122,
+     "config": "b2",
+     "b3_check_flags": [
+      [
+       "Claim not supported by cited passage"
+      ]
+     ]
+    }
+   },
+   {
+    "event": "done",
+    "data": {}
+   }
+  ]
+ }
+}
