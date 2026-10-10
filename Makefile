@@ -20,7 +20,7 @@ define run
 	else echo "not implemented yet: $(1) (owner and branch in CLAUDE.md section 9)"; exit 1; fi
 endef
 
-.PHONY: help setup freeze fixtures crawl extract chunk index migrate golden-check split eval retrieval-eval stats report-chunking app test lint clean
+.PHONY: help setup freeze fixtures crawl extract chunk index migrate golden-check split eval retrieval-eval stats report-chunking crawl-summary report-ingestion app test lint clean
 
 help:
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-14s %s\n", $$1, $$2}'
@@ -74,6 +74,12 @@ stats: ## bootstrap intervals and McNemar tests from saved eval runs
 
 report-chunking: ## fill reports/02_chunking.md tables from reports/artifacts/
 	$(call run,src.reports.chunking,)
+
+crawl-summary: ## totals across all crawl runs -> reports/artifacts/crawl_summary.json
+	$(call run,src.crawl.summary,)
+
+report-ingestion: ## fill reports/01_ingestion.md tables from reports/artifacts/
+	$(call run,src.reports.ingestion,)
 
 app: ## start the app at http://localhost:8000
 	@if [ -f src/app/server.py ]; then $(PY) -m uvicorn src.app.server:app --port 8000; \
