@@ -27,7 +27,7 @@ Team shortcuts (committed in `.claude/skills/`):
 ### What changed today
 
 1. **Corpus sources changed.** faa.gov blocks automated access (its CDN returns 403 even for robots.txt), and the instructor approved similar official sources. The approved sources, with hosts, seeds and paths, are in `configs/crawl/sources.yaml`:
-   - **GovInfo, 2025 annual edition of 14 CFR:** the drone regulations, one PDF per section (112 sections). Parts 107 (small UAS) and 89 (Remote ID) are in volume 2 and Part 48 (registration) is in volume 1, under `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol<N>/`, for example `.../CFR-2025-title14-vol2/pdf/CFR-2025-title14-vol2-sec107-51.pdf`. Each part's XML is read only to list its sections. The edition date is January 1, 2025, and it is shown as the content age.
+   - **GovInfo, 2025 annual edition of 14 CFR:** the drone regulations, one XML document per section (111 sections). Parts 107 (small UAS) and 89 (Remote ID) are in volume 2 and Part 48 (registration) is in volume 1, under `https://www.govinfo.gov/content/pkg/CFR-2025-title14-vol<N>/`, for example `.../CFR-2025-title14-vol2/xml/CFR-2025-title14-vol2-sec107-51.xml`. Each part's XML is read only to list its sections. The edition date is January 1, 2025, and it is shown as the content age.
    - **Federal Register:** the 8 FAA drone rule documents (final and proposed), full text through the `full_text` route.
    - **GovInfo PDFs:** the official printed PDF of each of those 8 rules.
    - **Know Before You Fly:** guidance pages and PDFs only. It is an education campaign run in partnership with the FAA, not the FAA, and the UI labels it that way.
@@ -45,8 +45,9 @@ Team shortcuts (committed in `.claude/skills/`):
 |---|---|---|
 | Foundation | contracts, config, paths, fixtures, pinned requirements, Makefile, CI | #13, #34 |
 | Crawl | multi-source crawler, robots.txt per host (fixed parser), 1 req/s, raw bytes and manifest | #28, #29 |
-| CFR crawl | 112 GovInfo 14 CFR section PDFs crawled (robots-compliant), extraction support for them | #38 |
-| Extraction | HTML and PDF extraction, PII filter, `data/normalized/` committed (49 documents: 8 Federal Register rules, their 8 GovInfo PDFs, 33 Know Before You Fly pages and PDFs), 5 real samples | #36 |
+| Extraction | HTML and PDF extraction, PII filter, 5 real samples | #36 |
+| CFR sections | 111 GovInfo 14 CFR section XML documents (robots-compliant), parsed by `src/extract/cfr.py` | #38, #41 |
+| Corpus | `data/normalized/`: 160 documents (111 CFR sections, 8 Federal Register rules, their 8 GovInfo PDFs, 33 Know Before You Fly pages and PDFs), every one with an `effective_date` | #41 |
 | Chunking | fixed-size, structure-aware, chunk stats | #17, #18, #19 |
 | Index | bge embeddings, cosine Chroma with `page_type` filter, re-chunk migration with orphan check | #14, #22 |
 | Retrieval | BM25, hybrid RRF, cross-encoder rerank, retrieval metrics | #20, #31, #23, #24 |
@@ -59,13 +60,12 @@ Open: golden items (#16), split (#25), router (#27), all by Dorai.
 ### Critical path from now
 
 ```
-Now: data/normalized/ (49 docs) is on main -> everyone: git pull, make chunk + make index      (now)
-Adinath: CFR sections crawled (#38) -> make extract -> commit updated data/normalized/          (by 17:00)
-   -> everyone: git pull, re-run make chunk + make index (about 160 docs)                       (17:00 to 17:30)
-   -> Sai: real chunk stats, real index, migration fixed@v1 -> struct@v1, report 02             (17:30 to 21:00)
-Adinath: OCR for the 5 PDFs (24 pages) whose tables are images                                  (by 19:00)
+Now: data/normalized/ (160 docs) is on main -> everyone: git pull, make chunk + make index     (now)
+   -> Sai: real chunk stats, real index, migration fixed@v1 -> struct@v1, report 02             (now to 21:00)
+Adinath: OCR for the 5 PDFs (24 pages) whose tables are images -> updated data/normalized/      (by 19:00)
+   -> everyone: git pull, re-run make chunk + make index                                        (after it merges)
 Dorai: golden items by hand from the live source pages                                          (by 18:00)
-   -> make golden-check once data/normalized/ exists, fix quotes, verification by others        (18:30 to 20:00)
+   -> make golden-check (quotes against data/normalized/), verification by others              (18:00 to 20:00)
    -> merge split (#25), make split                                                             (by 20:30)
 Pavan: prompt.py + generate.py (16:30) -> answer.py (18:00) -> server.py + log.py (19:00)
        -> B2 end to end in the app (19:30) -> frontend against the real server              (to 21:30)
@@ -202,6 +202,7 @@ The timed version with owners is in "Current status and plan" above.
 | Language | Python 3.11, virtual env in `.venv/` |
 | Crawl | `requests`, robots.txt rules with RFC 9309 wildcards (`src/crawl/robots.py`), `tenacity` |
 | HTML extraction | `trafilatura` (fallback `beautifulsoup4`) |
+| CFR section XML | parsed in `src/extract/cfr.py` |
 | PDF extraction | `pdfplumber` (text and tables); `pytesseract` + `Pillow` only for tables stored as images |
 | Tokenizer and embeddings | `sentence-transformers` with `BAAI/bge-small-en-v1.5` (384 dim, normalized), its tokenizer for token counts |
 | Vector DB | `chromadb` `PersistentClient` at `chroma/`, collection `skyrules`, cosine |
@@ -223,7 +224,7 @@ UI reference: build the UI from `docs/UI_SPEC.md` (tokens, layout, every compone
 src/
   common/        config.py (loads configs/*.yaml + .env), paths.py, contracts.py
   crawl/         crawler.py, robots.py, ratelimit.py, sources.py
-  extract/       html.py, pdf.py, ocr.py, pii.py, normalize.py
+  extract/       html.py, cfr.py, pdf.py, ocr.py, pii.py, normalize.py
   chunk/         fixed.py, structure.py, stats.py
   index/         embed.py, store.py, migrate.py
   retrieve/      bm25.py, retrieve.py, rerank.py
@@ -339,7 +340,7 @@ Until real data exists, code against `tests/fixtures/` (5 normalized docs, a sma
 
 ```
 crawl (Adinath) -> extract + PII filter (Adinath) -> data/normalized/ committed
-   -> chunk (everyone locally; Sai reports stats) -> index (everyone locally; Nayan reports embedding record)
+   -> chunk + index (everyone locally; Sai reports chunk stats, the embedding record and the migration)
    -> retrieve + rerank (Sai, done) -> answer() pipeline (Pavan) <- generate() (Pavan) <- router (Dorai)
    -> server + frontend (Pavan)
 golden set (Dorai) -> golden-check with quotes (after extraction) -> verification (everyone) -> split (Dorai)
@@ -362,7 +363,7 @@ Times are in "Current status and plan" above. Nobody waits: if your input stage 
 
 Dorai writes all golden items by hand from the approved sources. Every other member verifies 10 of Dorai's items (Dorai assigns them), so no item is verified by its author.
 
-Every member: `data/normalized/` is on `main`, so pull and build your own local index now (section 6), re-run it when the GovInfo CFR sections land, and run the app against it before the demo.
+Every member: `data/normalized/` (160 documents) is on `main`, so pull and build your own local index now (section 6), re-run it whenever `data/normalized/` changes (Adinath's OCR update is next), and run the app against it before the demo.
 
 ### 9.1 Nayan: foundation, embeddings, vector DB, migration, CI
 
@@ -372,11 +373,11 @@ Every member: `data/normalized/` is on `main`, so pull and build your own local 
 ### 9.2 Adinath: crawl, extraction, statistics
 
 - **Done:** A1 crawler (#28), the multi-source crawler with the fixed robots parser (#29), and A2 plus A4 for HTML and PDF: extraction, the PII filter, `data/normalized/` with 49 documents and `tests/fixtures/real_sample/` (#36).
-- **A1b `scrape/govinfo-cfr`:** done (#38). 112 section PDFs of 14 CFR Parts 107, 89 and 48 (2025 edition) from GovInfo, part XML used only to list sections, 0 robots refusals.
-- **A2b `extract/cfr-sections` (next, by 17:00):** the CFR section PDFs are trimmed to their own section by `normalize.py` (#38). Re-run `make extract`, and commit the updated `data/normalized/` and `ingestion_stats.json`. Tell the group chat, because everyone re-runs `make chunk` and `make index` after it.
+- **A1b `scrape/govinfo-cfr`:** done (#38, #41). 111 section XML documents of 14 CFR Parts 107, 89 and 48 (2025 edition) from GovInfo, part XML used only to list sections, 0 robots refusals. The earlier section PDFs are skipped by extraction.
+- **A2b `extract/cfr-sections`:** done (#41). `src/extract/cfr.py` parses the section XML; `data/normalized/` has 160 documents.
 - **A2 `extract/normalize` (done for HTML and PDF in #36; the spec stays here for reference):**
   - `src/extract/html.py` (Federal Register and Know Before You Fly): trafilatura with headings kept as Markdown `#` levels and tables kept as Markdown tables, with a bs4 fallback. Strip navigation, footers and banners.
-  - GovInfo CFR section PDFs: section number and heading as the heading path ("14 CFR Part 107 > Subpart B > 107.51 Operating limitations for small unmanned aircraft"), paragraphs as text, and the edition date as `effective_date`.
+  - GovInfo CFR section XML (`src/extract/cfr.py`): section number and heading as the heading path ("14 CFR Part 107 > Subpart B > 107.51 Operating limitations for small unmanned aircraft"), paragraphs as text, and the edition date as `effective_date`.
   - `src/extract/pdf.py` (GovInfo and Know Before You Fly PDFs): pdfplumber text per page, tables to Markdown, headings by font size and section numbering.
   - `src/extract/normalize.py`:
     - Reads the manifest, skips the quarantined eCFR entries and anything not in an enabled source, and dedupes by content hash (a Federal Register HTML document and its GovInfo PDF are different documents; keep both).
@@ -384,7 +385,7 @@ Every member: `data/normalized/` is on `main`, so pull and build your own local 
     - Writes `data/normalized/` and `reports/artifacts/ingestion_stats.json` (documents per source and type, PDFs, pages with tables, duplicates removed, extraction failures, how often `effective_date` was found).
   - Commit `data/normalized/` in this PR, and copy 5 real normalized docs to `tests/fixtures/real_sample/`.
   - Tell the group chat when it is merged, because every other task builds on it.
-- **A3 `extract/ocr-tables` (needed, by 19:00):** `ingestion_stats.json` lists 5 documents (24 pages) that need OCR. Run pytesseract on those pages, mark `extraction.ocr_used: true`, log failures, and commit the re-extracted documents.
+- **A3 `extract/ocr-tables` (next, by 19:00):** `ingestion_stats.json` lists 5 documents (24 pages) that need OCR. Run pytesseract on those pages, mark `extraction.ocr_used: true`, log failures, and commit the re-extracted documents.
 - **A4 `extract/pii-filter` (done in #36; Dorai writes extra tests, ethics safeguard 1):** `src/extract/pii.py`: email, phone and street-address regex that drops or redacts, logging counts to `reports/artifacts/pii_log.json`. Organizational footer contacts are removed as boilerplate.
 - **A5:** `reports/01_ingestion.md` (Saturday 22:00): the crawl policy and evidence, counts per source, the faa.gov 403, the eCFR incident and quarantine, extraction methods and failures, and PII results. Numbers only from the artifacts.
 - **A6 `eval/stats` (code Saturday evening, run Sunday 10:00):**
@@ -406,7 +407,7 @@ Every member: `data/normalized/` is on `main`, so pull and build your own local 
   - On the dev split: retrieval metrics for B1, B2, A1, A2, A3, and Recall@20 of the pool as the reranker's ceiling.
   - Tune `gate_threshold` on dev only, and record how it was chosen.
   - Then `make eval` on dev for B0, B1, B2, A1, A2, A3 and B3.
-- **S13 `index/real-corpus` (from Nayan's N10, 17:30 to 21:00):** once Adinath's updated `data/normalized/` is on `main`, build `fixed@v1` on the real corpus, run `make migrate FROM=fixed@v1 TO=struct@v1` with the orphan check, run `make report-chunking`, and update report 02's wording for the new sources (GovInfo CFR sections instead of eCFR). Report 02 by Saturday 22:30. The migration and embedding code is Nayan's (#14, #22): tag him if it needs a fix.
+- **S13 `index/real-corpus` (from Nayan's N10, now to 21:00):** `data/normalized/` (160 documents) is on `main`, so build `fixed@v1` on the real corpus, run `make migrate FROM=fixed@v1 TO=struct@v1` with the orphan check, run `make report-chunking`, and update report 02's wording for the new sources (GovInfo CFR sections instead of eCFR). Report 02 by Saturday 22:30. The migration and embedding code is Nayan's (#14, #22): tag him if it needs a fix.
 - **S9:** `reports/04_retrieval_reranking.md` (Saturday 23:00 or Sunday 9:00). Optional Sunday: a Qwen3-8B (Ollama) or Claude Fable 5.1 comparison on the frozen config.
 
 ### 9.4 Pavan: LLM client, generation, backend, frontend
@@ -451,8 +452,8 @@ Every member: `data/normalized/` is on `main`, so pull and build your own local 
 - **D1 `eval/golden-set` (50 items by 18:00 Saturday, before any eval run on the dev split):**
   - Write all items from the approved sources into `eval/golden.jsonl`, reading the live pages in a browser. Re-source the 10 items in #16 first (they cite faa.gov pages).
   - Targets: single_hop 18, multi_hop 7, comparative 5, temporal 5, unanswerable 10, ambiguous 5. Floor: 40 items with every category minimum met.
-  - `source_url` must be the exact URL in the corpus (the GovInfo section URL, the Federal Register `full_text` URL, the GovInfo PDF URL or the Know Before You Fly page URL).
-  - Run the full `make golden-check` as you go (quotes are checked against `data/normalized/`); CFR-section items can be checked once the GovInfo CFR sections land.
+  - `source_url` must be the exact URL in the corpus (the GovInfo CFR section XML URL, the Federal Register `full_text` URL, the GovInfo PDF URL or the Know Before You Fly page URL).
+  - Run the full `make golden-check` as you go (quotes are checked against `data/normalized/`).
   - Assign 10 items to each other member to verify, then merge their verification PRs.
   - Claude Code may build and run the checker but never writes or fixes items (rule 4).
   - `reports/03_golden_set.md` states that Dorai wrote every item and who verified each one.
