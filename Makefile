@@ -47,8 +47,9 @@ crawl: ## crawl faa.gov once into data/raw/ (FORCE=1 to crawl again)
 extract: ## data/raw/ -> data/normalized/ + reports/artifacts/ingestion_stats.json
 	$(call run,src.extract.normalize,)
 
-chunk: ## data/normalized/ -> data/chunks/ (STRATEGY=fixed|struct)
+chunk: ## data/normalized/ -> data/chunks/ + chunk stats (STRATEGY=fixed|struct)
 	$(call run,$(CHUNK_MODULE_$(STRATEGY)),)
+	$(call run,src.chunk.stats,--strategy $(STRATEGY))
 
 index: ## embed chunks into Chroma and build BM25 (STRATEGY=fixed|struct)
 	$(call run,src.index.store,--strategy $(STRATEGY))
