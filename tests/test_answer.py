@@ -7,12 +7,23 @@ import pytest
 from src.common import paths
 from src.common.config import load_config
 from src.generate import answer as answer_mod
+from src.generate import log as log_mod
 from src.generate import prompt
 from src.generate.answer import STAGES, answer, source_name
 from src.generate.claim_check import JUDGE_SYSTEM
 from src.generate.llm import LLMResult, parse_json
 
 CANDIDATES = json.loads((paths.FIXTURES / "candidates.json").read_text())["candidates"]
+
+
+@pytest.fixture(autouse=True)
+def query_log(tmp_path, monkeypatch):
+    """Every answer() logs; keep test runs out of the real logs/ folder."""
+    path = tmp_path / "queries.jsonl"
+    monkeypatch.setattr(log_mod, "QUERY_LOG", path)
+    return path
+
+
 RULE_TEXT = "In uncontrolled airspace, recreational flyers stay at or below 400 feet."
 SUPPORTED = '{"supported": "yes", "reason": "The passage states it."}'
 
@@ -364,10 +375,34 @@ def test_unknown_price_makes_total_cost_unknown():
 
 def test_every_answer_is_logged_once(monkeypatch):
     logged = []
-    monkeypatch.setattr(answer_mod, "log_query", lambda q, r: logged.append((q, r["status"])))
+    monkeypatch.setattr(
+        answer_mod, "log_query", lambda q, r, **kw: logged.append((q, r["status"], kw))
+    )
     run("How high can I fly?", config("b3"), FakeLLM(gen_json((RULE_TEXT, [1]))))
-    run("Which drone should I buy?", config("b3"), FakeLLM('{"insufficient": true}'))
-    assert logged == [("How high can I fly?", "answered"), ("Which drone should I buy?", "refused")]
+    run("Which drone should I buy?", config("b2"), FakeLLM('{"insufficient": true}'))
+    assert logged == [
+        ("How high can I fly?", "answered", {"config_name": "b3", "pilot_type": "not_sure"}),
+        ("Which drone should I buy?", "refused", {"config_name": "b2", "pilot_type": "not_sure"}),
+    ]
+
+
+def test_answer_writes_one_log_line_with_its_trace(query_log):
+    run(
+        "How high can I fly?",
+        config("b3"),
+        FakeLLM(gen_json((RULE_TEXT, [1]))),
+        pilot_type="recreational",
+    )
+    (line,) = query_log.read_text().splitlines()
+    record = json.loads(line)
+    assert (record["config"], record["pilot_type"], record["status"]) == (
+        "b3",
+        "recreational",
+        "answered",
+    )
+    assert record["citations"] == [CANDIDATES[1]["chunk_id"]]
+    assert len(record["candidates"]) == 6 and len(record["reranked"]) == 5
+    assert record["checks"]["per_check"]["claim_support"] is True
 
 
 @pytest.mark.parametrize(
