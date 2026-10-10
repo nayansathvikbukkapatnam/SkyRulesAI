@@ -20,7 +20,7 @@ define run
 	else echo "not implemented yet: $(1) (owner and branch in CLAUDE.md section 9)"; exit 1; fi
 endef
 
-.PHONY: help setup freeze fixtures crawl extract chunk index migrate golden-check split eval stats app test lint clean
+.PHONY: help setup freeze fixtures crawl extract chunk index migrate golden-check split eval retrieval-eval stats app test lint clean
 
 help:
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  make %-14s %s\n", $$1, $$2}'
@@ -65,6 +65,9 @@ split: ## stratified 60/40 dev/test split, seed 42 (refuses to overwrite)
 
 eval: ## run a config on a split (CONFIG=b2 SPLIT=dev; the test split needs FINAL=1)
 	$(call run,src.eval.run_eval,--config $(CONFIG) --split $(SPLIT) $(if $(FINAL),--final))
+
+retrieval-eval: ## Recall@5/20, MRR, nDCG@10 for a config (CONFIG=b2 SPLIT=dev; test needs FINAL=1)
+	$(call run,src.eval.retrieval_metrics,--config $(CONFIG) --split $(SPLIT) $(if $(FINAL),--final))
 
 stats: ## bootstrap intervals and McNemar tests from saved eval runs
 	$(call run,src.eval.stats,)
