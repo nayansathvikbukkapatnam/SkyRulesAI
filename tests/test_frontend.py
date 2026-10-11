@@ -74,8 +74,8 @@ def test_static_files_are_served(client, path, kind):
 def test_page_has_the_required_controls_and_labels():
     assert '<label for="ask-input" class="sr-only">Your drone question</label>' in INDEX
     assert 'placeholder="Ask about registration, airspace, Remote ID, night flying..."' in INDEX
-    assert INDEX.count('class="pilot-btn"') == 3
-    assert 'data-pilot="not_sure" aria-pressed="true"' in INDEX
+    assert "pilot-btn" not in INDEX  # the pilot toggle was removed; the page sends not_sure
+    assert 'const PILOT_TYPE = "not_sure";' in APP_JS and "pilot_type: PILOT_TYPE" in APP_JS
     assert 'id="compare-btn" class="head-btn compare" aria-pressed="false"' in INDEX
     assert 'id="theme-btn" class="head-btn" aria-pressed="false"' in INDEX
     assert 'id="trace-toggle" class="trace-toggle" aria-expanded="false"' in INDEX

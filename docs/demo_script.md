@@ -7,7 +7,6 @@ Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B
 - do **not** run `make migrate` on this laptop: it deletes the `fixed@v1` vectors and the compare view would show "Something went wrong" (see #63)
 - `.env` needs your own LLM key; check `curl -s http://localhost:8000/api/health` says `ok` and both BM25 indexes are `true` before going on stage
 - open http://localhost:8000
-- pilot toggle on "Not sure"
 - close every other tab
 - have `reports/06_final_performance.md` open in a second tab
 
