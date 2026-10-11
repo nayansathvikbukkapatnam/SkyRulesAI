@@ -62,7 +62,7 @@ Contrast: text at least 4.5:1 on its background in both modes.
 
 ## 3. Layout
 
-1. **Header bar** (`--head`): drone mark + "SkyRules AI" + "U.S. drone rules, answered from official sources"; on the right, the pilot toggle, "Compare B2 vs B3", and "Cockpit mode" / "Daylight mode". Wraps on narrow screens.
+1. **Header bar** (`--head`): drone mark + "SkyRules AI" + "U.S. drone rules, answered from official sources"; on the right, "Compare B2 vs B3" and "Cockpit mode" / "Daylight mode". Wraps on narrow screens.
 2. **Reliability banner** (`--tint`): "Student project, not official FAA guidance. Check the linked source before you fly."
 3. **Main area:** max width 1440 px, 24 to 32 px padding, two columns that wrap:
    - **Conversation** (`flex: 999 1 560px`)
@@ -71,8 +71,8 @@ Contrast: text at least 4.5:1 on its background in both modes.
 
 ## 4. Components and states
 
-### 4.1 Pilot toggle
-A segmented control: "Recreational", "Part 107", "Not sure" (default). It uses `aria-pressed` and is sent as `pilot_type` to `/api/ask`. The router uses it, and the answer header shows "For: Recreational flyer" / "Part 107 pilot" / "Not sure, covering both".
+### 4.1 Pilot type (toggle removed)
+The page used to have a "Recreational / Part 107 / Not sure" toggle. Choosing Recreational or Part 107 only turned off the router's pilot-unclear rule and did not change answers, so it was removed. The page always sends `pilot_type: "not_sure"` to `/api/ask`, as the eval runs do: for a licensing question that does not say which kind of pilot is asking, the router asks the model to answer both cases (or the one the sources cover).
 
 ### 4.2 Empty state
 - **Background:** a faint sectional-chart pattern of three dashed airspace rings and a few contour lines, in SVG with low opacity.

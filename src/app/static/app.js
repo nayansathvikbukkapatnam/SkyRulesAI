@@ -36,11 +36,6 @@
     number_date: "Numbers",
     quote_limit: "Quotes",
   };
-  const PILOT_NAMES = {
-    recreational: "Recreational flyer",
-    part107: "Part 107 pilot",
-    not_sure: "Not sure, covering both",
-  };
   const TAG_LABELS = {
     location_live: "Location-specific",
     high_stakes: "High-stakes",
@@ -63,8 +58,11 @@
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const params = new URLSearchParams(window.location.search);
 
+  // The page always sends pilot_type "not_sure", as the eval runs do: the router then answers
+  // both pilot cases when a licensing question does not say which one applies.
+  const PILOT_TYPE = "not_sure";
+
   const state = {
-    pilot: "not_sure",
     compare: false,
     mock: params.get("mock") === "1",
     busy: false,
@@ -138,13 +136,6 @@
     $("theme-moon").hidden = dark;
     $("theme-sun").hidden = !dark;
     storeSet("skyrules-theme", dark ? "dark" : "light");
-  }
-
-  function setPilot(pilot) {
-    state.pilot = pilot;
-    for (const b of document.querySelectorAll(".pilot-btn")) {
-      b.setAttribute("aria-pressed", b.dataset.pilot === pilot ? "true" : "false");
-    }
   }
 
   function setCompare(on) {
@@ -467,7 +458,6 @@
     const citeById = Object.fromEntries(a.citations.map((c) => [c.chunk_id, c]));
     const head = el("div", { class: "answer-head" }, [
       el("span", { class: "answer-title", text: "Verified answer" }),
-      el("span", { class: "pill pilot", text: "For: " + (PILOT_NAMES[turn.pilot] || PILOT_NAMES.not_sure) }),
       tagPill(a),
     ]);
     const list = el("div", { class: "sentences" });
@@ -790,7 +780,6 @@
     archiveCurrent();
     const history = historyMessages();
     const turn = newTurn(question);
-    turn.pilot = state.pilot;
     turn.compare = state.compare;
     state.current = turn;
     $("ask-input").value = "";
@@ -802,7 +791,7 @@
     turn.nodes.root.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
 
     try {
-      await streamAsk({ question, history, pilot_type: state.pilot, compare: state.compare }, (ev) => {
+      await streamAsk({ question, history, pilot_type: PILOT_TYPE, compare: state.compare }, (ev) => {
         if (ev.event === "stage") onStage(turn, ev.data);
         else if (ev.event === "answer") {
           if (ev.data.config === "b2") turn.b2 = ev.data;
@@ -842,7 +831,6 @@
   function init() {
     setTheme(storeGet("skyrules-theme") === "dark");
     $("mock-tag").hidden = !state.mock;
-    for (const b of document.querySelectorAll(".pilot-btn")) b.addEventListener("click", () => setPilot(b.dataset.pilot));
     $("compare-btn").addEventListener("click", () => setCompare(!state.compare));
     $("theme-btn").addEventListener("click", () => setTheme(document.documentElement.getAttribute("data-theme") !== "dark"));
     for (const chip of document.querySelectorAll(".example-chip")) chip.addEventListener("click", () => ask(chip.textContent));

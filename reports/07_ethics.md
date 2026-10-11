@@ -105,7 +105,7 @@ People may treat a chatbot answer as permission to fly. What the interface does 
 | False confidence about a location | Airspace depends on place and time | Router refers location and live questions to B4UFLY and Facility Maps |
 | Stale content | An old rule with a real link looks verified | Dates on every source card; temporal golden items; proposed-rule text is a known gap (section 4) |
 | Prompt injection through retrieved text | Pages are untrusted input | Router stripping, the untrusted-passage prompt rule, planted-page test |
-| Wrong pilot category | Hobby and Part 107 rules differ | Pilot-type toggle; the router asks for both answers when it's unclear |
+| Wrong pilot category | Hobby and Part 107 rules differ | The router asks for both answers when it's unclear |
 | Copying source text | Long verbatim copying | 25-word quote limit checked in code |
 | Breaking a site's crawl rules | It's someone's production server | robots.txt in code, 1 req/s, crawl once; the eCFR incident fixed and disclosed |
 

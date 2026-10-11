@@ -66,13 +66,6 @@ input::placeholder { color: #7F90A4; }
 .brand-name { font-size: 20px; font-weight: 700; letter-spacing: 0.01em; }
 .brand-sub { font-size: 13px; color: #B8C4D2; }
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.pilot-label { font-size: 13px; color: #B8C4D2; }
-.pilot-group { display: flex; gap: 4px; padding: 4px; background: #1B2B40; border-radius: 10px; }
-.pilot-btn {
-  min-height: 36px; padding: 0 14px; border: none; border-radius: 7px; font-size: 14px; font-weight: 500;
-  cursor: pointer; background: transparent; color: #DCE3EA;
-}
-.pilot-btn[aria-pressed="true"] { background: #FFFFFF; color: #0B1522; }
 .head-btn {
   min-height: 36px; display: inline-flex; align-items: center; gap: 8px; padding: 0 14px; border-radius: 8px;
   font-size: 14px; font-weight: 500; cursor: pointer; background: transparent; color: #FFFFFF; border: 1px solid #4A5868;
@@ -181,7 +174,6 @@ input::placeholder { color: #7F90A4; }
 .answer-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .answer-title { font-weight: 600; font-size: 17px; color: var(--ink); }
 .pill { font-size: 12px; font-weight: 500; padding: 3px 10px; border-radius: 999px; }
-.pill.pilot { color: var(--tintInk); background: var(--tint); }
 .pill.tag { color: var(--warnInk); background: var(--warnBg); }
 .figure {
   display: flex; align-items: center; gap: 20px; background: #0E1A2B; color: #FFFFFF;
