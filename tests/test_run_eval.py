@@ -120,6 +120,17 @@ def test_judge_no_error_and_garbage_all_fail():
     assert err["correct"] is False and "TimeoutError" in err["judge"]["reason"]
     junk = am.item_result(ITEMS[0], answer, lambda s, u: "looks right to me")
     assert junk["correct"] is False and "unparseable" in junk["judge"]["reason"]
+    mixed = am.item_result(
+        ITEMS[0], answer, lambda s, u: '{"correct": "yes", "reason": "a"} {"correct": "no"}'
+    )
+    assert mixed["correct"] is False and "unparseable" in mixed["judge"]["reason"]
+
+
+def test_a_repeated_judge_reply_is_read():
+    answer = fake_answer(ITEMS[0]["question"], [], {})
+    reply = '{"correct": "yes", "reason": "same facts", "}\n\n{"correct": "yes", "reason": "b"}'
+    assert am.parse_judgement(reply) == {"correct": True, "reason": "b"}
+    assert am.item_result(ITEMS[0], answer, lambda s, u: reply)["judge"]["correct"] is True
 
 
 def test_without_a_judge_answerable_correctness_is_ungraded():

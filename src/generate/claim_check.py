@@ -203,30 +203,42 @@ def judge_prompt(sentence: str, passages: Sequence[str]) -> str:
     return f"{body}\n\nDoes this passage support this sentence?\n<sentence>{sentence}</sentence>"
 
 
-_VERDICT_FIELD = re.compile(r'"supported"\s*:\s*"(yes|no)"', re.IGNORECASE)
 _REASON_FIELD = re.compile(r'"reason"\s*:\s*"((?:[^"\\]|\\.)*)"')
+_DECODER = json.JSONDecoder()
+
+
+def read_verdict(reply: str, field: str) -> tuple[bool, str] | None:
+    """The yes/no `field` of a judge reply and its reason, or None when it is unclear.
+
+    The model sometimes repeats the JSON object, adds a note after it, or leaves stray
+    characters after valid fields ('..."reason": "x", "}'). Every "field": "yes|no" in
+    the reply is read, and the verdict counts only when they all agree. The reason
+    comes from the first JSON object that parses, else from the raw text.
+    """
+    verdicts = {v.lower() for v in re.findall(rf'"{field}"\s*:\s*"(yes|no)"', reply, re.IGNORECASE)}
+    if len(verdicts) != 1:
+        return None
+    reason = None
+    for brace in re.finditer(r"\{", reply):
+        try:
+            data, _ = _DECODER.raw_decode(reply, brace.start())
+        except json.JSONDecodeError:
+            continue
+        if isinstance(data, dict) and field in data:
+            reason = str(data.get("reason", ""))
+            break
+    if reason is None:
+        found = _REASON_FIELD.search(reply)
+        reason = found.group(1) if found else ""
+    return verdicts.pop() == "yes", reason
 
 
 def parse_verdict(reply: str) -> dict[str, Any]:
     """{"supported": bool, "reason": str}. Anything unparseable is unsupported."""
-    match = re.search(r"\{.*\}", reply, re.S)
-    try:
-        data = json.loads(match.group(0)) if match else None
-    except json.JSONDecodeError:
-        data = None
-    if not isinstance(data, dict):
-        # The model sometimes adds stray characters after valid fields ('..."reason": "x", "}').
-        # Read the verdict field itself, but only when it appears exactly once.
-        verdicts = _VERDICT_FIELD.findall(reply)
-        if len(verdicts) == 1:
-            reason = _REASON_FIELD.search(reply)
-            data = {"supported": verdicts[0], "reason": reason.group(1) if reason else ""}
-    if not isinstance(data, dict) or str(data.get("supported", "")).lower() not in ("yes", "no"):
+    verdict = read_verdict(reply, "supported")
+    if verdict is None:
         return {"supported": False, "reason": f"unparseable judge reply: {reply[:120]!r}"}
-    return {
-        "supported": str(data["supported"]).lower() == "yes",
-        "reason": str(data.get("reason", "")),
-    }
+    return {"supported": verdict[0], "reason": verdict[1]}
 
 
 _QUOTES = str.maketrans({"\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"'})

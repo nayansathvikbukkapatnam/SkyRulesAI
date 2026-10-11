@@ -117,10 +117,24 @@ def test_prompt_wraps_passages_as_untrusted_data():
         # valid fields followed by stray characters: the verdict is read, once
         ('{"supported": "yes", "reason": "matches", "}', True),
         ('"supported": "yes" then "supported": "no"', False),  # ambiguous: fail closed
+        # the object repeated with a note in between: every verdict agrees
+        (
+            '{"supported": "yes", "reason": "a", "supported": "yes"}\n\nNote: duplicate key; '
+            'the correct reply is:\n\n{"supported": "yes", "reason": "a"}',
+            True,
+        ),
+        ('{"supported": "no", "reason": "a"}\n{"supported": "no", "reason": "b"}', False),
+        ('{"supported": "yes", "reason": "a"}\n{"supported": "no", "reason": "b"}', False),
+        ('{"supported": "yes", "reason": "a", "supported": "no"}', False),  # duplicate key
     ],
 )
 def test_parse_verdict(reply, supported):
     assert parse_verdict(reply)["supported"] is supported
+
+
+def test_parse_verdict_keeps_the_reason_of_a_repeated_reply():
+    reply = '{"supported": "yes", "reason": "stated"}\nAgain: {"supported": "yes", "reason": "x"}'
+    assert parse_verdict(reply) == {"supported": True, "reason": "stated"}
 
 
 def test_judge_error_is_unsupported():
