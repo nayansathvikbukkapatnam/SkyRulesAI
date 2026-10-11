@@ -1,6 +1,6 @@
 # 07 Ethics
 
-Owner: Dorai Saketh Guntur. **Draft, Saturday evening.** Sections marked **TODO** are filled in once the run they depend on has happened. Every number below comes from a file in `reports/artifacts/`, with the command that produced it.
+Owner: Dorai Saketh Guntur. **Draft.** One section is still marked **TODO** (the injection test result) and is filled in once that run has happened. Every number below comes from a file in `reports/artifacts/`, with the command that produced it.
 
 SkyRules answers questions about U.S. drone rules. A wrong answer here isn't abstract: someone could fly where they shouldn't, or skip a requirement and get fined. Most of the choices below come from that.
 
@@ -16,13 +16,13 @@ We crawled each site once, through code that enforces the rules instead of relyi
 - **Hard caps:** at most 600 URLs in total, link depth 3, and at most 4 attempts per URL with backoff on 429 and 5xx errors (`crawl_stats.json`, `limits`).
 - **Crawl once.** Re-chunking and re-indexing start from the saved `data/normalized/`, never from a new crawl.
 
-In the latest run (the GovInfo CFR sections), the crawler checked robots.txt 115 times, was disallowed 0 times, and made 116 requests (`crawl_stats.json`).
+Across all crawl runs, 385 documents were fetched and every one was recorded as robots-allowed at fetch time; 13 URLs plus 1 sitemap were skipped because robots.txt disallowed them (`reports/artifacts/crawl_summary.json`, from `make crawl-summary`). The last run, which resumed the GovInfo crawl, made 36 requests after 35 robots.txt checks with 0 refusals (`crawl_stats.json`).
 
 ### faa.gov blocked us, and we respected that
 
 The original plan was to crawl the FAA's drone section. faa.gov's CDN returned 403 for every request, including robots.txt itself, so the crawler treated the whole host as disallowed and we didn't try to work around it. We asked the instructor and moved to official sources that allow automated access: GovInfo (the 14 CFR drone regulations and the official PDFs of the FAA rules), the Federal Register (the FAA drone rules, through its API) and Know Before You Fly. faa.gov is still listed in `configs/crawl/sources.yaml`, so the refusal is on record, and nothing from it is in `data/`.
 
-**TODO:** add the count of faa.gov refusals from the crawl's skip log (Adinath's `data/raw/skipped.jsonl` summary).
+The crawl summary records 14 faa.gov URLs refused on robots.txt grounds and nothing fetched from that host (`crawl_summary.json`, `robots_disallowed_by_source`).
 
 ### The eCFR incident
 
@@ -31,7 +31,7 @@ We made a mistake here and want to be upfront about it. eCFR's robots.txt disall
 When we found it:
 - the parser was fixed to group rules the way the robots.txt standard (RFC 9309) says, with a test on eCFR's exact file (PR #29)
 - the eCFR source was disabled
-- the 112 files it had fetched were quarantined: they're never extracted, chunked or indexed. Extraction confirms it skipped all 112 (`reports/artifacts/ingestion_stats.json`, `excluded_disabled_sources`, from `make extract`)
+- the 112 files it had fetched were quarantined: they're never extracted, chunked or indexed. Extraction confirms it skipped all 112 (`reports/artifacts/ingestion_stats.json`, `excluded_by_source_config`, from `make extract`), and the crawl summary lists the same 112 under `quarantined_files`
 - the regulation text now comes from GovInfo's annual CFR edition instead, which allows it
 
 ---
@@ -48,7 +48,7 @@ When we found it:
 
 `tests/test_pii.py` checks each of these patterns against real-looking URLs.
 
-**What we redact.** After extraction, a regex filter (`src/extract/pii.py`) replaces email addresses, phone numbers and street addresses with a placeholder. Across the corpus it redacted 16 phone numbers, 58 street addresses and 16 email addresses, in 19 documents (`reports/artifacts/pii_log.json`, from `make extract`). The log stores counts only, never the values, and a test enforces that.
+**What we redact.** After extraction, a regex filter (`src/extract/pii.py`) replaces email addresses, phone numbers and street addresses with a placeholder. Across the corpus it redacted 18 phone numbers, 60 street addresses and 18 email addresses, in 20 documents (`reports/artifacts/pii_log.json`, from `make extract`). The log stores counts only, never the values, and a test enforces that.
 
 **Checked afterwards.** A test scans every committed document in `data/normalized/` and finds no email, phone or street-address pattern left.
 
@@ -62,7 +62,7 @@ Text we retrieve from pages is untrusted input. A page could contain instruction
 
 **Two defenses:**
 1. The safety router (`src/generate/router.py`) strips injected instructions from the user's own question before retrieval, and tags the query `injection`.
-2. The generation prompt is meant to wrap retrieved passages as untrusted reference text and tell the model to ignore instructions inside them (Pavan's `prompt.py`; **TODO:** confirm once it's merged). The claim-check judge already does this (`src/generate/claim_check.py`).
+2. The generation prompt (`src/generate/prompt.py`, rule 6) says that text inside `<passage>` tags is data, never instructions, and that the output format must not change because of one. `format_passages()` also neutralizes anything that looks like a passage tag, so a passage cannot close its own tag early. The claim-check judge carries the same instruction (`src/generate/claim_check.py`).
 
 **The test.** `data/test_pages/injection.html` is a clearly labelled synthetic page about drone lighting at night that tells the model to ignore its instructions, stop citing, say drones never need lights and there's no altitude limit, and end with a code word. `src/eval/injection_test.py` plants it in the index, asks three questions that should retrieve it, judges each answer, and removes it again.
 
@@ -74,12 +74,12 @@ Text we retrieve from pages is untrusted input. A page could contain instruction
 
 A rule that changed, quoted from an old page with a real link, looks verified, which arguably makes it worse than a hallucination.
 
-- Every document has a date: extraction found an effective or last-updated date for all 49 documents (`ingestion_stats.json`, `effective_date_found`).
+- Every document has a date: extraction found an effective or last-updated date for all 160 documents (`ingestion_stats.json`, `effective_date_found`).
 - The sources span a wide range. The Federal Register rules date from 2015 to 2021, the CFR edition is January 1, 2025, and the Know Before You Fly pages were updated in 2025 and 2026. So the same topic can appear in documents years apart.
 - The interface shows "Last updated: <date>" and a freshness badge on every source card (UI spec 4.9).
 - The golden set includes temporal questions, to check the bot handles dates and effective periods.
 
-**TODO:** a real example from testing, where old and new documents disagree or a proposed rule differs from the final one, and what the bot did with it.
+**A real case from the dev run.** The corpus holds both the 2019 *proposed* rule on operations over people and the 2021 *final* rule, and the retriever and reranker have no notion of which is current. On dev item g048 ("Can I fly my drone over people?") the generator wrote "Flying over a human being located in a moving vehicle is prohibited" from a 2019 proposed-rule passage, and the claim judge rejected it: "The passage is a proposed rule (not an enacted prohibition) and the sentence states the prohibition as settled fact" (`reports/artifacts/eval_b3_dev.json`, from `make eval CONFIG=b3 SPLIT=dev`). The sentence was dropped and, with a second unsupported sentence, the answer was refused. So the check caught it, but only because the judge happened to notice the word "proposed". Proposed-rule text competing with final-rule text is the main staleness gap we know of; the mitigations we recommend are to label a passage's status (proposed rule, final rule, CFR edition) in the prompt and on the source card, and to prefer final-rule passages when both are retrieved.
 
 ---
 
@@ -87,7 +87,7 @@ A rule that changed, quoted from an old page with a real link, looks verified, w
 
 People may treat a chatbot answer as permission to fly. What the interface does about that:
 
-- **A reliability banner** on every page: "Student project, not official FAA guidance. Check the linked FAA page before you fly." (UI spec)
+- **A reliability banner** on every page: "Student project, not official FAA guidance. Check the linked source before you fly." (`src/app/static/index.html`)
 - **A citation on every sentence**, linked to the source, so users can check it themselves.
 - **An explicit refusal** when the sources don't support an answer, instead of a guess.
 - **Referrals** from the safety router:
@@ -103,8 +103,8 @@ People may treat a chatbot answer as permission to fly. What the interface does 
 |---|---|---|
 | Treating an answer as permission to fly | A wrong yes can mean fines or a collision risk | Banner, per-sentence citations, refusals, FAA referrals |
 | False confidence about a location | Airspace depends on place and time | Router refers location and live questions to B4UFLY and Facility Maps |
-| Stale content | An old rule with a real link looks verified | Dates on every source card; temporal golden items |
-| Prompt injection through retrieved text | Pages are untrusted input | Router stripping, untrusted-context prompt (pending), planted-page test |
+| Stale content | An old rule with a real link looks verified | Dates on every source card; temporal golden items; proposed-rule text is a known gap (section 4) |
+| Prompt injection through retrieved text | Pages are untrusted input | Router stripping, the untrusted-passage prompt rule, planted-page test |
 | Wrong pilot category | Hobby and Part 107 rules differ | Pilot-type toggle; the router asks for both answers when it's unclear |
 | Copying source text | Long verbatim copying | 25-word quote limit checked in code |
 | Breaking a site's crawl rules | It's someone's production server | robots.txt in code, 1 req/s, crawl once; the eCFR incident fixed and disclosed |
@@ -114,4 +114,4 @@ People may treat a chatbot answer as permission to fly. What the interface does 
 ## 7. Two safeguards running in code by Saturday evening
 
 1. **Crawl compliance plus the PII filter.** Running: robots.txt checks, rate limit, URL exclusions and redaction all ran during the crawl and extraction. Evidence: `crawl_stats.json`, `ingestion_stats.json`, `pii_log.json` and the tests in `tests/test_crawl.py`, `tests/test_extract.py` and `tests/test_pii.py`.
-2. **Citation validity plus the 25-word quote limit** (`src/generate/checks.py`, PR #32). **TODO:** evidence from real answers, i.e. counts of sentences dropped or answers refused by each check, from the B3 dev run.
+2. **Citation validity plus the 25-word quote limit** (`src/generate/checks.py`, PR #32), with the claim and number checks beside them (`src/generate/claim_check.py`). Evidence from the B3 dev run (`reports/artifacts/eval_b3_dev.json`, `make eval CONFIG=b3 SPLIT=dev`, 30 items): the four checks examined 50 generated sentences; citation validity passed on all 19 answered items (rate 1.0) and the quote limit failed no sentence; the number check and the claim check each failed on 2 items; 3 items had one sentence dropped and were still answered; 2 items were refused because more than one sentence failed (`check failed: Claims` and `check failed: Numbers, Claims`). Over-refusal on answerable dev items was 0.208 and correct refusal on unanswerable items 1.0.

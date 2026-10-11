@@ -3,7 +3,7 @@
 Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B3 config before presenting. Results numbers come from `reports/06_final_performance.md` on the day, never from memory.
 
 **Before starting:**
-- `git pull`, `make chunk STRATEGY=struct && make index STRATEGY=struct`, `make app`
+- `git pull`, then both indexes (compare mode needs B2's `fixed@v1` too): `make chunk STRATEGY=fixed && make index STRATEGY=fixed && make chunk STRATEGY=struct && make index STRATEGY=struct`, then `make app`
 - open http://localhost:8000
 - pilot toggle on "Not sure"
 - close every other tab
@@ -36,7 +36,7 @@ Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B
 ## 4:00 to 5:00 | A refusal (speaker: Dorai)
 
 - Ask: **"Which drone should I buy?"**
-- Show the refusal card: "I don't have that information in the FAA pages I can search."
+- Show the refusal card: "I don't have that information in the official sources I can search."
 - One line: we measure both sides of this, correct refusals on unanswerable questions and over-refusals on answerable ones. Point to the numbers in report 06.
 
 ## 5:00 to 6:00 | Prompt injection (speaker: Dorai)
@@ -47,7 +47,8 @@ Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B
 
 ## 6:00 to 7:30 | B2 vs B3 (speaker: Nayan or Sai)
 
-- Turn on the compare toggle and ask a question where B2 fails a check. **TODO:** pick it from the dev run on Sunday morning.
+- Turn on the compare toggle and ask **"I'm 17 and want to start paid drone work with a 45-pound drone. Am I old enough for a remote pilot certificate, and is my drone small enough for Part 107?"** (dev item g019). In the dev runs B2 gave the age but missed the 55-pound limit and was graded wrong, while B3 answered both parts and was graded correct (`reports/artifacts/eval_b2_dev.json` and `eval_b3_dev.json`).
+- Backup: **"Can I fly my drone over people?"** (g048), where B3's checks flag a sentence taken from the 2019 proposed rule. The model is not deterministic, so rehearse both on Sunday morning and keep the one that still shows the contrast.
 - Show the B2 card's warning flags ("No citation", "Number not found in source") next to the clean B3 answer.
 - One line on the ablation: one change at a time from B2 to B3.
 
