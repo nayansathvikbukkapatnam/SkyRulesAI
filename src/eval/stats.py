@@ -158,6 +158,24 @@ def b0_incorrect_subset(runs: dict[str, dict]) -> dict[str, Any] | None:
     return {"ids": wrong, "n": len(wrong), "correctness": per_config}
 
 
+CATEGORIES = ("single_hop", "multi_hop", "comparative", "temporal", "unanswerable", "ambiguous")
+
+
+def by_category(runs: dict[str, dict]) -> dict[str, dict[str, Any]]:
+    """Correctness per golden category for each config (small n: read the intervals)."""
+    out: dict[str, dict[str, Any]] = {}
+    for config, run in runs.items():
+        out[config] = {}
+        for category in CATEGORIES:
+            values = [
+                bool(item["metrics"]["correct"])
+                for item in run["items"]
+                if item.get("category") == category and item["metrics"].get("correct") is not None
+            ]
+            out[config][category] = bootstrap_rate(values)
+    return out
+
+
 def comparisons(runs: dict[str, dict]) -> list[dict[str, Any]]:
     pairs = list(zip(ABLATION, ABLATION[1:], strict=False)) + list(EXTRA_PAIRS)
     out = []
@@ -207,6 +225,7 @@ def compute(runs: dict[str, dict], split: str) -> dict[str, Any]:
         "per_config": per_config,
         "comparisons": comparisons(runs),
         "b0_incorrect_subset": b0_incorrect_subset(runs),
+        "correctness_by_category": by_category(runs),
     }
 
 
@@ -286,6 +305,26 @@ def block_ablation(stats: dict | None) -> str:
     return _table(header, rows) + f"\n\n{note}"
 
 
+CATEGORY_CONFIGS = ("b0", "b2", "b3")
+
+
+def block_by_category(stats: dict | None) -> str:
+    if not stats or not stats.get("correctness_by_category"):
+        return _missing("stats", "make stats")
+    per = stats["correctness_by_category"]
+    configs = [c for c in CATEGORY_CONFIGS if c in per]
+    rows = []
+    for category in CATEGORIES:
+        n = max((per[c][category]["n"] for c in configs), default=0)
+        rows.append([category, n, *[_ci(per[c][category]) for c in configs]])
+    header = ["Question type", "Items", *[f"{c.upper()} correctness" for c in configs]]
+    note = (
+        "Each type has only a few items, so its intervals are wide: read them as a pointer "
+        "to where the system is weak, not as a finding on their own."
+    )
+    return _table(header, rows) + f"\n\n{note}"
+
+
 def block_leakage(stats: dict | None) -> str:
     if not stats:
         return _missing("stats", "make stats")
@@ -323,6 +362,7 @@ def render_report(text: str, stats: dict | None, split: str, artifacts: Path) ->
         "baselines": lambda: block_baselines(stats),
         "ablation": lambda: block_ablation(stats),
         "leakage": lambda: block_leakage(stats),
+        "by_category": lambda: block_by_category(stats),
         "failures": lambda: block_failures(split, artifacts),
     }
 

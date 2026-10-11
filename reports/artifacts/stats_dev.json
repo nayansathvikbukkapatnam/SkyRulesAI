@@ -1,7 +1,7 @@
 {
   "command": "make stats SPLIT=dev",
   "split": "dev",
-  "computed_at": "2026-10-11T01:42:22+00:00",
+  "computed_at": "2026-10-11T03:06:53+00:00",
   "method": {
     "interval": "percentile bootstrap, 95%, resampling items",
     "resamples": 10000,
@@ -543,6 +543,274 @@
         "low": 0.2857,
         "high": 0.7857,
         "n": 14
+      }
+    }
+  },
+  "correctness_by_category": {
+    "b0": {
+      "single_hop": {
+        "rate": 0.5455,
+        "low": 0.2727,
+        "high": 0.8182,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 0.8333,
+        "low": 0.5,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      }
+    },
+    "b1": {
+      "single_hop": {
+        "rate": 0.9091,
+        "low": 0.7273,
+        "high": 1.0,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.75,
+        "low": 0.25,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      }
+    },
+    "b2": {
+      "single_hop": {
+        "rate": 0.9091,
+        "low": 0.7273,
+        "high": 1.0,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      }
+    },
+    "a1": {
+      "single_hop": {
+        "rate": 0.8182,
+        "low": 0.5455,
+        "high": 1.0,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      }
+    },
+    "a2": {
+      "single_hop": {
+        "rate": 0.9091,
+        "low": 0.7273,
+        "high": 1.0,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      }
+    },
+    "a3": {
+      "single_hop": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.75,
+        "low": 0.25,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      }
+    },
+    "b3": {
+      "single_hop": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 11
+      },
+      "multi_hop": {
+        "rate": 0.75,
+        "low": 0.25,
+        "high": 1.0,
+        "n": 4
+      },
+      "comparative": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "temporal": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
       }
     }
   }

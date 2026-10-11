@@ -1,0 +1,36 @@
+{
+  "counts": {
+    "retrieval_miss": 8,
+    "rank_failure": 3,
+    "chunk_boundary": 0,
+    "extraction_failure": 0,
+    "stale_content": 0,
+    "reranker_demotion": 2,
+    "generator_ignored_context": 2,
+    "invalid_citation": 0,
+    "over_refusal": 0,
+    "hallucination": 0
+  },
+  "total": 15,
+  "unlabelled": 0,
+  "minimum": 15,
+  "meets_minimum": true,
+  "labelled_by": [
+    "Adinath"
+  ],
+  "configs": [
+    "b2",
+    "b3"
+  ],
+  "by_config": {
+    "b3": 7,
+    "b2": 8
+  },
+  "by_failure_type": {
+    "incorrect_answer": 7,
+    "over_refusal": 8
+  },
+  "command": "python -m src.eval.failure_labels count --split dev",
+  "split": "dev",
+  "computed_at": "2026-10-11T03:06:33+00:00"
+}
