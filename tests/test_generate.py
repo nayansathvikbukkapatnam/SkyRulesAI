@@ -6,7 +6,12 @@ import pytest
 
 from src.common import paths
 from src.generate import prompt
-from src.generate.generate import generate, invalid_passage_marker, rewrite_followup
+from src.generate.generate import (
+    generate,
+    invalid_passage_marker,
+    looks_like_followup,
+    rewrite_followup,
+)
 from src.generate.llm import LLMError, LLMResult, parse_json
 
 CANDIDATES = json.loads((paths.FIXTURES / "candidates.json").read_text())["candidates"]
@@ -277,6 +282,38 @@ def test_no_history_means_no_call():
     llm = FakeLLM()
     assert rewrite_followup("How high can I fly?", [], llm) == "How high can I fly?"
     assert llm.calls == []
+
+
+def test_a_standalone_question_is_not_rewritten_even_with_history():
+    # Rewriting it added context from earlier turns ("... in Dallas", "... in the U.S.")
+    # and reworded it differently on every turn.
+    llm = FakeLLM()
+    q = "How high can I fly as a hobby flyer?"
+    assert rewrite_followup(q, HISTORY, llm) == q
+    assert llm.calls == []
+
+
+@pytest.mark.parametrize(
+    "question, followup",
+    [
+        ("What about at night?", True),
+        ("And under Part 107?", True),
+        ("Does it need Remote ID?", True),
+        ("At night?", True),
+        ("Same for Part 107 pilots?", True),
+        ("Do they need a waiver for that?", True),
+        ("How high can I fly as a hobby flyer?", False),
+        ("Can I fly my drone at night?", False),
+        ("What is Remote ID?", False),
+        (
+            "How do recreational flyers and commercial drone pilots each show they are "
+            "qualified to fly?",
+            False,  # long and self-contained, even with "each" and "they"
+        ),
+    ],
+)
+def test_looks_like_followup(question, followup):
+    assert looks_like_followup(question) is followup
 
 
 def test_rewrite_returns_a_standalone_question():

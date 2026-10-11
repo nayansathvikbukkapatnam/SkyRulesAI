@@ -16,6 +16,7 @@ it rather than the citation silently disappearing.
 
 from __future__ import annotations
 
+import re
 from collections.abc import Mapping, Sequence
 from typing import Any, Literal, Protocol, TypedDict
 
@@ -75,6 +76,31 @@ def invalid_passage_marker(n: Any) -> str:
     return f"invalid-passage-{n}"
 
 
+# A question needs the conversation only when it starts like a follow-up, or is short and
+# points back at something. Anything else is rewritten from nothing but the history, which
+# added context the user never asked for (a new question got an earlier "in Dallas"), and
+# made the same question come back reworded, and answered differently, on each turn.
+_FOLLOWUP_OPENER = re.compile(
+    r"^\W*(?:and|also|but|or|so|then|same|what about|how about|what if)\b", re.IGNORECASE
+)
+_REFERENCE = re.compile(
+    r"\b(?:it|its|it's|that|this|those|these|they|them|their|there|he|she|his|her|"
+    r"one|ones|each|both|either|same|former|latter)\b",
+    re.IGNORECASE,
+)
+MAX_FOLLOWUP_WORDS = 12
+MAX_FRAGMENT_WORDS = 3
+
+
+def looks_like_followup(question: str) -> bool:
+    """True when a question depends on earlier turns ("What about at night?", "Does it
+    need Remote ID?"); False for one that stands on its own."""
+    words = re.findall(r"[\w'-]+", question)
+    if len(words) <= MAX_FRAGMENT_WORDS or _FOLLOWUP_OPENER.search(question):
+        return True
+    return len(words) <= MAX_FOLLOWUP_WORDS and _REFERENCE.search(question) is not None
+
+
 def rewrite_followup(question: str, history: Sequence[Mapping[str, str]], client: LLM) -> str:
     """A standalone version of a follow-up question; one LLM call, only with history.
 
@@ -82,7 +108,7 @@ def rewrite_followup(question: str, history: Sequence[Mapping[str, str]], client
     call fails or returns nothing usable, the original question is returned: the
     rewrite only helps retrieval, so it must never block an answer.
     """
-    if not history:
+    if not history or not looks_like_followup(question):
         return question
     try:
         r = client.complete(
