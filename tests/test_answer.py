@@ -9,7 +9,7 @@ from src.common.config import load_config
 from src.generate import answer as answer_mod
 from src.generate import log as log_mod
 from src.generate import prompt
-from src.generate.answer import STAGES, answer, source_name
+from src.generate.answer import STAGES, _run_checks, answer, source_name
 from src.generate.claim_check import JUDGE_SYSTEM
 from src.generate.llm import LLMResult, parse_json
 
@@ -488,3 +488,16 @@ def test_answer_writes_one_log_line_with_its_trace(query_log):
 )
 def test_source_names(url, name):
     assert source_name(url) == name
+
+
+def test_run_checks_passes_the_question_to_the_number_check():
+    # Dev item g019: "45-pound" came from the question; the chunk only states the 55-pound limit.
+    sentences = [{"text": "A 45-pound drone is under the 55-pound limit.", "chunk_ids": ["c1"]}]
+    rule = "Part 107 covers small unmanned aircraft weighing less than 55 pounds."
+    passages = [{"chunk_id": "c1", "text": rule}]
+    assert not _run_checks(sentences, passages, [], ["number_date"], None)["ok"]
+    checked = _run_checks(
+        sentences, passages, [], ["number_date"], None,
+        question="Is my 45-pound drone small enough for Part 107?",
+    )  # fmt: skip
+    assert checked["ok"] and checked["per_check"] == {"number_date": True}

@@ -126,12 +126,19 @@ def test_history_is_trimmed_to_the_last_six_turns():
 
 
 def test_compare_sends_b3_then_b2_with_flags(monkeypatch):
-    monkeypatch.setattr(server, "b3_check_flags", lambda b2, cfg, client: [["No citation"]])
+    seen = {}
+
+    def flags(b2, cfg, client, question=None):
+        seen["question"] = question
+        return [["No citation"]]
+
+    monkeypatch.setattr(server, "b3_check_flags", flags)
     with make_client(fake_answer()) as tc:
         ev = events(ask(tc, compare=True))
     answers = [d for e, d in ev if e == "answer"]
     assert [a["config"] for a in answers] == ["b3", "b2"]
     assert answers[1]["b3_check_flags"] == [["No citation"]]
+    assert seen["question"] == "How high can I fly?"  # the number check needs the question
     assert {d["config"] for e, d in ev if e == "stage"} == {"b3", "b2"}
     assert ev[-1][0] == "done"
 

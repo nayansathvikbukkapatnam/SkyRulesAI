@@ -229,6 +229,48 @@ def test_computed_conversion_is_still_caught():
     assert not result["ok"] and "0.66 pound" in result["missing"]
 
 
+# --- Numbers from the question and rule references ------------------------------------
+
+
+def test_numbers_restated_from_the_question_are_given():
+    # Dev item g020: "a 1-pound drone" was the user's own number, not a claim from a source.
+    chunk = "Remote ID is needed to fly legally if a drone weighs over 0.55 pounds."
+    sentence = "A drone over 0.55 pounds needs Remote ID, so a 1-pound drone does."
+    assert number_date_check(sentence, [chunk])["missing"] == ["1 pound"]
+    question = "I fly a 1-pound drone just for fun. Do I need Remote ID?"
+    assert number_date_check(sentence, [chunk], question) == {"ok": True, "missing": []}
+
+
+def test_a_conversion_the_model_computed_is_still_caught_with_the_question():
+    # PR #62's case: 0.66 pounds is in neither the question nor the chunk.
+    chunk = "You need to register your drone if it weighs over 0.55 pounds."
+    result = number_date_check(
+        "A 300-gram drone is about 0.66 pounds.", [chunk], "Must I register a 300-gram drone?"
+    )
+    assert not result["ok"] and result["missing"] == ["0.66 pound"]
+
+
+def test_rule_references_are_not_quantities():
+    # Dev item g047 was refused because "107" in "Part 107" was not in the cited chunk.
+    chunk = "To be eligible for a remote pilot certificate, a person must be at least 16 years old."
+    assert number_date_check("Under Part 107 you must be at least 16 years old.", [chunk])["ok"]
+    chunk2 = "The accident report is due within 10 calendar days of the operation."
+    assert number_date_check("Section 107.9 gives you 10 calendar days to report.", [chunk2])["ok"]
+    # A rule number next to a real number does not excuse the real one.
+    result = number_date_check("Part 107 limits altitude to 500 feet.", [chunk2])
+    assert result["missing"] == ["500 feet"]
+
+
+def test_check_sentences_passes_the_question_to_the_number_check():
+    sentences = [{"text": "A 45-pound drone is under the 55-pound limit.", "chunk_ids": ["c1"]}]
+    chunks = {"c1": "Part 107 covers small unmanned aircraft weighing less than 55 pounds."}
+    assert not check_sentences(sentences, chunks, checks=["number_date"])["ok"]
+    result = check_sentences(
+        sentences, chunks, checks=["number_date"], question="Is my 45-pound drone small enough?"
+    )
+    assert result["ok"]
+
+
 # --- Verbatim support (no judge call) and judge instructions ---------------------------
 
 LONG = (

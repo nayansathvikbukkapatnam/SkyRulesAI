@@ -102,13 +102,20 @@ def _sse(event: str, data: Any) -> str:
     return f"event: {event}\ndata: {body}\n\n"
 
 
-def b3_check_flags(b2: dict, b3_config: dict, client: Any) -> list[list[str]]:
+def b3_check_flags(
+    b2: dict, b3_config: dict, client: Any, question: str | None = None
+) -> list[list[str]]:
     """For each B2 sentence, the B3 checks it would fail, as UI flag text."""
     if b2.get("status") != "answered":
         return []
     basic, claims = answer_mod._validate(b3_config)
     checked = answer_mod._run_checks(
-        b2["sentences"], b2["trace"]["reranked"], basic, claims, answer_mod._MeteredClient(client)
+        b2["sentences"],
+        b2["trace"]["reranked"],
+        basic,
+        claims,
+        answer_mod._MeteredClient(client),
+        question=question,
     )
     flags = []
     for v in checked["sentences"]:
@@ -260,7 +267,7 @@ def _stream(
                 if name == COMPARE_CONFIG and compare:
                     try:
                         result["b3_check_flags"] = b3_check_flags(
-                            result, state.configs[MAIN_CONFIG], state.client
+                            result, state.configs[MAIN_CONFIG], state.client, question
                         )
                     except Exception as e:  # flags are extra; the B2 answer still goes out
                         result["b3_check_flags"] = None

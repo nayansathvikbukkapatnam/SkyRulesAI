@@ -140,8 +140,13 @@ def _run_checks(
     basic: list[str],
     claims: list[str],
     client: Any,
+    question: str | None = None,
 ) -> dict[str, Any]:
-    """Both check modules over the answer; per-check pass flags and merged per-sentence verdicts."""
+    """Both check modules over the answer; per-check pass flags and merged per-sentence verdicts.
+
+    `question` is passed to the number check so a number the user gave is not treated
+    as a claim the chunks must back.
+    """
     requested = basic + claims
     chunk_texts = {p["chunk_id"]: p["text"] for p in passages}
     merged: list[dict[str, Any]] = [
@@ -156,7 +161,9 @@ def _run_checks(
             per_check[name] = all(v[name]["ok"] for v in res["sentences"])
     if claims:
         judge = make_judge(client) if "claim_support" in claims else None
-        res = claim_check.check_sentences(sentences, chunk_texts, judge=judge, checks=claims)
+        res = claim_check.check_sentences(
+            sentences, chunk_texts, judge=judge, checks=claims, question=question
+        )
         for m, v in zip(merged, res["sentences"], strict=True):
             m.update({k: v[k] for k in (*claims, "error") if k in v})
         if "number_date" in claims:
@@ -357,7 +364,7 @@ def answer(
     stages.start("check")
     if basic or claims:
         try:
-            checked = _run_checks(sentences, passages, basic, claims, llm)
+            checked = _run_checks(sentences, passages, basic, claims, llm, question=query)
         except Exception as e:  # any check error means refuse (CLAUDE.md rule 7)
             trace["checks"] = {"ok": False, "error": f"{type(e).__name__}: {e}"}
             return refuse("check", f"check error: {type(e).__name__}: {e}", passages)

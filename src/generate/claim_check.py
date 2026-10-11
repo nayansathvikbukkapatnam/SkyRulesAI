@@ -87,6 +87,12 @@ _WORD_NUM = re.compile(
     re.I,
 )
 _CITATION_MARK = re.compile(r"\[\d+\]")
+# A number that names a rule, not a quantity: "Part 107", "§ 107.9", "Category 2".
+_REFERENCE = re.compile(
+    r"(?:\bparts?|§+|\bsec\.?|\bsections?|\bsubparts?|\bcategor(?:y|ies)|\btitle|\bchapter"
+    r"|\bappendix|\bdocket|\bparagraph)\s*(?:no\.?\s*)?(?P<v>\d[\d.]*)",
+    re.I,
+)
 
 
 def _value(raw: str) -> str:
@@ -146,14 +152,30 @@ def extract_facts(text: str) -> dict[str, set]:
     return {"dates": dates, "numbers": numbers}
 
 
-def number_date_check(sentence: str, cited_texts: Sequence[str]) -> dict[str, Any]:
+def _reference_values(text: str) -> set[str]:
+    """Values that name a rule in the text ("Part 107" -> {"107"}), not quantities."""
+    return {_value(m["v"].rstrip(".")) for m in _REFERENCE.finditer(text)}
+
+
+def number_date_check(
+    sentence: str, cited_texts: Sequence[str], question: str | None = None
+) -> dict[str, Any]:
     """Every date and number in the sentence must appear in a cited chunk.
 
     A number with a unit needs the same value and unit in a chunk, or the bare value
     (a chunk may write "400" in a table column headed "feet"). A bare number in the
     sentence matches the value with any unit.
+
+    Two kinds of number are not claims the chunks must back: a value the user gave in
+    the question and the sentence restates with the same unit ("a 45-pound drone"),
+    and a value that names a rule ("Part 107", "§ 107.9"). A number the model
+    computed from the question ("300 grams is about 0.66 pounds") is still checked,
+    because 0.66 pounds is not in the question.
     """
     claimed = extract_facts(sentence)
+    given = extract_facts(question) if question else {"dates": set(), "numbers": set()}
+    given_values = {v for v, _ in given["numbers"]}
+    references = _reference_values(sentence)
     found = {"dates": set(), "numbers": set()}
     for text in cited_texts:
         facts = extract_facts(text)
@@ -168,9 +190,15 @@ def number_date_check(sentence: str, cited_texts: Sequence[str]) -> dict[str, An
 
     missing: list[str] = []
     for d in sorted(claimed["dates"]):
+        if d in given["dates"]:
+            continue
         if d not in found["dates"] and not (len(d) == 7 and d in months):
             missing.append(d)
     for value, unit in sorted(claimed["numbers"], key=lambda n: (n[0], n[1] or "")):
+        if (value, unit) in given["numbers"] or (unit is None and value in given_values):
+            continue  # the user's own number, restated
+        if unit is None and value in references:
+            continue  # names a rule, not a quantity
         is_year = unit is None and re.fullmatch(r"(19|20)\d{2}", value) is not None
         ok = (
             (value in values or (is_year and value in years))
@@ -292,11 +320,13 @@ def check_sentences(
     chunk_texts: Mapping[str, str],
     judge: Judge | None = None,
     checks: Iterable[str] = CHECKS,
+    question: str | None = None,
 ) -> dict[str, Any]:
     """Per-sentence verdicts for the requested checks, and `ok` for the whole answer.
 
     `chunk_texts` maps the retrieved chunk_ids to their text. A sentence citing no
-    chunk, or a chunk that was not retrieved, fails (fail closed).
+    chunk, or a chunk that was not retrieved, fails (fail closed). `question` lets the
+    number check treat the user's own numbers as given (see number_date_check).
     """
     checks = tuple(checks)
     unknown = set(checks) - set(CHECKS)
@@ -315,7 +345,7 @@ def check_sentences(
             v["error"] = "no citation" if not ids else f"cited chunks not retrieved: {missing_ids}"
         else:
             if "number_date" in checks:
-                v["number_date"] = number_date_check(sentence["text"], passages)
+                v["number_date"] = number_date_check(sentence["text"], passages, question)
             if "claim_support" in checks:
                 v["claim_support"] = claim_support(sentence["text"], passages, judge)
         v["ok"] = (
