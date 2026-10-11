@@ -275,7 +275,7 @@ def answer(
             "rewritten_question": rewritten if rewritten != question else None,
             "trace": trace,
             "latency_ms": latency,
-            "cost_usd": llm.cost_usd,
+            "cost_usd": None if llm.cost_usd is None else round(llm.cost_usd, 8),
         }
         log_query(question, result, config_name=config.get("name"), pilot_type=pilot_type)
         return result

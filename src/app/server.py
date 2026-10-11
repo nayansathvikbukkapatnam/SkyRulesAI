@@ -30,7 +30,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -151,10 +151,18 @@ def _load(state: State) -> None:
         state.rerank_fn = state.rerank_fn or reranker.rerank
         if paths.CHROMA.exists():
             try:  # warm up so the first question does not pay for loading models
-                _ = retriever.store
+                strategies = sorted(
+                    {c["chunk_strategy"] for c in state.configs.values() if c.get("chunk_strategy")}
+                )
+                retriever.warm_up([s for s in strategies if paths.bm25_path(s).exists()])
                 _ = reranker.model
             except Exception as e:
                 log.warning("could not warm up retrieval: %s: %s", type(e).__name__, e)
+        else:
+            log.warning(
+                "no chroma/ yet: run make index for both strategies, then restart the app "
+                "(the first question would otherwise pay for loading the models)"
+            )
 
 
 def _index_status(configs: dict[str, dict]) -> dict[str, Any]:
@@ -191,7 +199,8 @@ def create_app(
     STATIC_DIR.mkdir(parents=True, exist_ok=True)
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-    @app.get("/", response_model=None)
+    # HEAD is what load balancers and the desktop preview use for health probes.
+    @app.api_route("/", methods=["GET", "HEAD"], response_model=None)
     def index() -> FileResponse | HTMLResponse:
         page = STATIC_DIR / "index.html"
         if page.exists():
@@ -199,6 +208,10 @@ def create_app(
         return HTMLResponse(
             "<!doctype html><title>SkyRules AI</title><p>Frontend not built yet.</p>"
         )
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    def favicon() -> Response:
+        return Response(status_code=204)  # no icon yet; stops a 404 per page load in the log
 
     @app.get("/api/health")
     def health() -> dict[str, Any]:

@@ -163,6 +163,7 @@ def test_answered_path_with_all_b3_checks():
     assert ret.rerank_calls[0]["top_n"] == 5
     assert set(out["latency_ms"]) == {*STAGES, "total"}
     assert out["cost_usd"] == pytest.approx(0.0002)  # generation + one judge call
+    assert out["cost_usd"] == round(out["cost_usd"], 8)  # no float noise in the event
 
 
 def test_on_stage_fires_for_every_stage_in_order():

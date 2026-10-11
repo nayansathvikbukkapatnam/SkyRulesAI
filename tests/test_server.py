@@ -212,6 +212,12 @@ def test_health_reports_what_is_loaded_and_never_a_key(monkeypatch):
     assert "fake-key-value" not in r.text
 
 
+def test_head_root_and_favicon_do_not_error():
+    client = make_client(fake_answer())
+    assert client.head("/").status_code == 200
+    assert client.get("/favicon.ico").status_code == 204
+
+
 def test_root_serves_the_page():
     with make_client(fake_answer()) as tc:
         r = tc.get("/")
