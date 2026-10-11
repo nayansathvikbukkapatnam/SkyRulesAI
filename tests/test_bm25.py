@@ -28,6 +28,39 @@ def test_tokenize_is_lowercase_alphanumeric():
     ]  # fmt: skip
 
 
+def test_tokenize_drops_stopwords_and_plurals():
+    # The first demo question used to match registration pages on "how", "can", "i", "as".
+    assert tokenize("How high can I fly as a hobby flyer?") == ["high", "fly", "hobby", "flyer"]
+    assert tokenize("Rules for drones, batteries and classes") == [
+        "rule", "drone", "battery", "class",
+    ]  # fmt: skip
+    # Words that change a rule's meaning are kept, and -ss / -us / -is words are untouched.
+    assert tokenize("must not fly over people under 400 feet") == [
+        "must", "not", "fly", "over", "people", "under", "400", "feet",
+    ]  # fmt: skip
+    # Short tokens are never touched ("lbs", "uas"), nor -ss / -us / -is words.
+    assert tokenize("class status analysis UAS lbs") == [
+        "class", "status", "analysis", "uas", "lbs",
+    ]  # fmt: skip
+
+
+def test_query_and_chunk_tokens_match_after_plural_reduction(index):
+    # "visibility" vs "visibilities"-style mismatches no longer matter: both reduce the same.
+    assert "Stable and unstable air" in index.search("stable air turbulences", k=1)[0]["text"]
+
+
+def test_old_tokenizer_pickle_is_refused(tmp_path, chunks):
+    import pickle
+
+    old = BM25Index("struct@v1", chunks)
+    old.tokenizer_version = 1
+    path = tmp_path / "bm25_struct@v1.pkl"
+    with path.open("wb") as f:
+        pickle.dump(old, f)
+    with pytest.raises(ValueError, match="tokenizer v1"):
+        BM25Index.load("struct@v1", path)
+
+
 def test_keyword_query_ranks_the_matching_chunk_first(index):
     top = index.search("stable air turbulence visibility", k=3)
     assert "Stable and unstable air" in top[0]["text"]
