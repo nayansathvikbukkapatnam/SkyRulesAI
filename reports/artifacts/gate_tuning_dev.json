@@ -1,0 +1,240 @@
+{
+  "source": "eval_a3_dev.json",
+  "source_git_commit": "8c790cb",
+  "n_items": 30,
+  "rule": "maximize dev correctness; ties: lower over-refusal, then lower threshold",
+  "chosen": {
+    "threshold": "-inf",
+    "correctness": 0.7667,
+    "over_refusal": 0.0833,
+    "correct_refusal": 1.0,
+    "newly_gated": 0
+  },
+  "no_gate": {
+    "threshold": "-inf",
+    "correctness": 0.7667,
+    "over_refusal": 0.0833,
+    "correct_refusal": 1.0,
+    "newly_gated": 0
+  },
+  "curve": [
+    {
+      "threshold": "-inf",
+      "correctness": 0.7667,
+      "over_refusal": 0.0833,
+      "correct_refusal": 1.0,
+      "newly_gated": 0
+    },
+    {
+      "threshold": -4.6741,
+      "correctness": 0.7667,
+      "over_refusal": 0.0833,
+      "correct_refusal": 1.0,
+      "newly_gated": 0
+    },
+    {
+      "threshold": -2.322,
+      "correctness": 0.7667,
+      "over_refusal": 0.125,
+      "correct_refusal": 1.0,
+      "newly_gated": 1
+    },
+    {
+      "threshold": -1.1362,
+      "correctness": 0.7667,
+      "over_refusal": 0.125,
+      "correct_refusal": 1.0,
+      "newly_gated": 1
+    },
+    {
+      "threshold": -0.7311,
+      "correctness": 0.7333,
+      "over_refusal": 0.1667,
+      "correct_refusal": 1.0,
+      "newly_gated": 2
+    },
+    {
+      "threshold": -0.3667,
+      "correctness": 0.7333,
+      "over_refusal": 0.1667,
+      "correct_refusal": 1.0,
+      "newly_gated": 2
+    },
+    {
+      "threshold": 0.5609,
+      "correctness": 0.7333,
+      "over_refusal": 0.1667,
+      "correct_refusal": 1.0,
+      "newly_gated": 2
+    },
+    {
+      "threshold": 1.69,
+      "correctness": 0.7333,
+      "over_refusal": 0.2083,
+      "correct_refusal": 1.0,
+      "newly_gated": 3
+    },
+    {
+      "threshold": 2.4216,
+      "correctness": 0.7,
+      "over_refusal": 0.25,
+      "correct_refusal": 1.0,
+      "newly_gated": 4
+    },
+    {
+      "threshold": 2.8117,
+      "correctness": 0.6667,
+      "over_refusal": 0.2917,
+      "correct_refusal": 1.0,
+      "newly_gated": 5
+    },
+    {
+      "threshold": 3.0095,
+      "correctness": 0.6333,
+      "over_refusal": 0.3333,
+      "correct_refusal": 1.0,
+      "newly_gated": 6
+    },
+    {
+      "threshold": 3.1866,
+      "correctness": 0.6333,
+      "over_refusal": 0.375,
+      "correct_refusal": 1.0,
+      "newly_gated": 7
+    },
+    {
+      "threshold": 3.3012,
+      "correctness": 0.6333,
+      "over_refusal": 0.375,
+      "correct_refusal": 1.0,
+      "newly_gated": 7
+    },
+    {
+      "threshold": 3.458,
+      "correctness": 0.6,
+      "over_refusal": 0.4167,
+      "correct_refusal": 1.0,
+      "newly_gated": 8
+    },
+    {
+      "threshold": 3.5682,
+      "correctness": 0.5667,
+      "over_refusal": 0.4583,
+      "correct_refusal": 1.0,
+      "newly_gated": 9
+    },
+    {
+      "threshold": 3.6126,
+      "correctness": 0.5667,
+      "over_refusal": 0.4583,
+      "correct_refusal": 1.0,
+      "newly_gated": 9
+    },
+    {
+      "threshold": 3.9818,
+      "correctness": 0.5333,
+      "over_refusal": 0.5,
+      "correct_refusal": 1.0,
+      "newly_gated": 10
+    },
+    {
+      "threshold": 4.4145,
+      "correctness": 0.5,
+      "over_refusal": 0.5417,
+      "correct_refusal": 1.0,
+      "newly_gated": 11
+    },
+    {
+      "threshold": 4.6916,
+      "correctness": 0.5,
+      "over_refusal": 0.5417,
+      "correct_refusal": 1.0,
+      "newly_gated": 11
+    },
+    {
+      "threshold": 4.9912,
+      "correctness": 0.5,
+      "over_refusal": 0.5417,
+      "correct_refusal": 1.0,
+      "newly_gated": 11
+    },
+    {
+      "threshold": 5.156,
+      "correctness": 0.4667,
+      "over_refusal": 0.5833,
+      "correct_refusal": 1.0,
+      "newly_gated": 12
+    },
+    {
+      "threshold": 5.4338,
+      "correctness": 0.4333,
+      "over_refusal": 0.625,
+      "correct_refusal": 1.0,
+      "newly_gated": 13
+    },
+    {
+      "threshold": 5.7868,
+      "correctness": 0.4,
+      "over_refusal": 0.6667,
+      "correct_refusal": 1.0,
+      "newly_gated": 14
+    },
+    {
+      "threshold": 6.0156,
+      "correctness": 0.4,
+      "over_refusal": 0.7083,
+      "correct_refusal": 1.0,
+      "newly_gated": 15
+    },
+    {
+      "threshold": 6.2498,
+      "correctness": 0.3667,
+      "over_refusal": 0.75,
+      "correct_refusal": 1.0,
+      "newly_gated": 16
+    },
+    {
+      "threshold": 6.3952,
+      "correctness": 0.3667,
+      "over_refusal": 0.7917,
+      "correct_refusal": 1.0,
+      "newly_gated": 17
+    },
+    {
+      "threshold": 6.4476,
+      "correctness": 0.3333,
+      "over_refusal": 0.8333,
+      "correct_refusal": 1.0,
+      "newly_gated": 18
+    },
+    {
+      "threshold": 6.8429,
+      "correctness": 0.3,
+      "over_refusal": 0.875,
+      "correct_refusal": 1.0,
+      "newly_gated": 19
+    },
+    {
+      "threshold": 7.2361,
+      "correctness": 0.2667,
+      "over_refusal": 0.9167,
+      "correct_refusal": 1.0,
+      "newly_gated": 20
+    },
+    {
+      "threshold": 7.7828,
+      "correctness": 0.2333,
+      "over_refusal": 0.9583,
+      "correct_refusal": 1.0,
+      "newly_gated": 21
+    },
+    {
+      "threshold": "inf",
+      "correctness": 0.2,
+      "over_refusal": 1.0,
+      "correct_refusal": 1.0,
+      "newly_gated": 22
+    }
+  ],
+  "written_at": "2026-10-11T03:38:36+00:00"
+}

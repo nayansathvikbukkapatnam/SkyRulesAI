@@ -3,5 +3,6 @@ retrieval_mode: hybrid
 chunk_strategy: struct@v1
 rerank: true
 gate: true
-gate_threshold: null           # set from the dev-split tuning (S15) before the b3-frozen tag
+gate_threshold: -4.6741        # tuned on dev (S15): lowest threshold tied for best dev correctness;
+                               # same dev results as no gate. reports/artifacts/gate_tuning_dev.json
 checks: [citation_validity, claim_support, number_date, quote_limit]
