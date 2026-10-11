@@ -20,7 +20,7 @@ Until the final run, the same commands with `--split dev` (and no `--final`) fil
 ## 1. Run
 
 <!-- BEGIN AUTO:run_info -->
-Split: **dev**. Statistics computed 2026-10-11T01:42:22+00:00 by `make stats SPLIT=dev`.
+Split: **dev**. Statistics computed 2026-10-11T02:29:10+00:00 by `make stats SPLIT=dev`.
 
 | Config | Eval file | Commit |
 |---|---|---|
@@ -61,6 +61,23 @@ Every rate has a 95% percentile bootstrap interval over items (10,000 resamples,
 
 Rates with 95% bootstrap intervals. Source: `reports/artifacts/stats_dev.json`.
 <!-- END AUTO:baselines -->
+
+### Correctness by question type
+
+The golden set has six kinds of question (report 03). Splitting correctness by kind shows whether the system is only good at the easy ones: closed-book B0, dense retrieval B2 and the final system B3, side by side.
+
+<!-- BEGIN AUTO:by_category -->
+| Question type | Items | B0 correctness | B2 correctness | B3 correctness |
+|---|---|---|---|---|
+| single_hop | 11 | 0.545 [0.273, 0.818] (n=11) | 0.909 [0.727, 1.000] (n=11) | 1.000 [1.000, 1.000] (n=11) |
+| multi_hop | 4 | 0.500 [0.000, 1.000] (n=4) | 0.500 [0.000, 1.000] (n=4) | 0.750 [0.250, 1.000] (n=4) |
+| comparative | 3 | 0.333 [0.000, 1.000] (n=3) | 0.667 [0.000, 1.000] (n=3) | 0.667 [0.000, 1.000] (n=3) |
+| temporal | 3 | 0.667 [0.000, 1.000] (n=3) | 0.667 [0.000, 1.000] (n=3) | 0.333 [0.000, 1.000] (n=3) |
+| unanswerable | 6 | 0.833 [0.500, 1.000] (n=6) | 1.000 [1.000, 1.000] (n=6) | 1.000 [1.000, 1.000] (n=6) |
+| ambiguous | 3 | 0.000 [0.000, 0.000] (n=3) | 0.000 [0.000, 0.000] (n=3) | 0.000 [0.000, 0.000] (n=3) |
+
+Each type has only a few items, so its intervals are wide: read them as a pointer to where the system is weak, not as a finding on their own.
+<!-- END AUTO:by_category -->
 
 ## 3. Ablation: one change at a time from B2 to B3
 

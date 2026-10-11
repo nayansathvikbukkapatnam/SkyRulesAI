@@ -160,3 +160,20 @@ def test_test_split_is_refused_without_the_frozen_tag(monkeypatch):
         stats.check_split("test", final=False)  # tag alone is not enough: FINAL=1 too
     stats.check_split("test", final=True)
     stats.check_split("dev", final=False)
+
+
+def test_correctness_by_category_and_its_report_table(tmp_path):
+    items = [
+        item("a", True, category="single_hop"),
+        item("b", False, category="single_hop"),
+        item("c", True, category="multi_hop"),
+        item("d", None, category="multi_hop"),  # not graded: left out
+    ]
+    runs = {"b3": run("b3", items)}
+    per = stats.by_category(runs)["b3"]
+    assert per["single_hop"]["rate"] == 0.5 and per["single_hop"]["n"] == 2
+    assert per["multi_hop"]["n"] == 1 and per["temporal"]["n"] == 0
+    text = "<!-- BEGIN AUTO:by_category -->\n<!-- END AUTO:by_category -->"
+    out = stats.render_report(text, stats.compute(runs, "dev"), "dev", tmp_path)
+    assert "| single_hop | 2 | 0.500 [" in out
+    assert "| temporal | 0 | - |" in out
