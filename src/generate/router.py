@@ -46,8 +46,11 @@ EMERGENCY_TEXT = (
 # Sent to the prompt (not shown as a referral) when the pilot type is unclear.
 PILOT_UNCLEAR_INSTRUCTIONS = (
     "The question does not say whether the person flies for fun or under Part 107. "
-    "Answer both cases in two labelled parts, 'If you fly for fun' and "
-    "'If you fly under Part 107', using only the numbered passages."
+    "If the passages cover both cases, answer both in two labelled parts, "
+    "'If you fly for fun' and 'If you fly under Part 107'. If the passages cover only "
+    "one case, answer that case only, with its label, and write nothing about the other "
+    "case: no sentence about what the passages do not say, and no rule the passages do "
+    "not state."
 )
 
 PILOT_TYPES = ("recreational", "part107", "not_sure")
