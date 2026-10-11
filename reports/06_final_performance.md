@@ -20,7 +20,7 @@ Until the final run, the same commands with `--split dev` (and no `--final`) fil
 ## 1. Run
 
 <!-- BEGIN AUTO:run_info -->
-Split: **dev**. Statistics computed 2026-10-11T02:29:10+00:00 by `make stats SPLIT=dev`.
+Split: **dev**. Statistics computed 2026-10-11T03:06:53+00:00 by `make stats SPLIT=dev`.
 
 | Config | Eval file | Commit |
 |---|---|---|
@@ -119,10 +119,24 @@ Items closed-book B0 got wrong: 14.
 Each failed item of the B3 run (an incorrect answer, an over-refusal, or an answer to an unanswerable question) was labelled by a person with one category from DELIVERABLES section 4: retrieval_miss, rank_failure, chunk_boundary, extraction_failure, stale_content, reranker_demotion, generator_ignored_context, invalid_citation, over_refusal, hallucination. The labels are in `reports/failure_labels_<split>.jsonl`; no label was written by AI.
 
 <!-- BEGIN AUTO:failures -->
-_Not produced yet: failure labels. Run `python -m src.eval.failure_labels count --split dev`._
+| Failure category | Count |
+|---|---|
+| `retrieval_miss` | 8 |
+| `rank_failure` | 3 |
+| `chunk_boundary` | 0 |
+| `extraction_failure` | 0 |
+| `stale_content` | 0 |
+| `reranker_demotion` | 2 |
+| `generator_ignored_context` | 2 |
+| `invalid_citation` | 0 |
+| `over_refusal` | 0 |
+| `hallucination` | 0 |
+| **Total labelled** | 15 |
+
+Labelled by Adinath, from the B2, B3 run(s). Source: `reports/artifacts/failure_labels_dev.json`.
 <!-- END AUTO:failures -->
 
-<!-- Adinath: after labelling, add two or three sentences on the most common categories and one example of each, quoting the item id. -->
+**What the labels show (dev split).** Most failures start in retrieval, not in generation: the page or passage the answer needed never reached the model. Multi-hop questions lose one of their two pages (g020: the Register Your Drone page never reached the pool, so B3 answered only the serial-number half), and in the long Federal Register rules the document is found but the one sentence that matters is not (g031, g034: the effective-date passages). Where the passage was in the pool but not given to the model, B2 ranked it too low (g034) and B3's reranker pushed it out (g047, g048), after which B3's checks refused. The remaining failures are the ambiguous question "What's the deadline?" (g050): both systems picked one deadline from the sources instead of asking which one was meant. No failure was labelled a hallucination or an invalid citation.
 
 ## 6. Known limitations
 
