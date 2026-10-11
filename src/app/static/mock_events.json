@@ -281,7 +281,7 @@
          },
          "claim_support": {
           "supported": true,
-          "reason": "Scripted verdict for the mock."
+          "reason": "stated word for word in passage 1"
          },
          "number_date": {
           "ok": true,
@@ -314,7 +314,7 @@
       "check": 395.0,
       "total": 2284.0
      },
-     "cost_usd": 0.000244,
+     "cost_usd": 0.000122,
      "config": "b3"
     }
    },
@@ -884,7 +884,7 @@
          },
          "claim_support": {
           "supported": true,
-          "reason": "Scripted verdict for the mock."
+          "reason": "stated word for word in passage 1"
          },
          "number_date": {
           "ok": true,
@@ -921,7 +921,7 @@
       "check": 395.0,
       "total": 2284.0
      },
-     "cost_usd": 0.000244,
+     "cost_usd": 0.000122,
      "config": "b3"
     }
    },

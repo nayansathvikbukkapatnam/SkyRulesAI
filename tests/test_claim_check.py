@@ -10,6 +10,7 @@ from src.generate.claim_check import (
     judge_prompt,
     number_date_check,
     parse_verdict,
+    stated_verbatim,
 )
 
 ALTITUDE = "Fixture text. In uncontrolled airspace, recreational flyers stay at or below 400 feet."
@@ -113,6 +114,9 @@ def test_prompt_wraps_passages_as_untrusted_data():
         ("yes", False),  # not JSON: fail closed
         ('{"supported": "maybe"}', False),
         ("{broken json", False),
+        # valid fields followed by stray characters: the verdict is read, once
+        ('{"supported": "yes", "reason": "matches", "}', True),
+        ('"supported": "yes" then "supported": "no"', False),  # ambiguous: fail closed
     ],
 )
 def test_parse_verdict(reply, supported):
@@ -209,3 +213,56 @@ def test_computed_conversion_is_still_caught():
     chunk = "You need to register your drone if it weighs over 0.55 pounds."
     result = number_date_check("A 300-gram drone is about 0.66 pounds.", [chunk])
     assert not result["ok"] and "0.66 pound" in result["missing"]
+
+
+# --- Verbatim support (no judge call) and judge instructions ---------------------------
+
+LONG = (
+    "Commenters said a module would cost $100 or more. One manufacturer estimated $50. "
+    "\u2022 The FAA determines the cost of a broadcast module to be $50. 54 \u2022 The FAA "
+    "notes the analysis reflects earlier industry conditions."
+)
+
+
+@pytest.mark.parametrize(
+    "sentence, passages, expected",
+    [
+        ("The FAA determines the cost of a broadcast module to be $50.", [LONG], 1),
+        ("The FAA determines the cost of a broadcast module to be $50 [1].", ["x", LONG], 2),
+        # a commenter's claim is not the fact itself
+        (
+            "Drones can fly at 500 feet here.",
+            ["One commenter said drones can fly at 500 feet here."],
+            None,
+        ),
+        # a cut-off sentence is not a match
+        (
+            "No person may operate a drone at all.",
+            ["No person may operate a drone at all times."],
+            None,
+        ),
+        (
+            "Remote pilots must hold a certificate",
+            ["(a) Remote pilots must hold a certificate; and"],
+            1,
+        ),
+        ("Too short.", ["Too short."], None),
+    ],
+)
+def test_stated_verbatim(sentence, passages, expected):
+    assert stated_verbatim(sentence, passages) == expected
+
+
+def test_verbatim_sentence_is_supported_without_calling_the_judge():
+    def must_not_be_called(system, user):
+        raise AssertionError("judge called")
+
+    verdict = claim_support(
+        "The FAA determines the cost of a broadcast module to be $50.", [LONG], must_not_be_called
+    )
+    assert verdict == {"supported": True, "reason": "stated word for word in passage 1"}
+
+
+def test_judge_instructions_cover_attribution_wording_and_who_said_it():
+    assert "another source says" in JUDGE_SYSTEM
+    assert "must match" in JUDGE_SYSTEM
