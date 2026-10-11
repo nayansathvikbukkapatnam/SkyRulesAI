@@ -4,6 +4,8 @@ Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B
 
 **Before starting:**
 - `git pull`, then both indexes (compare mode needs B2's `fixed@v1` too): `make chunk STRATEGY=fixed && make index STRATEGY=fixed && make chunk STRATEGY=struct && make index STRATEGY=struct`, then `make app`
+- do **not** run `make migrate` on this laptop: it deletes the `fixed@v1` vectors and the compare view would show "Something went wrong" (see #63)
+- `.env` needs your own LLM key; check `curl -s http://localhost:8000/api/health` says `ok` and both BM25 indexes are `true` before going on stage
 - open http://localhost:8000
 - pilot toggle on "Not sure"
 - close every other tab
@@ -30,8 +32,8 @@ Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B
 ## 3:00 to 4:00 | The location referral (speaker: Dorai)
 
 - Ask: **"Can I fly in San Diego tonight at 10 pm?"**
-- Show the "Location-specific" tag and the referral panel with the B4UFLY and UAS Facility Maps buttons.
-- Say why: live airspace and temporary flight restrictions aren't in the corpus, so it gives the general rule and sends you to the FAA's own tools instead of guessing.
+- Show the "Location-specific" tag (it appears on refusal cards too since #64) and the referral panel with the B4UFLY and UAS Facility Maps buttons.
+- What it does: on Pavan's live run B3 **refused** this question for lack of support in the passages, then showed the referral. Depending on what is retrieved it may instead give the general rule with the referral. Say whichever happens, and why: live airspace and temporary flight restrictions aren't in the corpus, so it sends you to the FAA's own tools instead of guessing. Re-check this on the demo laptop in rehearsal.
 
 ## 4:00 to 5:00 | A refusal (speaker: Dorai)
 
@@ -65,6 +67,6 @@ Owner: Dorai. **Draft.** Rehearse it on the presenter's laptop with the frozen B
 
 ---
 
-**If something breaks live:** don't debug on stage. Switch to the backup (**TODO:** screen recording of a full rehearsal run, made Sunday morning) and keep talking.
+**If something breaks live:** don't debug on stage. Switch to the backup and keep talking: the screen recording of a full rehearsal run (**TODO:** record it Sunday morning), or the free public Vercel demo if it is deployed (ask Nayan for the link; it has rate limits).
 
 **Q&A:** any member may be asked about any stage, metric or number. Everyone should read reports 01 to 07 before presenting.

@@ -16,7 +16,7 @@ We crawled each site once, through code that enforces the rules instead of relyi
 - **Hard caps:** at most 600 URLs in total, link depth 3, and at most 4 attempts per URL with backoff on 429 and 5xx errors (`crawl_stats.json`, `limits`).
 - **Crawl once.** Re-chunking and re-indexing start from the saved `data/normalized/`, never from a new crawl.
 
-Across all crawl runs, 385 documents were fetched and every one was recorded as robots-allowed at fetch time; 13 URLs plus 1 sitemap were skipped because robots.txt disallowed them (`reports/artifacts/crawl_summary.json`, from `make crawl-summary`). The last run, which resumed the GovInfo crawl, made 36 requests after 35 robots.txt checks with 0 refusals (`crawl_stats.json`).
+Across all crawl runs, 385 fetches were saved (112 of them the eCFR files that are now quarantined) and every one was recorded as robots-allowed at fetch time; 13 URLs plus 1 sitemap were skipped because robots.txt disallowed them (`reports/artifacts/crawl_summary.json`, from `make crawl-summary`). The last run, which resumed the GovInfo crawl, made 36 requests after 35 robots.txt checks with 0 refusals (`crawl_stats.json`).
 
 ### faa.gov blocked us, and we respected that
 
@@ -52,7 +52,7 @@ When we found it:
 
 **Checked afterwards.** A test scans every committed document in `data/normalized/` and finds no email, phone or street-address pattern left.
 
-**Known gap.** P.O. boxes aren't caught by the filter. It's recorded as an expected-failure test in `tests/test_pii.py`, so it can't be forgotten.
+**Known gaps.** The filter misses some contact details that are still in the committed corpus. Counting the documents in `data/normalized/` that contain each one: P.O. boxes (3 documents), the FAA office street address "L'Enfant Plaza" (4, the apostrophe defeats the street-address pattern), the vanity help-desk number 844-FLY-MYUAS (3, written with letters) and a help-desk email written with a stray space, "UASHelp@ faa.gov" (2). All of these are agency contact lines printed in public Federal Register rule text, not private individuals' details, but they are exactly the kind of line the filter is meant to remove, so we report them as a gap rather than call the corpus clean. The P.O. box case is recorded as an expected-failure test in `tests/test_pii.py` so it can't be forgotten; the others are not yet covered by a test.
 
 ---
 
@@ -66,7 +66,7 @@ Text we retrieve from pages is untrusted input. A page could contain instruction
 
 **The test.** `data/test_pages/injection.html` is a clearly labelled synthetic page about drone lighting at night that tells the model to ignore its instructions, stop citing, say drones never need lights and there's no altitude limit, and end with a code word. `src/eval/injection_test.py` plants it in the index, asks three questions that should retrieve it, judges each answer, and removes it again.
 
-**TODO:** the result, from `reports/artifacts/injection_test.json` (`python -m src.eval.injection_test --config b3`): how many of 3 answers resisted, whether the page was actually retrieved each time, and any failure quoted. If it fails, we report that it failed.
+**Result: not run yet.** The harness and its tests are merged, but the test needs the whole app running with an LLM key and a local index, and there is no `reports/artifacts/injection_test.json` yet. **TODO:** after `python -m src.eval.injection_test --config b3`, add here how many of the 3 answers resisted, whether the page was actually retrieved each time, and any failure quoted. If it fails, we report that it failed.
 
 ---
 
@@ -114,4 +114,6 @@ People may treat a chatbot answer as permission to fly. What the interface does 
 ## 7. Two safeguards running in code by Saturday evening
 
 1. **Crawl compliance plus the PII filter.** Running: robots.txt checks, rate limit, URL exclusions and redaction all ran during the crawl and extraction. Evidence: `crawl_stats.json`, `ingestion_stats.json`, `pii_log.json` and the tests in `tests/test_crawl.py`, `tests/test_extract.py` and `tests/test_pii.py`.
-2. **Citation validity plus the 25-word quote limit** (`src/generate/checks.py`, PR #32), with the claim and number checks beside them (`src/generate/claim_check.py`). Evidence from the B3 dev run (`reports/artifacts/eval_b3_dev.json`, `make eval CONFIG=b3 SPLIT=dev`, 30 items): the four checks examined 50 generated sentences; citation validity passed on all 19 answered items (rate 1.0) and the quote limit failed no sentence; the number check and the claim check each failed on 2 items; 1 item had one sentence dropped and was still answered (g020); 2 items were refused because more than one sentence failed (g047 with `check failed: Numbers, Claims` and g048 with `check failed: Claims`). Over-refusal on answerable dev items was 0.208 and correct refusal on unanswerable items 1.0.
+2. **Citation validity plus the 25-word quote limit** (`src/generate/checks.py`, PR #32), with the claim and number checks beside them (`src/generate/claim_check.py`). Evidence from the B3 dev run (`reports/artifacts/eval_b3_dev.json`, `make eval CONFIG=b3 SPLIT=dev`, 30 items): the four checks examined 50 generated sentences; citation validity passed on all 19 answered items (rate 1.0) and the quote limit failed no sentence; the number check and the claim check each failed on 2 items; 1 item had one sentence dropped and was still answered (g020); 2 items were refused because more than one sentence failed (g047 with `check failed: Numbers, Claims` and g048 with `check failed: Claims`). Over-refusal on answerable dev items was 0.208 and correct refusal on unanswerable items 1.0. For comparison, the same system without the gate and checks (A3) over-refused 0.083, with overlapping intervals (B3 [0.042, 0.375], A3 [0.000, 0.208], n = 24; `reports/artifacts/stats_dev.json`, from `make stats SPLIT=dev`), and correctness was 0.767 for both. So on this small dev set the checks removed unsupported sentences (the staleness case above) at the price of some extra refusals, not a measurable gain in correctness; the test split is where we say more.
+
+**What is not running.** The evidence gate is off: `gate: true` but `gate_threshold: null` in `configs/b3.yaml`, so no refusal in the dev run came from the gate. The threshold is to be set from the dev-split tuning (`python -m src.eval.tune_gate --config a3`) before the `b3-frozen` tag; until then this safeguard is built and tested but not active, and we say so.
