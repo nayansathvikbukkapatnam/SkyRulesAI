@@ -1,0 +1,549 @@
+{
+  "command": "make stats SPLIT=dev",
+  "split": "dev",
+  "computed_at": "2026-10-11T01:42:22+00:00",
+  "method": {
+    "interval": "percentile bootstrap, 95%, resampling items",
+    "resamples": 10000,
+    "seed": 42,
+    "paired_test": "McNemar exact (statsmodels), per-item correct / incorrect",
+    "pairing": "by item id; only items both runs graded",
+    "none_values": "left out of each metric; n reported"
+  },
+  "inputs": {
+    "b0": {
+      "file": "reports/artifacts/eval_b0_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": true,
+        "retrieval_mode": null,
+        "chunk_strategy": null,
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "b1": {
+      "file": "reports/artifacts/eval_b1_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "bm25",
+        "chunk_strategy": "fixed@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "b2": {
+      "file": "reports/artifacts/eval_b2_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "dense",
+        "chunk_strategy": "fixed@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "a1": {
+      "file": "reports/artifacts/eval_a1_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "dense",
+        "chunk_strategy": "struct@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "a2": {
+      "file": "reports/artifacts/eval_a2_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "hybrid",
+        "chunk_strategy": "struct@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "a3": {
+      "file": "reports/artifacts/eval_a3_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "hybrid",
+        "chunk_strategy": "struct@v1",
+        "rerank": true,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "b3": {
+      "file": "reports/artifacts/eval_b3_dev.json",
+      "git_commit": "8c790cb",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "hybrid",
+        "chunk_strategy": "struct@v1",
+        "rerank": true,
+        "gate": true,
+        "gate_threshold": null,
+        "checks": [
+          "citation_validity",
+          "claim_support",
+          "number_date",
+          "quote_limit"
+        ],
+        "generator_model": "claude-haiku-5-5"
+      }
+    }
+  },
+  "missing_configs": [],
+  "per_config": {
+    "b0": {
+      "correctness": {
+        "rate": 0.5333,
+        "low": 0.3658,
+        "high": 0.7,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": null,
+        "low": null,
+        "high": null,
+        "n": 0
+      },
+      "correct_refusal": {
+        "rate": 0.8333,
+        "low": 0.5,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.2083,
+        "low": 0.0417,
+        "high": 0.375,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 1414.4,
+        "p95": 1905.3
+      },
+      "cost_usd_per_query": 6.4e-05,
+      "n_items": 30,
+      "n_errors": 0
+    },
+    "b1": {
+      "correctness": {
+        "rate": 0.7,
+        "low": 0.5333,
+        "high": 0.8667,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 19
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.2083,
+        "low": 0.0417,
+        "high": 0.375,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 1204.3,
+        "p95": 1744.5
+      },
+      "cost_usd_per_query": 0.000524,
+      "n_items": 30,
+      "n_errors": 0
+    },
+    "b2": {
+      "correctness": {
+        "rate": 0.7333,
+        "low": 0.5667,
+        "high": 0.8667,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 21
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.125,
+        "low": 0.0,
+        "high": 0.25,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 1429.2,
+        "p95": 4766.5
+      },
+      "cost_usd_per_query": 0.000537,
+      "n_items": 30,
+      "n_errors": 0
+    },
+    "a1": {
+      "correctness": {
+        "rate": 0.6333,
+        "low": 0.4667,
+        "high": 0.8,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 18
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.25,
+        "low": 0.0833,
+        "high": 0.4167,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 1361.4,
+        "p95": 3751.6
+      },
+      "cost_usd_per_query": 0.000428,
+      "n_items": 30,
+      "n_errors": 0
+    },
+    "a2": {
+      "correctness": {
+        "rate": 0.7,
+        "low": 0.5333,
+        "high": 0.8667,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 20
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.1667,
+        "low": 0.0417,
+        "high": 0.3333,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 1355.4,
+        "p95": 1919.3
+      },
+      "cost_usd_per_query": 0.000424,
+      "n_items": 30,
+      "n_errors": 0
+    },
+    "a3": {
+      "correctness": {
+        "rate": 0.7667,
+        "low": 0.6,
+        "high": 0.9,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 22
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.0833,
+        "low": 0.0,
+        "high": 0.2083,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 1765.7,
+        "p95": 2591.8
+      },
+      "cost_usd_per_query": 0.000444,
+      "n_items": 30,
+      "n_errors": 0
+    },
+    "b3": {
+      "correctness": {
+        "rate": 0.7667,
+        "low": 0.6,
+        "high": 0.9,
+        "n": 30
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 19
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 6
+      },
+      "over_refusal": {
+        "rate": 0.2083,
+        "low": 0.0417,
+        "high": 0.375,
+        "n": 24
+      },
+      "latency_ms_total": {
+        "p50": 3800.6,
+        "p95": 6852.9
+      },
+      "cost_usd_per_query": 0.00069,
+      "n_items": 30,
+      "n_errors": 0
+    }
+  },
+  "comparisons": [
+    {
+      "before": "b2",
+      "after": "a1",
+      "n": 30,
+      "before_rate": 0.7333,
+      "after_rate": 0.6333,
+      "difference": -0.1,
+      "low": -0.2333,
+      "high": 0.0,
+      "table": [
+        [
+          19,
+          3
+        ],
+        [
+          0,
+          8
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.25
+    },
+    {
+      "before": "a1",
+      "after": "a2",
+      "n": 30,
+      "before_rate": 0.6333,
+      "after_rate": 0.7,
+      "difference": 0.0667,
+      "low": 0.0,
+      "high": 0.1667,
+      "table": [
+        [
+          19,
+          0
+        ],
+        [
+          2,
+          9
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.5
+    },
+    {
+      "before": "a2",
+      "after": "a3",
+      "n": 30,
+      "before_rate": 0.7,
+      "after_rate": 0.7667,
+      "difference": 0.0667,
+      "low": 0.0,
+      "high": 0.1667,
+      "table": [
+        [
+          21,
+          0
+        ],
+        [
+          2,
+          7
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.5
+    },
+    {
+      "before": "a3",
+      "after": "b3",
+      "n": 30,
+      "before_rate": 0.7667,
+      "after_rate": 0.7667,
+      "difference": 0.0,
+      "low": -0.1,
+      "high": 0.1,
+      "table": [
+        [
+          22,
+          1
+        ],
+        [
+          1,
+          6
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 1.0
+    },
+    {
+      "before": "b0",
+      "after": "b3",
+      "n": 30,
+      "before_rate": 0.5333,
+      "after_rate": 0.7667,
+      "difference": 0.2333,
+      "low": 0.0667,
+      "high": 0.4,
+      "table": [
+        [
+          15,
+          1
+        ],
+        [
+          8,
+          6
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.039062
+    },
+    {
+      "before": "b2",
+      "after": "b3",
+      "n": 30,
+      "before_rate": 0.7333,
+      "after_rate": 0.7667,
+      "difference": 0.0333,
+      "low": -0.1333,
+      "high": 0.2,
+      "table": [
+        [
+          19,
+          3
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 1.0
+    }
+  ],
+  "b0_incorrect_subset": {
+    "ids": [
+      "g007",
+      "g010",
+      "g014",
+      "g015",
+      "g017",
+      "g020",
+      "g022",
+      "g028",
+      "g029",
+      "g031",
+      "g043",
+      "g047",
+      "g048",
+      "g050"
+    ],
+    "n": 14,
+    "correctness": {
+      "b0": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 14
+      },
+      "b1": {
+        "rate": 0.5,
+        "low": 0.2143,
+        "high": 0.7857,
+        "n": 14
+      },
+      "b2": {
+        "rate": 0.6429,
+        "low": 0.4286,
+        "high": 0.8571,
+        "n": 14
+      },
+      "a1": {
+        "rate": 0.5,
+        "low": 0.2143,
+        "high": 0.7857,
+        "n": 14
+      },
+      "a2": {
+        "rate": 0.5714,
+        "low": 0.2857,
+        "high": 0.7857,
+        "n": 14
+      },
+      "a3": {
+        "rate": 0.5714,
+        "low": 0.2857,
+        "high": 0.7857,
+        "n": 14
+      },
+      "b3": {
+        "rate": 0.5714,
+        "low": 0.2857,
+        "high": 0.7857,
+        "n": 14
+      }
+    }
+  }
+}
