@@ -30,11 +30,12 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from typing import Any, Literal
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import FileResponse, HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+from src.app.limits import DemoLimits
 from src.common import paths
 from src.common.config import load_config
 from src.generate import answer as answer_mod
@@ -80,6 +81,7 @@ class State:
     retrieve_fn: Callable | None = None
     rerank_fn: Callable | None = None
     llm_error: str | None = None
+    limits: DemoLimits = field(default_factory=DemoLimits)
 
 
 def _finite(value: Any) -> Any:
@@ -171,6 +173,7 @@ def create_app(
     client: Any = None,
     retrieve_fn: Callable | None = None,
     rerank_fn: Callable | None = None,
+    limits: DemoLimits | None = None,
 ) -> FastAPI:
     """The FastAPI app. Tests pass stand-ins; make app uses the real pipeline."""
     state = State(
@@ -179,6 +182,7 @@ def create_app(
         client=client,
         retrieve_fn=retrieve_fn,
         rerank_fn=rerank_fn,
+        limits=limits or DemoLimits.from_env(),
     )
 
     @asynccontextmanager
@@ -216,15 +220,35 @@ def create_app(
         }
 
     @app.post("/api/ask")
-    def ask(req: AskRequest) -> StreamingResponse:
+    def ask(req: AskRequest, request: Request) -> StreamingResponse:
         history = [t.model_dump() for t in req.history][-MAX_HISTORY_MESSAGES:]
+        blocked = state.limits.admit(_visitor(request))
+        stream = (
+            _blocked(blocked)
+            if blocked
+            else _stream(state, req.question, history, req.pilot_type, req.compare)
+        )
         return StreamingResponse(
-            _stream(state, req.question, history, req.pilot_type, req.compare),
+            stream,
             media_type="text/event-stream",
             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
         )
 
     return app
+
+
+def _visitor(request: Request) -> str:
+    """The client IP; behind a host's proxy, the first X-Forwarded-For address."""
+    forwarded = request.headers.get("x-forwarded-for", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _blocked(message: str) -> Iterator[str]:
+    """A demo limit was hit: an error event and the end of the stream, no pipeline run."""
+    yield _sse("error", {"message": message})
+    yield _sse("done", {})
 
 
 def _stream(
@@ -256,6 +280,7 @@ def _stream(
                     retrieve_fn=state.retrieve_fn,
                     rerank_fn=state.rerank_fn,
                 )
+                state.limits.spend(result.get("cost_usd"))
                 result = {**result, "config": name}
                 if name == COMPARE_CONFIG and compare:
                     try:
