@@ -1,0 +1,2062 @@
+{
+  "config": "b0",
+  "split": "dev",
+  "switches": {
+    "closed_book": true,
+    "retrieval_mode": null,
+    "chunk_strategy": null,
+    "rerank": false,
+    "gate": false,
+    "gate_threshold": null,
+    "checks": [],
+    "generator_model": "claude-haiku-5-5"
+  },
+  "git_commit": "b9dfde5",
+  "started_at": "2026-10-11T00:20:52+00:00",
+  "finished_at": "2026-10-11T00:21:46+00:00",
+  "judge": "make_judge (configs/default.yaml generation)",
+  "summary": {
+    "n_items": 30,
+    "n_errors": 0,
+    "n_answered": 19,
+    "correctness": {
+      "rate": 0.5,
+      "n": 30
+    },
+    "correctness_by_category": {
+      "ambiguous": {
+        "rate": 0.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.3333,
+        "n": 3
+      },
+      "multi_hop": {
+        "rate": 0.5,
+        "n": 4
+      },
+      "single_hop": {
+        "rate": 0.4545,
+        "n": 11
+      },
+      "temporal": {
+        "rate": 0.6667,
+        "n": 3
+      },
+      "unanswerable": {
+        "rate": 0.8333,
+        "n": 6
+      }
+    },
+    "citation_validity": {
+      "rate": null,
+      "n": 0
+    },
+    "correct_refusal": {
+      "rate": 0.8333,
+      "n": 6
+    },
+    "over_refusal": {
+      "rate": 0.25,
+      "n": 24
+    },
+    "evidence_recall@5": null,
+    "latency_ms": {
+      "route": {
+        "p50": 0.2,
+        "p95": 0.6
+      },
+      "retrieve": {
+        "p50": 0.0,
+        "p95": 0.0
+      },
+      "rerank": {
+        "p50": 0.0,
+        "p95": 0.0
+      },
+      "generate": {
+        "p50": 1258.9,
+        "p95": 1613.9
+      },
+      "check": {
+        "p50": 0.0,
+        "p95": 0.0
+      },
+      "total": {
+        "p50": 1263.5,
+        "p95": 1617.8
+      }
+    },
+    "cost_usd_per_query": 6.2e-05,
+    "cost_usd_total": 0.001867
+  },
+  "items": [
+    {
+      "id": "g001",
+      "category": "single_hop",
+      "question": "What is the maximum altitude for a small drone flown under Part 107?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under 14 CFR Part 107, small drones may be flown at a maximum altitude of 400 feet above ground level.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Drones may also fly higher if they remain within 400 feet of a structure.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under 14 CFR Part 107, small drones may be flown at a maximum altitude of 400 feet above ground level.\"}, {\"text\": \"Drones may also fly higher if they remain within 400 feet of a structure.\"}]}",
+            "usage": {
+              "input_tokens": 203,
+              "output_tokens": 87,
+              "cost_usd": 6.379999999999999e-05,
+              "latency_ms": 1284
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1284.5,
+          "check": 0.0,
+          "total": 1285.2
+        },
+        "cost_usd": 6.379999999999999e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the 400 feet AGL maximum and the structure exception, matching the reference's key facts without contradiction."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g004",
+      "category": "single_hop",
+      "question": "What is the maximum groundspeed a drone may fly under Part 107?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under 14 CFR Part 107, small unmanned aircraft may not exceed a maximum groundspeed of 87 knots, which is about 100 miles per hour.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under 14 CFR Part 107, small unmanned aircraft may not exceed a maximum groundspeed of 87 knots, which is about 100 miles per hour.\"}]}",
+            "usage": {
+              "input_tokens": 204,
+              "output_tokens": 72,
+              "cost_usd": 5.640000000000001e-05,
+              "latency_ms": 1154
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1157.0,
+          "check": 0.0,
+          "total": 1160.0
+        },
+        "cost_usd": 5.640000000000001e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states 87 knots (about 100 mph), matching the reference exactly with no contradicting details."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g007",
+      "category": "single_hop",
+      "question": "What can I do if I want to fly commercially in a way Part 107 doesn't allow?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 209,
+              "output_tokens": 11,
+              "cost_usd": 2.64e-05,
+              "latency_ms": 1371
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1373.7,
+          "check": 0.0,
+          "total": 1374.8
+        },
+        "cost_usd": 2.64e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": true,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g009",
+      "category": "single_hop",
+      "question": "Does the TRUST test cost anything, and where can I take it?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "The TRUST test is the Recreational UAS Safety Test, required for recreational drone flyers in the U.S. under FAA rules.",
+            "chunk_ids": []
+          },
+          {
+            "text": "It is free and can be taken online through the FAA-approved TRUST test provider, with a certificate issued upon passing.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"The TRUST test is the Recreational UAS Safety Test, required for recreational drone flyers in the U.S. under FAA rules.\"}, {\"text\": \"It is free and can be taken online through the FAA-approved TRUST test provider, with a certificate issued upon passing.\"}]}",
+            "usage": {
+              "input_tokens": 201,
+              "output_tokens": 105,
+              "cost_usd": 7.259999999999999e-05,
+              "latency_ms": 1502
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1503.0,
+          "check": 0.0,
+          "total": 1504.7
+        },
+        "cost_usd": 7.259999999999999e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the test is free and can be taken online through FAA-approved providers, matching the reference, and the added details (name, certificate) are accurate extra information."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g010",
+      "category": "single_hop",
+      "question": "What happens if I lose my TRUST completion certificate?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "The TRUST completion certificate is typically not something the FAA reissues from its own records, so you generally need to retrieve it from where you took the test.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Most people download it from the testing provider's online account or ask the recreational-flyer education provider for a copy.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Check the specific provider's policy, since replacement procedures and any fees can vary, and I am not certain of the exact steps.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"The TRUST completion certificate is typically not something the FAA reissues from its own records, so you generally need to retrieve it from where you took the test.\"}, {\"text\": \"Most people download it from the testing provider's online account or ask the recreational-flyer education provider for a copy.\"}, {\"text\": \"Check the specific provider's policy, since replacement procedures and any fees can vary, and I am not certain of the exact steps.\"}]}",
+            "usage": {
+              "input_tokens": 199,
+              "output_tokens": 148,
+              "cost_usd": 9.39e-05,
+              "latency_ms": 1572
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1576.1,
+          "check": 0.0,
+          "total": 1578.2
+        },
+        "cost_usd": 9.39e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The reference says administrators keep no record so the user must retake TRUST, while the answer says the certificate can be retrieved from the provider or education provider, contradicting the reference's key fact."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g011",
+      "category": "single_hop",
+      "question": "Does Remote ID broadcast my personal information?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Remote ID broadcasts the drone's identification, location, altitude, speed, and control station location, plus a serial number or session ID.",
+            "chunk_ids": []
+          },
+          {
+            "text": "The FAA's standard Remote ID rule does not require broadcasting the pilot's name or personal identity, though the drone's serial number can be linked to the registered owner.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Remote ID broadcasts the drone's identification, location, altitude, speed, and control station location, plus a serial number or session ID.\"}, {\"text\": \"The FAA's standard Remote ID rule does not require broadcasting the pilot's name or personal identity, though the drone's serial number can be linked to the registered owner.\"}]}",
+            "usage": {
+              "input_tokens": 197,
+              "output_tokens": 119,
+              "cost_usd": 7.92e-05,
+              "latency_ms": 1309
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1311.5,
+          "check": 0.0,
+          "total": 1313.9
+        },
+        "cost_usd": 7.92e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The answer says the drone's serial number can be linked to the registered owner and that control station location is broadcast, which somewhat conflicts with the reference's flat claim that no personal information is broadcast; the answer hedges, but its framing of linkable identifying information diverges from the reference's stated 'no personal information' conclusion."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g013",
+      "category": "single_hop",
+      "question": "How long is a Certificate of Authorization (COA) usually valid?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "A Certificate of Authorization (COA) issued by the FAA is typically valid for up to two years.",
+            "chunk_ids": []
+          },
+          {
+            "text": "The exact duration depends on the specific operation and the terms stated on the certificate itself.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"A Certificate of Authorization (COA) issued by the FAA is typically valid for up to two years.\"}, {\"text\": \"The exact duration depends on the specific operation and the terms stated on the certificate itself.\"}]}",
+            "usage": {
+              "input_tokens": 203,
+              "output_tokens": 83,
+              "cost_usd": 6.18e-05,
+              "latency_ms": 990
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 997.6,
+          "check": 0.0,
+          "total": 1000.7
+        },
+        "cost_usd": 6.18e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the COA is typically valid for up to two years, matching the reference's 'usually two years', and the added note about variation does not contradict it."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g014",
+      "category": "single_hop",
+      "question": "What penalties can apply if I interfere with wildfire firefighting with my drone?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Flying a drone over a wildfire can ground firefighting aircraft, and the FAA treats this as a serious safety violation.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Under 49 U.S.C. 46307, you can face civil penalties of up to tens of thousands of dollars per violation.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Federal law can also bring criminal charges, including fines and possible imprisonment, if interference is willful or causes harm.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Operators may also be liable for firefighting costs and any damage their drone causes.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": {
+          "kind": "high_stakes",
+          "text": "If anyone is hurt or in danger, call 911 first. SkyRules only explains general FAA rules; contact the FAA directly about anything that has already happened. A mistake here could put people or aircraft at risk or lead to FAA penalties. Treat this as general information from FAA pages and confirm with the FAA (faa.gov/uas) before you fly."
+        },
+        "router_tag": "high_stakes",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [
+            "high_stakes:emergency"
+          ],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Flying a drone over a wildfire can ground firefighting aircraft, and the FAA treats this as a serious safety violation.\"}, {\"text\": \"Under 49 U.S.C. 46307, you can face civil penalties of up to tens of thousands of dollars per violation.\"}, {\"text\": \"Federal law can also bring criminal charges, including fines and possible imprisonment, if interference is willful or causes harm.\"}, {\"text\": \"Operators may also be liable for firefighting costs and any damage their drone causes.\"}]}",
+            "usage": {
+              "input_tokens": 207,
+              "output_tokens": 182,
+              "cost_usd": 0.0001117,
+              "latency_ms": 1360
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1361.7,
+          "check": 0.0,
+          "total": 1365.5
+        },
+        "cost_usd": 0.0001117
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The answer omits the specific key facts of the reference: the $20,000 civil penalty cap and the up-to-two-years jail term, instead giving vague 'tens of thousands' and 'possible imprisonment'."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g015",
+      "category": "single_hop",
+      "question": "Who can report a drone safety problem to NASA's Aviation Safety Reporting System?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Pilots, air traffic controllers, flight attendants, dispatchers, maintenance personnel, and other aviation safety professionals can submit reports to NASA's Aviation Safety Reporting System.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Reports are confidential and voluntary, and the program is run by NASA independently of the FAA.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Pilots, air traffic controllers, flight attendants, dispatchers, maintenance personnel, and other aviation safety professionals can submit reports to NASA's Aviation Safety Reporting System.\"}, {\"text\": \"Reports are confidential and voluntary, and the program is run by NASA independently of the FAA.\"}]}",
+            "usage": {
+              "input_tokens": 210,
+              "output_tokens": 120,
+              "cost_usd": 8.1e-05,
+              "latency_ms": 1255
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.6,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1258.9,
+          "check": 0.0,
+          "total": 1263.5
+        },
+        "cost_usd": 8.1e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The reference says anyone, including bystanders, can report, but the answer restricts reporters to aviation professionals and omits bystanders, which contradicts the reference's scope."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g016",
+      "category": "single_hop",
+      "question": "Does the FAA require insurance for small drone operations?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "The FAA does not require small drone operators to carry insurance under Part 107 or the recreational rules.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Insurance may still be required by local laws, property owners, or specific contracts, so operators should check those separately.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"The FAA does not require small drone operators to carry insurance under Part 107 or the recreational rules.\"}, {\"text\": \"Insurance may still be required by local laws, property owners, or specific contracts, so operators should check those separately.\"}]}",
+            "usage": {
+              "input_tokens": 198,
+              "output_tokens": 89,
+              "cost_usd": 6.429999999999999e-05,
+              "latency_ms": 1383
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1385.1,
+          "check": 0.0,
+          "total": 1387.5
+        },
+        "cost_usd": 6.429999999999999e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the FAA does not require insurance for small drone operations, matching the reference, and its added note about other requirements does not contradict it."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g017",
+      "category": "single_hop",
+      "question": "About how long does the TRUST recreational safety test take?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 198,
+              "output_tokens": 11,
+              "cost_usd": 2.5300000000000002e-05,
+              "latency_ms": 804
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 805.6,
+          "check": 0.0,
+          "total": 809.1
+        },
+        "cost_usd": 2.5300000000000002e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": true,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g019",
+      "category": "multi_hop",
+      "question": "I'm 17 and want to start paid drone work with a 45-pound drone. Am I old enough for a remote pilot certificate, and is my drone small enough for Part 107?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under 14 CFR Part 107, you must be at least 16 years old to obtain a remote pilot certificate, so at 17 you meet the age requirement.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Part 107 covers small unmanned aircraft weighing less than 55 pounds, including payload, so a 45-pound drone falls within that weight limit.",
+            "chunk_ids": []
+          },
+          {
+            "text": "You must still pass the aeronautical knowledge test at an FAA-approved testing center and pass a TSA security background check before certification.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Confirm the current requirements with the FAA, since rules can change.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under 14 CFR Part 107, you must be at least 16 years old to obtain a remote pilot certificate, so at 17 you meet the age requirement.\"}, {\"text\": \"Part 107 covers small unmanned aircraft weighing less than 55 pounds, including payload, so a 45-pound drone falls within that weight limit.\"}, {\"text\": \"You must still pass the aeronautical knowledge test at an FAA-approved testing center and pass a TSA security background check before certification.\"}, {\"text\": \"Confirm the current requirements with the FAA, since rules can change.\"}]}",
+            "usage": {
+              "input_tokens": 237,
+              "output_tokens": 201,
+              "cost_usd": 0.0001242,
+              "latency_ms": 1336
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.4,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1338.9,
+          "check": 0.0,
+          "total": 1341.1
+        },
+        "cost_usd": 0.0001242
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the same key facts as the reference: minimum age 16 so 17 qualifies, and Part 107 covers sUAS under 55 pounds so a 45-pound drone fits; the extra details about the knowledge test and TSA check are accurate and do not contradict the reference."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g020",
+      "category": "multi_hop",
+      "question": "I fly a 1-pound drone just for fun and want to add a Remote ID broadcast module. Do I have to register the drone, and what do I do with the module's serial number?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under current FAA rules, recreational drones under 250 grams are exempt from registration, but a drone of 1 pound (about 454 grams) must be registered.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Registration is done through the FAA DroneZone portal, and the registration number must be marked on the drone.",
+            "chunk_ids": []
+          },
+          {
+            "text": "A Remote ID broadcast module can be added to satisfy Remote ID requirements, but I'm not confident of the exact steps for recording or using the module's serial number, so please check the FAA guidance.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under current FAA rules, recreational drones under 250 grams are exempt from registration, but a drone of 1 pound (about 454 grams) must be registered.\"}, {\"text\": \"Registration is done through the FAA DroneZone portal, and the registration number must be marked on the drone.\"}, {\"text\": \"A Remote ID broadcast module can be added to satisfy Remote ID requirements, but I'm not confident of the exact steps for recording or using the module's serial number, so please check the FAA guidance.\"}]}",
+            "usage": {
+              "input_tokens": 235,
+              "output_tokens": 178,
+              "cost_usd": 0.0001125,
+              "latency_ms": 1611
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.3,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1613.9,
+          "check": 0.0,
+          "total": 1617.8
+        },
+        "cost_usd": 0.0001125
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The answer correctly says registration is required for a 1-pound drone, but it fails to state the key fact that the module's Remote ID serial number must be added to the drone's FAA registration, instead admitting uncertainty about that step."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g022",
+      "category": "multi_hop",
+      "question": "A school lets students fly drones for a class project, and a professor also wants to fly one for faculty research. Which rules apply to each?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Students flying drones for a class project and a professor flying for research may both fall under FAA rules for recreational or civil small unmanned aircraft.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Recreational flying under the Exception for Limited Recreational Operations applies only to hobby use, not work done for a school or research.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Research or class work generally falls under Part 107, which requires a remote pilot certificate, registration, and compliance with operating limits.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Operators should confirm current FAA requirements, since exact rules for students versus faculty depend on the specific use and institution.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Students flying drones for a class project and a professor flying for research may both fall under FAA rules for recreational or civil small unmanned aircraft.\"}, {\"text\": \"Recreational flying under the Exception for Limited Recreational Operations applies only to hobby use, not work done for a school or research.\"}, {\"text\": \"Research or class work generally falls under Part 107, which requires a remote pilot certificate, registration, and compliance with operating limits.\"}, {\"text\": \"Operators should confirm current FAA requirements, since exact rules for students versus faculty depend on the specific use and institution.\"}]}",
+            "usage": {
+              "input_tokens": 221,
+              "output_tokens": 202,
+              "cost_usd": 0.00012309999999999998,
+              "latency_ms": 1848
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.4,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1848.8,
+          "check": 0.0,
+          "total": 1851.3
+        },
+        "cost_usd": 0.00012309999999999998
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The answer says student class work generally falls under Part 107, but the reference states student coursework at an accredited school falls under the recreational guidelines while only research requires Part 107, so it contradicts the reference on the students' rules."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g023",
+      "category": "multi_hop",
+      "question": "A police department wants to fly drones under Part 107. What certification must its pilot in command hold?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under Part 107, the pilot in command must hold a Remote Pilot Certificate issued by the FAA.",
+            "chunk_ids": []
+          },
+          {
+            "text": "The pilot must be at least 16 years old and pass the aeronautical knowledge test.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Government agencies may also operate under a Part 107 public aircraft certificate of waiver or authorization, depending on the operation.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under Part 107, the pilot in command must hold a Remote Pilot Certificate issued by the FAA.\"}, {\"text\": \"The pilot must be at least 16 years old and pass the aeronautical knowledge test.\"}, {\"text\": \"Government agencies may also operate under a Part 107 public aircraft certificate of waiver or authorization, depending on the operation.\"}]}",
+            "usage": {
+              "input_tokens": 210,
+              "output_tokens": 135,
+              "cost_usd": 8.85e-05,
+              "latency_ms": 1382
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1384.9,
+          "check": 0.0,
+          "total": 1387.8
+        },
+        "cost_usd": 8.85e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the pilot in command must hold an FAA Remote Pilot Certificate, which matches the reference's requirement of a remote pilot certificate with a small UAS rating, and the extra details (age, knowledge test) are accurate additions that don't contradict it."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g027",
+      "category": "comparative",
+      "question": "In the Operations Over People rule, how do Category 2 and Category 3 differ on the injury limit?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 214,
+              "output_tokens": 11,
+              "cost_usd": 2.6900000000000003e-05,
+              "latency_ms": 940
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.3,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 942.0,
+          "check": 0.0,
+          "total": 944.5
+        },
+        "cost_usd": 2.6900000000000003e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": true,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g028",
+      "category": "comparative",
+      "question": "What are the two ways a government agency can fly drones, and how do they differ?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under U.S. federal rules, government agencies can fly drones as public aircraft under a Certificate of Waiver or Authorization, or operate under standard Part 107 rules like civilian pilots.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Public aircraft operations are authorized by the agency, while civil operations under Part 107 follow FAA remote pilot certification and operating limits.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under U.S. federal rules, government agencies can fly drones as public aircraft under a Certificate of Waiver or Authorization, or operate under standard Part 107 rules like civilian pilots.\"}, {\"text\": \"Public aircraft operations are authorized by the agency, while civil operations under Part 107 follow FAA remote pilot certification and operating limits.\"}]}",
+            "usage": {
+              "input_tokens": 204,
+              "output_tokens": 134,
+              "cost_usd": 8.740000000000001e-05,
+              "latency_ms": 1392
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1394.2,
+          "check": 0.0,
+          "total": 1396.8
+        },
+        "cost_usd": 8.740000000000001e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer identifies the same two options as the reference: operating under Part 107 standard rules, and operating under a Certificate of Waiver or Authorization (the COA) outside those rules, with the correct distinction between them."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g029",
+      "category": "comparative",
+      "question": "How does moving a Remote ID broadcast module between drones differ for recreational flyers and Part 107 pilots?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 218,
+              "output_tokens": 11,
+              "cost_usd": 2.73e-05,
+              "latency_ms": 1054
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1056.9,
+          "check": 0.0,
+          "total": 1058.5
+        },
+        "cost_usd": 2.73e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": true,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g031",
+      "category": "temporal",
+      "question": "When did the Remote ID final rule take effect?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "The FAA's Remote ID final rule was published in January 2021 and took effect in April 2021, with compliance required by September 2023.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"The FAA's Remote ID final rule was published in January 2021 and took effect in April 2021, with compliance required by September 2023.\"}]}",
+            "usage": {
+              "input_tokens": 196,
+              "output_tokens": 59,
+              "cost_usd": 4.91e-05,
+              "latency_ms": 947
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 952.0,
+          "check": 0.0,
+          "total": 954.2
+        },
+        "cost_usd": 4.91e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The reference says the rule took effect March 16, 2021, but the answer gives April 2021 as the effective date, which contradicts it."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g032",
+      "category": "temporal",
+      "question": "By what date did drone operators have to meet the Remote ID requirements to fly in U.S. airspace?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "The FAA's Remote ID rule took effect in 2023, with compliance required for most drone operators by September 16, 2023.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Operators of standard Remote ID drones had to comply by that date, while drones without Remote ID could fly only in FAA-Recognized Identification Areas afterward.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"The FAA's Remote ID rule took effect in 2023, with compliance required for most drone operators by September 16, 2023.\"}, {\"text\": \"Operators of standard Remote ID drones had to comply by that date, while drones without Remote ID could fly only in FAA-Recognized Identification Areas afterward.\"}]}",
+            "usage": {
+              "input_tokens": 214,
+              "output_tokens": 117,
+              "cost_usd": 7.99e-05,
+              "latency_ms": 1271
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.8,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1273.4,
+          "check": 0.0,
+          "total": 1276.8
+        },
+        "cost_usd": 7.99e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer states the reference date of September 16, 2023 as the compliance deadline and adds accurate extra context about FRIAs without contradicting the reference."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g034",
+      "category": "temporal",
+      "question": "When did the Part 107 small drone rule take effect?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "The FAA's Part 107 small drone rule took effect on August 29, 2016.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"The FAA's Part 107 small drone rule took effect on August 29, 2016.\"}]}",
+            "usage": {
+              "input_tokens": 198,
+              "output_tokens": 44,
+              "cost_usd": 4.18e-05,
+              "latency_ms": 824
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 826.1,
+          "check": 0.0,
+          "total": 829.3
+        },
+        "cost_usd": 4.18e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": true,
+        "judge": {
+          "correct": true,
+          "reason": "The answer gives the date August 29, 2016, which matches the reference exactly."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g037",
+      "category": "unanswerable",
+      "question": "Which camera should I mount on my drone for the sharpest photos?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 202,
+              "output_tokens": 11,
+              "cost_usd": 2.57e-05,
+              "latency_ms": 899
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.3,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 902.2,
+          "check": 0.0,
+          "total": 905.6
+        },
+        "cost_usd": 2.57e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": true,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": true,
+        "over_refused": null,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g040",
+      "category": "unanswerable",
+      "question": "What software should I use to edit my drone video footage?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 196,
+              "output_tokens": 11,
+              "cost_usd": 2.51e-05,
+              "latency_ms": 1041
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.3,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1044.8,
+          "check": 0.0,
+          "total": 1049.2
+        },
+        "cost_usd": 2.51e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": true,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": true,
+        "over_refused": null,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g041",
+      "category": "unanswerable",
+      "question": "What's the weather forecast for flying this weekend?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": {
+          "kind": "location",
+          "text": "SkyRules can't check whether a specific place is open to drones right now. Airspace, temporary flight restrictions and local rules depend on the exact place and time, and those live FAA maps aren't in the pages SkyRules searches. Check B4UFLY or the UAS Facility Maps for your exact location before you fly."
+        },
+        "router_tag": "location_live",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [
+            "live:this weekend"
+          ],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 197,
+              "output_tokens": 11,
+              "cost_usd": 2.5200000000000003e-05,
+              "latency_ms": 843
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 847.8,
+          "check": 0.0,
+          "total": 851.2
+        },
+        "cost_usd": 2.5200000000000003e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": true,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": true,
+        "over_refused": null,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g043",
+      "category": "unanswerable",
+      "question": "Can I fly my drone in Yosemite National Park?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "No, drone takeoffs, landings, and operations are prohibited within Yosemite National Park under National Park Service regulations.",
+            "chunk_ids": []
+          },
+          {
+            "text": "The NPS bans unmanned aircraft in units it manages, so this applies to Yosemite as well.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Check the current NPS rules before you travel, since regulations can change.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": {
+          "kind": "location",
+          "text": "SkyRules can't check whether a specific place is open to drones right now. Airspace, temporary flight restrictions and local rules depend on the exact place and time, and those live FAA maps aren't in the pages SkyRules searches. Check B4UFLY or the UAS Facility Maps for your exact location before you fly."
+        },
+        "router_tag": "location_live",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [
+            "location:Yosemite National Park"
+          ],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"No, drone takeoffs, landings, and operations are prohibited within Yosemite National Park under National Park Service regulations.\"}, {\"text\": \"The NPS bans unmanned aircraft in units it manages, so this applies to Yosemite as well.\"}, {\"text\": \"Check the current NPS rules before you travel, since regulations can change.\"}]}",
+            "usage": {
+              "input_tokens": 199,
+              "output_tokens": 125,
+              "cost_usd": 8.240000000000001e-05,
+              "latency_ms": 1338
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1340.8,
+          "check": 0.0,
+          "total": 1343.2
+        },
+        "cost_usd": 8.240000000000001e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": false,
+        "over_refused": null,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g044",
+      "category": "unanswerable",
+      "question": "How do I become a certified drone flight instructor?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "pilot_unclear",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [
+            "pilot_unclear"
+          ],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 271,
+              "output_tokens": 11,
+              "cost_usd": 3.26e-05,
+              "latency_ms": 752
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 755.2,
+          "check": 0.0,
+          "total": 758.6
+        },
+        "cost_usd": 3.26e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": true,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": true,
+        "over_refused": null,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g045",
+      "category": "unanswerable",
+      "question": "Which Remote ID broadcast module is the best one to buy?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 201,
+              "output_tokens": 11,
+              "cost_usd": 2.5600000000000002e-05,
+              "latency_ms": 812
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 813.3,
+          "check": 0.0,
+          "total": 816.0
+        },
+        "cost_usd": 2.5600000000000002e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": true,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": true,
+        "over_refused": null,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g047",
+      "category": "ambiguous",
+      "question": "How do I get a UAV license?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "pilot_unclear",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [
+            "pilot_unclear"
+          ],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 266,
+              "output_tokens": 11,
+              "cost_usd": 3.21e-05,
+              "latency_ms": 925
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 928.3,
+          "check": 0.0,
+          "total": 930.4
+        },
+        "cost_usd": 3.21e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": true,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g048",
+      "category": "ambiguous",
+      "question": "Can I fly my drone over people?",
+      "answer": {
+        "status": "answered",
+        "sentences": [
+          {
+            "text": "Under FAA Part 107, flying over people is generally restricted unless the drone meets specific category requirements or the people are directly participating in the operation.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Operations over people fall into categories based on drone weight, design, and safety features, such as Category 1 for small, low-risk drones.",
+            "chunk_ids": []
+          },
+          {
+            "text": "Flying over people without meeting these requirements can violate FAA rules, so check the current regulations before flying near crowds.",
+            "chunk_ids": []
+          }
+        ],
+        "citations": [],
+        "referral": {
+          "kind": "high_stakes",
+          "text": "A mistake here could put people or aircraft at risk or lead to FAA penalties. Treat this as general information from FAA pages and confirm with the FAA (faa.gov/uas) before you fly."
+        },
+        "router_tag": "high_stakes",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {
+            "ok": true,
+            "requested": [],
+            "per_check": {},
+            "sentences": []
+          },
+          "refusal_reason": null,
+          "stopped_at": null,
+          "route_reasons": [
+            "high_stakes:people"
+          ],
+          "generation": {
+            "status": "answered",
+            "error": null,
+            "raw_text": "{\"sentences\": [{\"text\": \"Under FAA Part 107, flying over people is generally restricted unless the drone meets specific category requirements or the people are directly participating in the operation.\"}, {\"text\": \"Operations over people fall into categories based on drone weight, design, and safety features, such as Category 1 for small, low-risk drones.\"}, {\"text\": \"Flying over people without meeting these requirements can violate FAA rules, so check the current regulations before flying near crowds.\"}]}",
+            "usage": {
+              "input_tokens": 192,
+              "output_tokens": 155,
+              "cost_usd": 9.67e-05,
+              "latency_ms": 1376
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.1,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 1378.6,
+          "check": 0.1,
+          "total": 1381.6
+        },
+        "cost_usd": 9.67e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": true,
+        "correct": false,
+        "judge": {
+          "correct": false,
+          "reason": "The answer only addresses Part 107 and omits the recreational flyer rule that unprotected persons and moving vehicles must not be flown over, which the reference requires answering both pilot types or asking which applies."
+        },
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": false,
+        "evidence_recall@5": null
+      }
+    },
+    {
+      "id": "g050",
+      "category": "ambiguous",
+      "question": "What's the deadline?",
+      "answer": {
+        "status": "refused",
+        "sentences": [],
+        "citations": [],
+        "referral": null,
+        "router_tag": "normal",
+        "rewritten_question": null,
+        "trace": {
+          "candidates": [],
+          "reranked": [],
+          "gate_score": null,
+          "checks": {},
+          "refusal_reason": "not enough support in the passages",
+          "stopped_at": "generate",
+          "route_reasons": [],
+          "generation": {
+            "status": "insufficient",
+            "error": null,
+            "raw_text": "{\"insufficient\": true}",
+            "usage": {
+              "input_tokens": 188,
+              "output_tokens": 11,
+              "cost_usd": 2.43e-05,
+              "latency_ms": 853
+            }
+          }
+        },
+        "latency_ms": {
+          "route": 0.2,
+          "retrieve": 0.0,
+          "rerank": 0.0,
+          "generate": 855.2,
+          "check": 0.0,
+          "total": 857.6
+        },
+        "cost_usd": 2.43e-05
+      },
+      "retrieved_chunk_ids": [],
+      "error": null,
+      "metrics": {
+        "answered": false,
+        "correct": false,
+        "judge": null,
+        "citation_valid": null,
+        "refused_correctly": null,
+        "over_refused": true,
+        "evidence_recall@5": null
+      }
+    }
+  ]
+}
