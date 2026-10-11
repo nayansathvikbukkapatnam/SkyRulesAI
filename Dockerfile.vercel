@@ -1,0 +1,38 @@
+# SkyRules AI on Vercel's container runtime (beta, all plans; docs: vercel.com/docs/functions/runtimes/container).
+#
+# Vercel builds this image from the repo on every push, so the build context is the repo
+# itself. It installs the pinned requirements with CPU-only torch (as in CI) and builds both
+# indexes from the committed data/normalized/, exactly as `make chunk` and `make index` do
+# on a laptop. Nothing large is committed.
+#
+# Vercel project -> Settings -> Environment Variables (runtime):
+#   ANTHROPIC_API_KEY (sensitive), LLM_PROVIDER=anthropic, ANTHROPIC_MODEL_ID=claude-haiku-5-5
+#   DEMO_QUESTIONS_PER_HOUR=10, DEMO_DAILY_BUDGET_USD=2   (src/app/limits.py)
+#   VERCEL_SUPPORT_LARGE_FUNCTIONS=1                       (the image is ~3 GB)
+FROM python:3.11-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    HF_HOME=/app/.cache/huggingface
+WORKDIR /app
+
+# CPU torch first (the Linux default pulls GB of CUDA), then the pinned set, as in CI.
+COPY requirements.txt .
+RUN pip install --upgrade pip \
+    && pip install "torch==$(grep -i '^torch==' requirements.txt | cut -d= -f3)" \
+       --index-url https://download.pytorch.org/whl/cpu \
+    && pip install -r requirements.txt
+
+COPY configs/ configs/
+COPY src/ src/
+COPY data/normalized/ data/normalized/
+
+# Both strategies: B3 uses struct@v1, the B2 compare view uses fixed@v1. Then download the
+# reranker so the first visitor does not wait for it.
+RUN python -m src.chunk.fixed && python -m src.index.store --strategy fixed \
+    && python -m src.chunk.structure && python -m src.index.store --strategy struct \
+    && python -c "from src.common.config import load_config; \
+from src.retrieve.rerank import Reranker; Reranker.from_config(load_config('default')).model"
+
+# Vercel sends traffic to $PORT (default 80).
+CMD ["sh", "-c", "exec python -m uvicorn src.app.server:app --host 0.0.0.0 --port ${PORT:-80}"]

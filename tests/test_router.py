@@ -101,6 +101,16 @@ def test_pilot_unclear_sends_both_cases_instructions():
     assert r.route("What is Remote ID?")["instructions"] is None
 
 
+def test_pilot_unclear_instructions_do_not_force_an_uncovered_case():
+    """A labelled part for a case the passages do not cover produced sentences like
+    'the passages do not describe a license for recreational flying', which fail the
+    claim check and refused the whole answer (dev item g047)."""
+    text = r.PILOT_UNCLEAR_INSTRUCTIONS
+    assert "If the passages cover only one case" in text
+    assert "answer that case only" in text
+    assert "no sentence about what the passages do not say" in text
+
+
 @pytest.mark.parametrize("pilot_type", ["recreational", "part107"])
 def test_pilot_toggle_resolves_unclear(pilot_type):
     result = r.route("Do I need a license?", pilot_type=pilot_type)

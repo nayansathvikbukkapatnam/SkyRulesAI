@@ -27,7 +27,7 @@ The proposal planned to crawl `www.faa.gov/uas`. The corpus ended up coming from
 
 Current 14 CFR Part 101 has no Subpart E, so the old model-aircraft rule is not in the CFR (recreational flying is now governed by the statute 49 U.S.C. 44809). Recreational rules in the corpus come from the Federal Register and Know Before You Fly.
 
-<!-- Adinath: add the instructor's approval of the source change (date and how it was given). -->
+**Approval.** The instructor approved moving the corpus to these official sources on October 10, 2026, after the faa.gov block (recorded in `CLAUDE.md`, "Current status and plan", item 1). The crawl rules did not change: robots.txt before every request, 1 request per second, the honest User-Agent and the PII exclusions.
 
 ## 2. Crawl policy, enforced in code
 
