@@ -36,7 +36,17 @@ B3 runs four checks on every sentence: citation validity, the 25-word quote limi
 Answer rates per config:
 
 <!-- BEGIN AUTO:rates -->
-_Not produced yet: eval runs on dev. Run `make eval CONFIG=b3 SPLIT=dev`._
+| Config | Items | Answered | Errors | Correct | Citation valid | Correct refusal (unanswerable) | Over-refusal (answerable) |
+|---|---|---|---|---|---|---|---|
+| B0 | 30 | 19 | 0 | 0.4667 (n=30) | n/a | 0.8333 (n=6) | 0.25 (n=24) |
+| B1 | 30 | 19 | 0 | 0.7 (n=30) | 1 (n=19) | 1 (n=6) | 0.2083 (n=24) |
+| B2 | 30 | 21 | 0 | 0.7667 (n=30) | 1 (n=21) | 1 (n=6) | 0.125 (n=24) |
+| A1 | 30 | 19 | 0 | 0.7333 (n=30) | 1 (n=19) | 1 (n=6) | 0.2083 (n=24) |
+| A2 | 30 | 20 | 0 | 0.7 (n=30) | 1 (n=20) | 1 (n=6) | 0.1667 (n=24) |
+| A3 | 30 | 22 | 0 | 0.7667 (n=30) | 1 (n=22) | 1 (n=6) | 0.0833 (n=24) |
+| B3 | 30 | 20 | 0 | 0.7 (n=30) | 1 (n=20) | 1 (n=6) | 0.1667 (n=24) |
+
+Source: `reports/artifacts/eval_<config>_dev.json` (`make eval CONFIG=<config> SPLIT=dev`), commits: A1 e955c7f, A2 e955c7f, A3 e955c7f, B0 e955c7f, B1 e955c7f, B2 e955c7f, B3 e955c7f. Citation validity is not applicable to B0 (closed book cites nothing). Intervals and paired tests are in report 06.
 <!-- END AUTO:rates -->
 
 ## 3. Refusals: correct refusals and over-refusals
@@ -44,7 +54,13 @@ _Not produced yet: eval runs on dev. Run `make eval CONFIG=b3 SPLIT=dev`._
 Correct refusal is measured on unanswerable items, over-refusal on answerable ones (table above). Why B3 refused:
 
 <!-- BEGIN AUTO:refusals -->
-_Not produced yet: the B3 eval run. Run `make eval CONFIG=b3 SPLIT=dev`._
+| Refusal reason | Refusals | On unanswerable items | On answerable items |
+|---|---|---|---|
+| Not enough support (model said insufficient) | 8 | 5 | 3 |
+| Failed check: Numbers, Claims | 1 | 0 | 1 |
+| Evidence gate | 1 | 1 | 0 |
+
+Source: `trace.refusal_reason` in `eval_b3_dev.json`. 10 refusals; 0 pipeline errors are counted separately.
 <!-- END AUTO:refusals -->
 
 ## 4. Citation validity and the quote limit
@@ -52,7 +68,14 @@ _Not produced yet: the B3 eval run. Run `make eval CONFIG=b3 SPLIT=dev`._
 Each answer that reaches the checks, and what failed. A failed check refuses the whole answer, so no failed sentence reaches a user.
 
 <!-- BEGIN AUTO:checks -->
-_Not produced yet: the B3 eval run. Run `make eval CONFIG=b3 SPLIT=dev`._
+| Check | Answers checked | Answers failed (refused) | Sentences failed |
+|---|---|---|---|
+| Citations | 21 | 0 | 0 |
+| Claims | 21 | 1 | 3 |
+| Numbers | 21 | 1 | 3 |
+| Quotes (25-word limit) | 21 | 0 | 1 |
+
+Source: `trace.checks` in `eval_b3_dev.json`. Any failed check refuses the whole answer (fail closed), so no failed sentence was shown to a user.
 <!-- END AUTO:checks -->
 
 ## 5. Referral behavior
@@ -60,7 +83,19 @@ _Not produced yet: the B3 eval run. Run `make eval CONFIG=b3 SPLIT=dev`._
 The router (`src/generate/router.py`) tags location-specific and high-stakes questions and attaches a referral to B4UFLY, the UAS Facility Maps or the FAA, also when SkyRules refuses.
 
 <!-- BEGIN AUTO:referrals -->
-_Not produced yet: the B3 eval run. Run `make eval CONFIG=b3 SPLIT=dev`._
+| Router tag | Questions |
+|---|---|
+| normal | 24 |
+| high_stakes | 2 |
+| location_live | 2 |
+| pilot_unclear | 2 |
+
+| Router tag | Referral | Answer status | Questions |
+|---|---|---|---|
+| high_stakes | high_stakes | answered | 2 |
+| location_live | location | refused | 2 |
+
+Source: `router_tag` and `referral` in `eval_b3_dev.json`.
 <!-- END AUTO:referrals -->
 
 ## 6. How answer correctness is judged, and how the judge was checked
@@ -76,7 +111,17 @@ _Not produced yet: the judge check against hand labels. Run `python -m src.repor
 ## 7. Latency and cost
 
 <!-- BEGIN AUTO:latency_cost -->
-_Not produced yet: eval runs on dev. Run `make eval CONFIG=b3 SPLIT=dev`._
+| Config | route p50 / p95 (ms) | retrieve p50 / p95 (ms) | rerank p50 / p95 (ms) | generate p50 / p95 (ms) | check p50 / p95 (ms) | total p50 / p95 (ms) | Cost per query (USD) | Total (USD) |
+|---|---|---|---|---|---|---|---|---|
+| B0 | 0.1 / 0.2 | 0 / 0 | 0 / 0 | 1145.4 / 1815.3 | 0 / 0 | 1147.3 / 1817 | 0.000066 | 0.001986 |
+| B1 | 0.1 / 0.3 | 18 / 34.1 | 0 / 0 | 1178.8 / 1779.5 | 0 / 0 | 1197.9 / 1814.9 | 0.000528 | 0.015844 |
+| B2 | 0.1 / 0.3 | 36.1 / 161.5 | 0 / 0 | 1205.1 / 1659 | 0 / 0 | 1243.4 / 2367.7 | 0.000537 | 0.016099 |
+| A1 | 0.1 / 0.3 | 38.1 / 172.5 | 0 / 0 | 1067.6 / 1726.2 | 0 / 0 | 1122.9 / 3007.6 | 0.000428 | 0.012838 |
+| A2 | 0.1 / 0.2 | 47.2 / 185.2 | 0 / 0 | 1157 / 1634.2 | 0 / 0 | 1207.3 / 6261.4 | 0.000427 | 0.012813 |
+| A3 | 0.1 / 0.3 | 47.2 / 171 | 329.8 / 482.1 | 1223.2 / 1643.9 | 0 / 0 | 1624.7 / 2167.7 | 0.000439 | 0.013172 |
+| B3 | 0.1 / 0.2 | 47.3 / 55.9 | 326 / 490 | 1216.2 / 1792.6 | 1832.7 / 4614.6 | 3414 / 8066.8 | 0.0007 | 0.020987 |
+
+Source: `summary.latency_ms` and `summary.cost_usd_*` in `eval_<config>_dev.json`. Latency is measured on one laptop (CPU retrieval and rerank, Claude API calls); a cached LLM reply keeps its original latency.
 <!-- END AUTO:latency_cost -->
 
 ## 8. Limitations
