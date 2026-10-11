@@ -1,0 +1,1158 @@
+{
+  "config": "a1",
+  "split": "test",
+  "switches": {
+    "closed_book": false,
+    "retrieval_mode": "dense",
+    "chunk_strategy": "struct@v1",
+    "rerank": false,
+    "gate": false,
+    "gate_threshold": null,
+    "checks": [],
+    "generator_model": "claude-haiku-5-5"
+  },
+  "n_items": 20,
+  "n_scored": 15,
+  "n_skipped": 5,
+  "pool": {
+    "recall@5": 0.4444,
+    "recall@20": 0.6444,
+    "mrr": 0.4222,
+    "ndcg@10": 0.4257
+  },
+  "final": {
+    "recall@5": 0.4444,
+    "recall@20": 0.6444,
+    "mrr": 0.4222,
+    "ndcg@10": 0.4257
+  },
+  "pool_recall@20_ceiling": 0.6444,
+  "ci95": {
+    "pool": {
+      "recall@5": [
+        0.2444,
+        0.6444
+      ],
+      "recall@20": [
+        0.4222,
+        0.8444
+      ],
+      "mrr": [
+        0.2333,
+        0.6278
+      ],
+      "ndcg@10": [
+        0.2623,
+        0.5945
+      ]
+    },
+    "final": {
+      "recall@5": [
+        0.2444,
+        0.6444
+      ],
+      "recall@20": [
+        0.4222,
+        0.8444
+      ],
+      "mrr": [
+        0.2333,
+        0.6278
+      ],
+      "ndcg@10": [
+        0.2623,
+        0.5945
+      ]
+    }
+  },
+  "by_category": {
+    "ambiguous": {
+      "n": 1,
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 1.0,
+        "mrr": 0.1667,
+        "ndcg@10": 0.3562
+      }
+    },
+    "comparative": {
+      "n": 2,
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 0.75,
+        "mrr": 0.75,
+        "ndcg@10": 0.5
+      }
+    },
+    "multi_hop": {
+      "n": 3,
+      "final": {
+        "recall@5": 0.3889,
+        "recall@20": 0.3889,
+        "mrr": 0.25,
+        "ndcg@10": 0.2854
+      }
+    },
+    "single_hop": {
+      "n": 7,
+      "final": {
+        "recall@5": 0.5714,
+        "recall@20": 0.7143,
+        "mrr": 0.4167,
+        "ndcg@10": 0.5087
+      }
+    },
+    "temporal": {
+      "n": 2,
+      "final": {
+        "recall@5": 0.25,
+        "recall@20": 0.5,
+        "mrr": 0.5,
+        "ndcg@10": 0.3066
+      }
+    }
+  },
+  "latency_ms": {
+    "retrieve": {
+      "p50": 14.5,
+      "p95": 4502.5
+    },
+    "rerank": {
+      "p50": 0.0,
+      "p95": 0.0
+    }
+  },
+  "items": [
+    {
+      "id": "g002",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "e60bb427392f::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0337",
+        "e6538e7de5f6::struct@v1::0354",
+        "027d5d0c31b3::struct@v1::0002",
+        "f01f177cc2bc::struct@v1::0013",
+        "e6538e7de5f6::struct@v1::0352",
+        "e6538e7de5f6::struct@v1::0359",
+        "e6538e7de5f6::struct@v1::0361",
+        "f01f177cc2bc::struct@v1::0342",
+        "e6538e7de5f6::struct@v1::0353",
+        "e6538e7de5f6::struct@v1::0358",
+        "e6538e7de5f6::struct@v1::0355",
+        "f01f177cc2bc::struct@v1::0335",
+        "f01f177cc2bc::struct@v1::0345",
+        "62a8b8ebf885::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0569",
+        "f01f177cc2bc::struct@v1::0338",
+        "e6538e7de5f6::struct@v1::0357",
+        "f01f177cc2bc::struct@v1::0503",
+        "e6538e7de5f6::struct@v1::0538"
+      ],
+      "final_ids": [
+        "e60bb427392f::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0337",
+        "e6538e7de5f6::struct@v1::0354",
+        "027d5d0c31b3::struct@v1::0002",
+        "f01f177cc2bc::struct@v1::0013",
+        "e6538e7de5f6::struct@v1::0352",
+        "e6538e7de5f6::struct@v1::0359",
+        "e6538e7de5f6::struct@v1::0361",
+        "f01f177cc2bc::struct@v1::0342",
+        "e6538e7de5f6::struct@v1::0353",
+        "e6538e7de5f6::struct@v1::0358",
+        "e6538e7de5f6::struct@v1::0355",
+        "f01f177cc2bc::struct@v1::0335",
+        "f01f177cc2bc::struct@v1::0345",
+        "62a8b8ebf885::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0569",
+        "f01f177cc2bc::struct@v1::0338",
+        "e6538e7de5f6::struct@v1::0357",
+        "f01f177cc2bc::struct@v1::0503",
+        "e6538e7de5f6::struct@v1::0538"
+      ],
+      "latency_ms": {
+        "retrieve": 4502.5384170003235,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g003",
+      "category": "single_hop",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.7737056144690833,
+        "first_hit_rank": 2
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.7737056144690833,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "f01f177cc2bc::struct@v1::0148",
+        "b659ca0ae813::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0589",
+        "e6538e7de5f6::struct@v1::0152",
+        "e6538e7de5f6::struct@v1::0151",
+        "f01f177cc2bc::struct@v1::0557",
+        "f01f177cc2bc::struct@v1::0147",
+        "ccf7e5b8f4be::struct@v1::0152",
+        "18578889e1bd::struct@v1::0245",
+        "e6538e7de5f6::struct@v1::0154",
+        "f01f177cc2bc::struct@v1::0078",
+        "f01f177cc2bc::struct@v1::0149",
+        "18578889e1bd::struct@v1::0171",
+        "e6538e7de5f6::struct@v1::0075",
+        "e6538e7de5f6::struct@v1::0609",
+        "e6538e7de5f6::struct@v1::0074",
+        "f01f177cc2bc::struct@v1::0153",
+        "a15eb08c9b7d::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0520",
+        "638de1ad05b0::struct@v1::0052"
+      ],
+      "final_ids": [
+        "f01f177cc2bc::struct@v1::0148",
+        "b659ca0ae813::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0589",
+        "e6538e7de5f6::struct@v1::0152",
+        "e6538e7de5f6::struct@v1::0151",
+        "f01f177cc2bc::struct@v1::0557",
+        "f01f177cc2bc::struct@v1::0147",
+        "ccf7e5b8f4be::struct@v1::0152",
+        "18578889e1bd::struct@v1::0245",
+        "e6538e7de5f6::struct@v1::0154",
+        "f01f177cc2bc::struct@v1::0078",
+        "f01f177cc2bc::struct@v1::0149",
+        "18578889e1bd::struct@v1::0171",
+        "e6538e7de5f6::struct@v1::0075",
+        "e6538e7de5f6::struct@v1::0609",
+        "e6538e7de5f6::struct@v1::0074",
+        "f01f177cc2bc::struct@v1::0153",
+        "a15eb08c9b7d::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0520",
+        "638de1ad05b0::struct@v1::0052"
+      ],
+      "latency_ms": {
+        "retrieve": 20.113417063839734,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g005",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "0c1fbe345652::struct@v1::0003",
+        "cdf436877a71::struct@v1::0102",
+        "d98d42a3eebf::struct@v1::0416",
+        "a598c89d0df6::struct@v1::0104",
+        "34e274a857ad::struct@v1::0226",
+        "34e274a857ad::struct@v1::0227",
+        "a598c89d0df6::struct@v1::0101",
+        "a598c89d0df6::struct@v1::0180",
+        "cdf436877a71::struct@v1::0163",
+        "cdf436877a71::struct@v1::0172",
+        "1caea8f49978::struct@v1::0204",
+        "cdf436877a71::struct@v1::0170",
+        "cdf436877a71::struct@v1::0101",
+        "a226c9edd739::struct@v1::0256",
+        "a226c9edd739::struct@v1::0255",
+        "cdf436877a71::struct@v1::0173",
+        "a598c89d0df6::struct@v1::0211",
+        "d98d42a3eebf::struct@v1::0434",
+        "a598c89d0df6::struct@v1::0178",
+        "cdf436877a71::struct@v1::0099"
+      ],
+      "final_ids": [
+        "0c1fbe345652::struct@v1::0003",
+        "cdf436877a71::struct@v1::0102",
+        "d98d42a3eebf::struct@v1::0416",
+        "a598c89d0df6::struct@v1::0104",
+        "34e274a857ad::struct@v1::0226",
+        "34e274a857ad::struct@v1::0227",
+        "a598c89d0df6::struct@v1::0101",
+        "a598c89d0df6::struct@v1::0180",
+        "cdf436877a71::struct@v1::0163",
+        "cdf436877a71::struct@v1::0172",
+        "1caea8f49978::struct@v1::0204",
+        "cdf436877a71::struct@v1::0170",
+        "cdf436877a71::struct@v1::0101",
+        "a226c9edd739::struct@v1::0256",
+        "a226c9edd739::struct@v1::0255",
+        "cdf436877a71::struct@v1::0173",
+        "a598c89d0df6::struct@v1::0211",
+        "d98d42a3eebf::struct@v1::0434",
+        "a598c89d0df6::struct@v1::0178",
+        "cdf436877a71::struct@v1::0099"
+      ],
+      "latency_ms": {
+        "retrieve": 15.203125076368451,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g006",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.25,
+        "ndcg@10": 0.43067655807339306,
+        "first_hit_rank": 4
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.25,
+        "ndcg@10": 0.43067655807339306,
+        "first_hit_rank": 4
+      },
+      "pool_ids": [
+        "3b2c31d0fa3b::struct@v1::0015",
+        "c608fd357f29::struct@v1::0003",
+        "40723a11ce29::struct@v1::0005",
+        "0e7488f56448::struct@v1::0001",
+        "40723a11ce29::struct@v1::0002",
+        "40723a11ce29::struct@v1::0010",
+        "40723a11ce29::struct@v1::0007",
+        "40723a11ce29::struct@v1::0006",
+        "40723a11ce29::struct@v1::0008",
+        "c608fd357f29::struct@v1::0005",
+        "40723a11ce29::struct@v1::0001",
+        "40723a11ce29::struct@v1::0000",
+        "72e7d3d8955f::struct@v1::0000",
+        "340829266a24::struct@v1::0000",
+        "72e7d3d8955f::struct@v1::0005",
+        "0e7488f56448::struct@v1::0000",
+        "40723a11ce29::struct@v1::0003",
+        "3b2c31d0fa3b::struct@v1::0016",
+        "82ced57d690e::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0005"
+      ],
+      "final_ids": [
+        "3b2c31d0fa3b::struct@v1::0015",
+        "c608fd357f29::struct@v1::0003",
+        "40723a11ce29::struct@v1::0005",
+        "0e7488f56448::struct@v1::0001",
+        "40723a11ce29::struct@v1::0002",
+        "40723a11ce29::struct@v1::0010",
+        "40723a11ce29::struct@v1::0007",
+        "40723a11ce29::struct@v1::0006",
+        "40723a11ce29::struct@v1::0008",
+        "c608fd357f29::struct@v1::0005",
+        "40723a11ce29::struct@v1::0001",
+        "40723a11ce29::struct@v1::0000",
+        "72e7d3d8955f::struct@v1::0000",
+        "340829266a24::struct@v1::0000",
+        "72e7d3d8955f::struct@v1::0005",
+        "0e7488f56448::struct@v1::0000",
+        "40723a11ce29::struct@v1::0003",
+        "3b2c31d0fa3b::struct@v1::0016",
+        "82ced57d690e::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0005"
+      ],
+      "latency_ms": {
+        "retrieve": 14.06795799266547,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g008",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "81e6ad1d72fa::struct@v1::0000",
+        "0c1fbe345652::struct@v1::0003",
+        "d98d42a3eebf::struct@v1::0321",
+        "a226c9edd739::struct@v1::0253",
+        "cdf436877a71::struct@v1::0056",
+        "a598c89d0df6::struct@v1::0056",
+        "cdf436877a71::struct@v1::0062",
+        "cdf436877a71::struct@v1::0055",
+        "a598c89d0df6::struct@v1::0032",
+        "1caea8f49978::struct@v1::0080",
+        "d98d42a3eebf::struct@v1::0320",
+        "cdf436877a71::struct@v1::0063",
+        "a598c89d0df6::struct@v1::0062",
+        "cdf436877a71::struct@v1::0033",
+        "a598c89d0df6::struct@v1::0055",
+        "a226c9edd739::struct@v1::0254",
+        "40723a11ce29::struct@v1::0002",
+        "f812b89061f0::struct@v1::0000",
+        "cdf436877a71::struct@v1::0058",
+        "cdf436877a71::struct@v1::0057"
+      ],
+      "final_ids": [
+        "81e6ad1d72fa::struct@v1::0000",
+        "0c1fbe345652::struct@v1::0003",
+        "d98d42a3eebf::struct@v1::0321",
+        "a226c9edd739::struct@v1::0253",
+        "cdf436877a71::struct@v1::0056",
+        "a598c89d0df6::struct@v1::0056",
+        "cdf436877a71::struct@v1::0062",
+        "cdf436877a71::struct@v1::0055",
+        "a598c89d0df6::struct@v1::0032",
+        "1caea8f49978::struct@v1::0080",
+        "d98d42a3eebf::struct@v1::0320",
+        "cdf436877a71::struct@v1::0063",
+        "a598c89d0df6::struct@v1::0062",
+        "cdf436877a71::struct@v1::0033",
+        "a598c89d0df6::struct@v1::0055",
+        "a226c9edd739::struct@v1::0254",
+        "40723a11ce29::struct@v1::0002",
+        "f812b89061f0::struct@v1::0000",
+        "cdf436877a71::struct@v1::0058",
+        "cdf436877a71::struct@v1::0057"
+      ],
+      "latency_ms": {
+        "retrieve": 14.36533301603049,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g012",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 1.0,
+        "mrr": 0.16666666666666666,
+        "ndcg@10": 0.3562071871080222,
+        "first_hit_rank": 6
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 1.0,
+        "mrr": 0.16666666666666666,
+        "ndcg@10": 0.3562071871080222,
+        "first_hit_rank": 6
+      },
+      "pool_ids": [
+        "ea99ac2ec68f::struct@v1::0002",
+        "ea99ac2ec68f::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0007",
+        "ea99ac2ec68f::struct@v1::0006",
+        "ea99ac2ec68f::struct@v1::0000",
+        "ea99ac2ec68f::struct@v1::0001",
+        "ea99ac2ec68f::struct@v1::0004",
+        "1caea8f49978::struct@v1::0018",
+        "0c1fbe345652::struct@v1::0005",
+        "34e274a857ad::struct@v1::0019",
+        "d98d42a3eebf::struct@v1::0025",
+        "34e274a857ad::struct@v1::0006",
+        "a226c9edd739::struct@v1::0292",
+        "34e274a857ad::struct@v1::0228",
+        "34e274a857ad::struct@v1::0208",
+        "34e274a857ad::struct@v1::0270",
+        "d98d42a3eebf::struct@v1::0059",
+        "34e274a857ad::struct@v1::0188",
+        "a226c9edd739::struct@v1::0058",
+        "d98d42a3eebf::struct@v1::0392"
+      ],
+      "final_ids": [
+        "ea99ac2ec68f::struct@v1::0002",
+        "ea99ac2ec68f::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0007",
+        "ea99ac2ec68f::struct@v1::0006",
+        "ea99ac2ec68f::struct@v1::0000",
+        "ea99ac2ec68f::struct@v1::0001",
+        "ea99ac2ec68f::struct@v1::0004",
+        "1caea8f49978::struct@v1::0018",
+        "0c1fbe345652::struct@v1::0005",
+        "34e274a857ad::struct@v1::0019",
+        "d98d42a3eebf::struct@v1::0025",
+        "34e274a857ad::struct@v1::0006",
+        "a226c9edd739::struct@v1::0292",
+        "34e274a857ad::struct@v1::0228",
+        "34e274a857ad::struct@v1::0208",
+        "34e274a857ad::struct@v1::0270",
+        "d98d42a3eebf::struct@v1::0059",
+        "34e274a857ad::struct@v1::0188",
+        "a226c9edd739::struct@v1::0058",
+        "d98d42a3eebf::struct@v1::0392"
+      ],
+      "latency_ms": {
+        "retrieve": 14.644917100667953,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g018",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "d98d42a3eebf::struct@v1::0373",
+        "a226c9edd739::struct@v1::0300",
+        "a226c9edd739::struct@v1::0304",
+        "a226c9edd739::struct@v1::0327",
+        "34e274a857ad::struct@v1::0232",
+        "d98d42a3eebf::struct@v1::0377",
+        "1caea8f49978::struct@v1::0218",
+        "a226c9edd739::struct@v1::0358",
+        "34e274a857ad::struct@v1::0242",
+        "1caea8f49978::struct@v1::0220",
+        "1caea8f49978::struct@v1::0102",
+        "34e274a857ad::struct@v1::0236",
+        "d98d42a3eebf::struct@v1::0378",
+        "a226c9edd739::struct@v1::0341",
+        "d98d42a3eebf::struct@v1::0450",
+        "34e274a857ad::struct@v1::0241",
+        "1caea8f49978::struct@v1::0191",
+        "a226c9edd739::struct@v1::0021",
+        "d98d42a3eebf::struct@v1::0016",
+        "d98d42a3eebf::struct@v1::0015"
+      ],
+      "final_ids": [
+        "d98d42a3eebf::struct@v1::0373",
+        "a226c9edd739::struct@v1::0300",
+        "a226c9edd739::struct@v1::0304",
+        "a226c9edd739::struct@v1::0327",
+        "34e274a857ad::struct@v1::0232",
+        "d98d42a3eebf::struct@v1::0377",
+        "1caea8f49978::struct@v1::0218",
+        "a226c9edd739::struct@v1::0358",
+        "34e274a857ad::struct@v1::0242",
+        "1caea8f49978::struct@v1::0220",
+        "1caea8f49978::struct@v1::0102",
+        "34e274a857ad::struct@v1::0236",
+        "d98d42a3eebf::struct@v1::0378",
+        "a226c9edd739::struct@v1::0341",
+        "d98d42a3eebf::struct@v1::0450",
+        "34e274a857ad::struct@v1::0241",
+        "1caea8f49978::struct@v1::0191",
+        "a226c9edd739::struct@v1::0021",
+        "d98d42a3eebf::struct@v1::0016",
+        "d98d42a3eebf::struct@v1::0015"
+      ],
+      "latency_ms": {
+        "retrieve": 14.36912501230836,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g021",
+      "category": "multi_hop",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 0.25,
+        "ndcg@10": 0.2640681225725909,
+        "first_hit_rank": 4
+      },
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 0.25,
+        "ndcg@10": 0.2640681225725909,
+        "first_hit_rank": 4
+      },
+      "pool_ids": [
+        "1caea8f49978::struct@v1::0173",
+        "34e274a857ad::struct@v1::0200",
+        "34e274a857ad::struct@v1::0201",
+        "34e274a857ad::struct@v1::0003",
+        "1caea8f49978::struct@v1::0174",
+        "a226c9edd739::struct@v1::0284",
+        "d98d42a3eebf::struct@v1::0356",
+        "34e274a857ad::struct@v1::0202",
+        "a226c9edd739::struct@v1::0288",
+        "d98d42a3eebf::struct@v1::0361",
+        "d98d42a3eebf::struct@v1::0357",
+        "d98d42a3eebf::struct@v1::0363",
+        "d98d42a3eebf::struct@v1::0355",
+        "a226c9edd739::struct@v1::0283",
+        "a226c9edd739::struct@v1::0285",
+        "a226c9edd739::struct@v1::0287",
+        "d98d42a3eebf::struct@v1::0412",
+        "d98d42a3eebf::struct@v1::0360",
+        "1caea8f49978::struct@v1::0245",
+        "a226c9edd739::struct@v1::0291"
+      ],
+      "final_ids": [
+        "1caea8f49978::struct@v1::0173",
+        "34e274a857ad::struct@v1::0200",
+        "34e274a857ad::struct@v1::0201",
+        "34e274a857ad::struct@v1::0003",
+        "1caea8f49978::struct@v1::0174",
+        "a226c9edd739::struct@v1::0284",
+        "d98d42a3eebf::struct@v1::0356",
+        "34e274a857ad::struct@v1::0202",
+        "a226c9edd739::struct@v1::0288",
+        "d98d42a3eebf::struct@v1::0361",
+        "d98d42a3eebf::struct@v1::0357",
+        "d98d42a3eebf::struct@v1::0363",
+        "d98d42a3eebf::struct@v1::0355",
+        "a226c9edd739::struct@v1::0283",
+        "a226c9edd739::struct@v1::0285",
+        "a226c9edd739::struct@v1::0287",
+        "d98d42a3eebf::struct@v1::0412",
+        "d98d42a3eebf::struct@v1::0360",
+        "1caea8f49978::struct@v1::0245",
+        "a226c9edd739::struct@v1::0291"
+      ],
+      "latency_ms": {
+        "retrieve": 15.273708035238087,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g024",
+      "category": "multi_hop",
+      "n_evidence": 3,
+      "pool": {
+        "recall@5": 0.6666666666666666,
+        "recall@20": 0.6666666666666666,
+        "mrr": 0.5,
+        "ndcg@10": 0.5921638219317304,
+        "first_hit_rank": 2
+      },
+      "final": {
+        "recall@5": 0.6666666666666666,
+        "recall@20": 0.6666666666666666,
+        "mrr": 0.5,
+        "ndcg@10": 0.5921638219317304,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "18578889e1bd::struct@v1::0245",
+        "b659ca0ae813::struct@v1::0000",
+        "aa3f056e9982::struct@v1::0186",
+        "ccf7e5b8f4be::struct@v1::0159",
+        "ccf7e5b8f4be::struct@v1::0151",
+        "18578889e1bd::struct@v1::0192",
+        "ccf7e5b8f4be::struct@v1::0158",
+        "18578889e1bd::struct@v1::0178",
+        "18578889e1bd::struct@v1::0167",
+        "aa3f056e9982::struct@v1::0054",
+        "18578889e1bd::struct@v1::0166",
+        "18578889e1bd::struct@v1::0177",
+        "ccf7e5b8f4be::struct@v1::0148",
+        "638de1ad05b0::struct@v1::0046",
+        "ccf7e5b8f4be::struct@v1::0149",
+        "638de1ad05b0::struct@v1::0022",
+        "aa3f056e9982::struct@v1::0046",
+        "638de1ad05b0::struct@v1::0009",
+        "ccf7e5b8f4be::struct@v1::0265",
+        "ccf7e5b8f4be::struct@v1::0152"
+      ],
+      "final_ids": [
+        "18578889e1bd::struct@v1::0245",
+        "b659ca0ae813::struct@v1::0000",
+        "aa3f056e9982::struct@v1::0186",
+        "ccf7e5b8f4be::struct@v1::0159",
+        "ccf7e5b8f4be::struct@v1::0151",
+        "18578889e1bd::struct@v1::0192",
+        "ccf7e5b8f4be::struct@v1::0158",
+        "18578889e1bd::struct@v1::0178",
+        "18578889e1bd::struct@v1::0167",
+        "aa3f056e9982::struct@v1::0054",
+        "18578889e1bd::struct@v1::0166",
+        "18578889e1bd::struct@v1::0177",
+        "ccf7e5b8f4be::struct@v1::0148",
+        "638de1ad05b0::struct@v1::0046",
+        "ccf7e5b8f4be::struct@v1::0149",
+        "638de1ad05b0::struct@v1::0022",
+        "aa3f056e9982::struct@v1::0046",
+        "638de1ad05b0::struct@v1::0009",
+        "ccf7e5b8f4be::struct@v1::0265",
+        "ccf7e5b8f4be::struct@v1::0152"
+      ],
+      "latency_ms": {
+        "retrieve": 14.472416951321065,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g025",
+      "category": "multi_hop",
+      "n_evidence": 3,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "f01f177cc2bc::struct@v1::0078",
+        "18578889e1bd::struct@v1::0199",
+        "e6538e7de5f6::struct@v1::0075",
+        "638de1ad05b0::struct@v1::0022",
+        "e6538e7de5f6::struct@v1::0010",
+        "18578889e1bd::struct@v1::0192",
+        "dbb65c5addee::struct@v1::0000",
+        "638de1ad05b0::struct@v1::0157",
+        "638de1ad05b0::struct@v1::0217",
+        "638de1ad05b0::struct@v1::0167",
+        "ccf7e5b8f4be::struct@v1::0127",
+        "f01f177cc2bc::struct@v1::0105",
+        "aa3f056e9982::struct@v1::0135",
+        "18578889e1bd::struct@v1::0276",
+        "aa3f056e9982::struct@v1::0185",
+        "18c40cf96df3::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0074",
+        "e6538e7de5f6::struct@v1::0088",
+        "aa3f056e9982::struct@v1::0142",
+        "6db3baa6938d::struct@v1::0000"
+      ],
+      "final_ids": [
+        "f01f177cc2bc::struct@v1::0078",
+        "18578889e1bd::struct@v1::0199",
+        "e6538e7de5f6::struct@v1::0075",
+        "638de1ad05b0::struct@v1::0022",
+        "e6538e7de5f6::struct@v1::0010",
+        "18578889e1bd::struct@v1::0192",
+        "dbb65c5addee::struct@v1::0000",
+        "638de1ad05b0::struct@v1::0157",
+        "638de1ad05b0::struct@v1::0217",
+        "638de1ad05b0::struct@v1::0167",
+        "ccf7e5b8f4be::struct@v1::0127",
+        "f01f177cc2bc::struct@v1::0105",
+        "aa3f056e9982::struct@v1::0135",
+        "18578889e1bd::struct@v1::0276",
+        "aa3f056e9982::struct@v1::0185",
+        "18c40cf96df3::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0074",
+        "e6538e7de5f6::struct@v1::0088",
+        "aa3f056e9982::struct@v1::0142",
+        "6db3baa6938d::struct@v1::0000"
+      ],
+      "latency_ms": {
+        "retrieve": 15.742624993436038,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g026",
+      "category": "comparative",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.5,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "0e7488f56448::struct@v1::0001",
+        "7473b54fbb77::struct@v1::0039",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "7473b54fbb77::struct@v1::0029",
+        "c608fd357f29::struct@v1::0003",
+        "40723a11ce29::struct@v1::0008",
+        "40723a11ce29::struct@v1::0001",
+        "0e7488f56448::struct@v1::0000",
+        "40723a11ce29::struct@v1::0010",
+        "ea99ac2ec68f::struct@v1::0005",
+        "40723a11ce29::struct@v1::0005",
+        "0c1fbe345652::struct@v1::0004",
+        "027d5d0c31b3::struct@v1::0002",
+        "7473b54fbb77::struct@v1::0017",
+        "0e7488f56448::struct@v1::0002",
+        "ccf7e5b8f4be::struct@v1::0188",
+        "81e6ad1d72fa::struct@v1::0000",
+        "40723a11ce29::struct@v1::0000",
+        "3b2c31d0fa3b::struct@v1::0016",
+        "c608fd357f29::struct@v1::0005"
+      ],
+      "final_ids": [
+        "0e7488f56448::struct@v1::0001",
+        "7473b54fbb77::struct@v1::0039",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "7473b54fbb77::struct@v1::0029",
+        "c608fd357f29::struct@v1::0003",
+        "40723a11ce29::struct@v1::0008",
+        "40723a11ce29::struct@v1::0001",
+        "0e7488f56448::struct@v1::0000",
+        "40723a11ce29::struct@v1::0010",
+        "ea99ac2ec68f::struct@v1::0005",
+        "40723a11ce29::struct@v1::0005",
+        "0c1fbe345652::struct@v1::0004",
+        "027d5d0c31b3::struct@v1::0002",
+        "7473b54fbb77::struct@v1::0017",
+        "0e7488f56448::struct@v1::0002",
+        "ccf7e5b8f4be::struct@v1::0188",
+        "81e6ad1d72fa::struct@v1::0000",
+        "40723a11ce29::struct@v1::0000",
+        "3b2c31d0fa3b::struct@v1::0016",
+        "c608fd357f29::struct@v1::0005"
+      ],
+      "latency_ms": {
+        "retrieve": 13.866958091966808,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g030",
+      "category": "comparative",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 0.5,
+        "ndcg@10": 0.38685280723454163,
+        "first_hit_rank": 2
+      },
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 0.5,
+        "ndcg@10": 0.38685280723454163,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "ccf7e5b8f4be::struct@v1::0193",
+        "18578889e1bd::struct@v1::0189",
+        "ccf7e5b8f4be::struct@v1::0170",
+        "c608fd357f29::struct@v1::0002",
+        "ccf7e5b8f4be::struct@v1::0172",
+        "18578889e1bd::struct@v1::0188",
+        "e6538e7de5f6::struct@v1::0512",
+        "18578889e1bd::struct@v1::0216",
+        "ccf7e5b8f4be::struct@v1::0169",
+        "18578889e1bd::struct@v1::0190",
+        "ccf7e5b8f4be::struct@v1::0196",
+        "ccf7e5b8f4be::struct@v1::0171",
+        "18578889e1bd::struct@v1::0215",
+        "18578889e1bd::struct@v1::0192",
+        "aa3f056e9982::struct@v1::0165",
+        "5ad0bdbe0dfe::struct@v1::0000",
+        "18578889e1bd::struct@v1::0185",
+        "aa3f056e9982::struct@v1::0146",
+        "638de1ad05b0::struct@v1::0177",
+        "0e7488f56448::struct@v1::0002"
+      ],
+      "final_ids": [
+        "ccf7e5b8f4be::struct@v1::0193",
+        "18578889e1bd::struct@v1::0189",
+        "ccf7e5b8f4be::struct@v1::0170",
+        "c608fd357f29::struct@v1::0002",
+        "ccf7e5b8f4be::struct@v1::0172",
+        "18578889e1bd::struct@v1::0188",
+        "e6538e7de5f6::struct@v1::0512",
+        "18578889e1bd::struct@v1::0216",
+        "ccf7e5b8f4be::struct@v1::0169",
+        "18578889e1bd::struct@v1::0190",
+        "ccf7e5b8f4be::struct@v1::0196",
+        "ccf7e5b8f4be::struct@v1::0171",
+        "18578889e1bd::struct@v1::0215",
+        "18578889e1bd::struct@v1::0192",
+        "aa3f056e9982::struct@v1::0165",
+        "5ad0bdbe0dfe::struct@v1::0000",
+        "18578889e1bd::struct@v1::0185",
+        "aa3f056e9982::struct@v1::0146",
+        "638de1ad05b0::struct@v1::0177",
+        "0e7488f56448::struct@v1::0002"
+      ],
+      "latency_ms": {
+        "retrieve": 13.802333967760205,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g033",
+      "category": "temporal",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "d98d42a3eebf::struct@v1::0357",
+        "d98d42a3eebf::struct@v1::0359",
+        "a226c9edd739::struct@v1::0287",
+        "a226c9edd739::struct@v1::0285",
+        "a226c9edd739::struct@v1::0435",
+        "d98d42a3eebf::struct@v1::0277",
+        "d98d42a3eebf::struct@v1::0360",
+        "a226c9edd739::struct@v1::0288",
+        "34e274a857ad::struct@v1::0172",
+        "34e274a857ad::struct@v1::0233",
+        "ea99ac2ec68f::struct@v1::0000",
+        "34e274a857ad::struct@v1::0007",
+        "a226c9edd739::struct@v1::0218",
+        "639e72062032::struct@v1::0000",
+        "a226c9edd739::struct@v1::0284",
+        "d98d42a3eebf::struct@v1::0358",
+        "1caea8f49978::struct@v1::0341",
+        "d98d42a3eebf::struct@v1::0494",
+        "d98d42a3eebf::struct@v1::0279",
+        "1caea8f49978::struct@v1::0150"
+      ],
+      "final_ids": [
+        "d98d42a3eebf::struct@v1::0357",
+        "d98d42a3eebf::struct@v1::0359",
+        "a226c9edd739::struct@v1::0287",
+        "a226c9edd739::struct@v1::0285",
+        "a226c9edd739::struct@v1::0435",
+        "d98d42a3eebf::struct@v1::0277",
+        "d98d42a3eebf::struct@v1::0360",
+        "a226c9edd739::struct@v1::0288",
+        "34e274a857ad::struct@v1::0172",
+        "34e274a857ad::struct@v1::0233",
+        "ea99ac2ec68f::struct@v1::0000",
+        "34e274a857ad::struct@v1::0007",
+        "a226c9edd739::struct@v1::0218",
+        "639e72062032::struct@v1::0000",
+        "a226c9edd739::struct@v1::0284",
+        "d98d42a3eebf::struct@v1::0358",
+        "1caea8f49978::struct@v1::0341",
+        "d98d42a3eebf::struct@v1::0494",
+        "d98d42a3eebf::struct@v1::0279",
+        "1caea8f49978::struct@v1::0150"
+      ],
+      "latency_ms": {
+        "retrieve": 14.08329198602587,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g035",
+      "category": "temporal",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.5,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "f768dbc8f5d4::struct@v1::0003",
+        "638de1ad05b0::struct@v1::0034",
+        "18578889e1bd::struct@v1::0027",
+        "a598c89d0df6::struct@v1::0003",
+        "afc3e9e83f44::struct@v1::0012",
+        "a226c9edd739::struct@v1::0266",
+        "f768dbc8f5d4::struct@v1::0010",
+        "afc3e9e83f44::struct@v1::0010",
+        "cdf436877a71::struct@v1::0119",
+        "e6538e7de5f6::struct@v1::0431",
+        "f768dbc8f5d4::struct@v1::0005",
+        "ccf7e5b8f4be::struct@v1::0026",
+        "afc3e9e83f44::struct@v1::0015",
+        "d98d42a3eebf::struct@v1::0315",
+        "f768dbc8f5d4::struct@v1::0002",
+        "a598c89d0df6::struct@v1::0122",
+        "cdf436877a71::struct@v1::0010",
+        "cdf436877a71::struct@v1::0104",
+        "cdf436877a71::struct@v1::0191",
+        "a598c89d0df6::struct@v1::0206"
+      ],
+      "final_ids": [
+        "f768dbc8f5d4::struct@v1::0003",
+        "638de1ad05b0::struct@v1::0034",
+        "18578889e1bd::struct@v1::0027",
+        "a598c89d0df6::struct@v1::0003",
+        "afc3e9e83f44::struct@v1::0012",
+        "a226c9edd739::struct@v1::0266",
+        "f768dbc8f5d4::struct@v1::0010",
+        "afc3e9e83f44::struct@v1::0010",
+        "cdf436877a71::struct@v1::0119",
+        "e6538e7de5f6::struct@v1::0431",
+        "f768dbc8f5d4::struct@v1::0005",
+        "ccf7e5b8f4be::struct@v1::0026",
+        "afc3e9e83f44::struct@v1::0015",
+        "d98d42a3eebf::struct@v1::0315",
+        "f768dbc8f5d4::struct@v1::0002",
+        "a598c89d0df6::struct@v1::0122",
+        "cdf436877a71::struct@v1::0010",
+        "cdf436877a71::struct@v1::0104",
+        "cdf436877a71::struct@v1::0191",
+        "a598c89d0df6::struct@v1::0206"
+      ],
+      "latency_ms": {
+        "retrieve": 14.45841696113348,
+        "rerank": 0.0
+      }
+    },
+    {
+      "id": "g036",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g038",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g039",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g042",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g046",
+      "category": "ambiguous",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g049",
+      "category": "ambiguous",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 1.0,
+        "mrr": 0.16666666666666666,
+        "ndcg@10": 0.3562071871080222,
+        "first_hit_rank": 6
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 1.0,
+        "mrr": 0.16666666666666666,
+        "ndcg@10": 0.3562071871080222,
+        "first_hit_rank": 6
+      },
+      "pool_ids": [
+        "3b2c31d0fa3b::struct@v1::0004",
+        "3b2c31d0fa3b::struct@v1::0009",
+        "ea99ac2ec68f::struct@v1::0000",
+        "82ced57d690e::struct@v1::0009",
+        "ea99ac2ec68f::struct@v1::0006",
+        "0c1fbe345652::struct@v1::0003",
+        "40723a11ce29::struct@v1::0006",
+        "3b2c31d0fa3b::struct@v1::0005",
+        "40723a11ce29::struct@v1::0008",
+        "65daa83b00e2::struct@v1::0002",
+        "82ced57d690e::struct@v1::0001",
+        "40723a11ce29::struct@v1::0002",
+        "a598c89d0df6::struct@v1::0059",
+        "3b2c31d0fa3b::struct@v1::0008",
+        "ea99ac2ec68f::struct@v1::0004",
+        "ea99ac2ec68f::struct@v1::0001",
+        "a598c89d0df6::struct@v1::0051",
+        "3b2c31d0fa3b::struct@v1::0012",
+        "3b2c31d0fa3b::struct@v1::0007",
+        "7473b54fbb77::struct@v1::0018"
+      ],
+      "final_ids": [
+        "3b2c31d0fa3b::struct@v1::0004",
+        "3b2c31d0fa3b::struct@v1::0009",
+        "ea99ac2ec68f::struct@v1::0000",
+        "82ced57d690e::struct@v1::0009",
+        "ea99ac2ec68f::struct@v1::0006",
+        "0c1fbe345652::struct@v1::0003",
+        "40723a11ce29::struct@v1::0006",
+        "3b2c31d0fa3b::struct@v1::0005",
+        "40723a11ce29::struct@v1::0008",
+        "65daa83b00e2::struct@v1::0002",
+        "82ced57d690e::struct@v1::0001",
+        "40723a11ce29::struct@v1::0002",
+        "a598c89d0df6::struct@v1::0059",
+        "3b2c31d0fa3b::struct@v1::0008",
+        "ea99ac2ec68f::struct@v1::0004",
+        "ea99ac2ec68f::struct@v1::0001",
+        "a598c89d0df6::struct@v1::0051",
+        "3b2c31d0fa3b::struct@v1::0012",
+        "3b2c31d0fa3b::struct@v1::0007",
+        "7473b54fbb77::struct@v1::0018"
+      ],
+      "latency_ms": {
+        "retrieve": 13.992290943861008,
+        "rerank": 0.0
+      }
+    }
+  ],
+  "written_at": "2026-10-11T03:55:22+00:00"
+}
