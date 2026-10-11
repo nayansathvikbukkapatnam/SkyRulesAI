@@ -26,7 +26,7 @@ A narrow chatbot with honest measurement beats a broad one without it. An honest
 ## 1. Pipeline (all nine stages)
 
 - [ ] **Scrape:**
-  - [ ] Crawls only allowed `www.faa.gov` drone paths.
+  - [ ] Crawls only the approved sources in `configs/crawl/sources.yaml`: the GovInfo 2025 edition of 14 CFR, the Federal Register drone rules and their GovInfo PDFs, and Know Before You Fly. faa.gov blocked automated access (kept in the crawl log as evidence), and the quarantined eCFR files are never used.
   - [ ] robots.txt is checked in code, at most 1 request per second, with a User-Agent containing the team email.
   - [ ] Raw bytes are saved with URL, timestamp and SHA-256 before parsing.
   - [ ] 150+ pages, including 5+ PDFs and 3+ pages with data tables.
@@ -72,7 +72,7 @@ A narrow chatbot with honest measurement beats a broad one without it. An honest
 | Unanswerable | 8 | 10 |
 | Ambiguous or adversarial | 3 | 5 |
 
-- [ ] Written from the FAA pages BEFORE the chatbot worked, by team members, not by AI
+- [ ] Written from the approved source pages BEFORE any evaluation run or tuning, by team members, not by AI
 - [ ] Every answerable item has a gold answer, source URL and an evidence quote of 25 words or fewer; every unanswerable item records what was searched
 - [ ] Every gold answer verified against the page by a human other than the author
 - [ ] Stratified 60/40 dev/test split, seed recorded; tuning on dev only; test run exactly once at the end, and the report says so
