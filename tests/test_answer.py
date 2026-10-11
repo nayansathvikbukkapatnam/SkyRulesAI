@@ -247,6 +247,69 @@ def test_copied_run_over_25_words_is_a_refusal():
     assert out["trace"]["refusal_reason"] == "check failed: Quotes"
 
 
+class PickyJudgeLLM(FakeLLM):
+    """A judge that rejects only the sentences containing one of `reject`."""
+
+    def __init__(self, *generations, reject=(), **kwargs):
+        super().__init__(*generations, **kwargs)
+        self.reject = reject
+
+    def complete(self, system, messages, max_tokens=None):
+        if system == JUDGE_SYSTEM:
+            self.calls.append({"system": system, "messages": messages})
+            sentence = messages[-1]["content"].split("<sentence>")[-1]
+            if any(r in sentence for r in self.reject):
+                return result('{"supported": "no", "reason": "Not stated."}', self.cost)
+            return result(SUPPORTED, self.cost)
+        return super().complete(system, messages, max_tokens)
+
+
+def test_one_unsupported_sentence_is_dropped_and_the_rest_answered():
+    llm = PickyJudgeLLM(
+        gen_json((RULE_TEXT, [1]), ("A claim the passage does not make.", [2])),
+        reject=("does not make",),
+    )
+    out, events, _ = run("q", config("b3"), llm)
+
+    assert out["status"] == "answered"
+    assert out["sentences"] == [{"text": RULE_TEXT, "chunk_ids": [CANDIDATES[1]["chunk_id"]]}]
+    assert [c["chunk_id"] for c in out["citations"]] == [CANDIDATES[1]["chunk_id"]]
+    checks = out["trace"]["checks"]
+    assert checks["ok"] is True and all(checks["per_check"].values())  # the shown answer
+    assert checks["per_check_all"]["claim_support"] is False  # every generated sentence
+    assert checks["dropped"] == [
+        {"index": 1, "text": "A claim the passage does not make.", "failed": ["Claims"]}
+    ]
+    assert len(checks["sentences"]) == 2  # verdicts kept for both sentences
+    assert out["trace"]["refusal_reason"] is None
+    assert events[-1] == ("check", "done")
+
+
+def test_a_sentence_citing_an_unretrieved_chunk_is_dropped():
+    out, _, _ = run("q", config("b3"), FakeLLM(gen_json((RULE_TEXT, [1]), ("Uncited.", [9]))))
+    assert out["status"] == "answered"
+    assert [s["text"] for s in out["sentences"]] == [RULE_TEXT]
+    assert out["trace"]["checks"]["dropped"][0]["failed"][0] == "Citations"
+
+
+def test_more_than_one_dropped_sentence_is_a_refusal():
+    llm = PickyJudgeLLM(
+        gen_json((RULE_TEXT, [1]), ("Bad one.", [1]), ("Bad two.", [2])), reject=("Bad",)
+    )
+    out, events, _ = run("q", config("b3"), llm)
+    assert out["status"] == "refused" and out["sentences"] == []
+    assert out["trace"]["refusal_reason"] == "check failed: Claims"
+    assert [d["index"] for d in out["trace"]["checks"]["dropped"]] == [1, 2]
+    assert events[-1] == ("check", "stopped")
+
+
+def test_an_unparseable_judge_reply_is_a_check_error_not_a_drop():
+    llm = FakeLLM(gen_json((RULE_TEXT, [1]), ("Second claim.", [1])), judge="maybe?")
+    out, _, _ = run("q", config("b3"), llm)
+    assert out["status"] == "refused"
+    assert out["trace"]["refusal_reason"].startswith("check error: unparseable judge reply")
+
+
 def test_check_error_is_a_refusal(monkeypatch):
     def broken(*args, **kwargs):
         raise RuntimeError("judge exploded")

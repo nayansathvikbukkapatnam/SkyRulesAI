@@ -9,7 +9,9 @@ Steps, in order:
  4. Evidence gate on the top rerank score (only when gate is on and a threshold is set).
  5. Generate from the passages.
  6. Checks named in the config's `checks` (checks.py and claim_check.py).
- 7. Fail closed: refuse on insufficient, a generation error, or any failed or erroring check.
+ 7. Drop each sentence that fails a check (proposal sections 7.4 and 8). Fail closed:
+    refuse on insufficient, a generation error, a check or judge error, no sentence left,
+    or more than MAX_DROPPED_SENTENCES dropped.
  8. Referral: attached for location and high-stakes tags, also on refusals.
  9. Citations from the cited chunks, per-stage latency and total cost.
 10. Log the query.
@@ -40,6 +42,14 @@ from src.generate.router import route
 
 STAGES = ("route", "retrieve", "rerank", "generate", "check")
 OnStage = Callable[[str, str, float], None]
+
+# Proposal 7.4: a sentence that fails a check is dropped, and the answer is refused when
+# more than one is dropped (or none is left).
+MAX_DROPPED_SENTENCES = 1
+
+# A judge that errored or replied with something unparseable is a check error, not a
+# verdict: the answer is refused (fail closed), never answered without that sentence.
+JUDGE_ERROR_PREFIXES = ("judge error", "unparseable judge reply")
 
 # Names shown on the checks row of the answer card (UI_SPEC 4.5).
 CHECK_LABELS = {
@@ -171,6 +181,27 @@ def _run_checks(
         "per_check": per_check,
         "sentences": merged,
     }
+
+
+def _judge_error(checked: Mapping[str, Any]) -> str | None:
+    """The first claim-judge error in the verdicts, if any."""
+    for v in checked["sentences"]:
+        reason = str((v.get("claim_support") or {}).get("reason", ""))
+        if reason.startswith(JUDGE_ERROR_PREFIXES):
+            return reason
+    return None
+
+
+def _failed_labels(verdict: Mapping[str, Any], requested: Sequence[str]) -> list[str]:
+    """The checks one sentence failed, by their answer-card names."""
+    failed = [
+        CHECK_LABELS[n]
+        for n in requested
+        if not (verdict.get(n) or {}).get("supported" if n == "claim_support" else "ok", False)
+    ]
+    if "error" in verdict and "Citations" not in failed:
+        failed.append("Citations")
+    return failed
 
 
 def _citations(
@@ -331,9 +362,29 @@ def answer(
             trace["checks"] = {"ok": False, "error": f"{type(e).__name__}: {e}"}
             return refuse("check", f"check error: {type(e).__name__}: {e}", passages)
         trace["checks"] = checked
-        if not checked["ok"]:
-            failed = [CHECK_LABELS[n] for n, ok in checked["per_check"].items() if not ok]
-            return refuse("check", f"check failed: {', '.join(failed)}", passages)
+        judge_error = _judge_error(checked)
+        if judge_error:
+            return refuse("check", f"check error: {judge_error}", passages)
+        kept = [i for i, v in enumerate(checked["sentences"]) if v["ok"]]
+        dropped = [i for i, v in enumerate(checked["sentences"]) if not v["ok"]]
+        if dropped:
+            # Keep the verdicts over every generated sentence for the trace and the log;
+            # per_check then describes the answer that is shown.
+            checked["per_check_all"] = dict(checked["per_check"])
+            checked["dropped"] = [
+                {
+                    "index": i,
+                    "text": sentences[i]["text"],
+                    "failed": _failed_labels(checked["sentences"][i], checked["requested"]),
+                }
+                for i in dropped
+            ]
+            if not kept or len(dropped) > MAX_DROPPED_SENTENCES:
+                failed = [CHECK_LABELS[n] for n, ok in checked["per_check"].items() if not ok]
+                return refuse("check", f"check failed: {', '.join(failed)}", passages)
+            sentences = [sentences[i] for i in kept]
+            checked["per_check"] = dict.fromkeys(checked["per_check"], True)
+            checked["ok"] = True
     else:
         trace["checks"] = {"ok": True, "requested": [], "per_check": {}, "sentences": []}
     stages.end("check")
