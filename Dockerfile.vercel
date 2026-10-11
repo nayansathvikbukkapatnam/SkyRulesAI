@@ -1,14 +1,19 @@
 # SkyRules AI on Vercel's container runtime (beta, all plans; docs: vercel.com/docs/functions/runtimes/container).
 #
 # Vercel builds this image from the repo on every push, so the build context is the repo
-# itself. It installs the pinned requirements with CPU-only torch (as in CI) and builds both
-# indexes from the committed data/normalized/, exactly as `make chunk` and `make index` do
-# on a laptop. Nothing large is committed.
+# itself. It installs the pinned requirements with CPU-only torch (as in CI).
+#
+# The index (chunks, BM25 and Chroma for fixed@v1 and struct@v1) is NOT rebuilt here:
+# embedding 8,568 chunks on Vercel's 2-core build machine takes ~40 minutes, and builds
+# stop at 45. Instead the build downloads the index built from the committed
+# data/normalized/ with `make chunk` + `make index` (both strategies), published as a
+# GitHub Release asset, and checks its SHA-256 before unpacking. Nothing large is committed.
+# When data/normalized/ changes, rebuild the index, publish a new release asset and update
+# INDEX_URL and INDEX_SHA256 below.
 #
 # Vercel project -> Settings -> Environment Variables (runtime):
 #   ANTHROPIC_API_KEY (sensitive), LLM_PROVIDER=anthropic, ANTHROPIC_MODEL_ID=claude-haiku-5-5
-#   DEMO_QUESTIONS_PER_HOUR=10, DEMO_DAILY_BUDGET_USD=2   (src/app/limits.py)
-#   VERCEL_SUPPORT_LARGE_FUNCTIONS=1                       (the image is ~3 GB)
+#   DEMO_QUESTIONS_PER_HOUR, DEMO_DAILY_BUDGET_USD   (src/app/limits.py)
 FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \
@@ -23,16 +28,28 @@ RUN pip install --upgrade pip \
        --index-url https://download.pytorch.org/whl/cpu \
     && pip install -r requirements.txt
 
+# Index built from data/normalized/ at fe3c583 (3,657 fixed@v1 + 4,911 struct@v1 chunks).
+ARG INDEX_URL=https://github.com/nayansathvikbukkapatnam/SkyRulesAI/releases/download/index-fe3c583/skyrules-index-fe3c583.tar.gz
+ARG INDEX_SHA256=0f3b9952f412cbdea0a66b22897f926b7c31e57a4f21ba38e2b346ce993e0aff
+RUN python -c "import hashlib, sys, tarfile, urllib.request; \
+p, _ = urllib.request.urlretrieve('$INDEX_URL', '/tmp/index.tgz'); \
+h = hashlib.sha256(open(p, 'rb').read()).hexdigest(); \
+sys.exit(f'index checksum mismatch: {h}') if h != '$INDEX_SHA256' else None; \
+tarfile.open(p).extractall('/app', filter='data')" \
+    && rm /tmp/index.tgz
+
 COPY configs/ configs/
 COPY src/ src/
-COPY data/normalized/ data/normalized/
 
-# Both strategies: B3 uses struct@v1, the B2 compare view uses fixed@v1. Then download the
-# reranker so the first visitor does not wait for it.
-RUN python -m src.chunk.fixed && python -m src.index.store --strategy fixed \
-    && python -m src.chunk.structure && python -m src.index.store --strategy struct \
-    && python -c "from src.common.config import load_config; \
-from src.retrieve.rerank import Reranker; Reranker.from_config(load_config('default')).model"
+# Load both models (downloads them into the image) and check the index works on Linux:
+# all chunks present, and both strategies retrieve 20 and rerank to 5.
+RUN python -c "from src.common.config import load_config; \
+from src.retrieve.retrieve import Retriever; from src.retrieve.rerank import Reranker; \
+d = load_config('default'); r = Retriever(d); rr = Reranker.from_config(d); \
+n = r.store.count(); assert n == 8568, n; \
+q = 'What is the maximum altitude for a small drone?'; \
+[print(s, len(rr.rerank(q, r.retrieve(q, k=20, mode='hybrid', strategy=s), top_n=5))) \
+ for s in ('struct@v1', 'fixed@v1')]"
 
 # Vercel sends traffic to $PORT (default 80).
 CMD ["sh", "-c", "exec python -m uvicorn src.app.server:app --host 0.0.0.0 --port ${PORT:-80}"]
