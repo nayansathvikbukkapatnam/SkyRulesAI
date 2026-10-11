@@ -138,7 +138,7 @@ SkyRules AI is a retrieval-augmented chatbot that answers questions about U.S. d
   - The app is FastAPI at `http://localhost:8000`.
   - Chroma is a folder on disk (`chroma/`) with no database server.
   - Embeddings and the reranker run locally on CPU.
-- **No paid hosting, domain or cloud database.** The live demo runs from a laptop. The one exception is the free public demo on a Hugging Face Docker Space (`deploy/hf/`): it builds the same app from `main`, with demo rate limits (`src/app/limits.py`) and the API key stored only as a Space secret. Do not set up any other host.
+- **No paid hosting, domain or cloud database.** The live demo runs from a laptop. The one exception is the free public demo on Vercel (Hobby plan, container runtime, `Dockerfile.vercel`): it builds the same app from `main`, with demo rate limits (`src/app/limits.py`) and the API key stored only as a Vercel environment variable. Do not set up any other host.
 - **The only network calls** are Adinath's one-time crawl of the approved sources and the LLM calls to the Claude API (or Bedrock when `LLM_PROVIDER=bedrock`).
 
 ### 1.2 Data flow: where data is stored, in order
