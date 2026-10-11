@@ -1,0 +1,1359 @@
+{
+  "config": "a3",
+  "split": "dev",
+  "switches": {
+    "closed_book": false,
+    "retrieval_mode": "hybrid",
+    "chunk_strategy": "struct@v1",
+    "rerank": true,
+    "gate": false,
+    "gate_threshold": null,
+    "checks": [],
+    "generator_model": "claude-haiku-5-5"
+  },
+  "n_items": 30,
+  "n_scored": 23,
+  "n_skipped": 7,
+  "pool": {
+    "recall@5": 0.4928,
+    "recall@20": 0.558,
+    "mrr": 0.4004,
+    "ndcg@10": 0.4124
+  },
+  "final": {
+    "recall@5": 0.5072,
+    "recall@20": 0.5072,
+    "mrr": 0.3928,
+    "ndcg@10": 0.4103
+  },
+  "pool_recall@20_ceiling": 0.558,
+  "ci95": {
+    "pool": {
+      "recall@5": [
+        0.3043,
+        0.6739
+      ],
+      "recall@20": [
+        0.3768,
+        0.7391
+      ],
+      "mrr": [
+        0.2301,
+        0.5761
+      ],
+      "ndcg@10": [
+        0.2488,
+        0.5804
+      ]
+    },
+    "final": {
+      "recall@5": [
+        0.3116,
+        0.6957
+      ],
+      "recall@20": [
+        0.3116,
+        0.6957
+      ],
+      "mrr": [
+        0.2275,
+        0.5652
+      ],
+      "ndcg@10": [
+        0.2435,
+        0.5736
+      ]
+    }
+  },
+  "by_category": {
+    "ambiguous": {
+      "n": 2,
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      }
+    },
+    "comparative": {
+      "n": 3,
+      "final": {
+        "recall@5": 0.5556,
+        "recall@20": 0.5556,
+        "mrr": 0.4,
+        "ndcg@10": 0.4544
+      }
+    },
+    "multi_hop": {
+      "n": 4,
+      "final": {
+        "recall@5": 0.25,
+        "recall@20": 0.25,
+        "mrr": 0.3333,
+        "ndcg@10": 0.2299
+      }
+    },
+    "single_hop": {
+      "n": 11,
+      "final": {
+        "recall@5": 0.8182,
+        "recall@20": 0.8182,
+        "mrr": 0.5909,
+        "ndcg@10": 0.6504
+      }
+    },
+    "temporal": {
+      "n": 3,
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0
+      }
+    }
+  },
+  "latency_ms": {
+    "retrieve": {
+      "p50": 31.1,
+      "p95": 256.3
+    },
+    "rerank": {
+      "p50": 420.8,
+      "p95": 438.6
+    }
+  },
+  "items": [
+    {
+      "id": "g001",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "e6538e7de5f6::struct@v1::0210",
+        "e6538e7de5f6::struct@v1::0208",
+        "e6538e7de5f6::struct@v1::0200",
+        "f01f177cc2bc::struct@v1::0193",
+        "f01f177cc2bc::struct@v1::0203",
+        "98f22391df77::struct@v1::0018",
+        "f01f177cc2bc::struct@v1::0198",
+        "f01f177cc2bc::struct@v1::0154",
+        "aa3f056e9982::struct@v1::0082",
+        "e6538e7de5f6::struct@v1::0204",
+        "e6538e7de5f6::struct@v1::0039",
+        "e6538e7de5f6::struct@v1::0280",
+        "e6538e7de5f6::struct@v1::0209",
+        "f01f177cc2bc::struct@v1::0194",
+        "d3b2624ef1ef::struct@v1::0015",
+        "f01f177cc2bc::struct@v1::0199",
+        "f01f177cc2bc::struct@v1::0043",
+        "e6538e7de5f6::struct@v1::0205",
+        "cdf436877a71::struct@v1::0062",
+        "f01f177cc2bc::struct@v1::0204"
+      ],
+      "final_ids": [
+        "e6538e7de5f6::struct@v1::0210",
+        "98f22391df77::struct@v1::0018",
+        "e6538e7de5f6::struct@v1::0209",
+        "d3b2624ef1ef::struct@v1::0015",
+        "f01f177cc2bc::struct@v1::0203"
+      ],
+      "latency_ms": {
+        "retrieve": 5995.283249998465,
+        "rerank": 2119.4605830023647
+      }
+    },
+    {
+      "id": "g004",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "f01f177cc2bc::struct@v1::0209",
+        "e6538e7de5f6::struct@v1::0216",
+        "e6538e7de5f6::struct@v1::0217",
+        "f01f177cc2bc::struct@v1::0210",
+        "e6538e7de5f6::struct@v1::0213",
+        "f01f177cc2bc::struct@v1::0206",
+        "d3b2624ef1ef::struct@v1::0014",
+        "ddec8ea44a1e::struct@v1::0000",
+        "027d5d0c31b3::struct@v1::0002",
+        "ddec8ea44a1e::struct@v1::0003",
+        "e6538e7de5f6::struct@v1::0215",
+        "ea99ac2ec68f::struct@v1::0008",
+        "f01f177cc2bc::struct@v1::0208",
+        "7473b54fbb77::struct@v1::0030",
+        "98f22391df77::struct@v1::0018",
+        "0e7488f56448::struct@v1::0002",
+        "f01f177cc2bc::struct@v1::0207",
+        "82ced57d690e::struct@v1::0021",
+        "e6538e7de5f6::struct@v1::0214",
+        "7473b54fbb77::struct@v1::0031"
+      ],
+      "final_ids": [
+        "d3b2624ef1ef::struct@v1::0014",
+        "f01f177cc2bc::struct@v1::0210",
+        "98f22391df77::struct@v1::0018",
+        "e6538e7de5f6::struct@v1::0216",
+        "f01f177cc2bc::struct@v1::0209"
+      ],
+      "latency_ms": {
+        "retrieve": 256.3429170040763,
+        "rerank": 431.44445800135145
+      }
+    },
+    {
+      "id": "g007",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575,
+        "first_hit_rank": 2
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "027d5d0c31b3::struct@v1::0002",
+        "027d5d0c31b3::struct@v1::0003",
+        "72e7d3d8955f::struct@v1::0001",
+        "ed572f8de9a9::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0043",
+        "82ced57d690e::struct@v1::0003",
+        "e6538e7de5f6::struct@v1::0039",
+        "97cdec17ac3c::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0010",
+        "65daa83b00e2::struct@v1::0002",
+        "e6538e7de5f6::struct@v1::0074",
+        "0e7488f56448::struct@v1::0001",
+        "ccf7e5b8f4be::struct@v1::0193",
+        "ea99ac2ec68f::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0005",
+        "0e7488f56448::struct@v1::0003",
+        "f01f177cc2bc::struct@v1::0078",
+        "0e7488f56448::struct@v1::0002",
+        "f01f177cc2bc::struct@v1::0059",
+        "027d5d0c31b3::struct@v1::0005"
+      ],
+      "final_ids": [
+        "027d5d0c31b3::struct@v1::0002",
+        "027d5d0c31b3::struct@v1::0003",
+        "f01f177cc2bc::struct@v1::0043",
+        "e6538e7de5f6::struct@v1::0010",
+        "f01f177cc2bc::struct@v1::0059"
+      ],
+      "latency_ms": {
+        "retrieve": 34.311666000576224,
+        "rerank": 425.0182500036317
+      }
+    },
+    {
+      "id": "g009",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "80ad18a27edc::struct@v1::0000",
+        "0e7488f56448::struct@v1::0002",
+        "0c1fbe345652::struct@v1::0004",
+        "076d2a6d3f8e::struct@v1::0006",
+        "e6538e7de5f6::struct@v1::0512",
+        "82ced57d690e::struct@v1::0003",
+        "65daa83b00e2::struct@v1::0002",
+        "18578889e1bd::struct@v1::0189",
+        "7473b54fbb77::struct@v1::0017",
+        "e6538e7de5f6::struct@v1::0408",
+        "a598c89d0df6::struct@v1::0039",
+        "7473b54fbb77::struct@v1::0001",
+        "e6538e7de5f6::struct@v1::0410",
+        "aa3f056e9982::struct@v1::0146",
+        "cdf436877a71::struct@v1::0040",
+        "18578889e1bd::struct@v1::0218",
+        "638de1ad05b0::struct@v1::0177",
+        "7473b54fbb77::struct@v1::0029",
+        "0e7488f56448::struct@v1::0001",
+        "ccf7e5b8f4be::struct@v1::0193"
+      ],
+      "final_ids": [
+        "80ad18a27edc::struct@v1::0000",
+        "0e7488f56448::struct@v1::0002",
+        "82ced57d690e::struct@v1::0003",
+        "076d2a6d3f8e::struct@v1::0006",
+        "0c1fbe345652::struct@v1::0004"
+      ],
+      "latency_ms": {
+        "retrieve": 28.358791998471133,
+        "rerank": 423.09395800111815
+      }
+    },
+    {
+      "id": "g010",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.2,
+        "ndcg@10": 0.38685280723454163,
+        "first_hit_rank": 5
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "e6538e7de5f6::struct@v1::0428",
+        "f01f177cc2bc::struct@v1::0398",
+        "f01f177cc2bc::struct@v1::0575",
+        "55249e1585d2::struct@v1::0000",
+        "80ad18a27edc::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0399",
+        "e6538e7de5f6::struct@v1::0429",
+        "e6538e7de5f6::struct@v1::0597",
+        "f01f177cc2bc::struct@v1::0387",
+        "0e7488f56448::struct@v1::0002",
+        "e6538e7de5f6::struct@v1::0413",
+        "82ced57d690e::struct@v1::0003",
+        "e6538e7de5f6::struct@v1::0430",
+        "0c1fbe345652::struct@v1::0004",
+        "f01f177cc2bc::struct@v1::0392",
+        "65daa83b00e2::struct@v1::0002",
+        "f01f177cc2bc::struct@v1::0400",
+        "40723a11ce29::struct@v1::0002",
+        "e6538e7de5f6::struct@v1::0416",
+        "ddec8ea44a1e::struct@v1::0003"
+      ],
+      "final_ids": [
+        "80ad18a27edc::struct@v1::0000",
+        "f01f177cc2bc::struct@v1::0400",
+        "0c1fbe345652::struct@v1::0004",
+        "f01f177cc2bc::struct@v1::0399",
+        "55249e1585d2::struct@v1::0000"
+      ],
+      "latency_ms": {
+        "retrieve": 26.976166998792905,
+        "rerank": 418.7964579978143
+      }
+    },
+    {
+      "id": "g011",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "ea99ac2ec68f::struct@v1::0001",
+        "d98d42a3eebf::struct@v1::0073",
+        "34e274a857ad::struct@v1::0186",
+        "ea99ac2ec68f::struct@v1::0006",
+        "a226c9edd739::struct@v1::0072",
+        "d98d42a3eebf::struct@v1::0074",
+        "a226c9edd739::struct@v1::0150",
+        "d98d42a3eebf::struct@v1::0185",
+        "a226c9edd739::struct@v1::0071",
+        "ea99ac2ec68f::struct@v1::0007",
+        "d98d42a3eebf::struct@v1::0188",
+        "1caea8f49978::struct@v1::0160",
+        "a226c9edd739::struct@v1::0147",
+        "ea99ac2ec68f::struct@v1::0005",
+        "d98d42a3eebf::struct@v1::0180",
+        "34e274a857ad::struct@v1::0144",
+        "34e274a857ad::struct@v1::0187",
+        "d98d42a3eebf::struct@v1::0155",
+        "ea99ac2ec68f::struct@v1::0003",
+        "1caea8f49978::struct@v1::0113"
+      ],
+      "final_ids": [
+        "ea99ac2ec68f::struct@v1::0001",
+        "d98d42a3eebf::struct@v1::0180",
+        "a226c9edd739::struct@v1::0150",
+        "1caea8f49978::struct@v1::0160",
+        "d98d42a3eebf::struct@v1::0188"
+      ],
+      "latency_ms": {
+        "retrieve": 23.636833000637125,
+        "rerank": 414.16737499821465
+      }
+    },
+    {
+      "id": "g013",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 1.0,
+        "mrr": 0.08333333333333333,
+        "ndcg@10": 0.0,
+        "first_hit_rank": 12
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "3b2c31d0fa3b::struct@v1::0021",
+        "72e7d3d8955f::struct@v1::0004",
+        "72e7d3d8955f::struct@v1::0002",
+        "e6538e7de5f6::struct@v1::0073",
+        "cdf436877a71::struct@v1::0108",
+        "a598c89d0df6::struct@v1::0111",
+        "638de1ad05b0::struct@v1::0176",
+        "f01f177cc2bc::struct@v1::0291",
+        "a226c9edd739::struct@v1::0116",
+        "cdf436877a71::struct@v1::0109",
+        "18578889e1bd::struct@v1::0228",
+        "72e7d3d8955f::struct@v1::0003",
+        "a598c89d0df6::struct@v1::0112",
+        "a598c89d0df6::struct@v1::0214",
+        "7a76932c38e8::struct@v1::0000",
+        "a598c89d0df6::struct@v1::0213",
+        "aa3f056e9982::struct@v1::0145",
+        "a226c9edd739::struct@v1::0027",
+        "e6538e7de5f6::struct@v1::0382",
+        "22e7665e36ac::struct@v1::0000"
+      ],
+      "final_ids": [
+        "72e7d3d8955f::struct@v1::0004",
+        "72e7d3d8955f::struct@v1::0003",
+        "72e7d3d8955f::struct@v1::0002",
+        "3b2c31d0fa3b::struct@v1::0021",
+        "cdf436877a71::struct@v1::0109"
+      ],
+      "latency_ms": {
+        "retrieve": 26.284790998033714,
+        "rerank": 420.84754099778365
+      }
+    },
+    {
+      "id": "g014",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "340829266a24::struct@v1::0000",
+        "a598c89d0df6::struct@v1::0219",
+        "cdf436877a71::struct@v1::0014",
+        "3b2c31d0fa3b::struct@v1::0017",
+        "1caea8f49978::struct@v1::0200",
+        "cdf436877a71::struct@v1::0015",
+        "1caea8f49978::struct@v1::0199",
+        "34e274a857ad::struct@v1::0221",
+        "40723a11ce29::struct@v1::0008",
+        "40723a11ce29::struct@v1::0002",
+        "638de1ad05b0::struct@v1::0024",
+        "34e274a857ad::struct@v1::0222",
+        "34e274a857ad::struct@v1::0365",
+        "1caea8f49978::struct@v1::0201",
+        "34e274a857ad::struct@v1::0366",
+        "ea99ac2ec68f::struct@v1::0008",
+        "40723a11ce29::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0006",
+        "3b2c31d0fa3b::struct@v1::0016",
+        "3b2c31d0fa3b::struct@v1::0013"
+      ],
+      "final_ids": [
+        "3b2c31d0fa3b::struct@v1::0017",
+        "340829266a24::struct@v1::0000",
+        "a598c89d0df6::struct@v1::0219",
+        "1caea8f49978::struct@v1::0200",
+        "cdf436877a71::struct@v1::0014"
+      ],
+      "latency_ms": {
+        "retrieve": 27.336625003954396,
+        "rerank": 417.75274999963585
+      }
+    },
+    {
+      "id": "g015",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "cee8832e1eb5::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0448",
+        "f01f177cc2bc::struct@v1::0416",
+        "f01f177cc2bc::struct@v1::0417",
+        "e6538e7de5f6::struct@v1::0447",
+        "e6538e7de5f6::struct@v1::0446",
+        "f01f177cc2bc::struct@v1::0418",
+        "f01f177cc2bc::struct@v1::0415",
+        "e6538e7de5f6::struct@v1::0439",
+        "638de1ad05b0::struct@v1::0236",
+        "e6538e7de5f6::struct@v1::0551",
+        "aa3f056e9982::struct@v1::0059",
+        "aa3f056e9982::struct@v1::0112",
+        "18578889e1bd::struct@v1::0120",
+        "ddec8ea44a1e::struct@v1::0001",
+        "34e274a857ad::struct@v1::0349",
+        "638de1ad05b0::struct@v1::0138",
+        "e6538e7de5f6::struct@v1::0442",
+        "e6538e7de5f6::struct@v1::0449",
+        "f01f177cc2bc::struct@v1::0407"
+      ],
+      "final_ids": [
+        "cee8832e1eb5::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0446",
+        "f01f177cc2bc::struct@v1::0415",
+        "e6538e7de5f6::struct@v1::0448",
+        "638de1ad05b0::struct@v1::0236"
+      ],
+      "latency_ms": {
+        "retrieve": 29.621833004057407,
+        "rerank": 403.5683339971001
+      }
+    },
+    {
+      "id": "g016",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "e6538e7de5f6::struct@v1::0463",
+        "f01f177cc2bc::struct@v1::0430",
+        "18578889e1bd::struct@v1::0205",
+        "ccf7e5b8f4be::struct@v1::0183",
+        "18578889e1bd::struct@v1::0220",
+        "ccf7e5b8f4be::struct@v1::0198",
+        "f01f177cc2bc::struct@v1::0231",
+        "cdf436877a71::struct@v1::0149",
+        "e6538e7de5f6::struct@v1::0238",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "cdf436877a71::struct@v1::0048",
+        "ccf7e5b8f4be::struct@v1::0225",
+        "e6538e7de5f6::struct@v1::0429",
+        "f01f177cc2bc::struct@v1::0399",
+        "f01f177cc2bc::struct@v1::0507",
+        "f01f177cc2bc::struct@v1::0398",
+        "f01f177cc2bc::struct@v1::0431",
+        "a598c89d0df6::struct@v1::0156",
+        "f01f177cc2bc::struct@v1::0014",
+        "18578889e1bd::struct@v1::0243"
+      ],
+      "final_ids": [
+        "18578889e1bd::struct@v1::0205",
+        "e6538e7de5f6::struct@v1::0463",
+        "ccf7e5b8f4be::struct@v1::0183",
+        "f01f177cc2bc::struct@v1::0231",
+        "f01f177cc2bc::struct@v1::0430"
+      ],
+      "latency_ms": {
+        "retrieve": 28.792249999241903,
+        "rerank": 403.5310000035679
+      }
+    },
+    {
+      "id": "g017",
+      "category": "single_hop",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.25,
+        "ndcg@10": 0.43067655807339306,
+        "first_hit_rank": 4
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 0.5,
+        "ndcg@10": 0.6309297535714575,
+        "first_hit_rank": 2
+      },
+      "pool_ids": [
+        "80ad18a27edc::struct@v1::0000",
+        "076d2a6d3f8e::struct@v1::0006",
+        "82ced57d690e::struct@v1::0003",
+        "0e7488f56448::struct@v1::0002",
+        "0c1fbe345652::struct@v1::0004",
+        "7473b54fbb77::struct@v1::0017",
+        "7473b54fbb77::struct@v1::0029",
+        "65daa83b00e2::struct@v1::0002",
+        "c608fd357f29::struct@v1::0002",
+        "7473b54fbb77::struct@v1::0001",
+        "e6538e7de5f6::struct@v1::0378",
+        "042140280bab::struct@v1::0000",
+        "7473b54fbb77::struct@v1::0030",
+        "f01f177cc2bc::struct@v1::0359",
+        "40723a11ce29::struct@v1::0002",
+        "f01f177cc2bc::struct@v1::0358",
+        "0e7488f56448::struct@v1::0001",
+        "d98d42a3eebf::struct@v1::0124",
+        "e6538e7de5f6::struct@v1::0377",
+        "ea99ac2ec68f::struct@v1::0005"
+      ],
+      "final_ids": [
+        "80ad18a27edc::struct@v1::0000",
+        "0e7488f56448::struct@v1::0002",
+        "82ced57d690e::struct@v1::0003",
+        "7473b54fbb77::struct@v1::0029",
+        "7473b54fbb77::struct@v1::0017"
+      ],
+      "latency_ms": {
+        "retrieve": 26.807833004568238,
+        "rerank": 428.87562500254717
+      }
+    },
+    {
+      "id": "g019",
+      "category": "multi_hop",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.5,
+        "mrr": 0.14285714285714285,
+        "ndcg@10": 0.20438239758848611,
+        "first_hit_rank": 7
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "027d5d0c31b3::struct@v1::0002",
+        "e6538e7de5f6::struct@v1::0354",
+        "e6538e7de5f6::struct@v1::0361",
+        "ea99ac2ec68f::struct@v1::0007",
+        "f01f177cc2bc::struct@v1::0337",
+        "7473b54fbb77::struct@v1::0036",
+        "e60bb427392f::struct@v1::0000",
+        "3b2c31d0fa3b::struct@v1::0019",
+        "ea99ac2ec68f::struct@v1::0005",
+        "3b2c31d0fa3b::struct@v1::0023",
+        "ddec8ea44a1e::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0010",
+        "55249e1585d2::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0428",
+        "f01f177cc2bc::struct@v1::0342",
+        "e6538e7de5f6::struct@v1::0359",
+        "f01f177cc2bc::struct@v1::0575",
+        "e6538e7de5f6::struct@v1::0358",
+        "027d5d0c31b3::struct@v1::0004",
+        "e6538e7de5f6::struct@v1::0352"
+      ],
+      "final_ids": [
+        "e6538e7de5f6::struct@v1::0354",
+        "027d5d0c31b3::struct@v1::0002",
+        "3b2c31d0fa3b::struct@v1::0019",
+        "e6538e7de5f6::struct@v1::0358",
+        "e6538e7de5f6::struct@v1::0359"
+      ],
+      "latency_ms": {
+        "retrieve": 45.883415994467214,
+        "rerank": 412.11575000488665
+      }
+    },
+    {
+      "id": "g020",
+      "category": "multi_hop",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 0.5,
+        "ndcg@10": 0.38685280723454163,
+        "first_hit_rank": 2
+      },
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.3065735963827292,
+        "first_hit_rank": 3
+      },
+      "pool_ids": [
+        "ea99ac2ec68f::struct@v1::0007",
+        "ea99ac2ec68f::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0006",
+        "ea99ac2ec68f::struct@v1::0001",
+        "d98d42a3eebf::struct@v1::0262",
+        "a226c9edd739::struct@v1::0361",
+        "a226c9edd739::struct@v1::0261",
+        "65daa83b00e2::struct@v1::0002",
+        "82ced57d690e::struct@v1::0003",
+        "d98d42a3eebf::struct@v1::0330",
+        "027d5d0c31b3::struct@v1::0002",
+        "d98d42a3eebf::struct@v1::0090",
+        "d98d42a3eebf::struct@v1::0088",
+        "ea99ac2ec68f::struct@v1::0005",
+        "0e7488f56448::struct@v1::0001",
+        "a226c9edd739::struct@v1::0250",
+        "a226c9edd739::struct@v1::0204",
+        "a226c9edd739::struct@v1::0081",
+        "0e7488f56448::struct@v1::0002",
+        "ea99ac2ec68f::struct@v1::0004"
+      ],
+      "final_ids": [
+        "ea99ac2ec68f::struct@v1::0006",
+        "ea99ac2ec68f::struct@v1::0007",
+        "ea99ac2ec68f::struct@v1::0003",
+        "ea99ac2ec68f::struct@v1::0001",
+        "ea99ac2ec68f::struct@v1::0005"
+      ],
+      "latency_ms": {
+        "retrieve": 167.95837500103517,
+        "rerank": 411.8561249997583
+      }
+    },
+    {
+      "id": "g022",
+      "category": "multi_hop",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 0.5,
+        "recall@20": 0.5,
+        "mrr": 1.0,
+        "ndcg@10": 0.6131471927654584,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "f06dc42d569d::struct@v1::0000",
+        "7473b54fbb77::struct@v1::0030",
+        "7473b54fbb77::struct@v1::0031",
+        "7473b54fbb77::struct@v1::0037",
+        "7473b54fbb77::struct@v1::0023",
+        "7473b54fbb77::struct@v1::0036",
+        "7473b54fbb77::struct@v1::0020",
+        "7473b54fbb77::struct@v1::0026",
+        "e6538e7de5f6::struct@v1::0097",
+        "e6538e7de5f6::struct@v1::0095",
+        "f01f177cc2bc::struct@v1::0096",
+        "7473b54fbb77::struct@v1::0024",
+        "7473b54fbb77::struct@v1::0029",
+        "65daa83b00e2::struct@v1::0000",
+        "7473b54fbb77::struct@v1::0022",
+        "7473b54fbb77::struct@v1::0028",
+        "a226c9edd739::struct@v1::0094",
+        "f01f177cc2bc::struct@v1::0095",
+        "7473b54fbb77::struct@v1::0033",
+        "d98d42a3eebf::struct@v1::0105"
+      ],
+      "final_ids": [
+        "f06dc42d569d::struct@v1::0000",
+        "7473b54fbb77::struct@v1::0024",
+        "7473b54fbb77::struct@v1::0036",
+        "7473b54fbb77::struct@v1::0023",
+        "7473b54fbb77::struct@v1::0020"
+      ],
+      "latency_ms": {
+        "retrieve": 37.40799999650335,
+        "rerank": 419.56804099754663
+      }
+    },
+    {
+      "id": "g023",
+      "category": "multi_hop",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "e6538e7de5f6::struct@v1::0010",
+        "7473b54fbb77::struct@v1::0030",
+        "aa3f056e9982::struct@v1::0142",
+        "18578889e1bd::struct@v1::0192",
+        "638de1ad05b0::struct@v1::0038",
+        "ccf7e5b8f4be::struct@v1::0174",
+        "ea99ac2ec68f::struct@v1::0008",
+        "638de1ad05b0::struct@v1::0157",
+        "f01f177cc2bc::struct@v1::0121",
+        "7473b54fbb77::struct@v1::0031",
+        "f01f177cc2bc::struct@v1::0403",
+        "6db3baa6938d::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0461",
+        "18578889e1bd::struct@v1::0194",
+        "f01f177cc2bc::struct@v1::0012",
+        "ccf7e5b8f4be::struct@v1::0176",
+        "f01f177cc2bc::struct@v1::0428",
+        "ccf7e5b8f4be::struct@v1::0172",
+        "e6538e7de5f6::struct@v1::0538",
+        "18578889e1bd::struct@v1::0204"
+      ],
+      "final_ids": [
+        "e6538e7de5f6::struct@v1::0010",
+        "aa3f056e9982::struct@v1::0142",
+        "ccf7e5b8f4be::struct@v1::0176",
+        "e6538e7de5f6::struct@v1::0538",
+        "f01f177cc2bc::struct@v1::0428"
+      ],
+      "latency_ms": {
+        "retrieve": 31.216417002724484,
+        "rerank": 411.82416700030444
+      }
+    },
+    {
+      "id": "g027",
+      "category": "comparative",
+      "n_evidence": 3,
+      "pool": {
+        "recall@5": 0.6666666666666666,
+        "recall@20": 0.6666666666666666,
+        "mrr": 0.3333333333333333,
+        "ndcg@10": 0.46927872602275644,
+        "first_hit_rank": 3
+      },
+      "final": {
+        "recall@5": 0.6666666666666666,
+        "recall@20": 0.6666666666666666,
+        "mrr": 0.2,
+        "ndcg@10": 0.36308358507470534,
+        "first_hit_rank": 5
+      },
+      "pool_ids": [
+        "ccf7e5b8f4be::struct@v1::0053",
+        "18578889e1bd::struct@v1::0060",
+        "18578889e1bd::struct@v1::0010",
+        "18578889e1bd::struct@v1::0075",
+        "aa3f056e9982::struct@v1::0029",
+        "638de1ad05b0::struct@v1::0014",
+        "638de1ad05b0::struct@v1::0065",
+        "ccf7e5b8f4be::struct@v1::0066",
+        "aa3f056e9982::struct@v1::0013",
+        "18578889e1bd::struct@v1::0056",
+        "aa3f056e9982::struct@v1::0058",
+        "18578889e1bd::struct@v1::0061",
+        "ccf7e5b8f4be::struct@v1::0050",
+        "18578889e1bd::struct@v1::0051",
+        "aa3f056e9982::struct@v1::0012",
+        "ccf7e5b8f4be::struct@v1::0047",
+        "ccf7e5b8f4be::struct@v1::0116",
+        "638de1ad05b0::struct@v1::0062",
+        "18578889e1bd::struct@v1::0012",
+        "18578889e1bd::struct@v1::0046"
+      ],
+      "final_ids": [
+        "638de1ad05b0::struct@v1::0014",
+        "ccf7e5b8f4be::struct@v1::0053",
+        "18578889e1bd::struct@v1::0056",
+        "638de1ad05b0::struct@v1::0065",
+        "18578889e1bd::struct@v1::0010"
+      ],
+      "latency_ms": {
+        "retrieve": 31.507499996223487,
+        "rerank": 424.4312499940861
+      }
+    },
+    {
+      "id": "g028",
+      "category": "comparative",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "7473b54fbb77::struct@v1::0030",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "3b2c31d0fa3b::struct@v1::0023",
+        "72e7d3d8955f::struct@v1::0000",
+        "7473b54fbb77::struct@v1::0003",
+        "7473b54fbb77::struct@v1::0031",
+        "e6538e7de5f6::struct@v1::0171",
+        "ea99ac2ec68f::struct@v1::0008",
+        "aa3f056e9982::struct@v1::0031",
+        "ddec8ea44a1e::struct@v1::0000",
+        "3b2c31d0fa3b::struct@v1::0018",
+        "638de1ad05b0::struct@v1::0032",
+        "ddec8ea44a1e::struct@v1::0001",
+        "40723a11ce29::struct@v1::0009",
+        "f9bed737a3fb::struct@v1::0000",
+        "18578889e1bd::struct@v1::0026",
+        "340829266a24::struct@v1::0000",
+        "0e7488f56448::struct@v1::0001",
+        "f01f177cc2bc::struct@v1::0496",
+        "f01f177cc2bc::struct@v1::0167"
+      ],
+      "final_ids": [
+        "72e7d3d8955f::struct@v1::0000",
+        "340829266a24::struct@v1::0000",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "7473b54fbb77::struct@v1::0030",
+        "ddec8ea44a1e::struct@v1::0000"
+      ],
+      "latency_ms": {
+        "retrieve": 75.62887499807402,
+        "rerank": 437.81366600160254
+      }
+    },
+    {
+      "id": "g029",
+      "category": "comparative",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "final": {
+        "recall@5": 1.0,
+        "recall@20": 1.0,
+        "mrr": 1.0,
+        "ndcg@10": 1.0,
+        "first_hit_rank": 1
+      },
+      "pool_ids": [
+        "ea99ac2ec68f::struct@v1::0003",
+        "a226c9edd739::struct@v1::0317",
+        "a226c9edd739::struct@v1::0250",
+        "d98d42a3eebf::struct@v1::0330",
+        "ea99ac2ec68f::struct@v1::0002",
+        "a226c9edd739::struct@v1::0140",
+        "ea99ac2ec68f::struct@v1::0001",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "a226c9edd739::struct@v1::0074",
+        "7473b54fbb77::struct@v1::0030",
+        "a226c9edd739::struct@v1::0427",
+        "a226c9edd739::struct@v1::0361",
+        "ea99ac2ec68f::struct@v1::0004",
+        "d98d42a3eebf::struct@v1::0390",
+        "a226c9edd739::struct@v1::0221",
+        "d98d42a3eebf::struct@v1::0090",
+        "a226c9edd739::struct@v1::0223",
+        "ea99ac2ec68f::struct@v1::0007",
+        "a226c9edd739::struct@v1::0079",
+        "d98d42a3eebf::struct@v1::0177"
+      ],
+      "final_ids": [
+        "ea99ac2ec68f::struct@v1::0003",
+        "a226c9edd739::struct@v1::0250",
+        "3b2c31d0fa3b::struct@v1::0015",
+        "a226c9edd739::struct@v1::0079",
+        "d98d42a3eebf::struct@v1::0390"
+      ],
+      "latency_ms": {
+        "retrieve": 31.130999996094033,
+        "rerank": 419.5724169985624
+      }
+    },
+    {
+      "id": "g031",
+      "category": "temporal",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "18578889e1bd::struct@v1::0223",
+        "ccf7e5b8f4be::struct@v1::0200",
+        "18578889e1bd::struct@v1::0030",
+        "a226c9edd739::struct@v1::0120",
+        "34e274a857ad::struct@v1::0112",
+        "d98d42a3eebf::struct@v1::0412",
+        "1caea8f49978::struct@v1::0111",
+        "d98d42a3eebf::struct@v1::0001",
+        "34e274a857ad::struct@v1::0102",
+        "d98d42a3eebf::struct@v1::0355",
+        "a226c9edd739::struct@v1::0342",
+        "d98d42a3eebf::struct@v1::0063",
+        "a226c9edd739::struct@v1::0283",
+        "f01f177cc2bc::struct@v1::0371",
+        "18578889e1bd::struct@v1::0222",
+        "a226c9edd739::struct@v1::0343",
+        "34e274a857ad::struct@v1::0185",
+        "a226c9edd739::struct@v1::0124",
+        "a226c9edd739::struct@v1::0099",
+        "d98d42a3eebf::struct@v1::0217"
+      ],
+      "final_ids": [
+        "d98d42a3eebf::struct@v1::0001",
+        "ccf7e5b8f4be::struct@v1::0200",
+        "d98d42a3eebf::struct@v1::0412",
+        "18578889e1bd::struct@v1::0030",
+        "d98d42a3eebf::struct@v1::0355"
+      ],
+      "latency_ms": {
+        "retrieve": 206.40787499723956,
+        "rerank": 421.75316700013354
+      }
+    },
+    {
+      "id": "g032",
+      "category": "temporal",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "7f22cea9e78c::struct@v1::0000",
+        "ea99ac2ec68f::struct@v1::0001",
+        "027d5d0c31b3::struct@v1::0002",
+        "a226c9edd739::struct@v1::0416",
+        "1caea8f49978::struct@v1::0317",
+        "ea99ac2ec68f::struct@v1::0008",
+        "34e274a857ad::struct@v1::0019",
+        "d98d42a3eebf::struct@v1::0054",
+        "34e274a857ad::struct@v1::0006",
+        "d98d42a3eebf::struct@v1::0356",
+        "1caea8f49978::struct@v1::0008",
+        "d98d42a3eebf::struct@v1::0005",
+        "1caea8f49978::struct@v1::0158",
+        "a226c9edd739::struct@v1::0053",
+        "1caea8f49978::struct@v1::0009",
+        "ea99ac2ec68f::struct@v1::0003",
+        "1caea8f49978::struct@v1::0012",
+        "1caea8f49978::struct@v1::0079",
+        "34e274a857ad::struct@v1::0209",
+        "d98d42a3eebf::struct@v1::0314"
+      ],
+      "final_ids": [
+        "a226c9edd739::struct@v1::0416",
+        "7f22cea9e78c::struct@v1::0000",
+        "1caea8f49978::struct@v1::0008",
+        "1caea8f49978::struct@v1::0012",
+        "ea99ac2ec68f::struct@v1::0001"
+      ],
+      "latency_ms": {
+        "retrieve": 36.581334003130905,
+        "rerank": 435.11287499859463
+      }
+    },
+    {
+      "id": "g034",
+      "category": "temporal",
+      "n_evidence": 1,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "638de1ad05b0::struct@v1::0216",
+        "f01f177cc2bc::struct@v1::0371",
+        "18578889e1bd::struct@v1::0222",
+        "18578889e1bd::struct@v1::0296",
+        "aa3f056e9982::struct@v1::0006",
+        "f01f177cc2bc::struct@v1::0076",
+        "e6538e7de5f6::struct@v1::0039",
+        "e6538e7de5f6::struct@v1::0073",
+        "638de1ad05b0::struct@v1::0008",
+        "ccf7e5b8f4be::struct@v1::0261",
+        "638de1ad05b0::struct@v1::0007",
+        "a598c89d0df6::struct@v1::0070",
+        "ccf7e5b8f4be::struct@v1::0269",
+        "e6538e7de5f6::struct@v1::0392",
+        "18578889e1bd::struct@v1::0004",
+        "cdf436877a71::struct@v1::0070",
+        "18578889e1bd::struct@v1::0275",
+        "ccf7e5b8f4be::struct@v1::0160",
+        "aa3f056e9982::struct@v1::0183",
+        "ccf7e5b8f4be::struct@v1::0200"
+      ],
+      "final_ids": [
+        "18578889e1bd::struct@v1::0296",
+        "638de1ad05b0::struct@v1::0007",
+        "aa3f056e9982::struct@v1::0006",
+        "18578889e1bd::struct@v1::0004",
+        "638de1ad05b0::struct@v1::0008"
+      ],
+      "latency_ms": {
+        "retrieve": 30.03020900359843,
+        "rerank": 418.34108300099615
+      }
+    },
+    {
+      "id": "g037",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g040",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g041",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g043",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g044",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g045",
+      "category": "unanswerable",
+      "skipped": "no evidence (unanswerable or no source)"
+    },
+    {
+      "id": "g047",
+      "category": "ambiguous",
+      "n_evidence": 2,
+      "pool": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "3b2c31d0fa3b::struct@v1::0023",
+        "027d5d0c31b3::struct@v1::0004",
+        "027d5d0c31b3::struct@v1::0002",
+        "93f852a157b5::struct@v1::0008",
+        "0c1fbe345652::struct@v1::0002",
+        "1caea8f49978::struct@v1::0081",
+        "82ced57d690e::struct@v1::0003",
+        "f01f177cc2bc::struct@v1::0343",
+        "d98d42a3eebf::struct@v1::0181",
+        "f01f177cc2bc::struct@v1::0013",
+        "ddec8ea44a1e::struct@v1::0000",
+        "e6538e7de5f6::struct@v1::0054",
+        "0c1fbe345652::struct@v1::0004",
+        "82ced57d690e::struct@v1::0001",
+        "93f852a157b5::struct@v1::0010",
+        "93f852a157b5::struct@v1::0004",
+        "a598c89d0df6::struct@v1::0073",
+        "e6538e7de5f6::struct@v1::0549",
+        "cdf436877a71::struct@v1::0077",
+        "f01f177cc2bc::struct@v1::0384"
+      ],
+      "final_ids": [
+        "3b2c31d0fa3b::struct@v1::0023",
+        "027d5d0c31b3::struct@v1::0002",
+        "e6538e7de5f6::struct@v1::0549",
+        "f01f177cc2bc::struct@v1::0013",
+        "d98d42a3eebf::struct@v1::0181"
+      ],
+      "latency_ms": {
+        "retrieve": 29.426499997498468,
+        "rerank": 438.55270899803145
+      }
+    },
+    {
+      "id": "g048",
+      "category": "ambiguous",
+      "n_evidence": 3,
+      "pool": {
+        "recall@5": 0.6666666666666666,
+        "recall@20": 0.6666666666666666,
+        "mrr": 0.2,
+        "ndcg@10": 0.36308358507470534,
+        "first_hit_rank": 5
+      },
+      "final": {
+        "recall@5": 0.0,
+        "recall@20": 0.0,
+        "mrr": 0.0,
+        "ndcg@10": 0.0,
+        "first_hit_rank": null
+      },
+      "pool_ids": [
+        "aa3f056e9982::struct@v1::0193",
+        "ea99ac2ec68f::struct@v1::0004",
+        "e6538e7de5f6::struct@v1::0247",
+        "ea99ac2ec68f::struct@v1::0005",
+        "5bba93faa54b::struct@v1::0000",
+        "ea99ac2ec68f::struct@v1::0007",
+        "e6538e7de5f6::struct@v1::0245",
+        "ea99ac2ec68f::struct@v1::0006",
+        "55249e1585d2::struct@v1::0000",
+        "638de1ad05b0::struct@v1::0010",
+        "027d5d0c31b3::struct@v1::0004",
+        "638de1ad05b0::struct@v1::0081",
+        "e6538e7de5f6::struct@v1::0257",
+        "f01f177cc2bc::struct@v1::0575",
+        "027d5d0c31b3::struct@v1::0002",
+        "18578889e1bd::struct@v1::0014",
+        "18578889e1bd::struct@v1::0011",
+        "e6538e7de5f6::struct@v1::0597",
+        "18578889e1bd::struct@v1::0041",
+        "82ced57d690e::struct@v1::0003"
+      ],
+      "final_ids": [
+        "18578889e1bd::struct@v1::0041",
+        "e6538e7de5f6::struct@v1::0245",
+        "18578889e1bd::struct@v1::0011",
+        "aa3f056e9982::struct@v1::0193",
+        "82ced57d690e::struct@v1::0003"
+      ],
+      "latency_ms": {
+        "retrieve": 24.290667002787814,
+        "rerank": 422.46833399985917
+      }
+    },
+    {
+      "id": "g050",
+      "category": "ambiguous",
+      "skipped": "no evidence (unanswerable or no source)"
+    }
+  ],
+  "written_at": "2026-10-11T00:20:50+00:00"
+}
