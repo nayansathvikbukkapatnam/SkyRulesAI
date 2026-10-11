@@ -134,7 +134,14 @@ Sources: `reports/artifacts/migration.json`, full log in `reports/artifacts/migr
 B2 and A1 differ only in the chunk strategy (a unit test checks that each ablation step changes one switch), so this comparison isolates the chunking change.
 
 <!-- BEGIN AUTO:dev_metrics -->
-_Not produced yet: dev retrieval metrics for b2, a1. Run `make retrieval-eval CONFIG=b2 SPLIT=dev` and `make retrieval-eval CONFIG=a1 SPLIT=dev`._
+| Metric (dev split) | B2 (`fixed@v1`) | A1 (`struct@v1`) | Change |
+|---|---|---|---|
+| Recall@5 | 0.4203 | 0.3551 | -0.0652 |
+| Recall@20 (pool) | 0.5652 | 0.5145 | -0.0507 |
+| MRR | 0.4087 | 0.3659 | -0.0428 |
+| nDCG@10 | 0.4177 | 0.3319 | -0.0858 |
+
+Items scored: 23 (b2), 23 (a1); unanswerable items are not scored. Both runs are dense retrieval with no reranker, so the only difference is the chunk strategy. Sources: `reports/artifacts/retrieval_b2_dev.json`, `retrieval_a1_dev.json`. Confidence intervals: report 04 and 06.
 <!-- END AUTO:dev_metrics -->
 
 ## 7. Findings
