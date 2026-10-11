@@ -1,93 +1,61 @@
-"""Gate tuning: replays thresholds on a dev eval run and picks the best, dev only."""
+"""Gate tuning: replay thresholds on a saved dev run and pick one by the stated rule."""
 
 import json
-import math
 
 import pytest
 
-from src.eval.tune_gate import main, simulate, tune
+from src.eval import tune_gate
 
 
-def rec(cat, answered, correct, score):
+def item(id_, category, score, status, correct):
     return {
-        "category": cat,
-        "answer": {"trace": {"gate_score": score}},
-        "metrics": {"answered": answered, "correct": correct},
+        "id": id_,
+        "category": category,
+        "answer": {"status": status, "trace": {"gate_score": score}},
+        "metrics": {"correct": correct},
     }
 
 
-# Two answerable items answered correctly with strong evidence, one answerable item
-# answered WRONG on weak evidence, and two unanswerable items the model answered anyway
-# on weak evidence (hallucinations). A gate between the weak and strong scores helps.
-RECORDS = [
-    rec("single_hop", True, True, 6.0),
-    rec("single_hop", True, True, 4.0),
-    rec("multi_hop", True, False, -2.0),
-    rec("unanswerable", True, False, -5.0),
-    rec("unanswerable", True, False, -1.0),
+ITEMS = [
+    item("u1", "unanswerable", -6.0, "refused", True),
+    item("w1", "ambiguous", -3.0, "answered", False),  # a wrong answer with a weak top passage
+    item("c1", "single_hop", -1.0, "answered", True),  # the weakest correct answer
+    item("c2", "single_hop", 4.0, "answered", True),
+    item("r1", "temporal", 5.0, "refused", False),  # already an over-refusal
 ]
 
 
-def test_simulate_without_gate_matches_the_run():
-    s = simulate(RECORDS, -math.inf)
-    assert s == {"threshold": -math.inf, "correctness": 0.4, "over_refusal": 0.0,
-                 "correct_refusal": 0.0, "newly_gated": 0}  # fmt: skip
+def test_replay_without_a_gate_keeps_the_saved_results():
+    row = tune_gate.replay(ITEMS, None)
+    assert (row["correct"], row["wrong_answers"], row["over_refusals"]) == (3, 1, 1)
+    assert row["gated"] == [] and row["correct_refusal"] == 1.0
 
 
-def test_simulate_with_a_gate_refuses_weak_evidence():
-    s = simulate(RECORDS, 0.0)
-    assert s["correctness"] == 0.8  # both strong answers kept, both unanswerables refused
-    # the weak wrong answer is now refused too
-    assert s["over_refusal"] == pytest.approx(1 / 3, abs=1e-4)
-    assert s["correct_refusal"] == 1.0
-    assert s["newly_gated"] == 3
+def test_a_gated_item_becomes_a_refusal():
+    row = tune_gate.replay(ITEMS, -2.0)
+    assert row["gated"] == ["u1", "w1"]
+    assert (row["correct"], row["wrong_answers"], row["over_refusals"]) == (3, 0, 2)
+    too_high = tune_gate.replay(ITEMS, 0.0)  # also stops the correct c1
+    assert too_high["correct"] == 2
 
 
-def test_tune_picks_the_lowest_threshold_with_best_correctness():
-    result = tune(RECORDS)
-    assert result["chosen"]["correctness"] == 0.8
-    # Refusing all three weak items needs a threshold in (-1, 4]; the tuner takes the
-    # midpoint of that gap between observed scores, 1.5.
-    assert result["chosen"]["threshold"] == 1.5
-    assert result["no_gate"]["correctness"] == 0.4
+def test_candidates_are_gap_midpoints_plus_no_gate():
+    thresholds = [t for t, _ in tune_gate.candidates(ITEMS)]
+    assert thresholds == [None, -4.5, -2.0, 1.5, 4.5]
 
 
-def test_missing_score_counts_as_gated():
-    s = simulate([rec("single_hop", True, True, None)], 0.0)
-    assert s["over_refusal"] == 1.0
+def test_choose_prefers_fewer_wrong_answers_then_the_widest_gap():
+    chosen = tune_gate.choose(ITEMS)["chosen"]
+    assert chosen["threshold"] == -2.0  # keeps c1, stops the wrong w1
+    assert chosen["gap"] == 2.0
 
 
-def test_ungraded_runs_and_runs_without_scores_are_rejected():
-    with pytest.raises(ValueError, match="ungraded"):
-        tune([rec("single_hop", True, None, 1.0)])
-    with pytest.raises(ValueError, match="rerank"):
-        tune([rec("single_hop", True, True, None)])
-
-
-def write_run(tmp_path, split="dev", gate=False):
-    run = {"split": split, "git_commit": "abc1234", "switches": {"gate": gate, "rerank": True},
-           "items": RECORDS}  # fmt: skip
-    (tmp_path / f"eval_a3_{split}.json").write_text(json.dumps(run))
-
-
-def test_main_writes_strict_json_and_plot(tmp_path, capsys):
-    write_run(tmp_path)
-    assert main(["--artifacts", str(tmp_path)]) == 0
-    text = (tmp_path / "gate_tuning_dev.json").read_text()
-    assert "Infinity" not in text  # strict JSON
-    saved = json.loads(text)
-    assert saved["chosen"]["threshold"] == 1.5 and saved["curve"][0]["threshold"] == "-inf"
-    assert saved["source_git_commit"] == "abc1234"
-    assert (tmp_path / "gate_tuning_dev.png").read_bytes()[:4] == b"\x89PNG"
-    assert "chosen gate_threshold 1.5" in capsys.readouterr().out
-
-
-def test_main_refuses_non_dev_and_gated_runs(tmp_path):
-    (tmp_path / "eval_a3_dev.json").write_text(
-        json.dumps({"split": "test", "switches": {"gate": False}, "items": RECORDS})
-    )
-    with pytest.raises(SystemExit, match="dev only"):
-        main(["--artifacts", str(tmp_path)])
-    write_run(tmp_path, gate=True)
-    with pytest.raises(SystemExit, match="already gates"):
-        main(["--artifacts", str(tmp_path)])
+def test_main_writes_the_artifact_and_refuses_a_test_run(tmp_path):
+    run = {"split": "dev", "git_commit": "abc1234", "items": ITEMS}
+    (tmp_path / "eval_b3_dev.json").write_text(json.dumps(run))
+    assert tune_gate.main(["--config", "b3", "--artifacts", str(tmp_path)]) == 0
+    out = json.loads((tmp_path / "gate_tuning_dev.json").read_text())
+    assert out["chosen"]["threshold"] == -2.0 and out["source_commit"] == "abc1234"
+    (tmp_path / "eval_b3_dev.json").write_text(json.dumps({**run, "split": "test"}))
+    with pytest.raises(SystemExit):
+        tune_gate.main(["--config", "b3", "--artifacts", str(tmp_path)])
