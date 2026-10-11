@@ -1,7 +1,7 @@
 {
   "command": "make stats SPLIT=dev",
   "split": "dev",
-  "computed_at": "2026-10-11T03:06:53+00:00",
+  "computed_at": "2026-10-11T17:15:23+00:00",
   "method": {
     "interval": "percentile bootstrap, 95%, resampling items",
     "resamples": 10000,
@@ -13,7 +13,7 @@
   "inputs": {
     "b0": {
       "file": "reports/artifacts/eval_b0_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": true,
         "retrieval_mode": null,
@@ -27,7 +27,7 @@
     },
     "b1": {
       "file": "reports/artifacts/eval_b1_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": false,
         "retrieval_mode": "bm25",
@@ -41,7 +41,7 @@
     },
     "b2": {
       "file": "reports/artifacts/eval_b2_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": false,
         "retrieval_mode": "dense",
@@ -55,7 +55,7 @@
     },
     "a1": {
       "file": "reports/artifacts/eval_a1_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": false,
         "retrieval_mode": "dense",
@@ -69,7 +69,7 @@
     },
     "a2": {
       "file": "reports/artifacts/eval_a2_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": false,
         "retrieval_mode": "hybrid",
@@ -83,7 +83,7 @@
     },
     "a3": {
       "file": "reports/artifacts/eval_a3_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": false,
         "retrieval_mode": "hybrid",
@@ -97,14 +97,14 @@
     },
     "b3": {
       "file": "reports/artifacts/eval_b3_dev.json",
-      "git_commit": "8c790cb",
+      "git_commit": "e955c7f",
       "switches": {
         "closed_book": false,
         "retrieval_mode": "hybrid",
         "chunk_strategy": "struct@v1",
         "rerank": true,
         "gate": true,
-        "gate_threshold": null,
+        "gate_threshold": -4.6741,
         "checks": [
           "citation_validity",
           "claim_support",
@@ -119,9 +119,9 @@
   "per_config": {
     "b0": {
       "correctness": {
-        "rate": 0.5333,
-        "low": 0.3658,
-        "high": 0.7,
+        "rate": 0.4667,
+        "low": 0.3,
+        "high": 0.6333,
         "n": 30
       },
       "citation_validity": {
@@ -137,16 +137,16 @@
         "n": 6
       },
       "over_refusal": {
-        "rate": 0.2083,
-        "low": 0.0417,
-        "high": 0.375,
+        "rate": 0.25,
+        "low": 0.0833,
+        "high": 0.4167,
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 1414.4,
-        "p95": 1905.3
+        "p50": 1147.3,
+        "p95": 1817.0
       },
-      "cost_usd_per_query": 6.4e-05,
+      "cost_usd_per_query": 6.6e-05,
       "n_items": 30,
       "n_errors": 0
     },
@@ -176,18 +176,18 @@
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 1204.3,
-        "p95": 1744.5
+        "p50": 1197.9,
+        "p95": 1814.9
       },
-      "cost_usd_per_query": 0.000524,
+      "cost_usd_per_query": 0.000528,
       "n_items": 30,
       "n_errors": 0
     },
     "b2": {
       "correctness": {
-        "rate": 0.7333,
-        "low": 0.5667,
-        "high": 0.8667,
+        "rate": 0.7667,
+        "low": 0.6,
+        "high": 0.9,
         "n": 30
       },
       "citation_validity": {
@@ -209,8 +209,8 @@
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 1429.2,
-        "p95": 4766.5
+        "p50": 1243.4,
+        "p95": 2367.7
       },
       "cost_usd_per_query": 0.000537,
       "n_items": 30,
@@ -218,16 +218,16 @@
     },
     "a1": {
       "correctness": {
-        "rate": 0.6333,
-        "low": 0.4667,
-        "high": 0.8,
+        "rate": 0.7333,
+        "low": 0.5667,
+        "high": 0.8667,
         "n": 30
       },
       "citation_validity": {
         "rate": 1.0,
         "low": 1.0,
         "high": 1.0,
-        "n": 18
+        "n": 19
       },
       "correct_refusal": {
         "rate": 1.0,
@@ -236,14 +236,14 @@
         "n": 6
       },
       "over_refusal": {
-        "rate": 0.25,
-        "low": 0.0833,
-        "high": 0.4167,
+        "rate": 0.2083,
+        "low": 0.0417,
+        "high": 0.375,
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 1361.4,
-        "p95": 3751.6
+        "p50": 1122.9,
+        "p95": 3007.6
       },
       "cost_usd_per_query": 0.000428,
       "n_items": 30,
@@ -275,10 +275,10 @@
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 1355.4,
-        "p95": 1919.3
+        "p50": 1207.3,
+        "p95": 6261.4
       },
-      "cost_usd_per_query": 0.000424,
+      "cost_usd_per_query": 0.000427,
       "n_items": 30,
       "n_errors": 0
     },
@@ -308,25 +308,25 @@
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 1765.7,
-        "p95": 2591.8
+        "p50": 1624.7,
+        "p95": 2167.7
       },
-      "cost_usd_per_query": 0.000444,
+      "cost_usd_per_query": 0.000439,
       "n_items": 30,
       "n_errors": 0
     },
     "b3": {
       "correctness": {
-        "rate": 0.7667,
-        "low": 0.6,
-        "high": 0.9,
+        "rate": 0.7,
+        "low": 0.5333,
+        "high": 0.8667,
         "n": 30
       },
       "citation_validity": {
         "rate": 1.0,
         "low": 1.0,
         "high": 1.0,
-        "n": 19
+        "n": 20
       },
       "correct_refusal": {
         "rate": 1.0,
@@ -335,16 +335,16 @@
         "n": 6
       },
       "over_refusal": {
-        "rate": 0.2083,
+        "rate": 0.1667,
         "low": 0.0417,
-        "high": 0.375,
+        "high": 0.3333,
         "n": 24
       },
       "latency_ms_total": {
-        "p50": 3800.6,
-        "p95": 6852.9
+        "p50": 3414.0,
+        "p95": 8066.8
       },
-      "cost_usd_per_query": 0.00069,
+      "cost_usd_per_query": 0.0007,
       "n_items": 30,
       "n_errors": 0
     }
@@ -354,45 +354,45 @@
       "before": "b2",
       "after": "a1",
       "n": 30,
-      "before_rate": 0.7333,
-      "after_rate": 0.6333,
-      "difference": -0.1,
-      "low": -0.2333,
-      "high": 0.0,
+      "before_rate": 0.7667,
+      "after_rate": 0.7333,
+      "difference": -0.0333,
+      "low": -0.2,
+      "high": 0.1333,
       "table": [
         [
           19,
-          3
+          4
         ],
         [
-          0,
-          8
+          3,
+          4
         ]
       ],
       "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
-      "p": 0.25
+      "p": 1.0
     },
     {
       "before": "a1",
       "after": "a2",
       "n": 30,
-      "before_rate": 0.6333,
+      "before_rate": 0.7333,
       "after_rate": 0.7,
-      "difference": 0.0667,
-      "low": 0.0,
-      "high": 0.1667,
+      "difference": -0.0333,
+      "low": -0.1333,
+      "high": 0.0667,
       "table": [
         [
-          19,
-          0
+          20,
+          2
         ],
         [
-          2,
-          9
+          1,
+          7
         ]
       ],
       "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
-      "p": 0.5
+      "p": 1.0
     },
     {
       "before": "a2",
@@ -421,77 +421,79 @@
       "after": "b3",
       "n": 30,
       "before_rate": 0.7667,
-      "after_rate": 0.7667,
-      "difference": 0.0,
-      "low": -0.1,
-      "high": 0.1,
+      "after_rate": 0.7,
+      "difference": -0.0667,
+      "low": -0.1667,
+      "high": 0.0,
       "table": [
         [
-          22,
-          1
+          21,
+          2
         ],
         [
-          1,
-          6
+          0,
+          7
         ]
       ],
       "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
-      "p": 1.0
+      "p": 0.5
     },
     {
       "before": "b0",
       "after": "b3",
       "n": 30,
-      "before_rate": 0.5333,
-      "after_rate": 0.7667,
+      "before_rate": 0.4667,
+      "after_rate": 0.7,
       "difference": 0.2333,
-      "low": 0.0667,
-      "high": 0.4,
+      "low": 0.0,
+      "high": 0.4667,
       "table": [
         [
-          15,
-          1
+          11,
+          3
         ],
         [
-          8,
+          10,
           6
         ]
       ],
       "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
-      "p": 0.039062
+      "p": 0.092285
     },
     {
       "before": "b2",
       "after": "b3",
       "n": 30,
-      "before_rate": 0.7333,
-      "after_rate": 0.7667,
-      "difference": 0.0333,
-      "low": -0.1333,
-      "high": 0.2,
+      "before_rate": 0.7667,
+      "after_rate": 0.7,
+      "difference": -0.0667,
+      "low": -0.2333,
+      "high": 0.1,
       "table": [
         [
-          19,
-          3
+          18,
+          5
         ],
         [
-          4,
+          3,
           4
         ]
       ],
       "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
-      "p": 1.0
+      "p": 0.726562
     }
   ],
   "b0_incorrect_subset": {
     "ids": [
-      "g007",
       "g010",
+      "g011",
       "g014",
       "g015",
+      "g016",
       "g017",
       "g020",
       "g022",
+      "g027",
       "g028",
       "g029",
       "g031",
@@ -500,58 +502,58 @@
       "g048",
       "g050"
     ],
-    "n": 14,
+    "n": 16,
     "correctness": {
       "b0": {
         "rate": 0.0,
         "low": 0.0,
         "high": 0.0,
-        "n": 14
+        "n": 16
       },
       "b1": {
-        "rate": 0.5,
-        "low": 0.2143,
-        "high": 0.7857,
-        "n": 14
+        "rate": 0.6875,
+        "low": 0.4375,
+        "high": 0.875,
+        "n": 16
       },
       "b2": {
-        "rate": 0.6429,
-        "low": 0.4286,
-        "high": 0.8571,
-        "n": 14
+        "rate": 0.75,
+        "low": 0.5,
+        "high": 0.9375,
+        "n": 16
       },
       "a1": {
-        "rate": 0.5,
-        "low": 0.2143,
-        "high": 0.7857,
-        "n": 14
+        "rate": 0.6875,
+        "low": 0.4375,
+        "high": 0.875,
+        "n": 16
       },
       "a2": {
-        "rate": 0.5714,
-        "low": 0.2857,
-        "high": 0.7857,
-        "n": 14
+        "rate": 0.625,
+        "low": 0.375,
+        "high": 0.875,
+        "n": 16
       },
       "a3": {
-        "rate": 0.5714,
-        "low": 0.2857,
-        "high": 0.7857,
-        "n": 14
+        "rate": 0.625,
+        "low": 0.375,
+        "high": 0.875,
+        "n": 16
       },
       "b3": {
-        "rate": 0.5714,
-        "low": 0.2857,
-        "high": 0.7857,
-        "n": 14
+        "rate": 0.625,
+        "low": 0.375,
+        "high": 0.875,
+        "n": 16
       }
     }
   },
   "correctness_by_category": {
     "b0": {
       "single_hop": {
-        "rate": 0.5455,
-        "low": 0.2727,
-        "high": 0.8182,
+        "rate": 0.4545,
+        "low": 0.1818,
+        "high": 0.7273,
         "n": 11
       },
       "multi_hop": {
@@ -561,9 +563,9 @@
         "n": 4
       },
       "comparative": {
-        "rate": 0.3333,
+        "rate": 0.0,
         "low": 0.0,
-        "high": 1.0,
+        "high": 0.0,
         "n": 3
       },
       "temporal": {
@@ -631,8 +633,8 @@
         "n": 11
       },
       "multi_hop": {
-        "rate": 0.5,
-        "low": 0.0,
+        "rate": 0.75,
+        "low": 0.25,
         "high": 1.0,
         "n": 4
       },
@@ -669,13 +671,13 @@
         "n": 11
       },
       "multi_hop": {
-        "rate": 0.5,
-        "low": 0.0,
+        "rate": 0.75,
+        "low": 0.25,
         "high": 1.0,
         "n": 4
       },
       "comparative": {
-        "rate": 0.3333,
+        "rate": 0.6667,
         "low": 0.0,
         "high": 1.0,
         "n": 3
@@ -693,9 +695,9 @@
         "n": 6
       },
       "ambiguous": {
-        "rate": 0.0,
+        "rate": 0.3333,
         "low": 0.0,
-        "high": 0.0,
+        "high": 1.0,
         "n": 3
       }
     },
@@ -777,14 +779,14 @@
     },
     "b3": {
       "single_hop": {
-        "rate": 1.0,
-        "low": 1.0,
+        "rate": 0.9091,
+        "low": 0.7273,
         "high": 1.0,
         "n": 11
       },
       "multi_hop": {
-        "rate": 0.75,
-        "low": 0.25,
+        "rate": 0.5,
+        "low": 0.0,
         "high": 1.0,
         "n": 4
       },

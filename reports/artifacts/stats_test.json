@@ -1,0 +1,813 @@
+{
+  "command": "make stats SPLIT=test",
+  "split": "test",
+  "computed_at": "2026-10-11T17:15:22+00:00",
+  "method": {
+    "interval": "percentile bootstrap, 95%, resampling items",
+    "resamples": 10000,
+    "seed": 42,
+    "paired_test": "McNemar exact (statsmodels), per-item correct / incorrect",
+    "pairing": "by item id; only items both runs graded",
+    "none_values": "left out of each metric; n reported"
+  },
+  "inputs": {
+    "b0": {
+      "file": "reports/artifacts/eval_b0_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": true,
+        "retrieval_mode": null,
+        "chunk_strategy": null,
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "b1": {
+      "file": "reports/artifacts/eval_b1_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "bm25",
+        "chunk_strategy": "fixed@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "b2": {
+      "file": "reports/artifacts/eval_b2_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "dense",
+        "chunk_strategy": "fixed@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "a1": {
+      "file": "reports/artifacts/eval_a1_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "dense",
+        "chunk_strategy": "struct@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "a2": {
+      "file": "reports/artifacts/eval_a2_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "hybrid",
+        "chunk_strategy": "struct@v1",
+        "rerank": false,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "a3": {
+      "file": "reports/artifacts/eval_a3_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "hybrid",
+        "chunk_strategy": "struct@v1",
+        "rerank": true,
+        "gate": false,
+        "gate_threshold": null,
+        "checks": [],
+        "generator_model": "claude-haiku-5-5"
+      }
+    },
+    "b3": {
+      "file": "reports/artifacts/eval_b3_test.json",
+      "git_commit": "e955c7f",
+      "switches": {
+        "closed_book": false,
+        "retrieval_mode": "hybrid",
+        "chunk_strategy": "struct@v1",
+        "rerank": true,
+        "gate": true,
+        "gate_threshold": -4.6741,
+        "checks": [
+          "citation_validity",
+          "claim_support",
+          "number_date",
+          "quote_limit"
+        ],
+        "generator_model": "claude-haiku-5-5"
+      }
+    }
+  },
+  "missing_configs": [],
+  "per_config": {
+    "b0": {
+      "correctness": {
+        "rate": 0.5,
+        "low": 0.3,
+        "high": 0.7,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": null,
+        "low": null,
+        "high": null,
+        "n": 0
+      },
+      "correct_refusal": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.375,
+        "low": 0.125,
+        "high": 0.625,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 1101.7,
+        "p95": 1615.2
+      },
+      "cost_usd_per_query": 5.9e-05,
+      "n_items": 20,
+      "n_errors": 0
+    },
+    "b1": {
+      "correctness": {
+        "rate": 0.65,
+        "low": 0.45,
+        "high": 0.85,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 10
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.375,
+        "low": 0.125,
+        "high": 0.625,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 1146.5,
+        "p95": 2009.9
+      },
+      "cost_usd_per_query": 0.000532,
+      "n_items": 20,
+      "n_errors": 0
+    },
+    "b2": {
+      "correctness": {
+        "rate": 0.65,
+        "low": 0.45,
+        "high": 0.85,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 11
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.3125,
+        "low": 0.125,
+        "high": 0.5625,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 997.5,
+        "p95": 1662.5
+      },
+      "cost_usd_per_query": 0.000503,
+      "n_items": 20,
+      "n_errors": 0
+    },
+    "a1": {
+      "correctness": {
+        "rate": 0.75,
+        "low": 0.55,
+        "high": 0.95,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 12
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.25,
+        "low": 0.0625,
+        "high": 0.4375,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 1149.9,
+        "p95": 3760.1
+      },
+      "cost_usd_per_query": 0.000417,
+      "n_items": 20,
+      "n_errors": 0
+    },
+    "a2": {
+      "correctness": {
+        "rate": 0.75,
+        "low": 0.55,
+        "high": 0.9,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 11
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.3125,
+        "low": 0.125,
+        "high": 0.5625,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 1164.0,
+        "p95": 2516.0
+      },
+      "cost_usd_per_query": 0.00044,
+      "n_items": 20,
+      "n_errors": 0
+    },
+    "a3": {
+      "correctness": {
+        "rate": 0.75,
+        "low": 0.55,
+        "high": 0.95,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 12
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.25,
+        "low": 0.0625,
+        "high": 0.4375,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 1488.1,
+        "p95": 2010.0
+      },
+      "cost_usd_per_query": 0.000427,
+      "n_items": 20,
+      "n_errors": 0
+    },
+    "b3": {
+      "correctness": {
+        "rate": 0.75,
+        "low": 0.55,
+        "high": 0.95,
+        "n": 20
+      },
+      "citation_validity": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 12
+      },
+      "correct_refusal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "over_refusal": {
+        "rate": 0.25,
+        "low": 0.0625,
+        "high": 0.4375,
+        "n": 16
+      },
+      "latency_ms_total": {
+        "p50": 2363.6,
+        "p95": 5078.9
+      },
+      "cost_usd_per_query": 0.000614,
+      "n_items": 20,
+      "n_errors": 0
+    }
+  },
+  "comparisons": [
+    {
+      "before": "b2",
+      "after": "a1",
+      "n": 20,
+      "before_rate": 0.65,
+      "after_rate": 0.75,
+      "difference": 0.1,
+      "low": 0.0,
+      "high": 0.25,
+      "table": [
+        [
+          13,
+          0
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.5
+    },
+    {
+      "before": "a1",
+      "after": "a2",
+      "n": 20,
+      "before_rate": 0.75,
+      "after_rate": 0.75,
+      "difference": 0.0,
+      "low": -0.15,
+      "high": 0.15,
+      "table": [
+        [
+          14,
+          1
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 1.0
+    },
+    {
+      "before": "a2",
+      "after": "a3",
+      "n": 20,
+      "before_rate": 0.75,
+      "after_rate": 0.75,
+      "difference": 0.0,
+      "low": -0.15,
+      "high": 0.15,
+      "table": [
+        [
+          14,
+          1
+        ],
+        [
+          1,
+          4
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 1.0
+    },
+    {
+      "before": "a3",
+      "after": "b3",
+      "n": 20,
+      "before_rate": 0.75,
+      "after_rate": 0.75,
+      "difference": 0.0,
+      "low": 0.0,
+      "high": 0.0,
+      "table": [
+        [
+          15,
+          0
+        ],
+        [
+          0,
+          5
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 1.0
+    },
+    {
+      "before": "b0",
+      "after": "b3",
+      "n": 20,
+      "before_rate": 0.5,
+      "after_rate": 0.75,
+      "difference": 0.25,
+      "low": 0.1,
+      "high": 0.45,
+      "table": [
+        [
+          10,
+          0
+        ],
+        [
+          5,
+          5
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.0625
+    },
+    {
+      "before": "b2",
+      "after": "b3",
+      "n": 20,
+      "before_rate": 0.65,
+      "after_rate": 0.75,
+      "difference": 0.1,
+      "low": 0.0,
+      "high": 0.25,
+      "table": [
+        [
+          13,
+          0
+        ],
+        [
+          2,
+          5
+        ]
+      ],
+      "table_layout": "[[both correct, only before correct], [only after correct, neither]]",
+      "p": 0.5
+    }
+  ],
+  "b0_incorrect_subset": {
+    "ids": [
+      "g003",
+      "g018",
+      "g021",
+      "g025",
+      "g030",
+      "g035",
+      "g038",
+      "g039",
+      "g046",
+      "g049"
+    ],
+    "n": 10,
+    "correctness": {
+      "b0": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 10
+      },
+      "b1": {
+        "rate": 0.5,
+        "low": 0.2,
+        "high": 0.8,
+        "n": 10
+      },
+      "b2": {
+        "rate": 0.4,
+        "low": 0.1,
+        "high": 0.7,
+        "n": 10
+      },
+      "a1": {
+        "rate": 0.5,
+        "low": 0.2,
+        "high": 0.8,
+        "n": 10
+      },
+      "a2": {
+        "rate": 0.5,
+        "low": 0.2,
+        "high": 0.8,
+        "n": 10
+      },
+      "a3": {
+        "rate": 0.5,
+        "low": 0.2,
+        "high": 0.8,
+        "n": 10
+      },
+      "b3": {
+        "rate": 0.5,
+        "low": 0.2,
+        "high": 0.8,
+        "n": 10
+      }
+    }
+  },
+  "correctness_by_category": {
+    "b0": {
+      "single_hop": {
+        "rate": 0.7143,
+        "low": 0.4286,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    },
+    "b1": {
+      "single_hop": {
+        "rate": 0.7143,
+        "low": 0.4286,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    },
+    "b2": {
+      "single_hop": {
+        "rate": 0.8571,
+        "low": 0.5714,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    },
+    "a1": {
+      "single_hop": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    },
+    "a2": {
+      "single_hop": {
+        "rate": 0.8571,
+        "low": 0.5714,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.6667,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    },
+    "a3": {
+      "single_hop": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    },
+    "b3": {
+      "single_hop": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 7
+      },
+      "multi_hop": {
+        "rate": 0.3333,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 3
+      },
+      "comparative": {
+        "rate": 0.5,
+        "low": 0.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "temporal": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 2
+      },
+      "unanswerable": {
+        "rate": 1.0,
+        "low": 1.0,
+        "high": 1.0,
+        "n": 4
+      },
+      "ambiguous": {
+        "rate": 0.0,
+        "low": 0.0,
+        "high": 0.0,
+        "n": 2
+      }
+    }
+  }
+}
