@@ -22,14 +22,13 @@ A judge error or an unparseable verdict counts as incorrect, with the reason kep
 
 from __future__ import annotations
 
-import json
-import re
 import statistics
 from collections.abc import Callable, Sequence
 from typing import Any
 
 from src.eval.retrieval_metrics import _percentile, evidence_pairs, item_metrics
 from src.generate.checks import citation_validity
+from src.generate.claim_check import read_verdict
 
 Judge = Callable[[str, str], str]
 
@@ -63,14 +62,10 @@ def judge_prompt(item: dict, answer: dict) -> str:
 
 
 def parse_judgement(reply: str) -> dict[str, Any]:
-    match = re.search(r"\{.*\}", reply, re.S)
-    try:
-        data = json.loads(match.group(0)) if match else None
-    except json.JSONDecodeError:
-        data = None
-    if not isinstance(data, dict) or str(data.get("correct", "")).lower() not in ("yes", "no"):
+    verdict = read_verdict(reply, "correct")
+    if verdict is None:
         return {"correct": False, "reason": f"unparseable judge reply: {reply[:120]!r}"}
-    return {"correct": str(data["correct"]).lower() == "yes", "reason": str(data.get("reason", ""))}
+    return {"correct": verdict[0], "reason": verdict[1]}
 
 
 def judge_correctness(item: dict, answer: dict, judge: Judge) -> dict[str, Any]:
